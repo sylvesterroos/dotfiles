@@ -6,7 +6,8 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
       <home-manager/nixos>
     ];
@@ -101,15 +102,21 @@
       flatpak
       firefox
       vscodium-fhs
-      nil # nix language server
-      nixpkgs-fmt # nix formatter
       thunderbird
       starship
+      podman
+      podman-compose
+      pods
 
       # extra gnome packages
       gnome.gnome-tweaks
       gnome.gnome-software
-    ]; 
+      gnomeExtensions.gsconnect
+      gnomeExtensions.appindicator
+      gnomeExtensions.pano
+      gnomeExtensions.dash-to-dock
+      gnomeExtensions.rounded-window-corners
+    ];
 
     programs.fish.enable = true;
 
@@ -131,6 +138,8 @@
   environment.systemPackages = with pkgs; [
     git
     neovim
+    #nixd # nix language server
+    nixpkgs-fmt # nix formatter
     wget
     exa
     ripgrep
