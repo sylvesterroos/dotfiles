@@ -1,0 +1,2 @@
+# this differs between devices, I'll let the installer handle it
+hardware-configuration.nix
