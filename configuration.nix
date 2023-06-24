@@ -117,6 +117,7 @@
       ranger
       mlocate
       fd
+      logiops
 
       # extra gnome packages
       gnome.gnome-tweaks
