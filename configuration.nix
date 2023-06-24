@@ -12,6 +12,14 @@
       <home-manager/nixos>
     ];
 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  # direnv: protect nix-shell from garbage collection
+  nix.extraOptions = ''
+    keep-outputs = true
+    keep-derivations = true
+  '';
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -123,6 +131,10 @@
       gnomeExtensions.quick-settings-tweaker
     ];
 
+    # project management
+    programs.direnv.enable = true;
+    programs.direnv.nix-direnv.enable = true;
+
     programs.fish.enable = true;
     programs.fish.shellAliases = {
       # changing "ls" to "exa"
@@ -155,7 +167,7 @@
     };
     programs.fish.interactiveShellInit = ''
       # asdf
-      source $HOME/.asdf/asdf.fish
+      #source $HOME/.asdf/asdf.fish
     '';
 
     programs.starship = {
@@ -382,6 +394,12 @@
     wget
     exa
     ripgrep
+    unzip
+
+    # needed for asdf-vm
+    # nix-shell -p ncurses gcc libssh openssl libxslt fop
+    # autoconf
+    # libxml2
   ];
 
   # Set variables for the global environment
@@ -391,6 +409,10 @@
 
     EDITOR = "nvim";
     VISUAL = "nvim";
+
+    # asdf-vm
+    # KERL_CONFIGURE_OPTIONS = "--disable-debug --without-javac";
+    # KERL_BUILD_DOCS = "yes";
   };
 
   # Some programs need SUID wrappers, can be configured further or are
