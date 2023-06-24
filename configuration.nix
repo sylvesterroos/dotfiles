@@ -107,6 +107,7 @@
       podman
       podman-compose
       pods
+      schildichat-desktop
 
       # extra gnome packages
       gnome.gnome-tweaks
@@ -116,9 +117,55 @@
       gnomeExtensions.pano
       gnomeExtensions.dash-to-dock
       gnomeExtensions.rounded-window-corners
+      gnomeExtensions.vitals
+      gnomeExtensions.quick-settings-tweaker
     ];
 
+    home.sessionVariables = {
+      # Fuck microsoft
+      DOTNET_CLI_TELEMETRY_OPTOUT = 1;
+
+      EDITOR = "nvim";
+      VISUAL = "nvim";
+    };
+
     programs.fish.enable = true;
+    programs.fish.shellAliases = {
+      # changing "ls" to "exa"
+      ls = "exa -alg --color=always --group-directories-first --header"; # my preferred listing
+      la = "exa -a --color=always --group-directories-first --header"; # all files and dirs
+      ll = "exa -l --color=always --group-directories-first --header"; # long format
+      lt = "exa -aT --color=always --group-directories-first --header"; # tree listing
+
+      # dotfiles stuff
+      dot = "/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME";
+      suf = "dot config --local status.showUntrackedFiles no";
+
+      # generating a new ssh key
+      ssh-keygen-ed25519 = "ssh-keygen -t ed25519 -C (whoami)@(uname -n)";
+
+      # youtube-dl
+      yt-dl = "youtube-dl";
+      yta-aac = "youtube-dl --add-metadata --extract-audio --audio-format aac ";
+      yta-best = "youtube-dl --add-metadata --extract-audio --audio-format best ";
+      yta-flac = "youtube-dl --add-metadata --extract-audio --audio-format flac ";
+      yta-m4a = "youtube-dl --add-metadata --extract-audio --audio-format m4a ";
+      yta-mp3 = "youtube-dl --add-metadata --extract-audio --audio-format mp3 ";
+      yta-opus = "youtube-dl --add-metadata --extract-audio --audio-format opus ";
+      yta-vorbis = "youtube-dl --add-metadata --extract-audio --audio-format vorbis ";
+      yta-wav = "youtube-dl --add-metadata --extract-audio --audio-format wav ";
+      ytv-best = "youtube-dl --add-metadata -f bestvideo+bestaudio ";
+
+      # the terminal rickroll
+      rr = "curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash";
+    };
+    programs.fish.interactiveShellInit = ''
+      # asdf
+      source $HOME/.asdf/asdf.fish
+
+      # STARSHIP
+      starship init fish | source
+    '';
 
     programs.git = {
       enable = true;
@@ -139,6 +186,7 @@
     git
     neovim
     #nixd # nix language server
+    nil # nix language server
     nixpkgs-fmt # nix formatter
     wget
     exa
