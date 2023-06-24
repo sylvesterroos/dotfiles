@@ -121,13 +121,6 @@
       gnomeExtensions.quick-settings-tweaker
     ];
 
-    home.sessionVariables = {
-      # Fuck microsoft
-      DOTNET_CLI_TELEMETRY_OPTOUT = 1;
-
-      EDITOR = "nvim";
-      VISUAL = "nvim";
-    };
 
     programs.fish.enable = true;
     programs.fish.shellAliases = {
@@ -192,6 +185,15 @@
     exa
     ripgrep
   ];
+
+  # Set variables for the global environment
+  environment.variables = rec {
+    # fuck microsoft
+    DOTNET_CLI_TELEMETRY_OPTOUT = "1";
+
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
