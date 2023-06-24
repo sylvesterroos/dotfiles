@@ -92,8 +92,6 @@
     description = "Sylvester Roos";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.fish;
-    packages = with pkgs; [
-    ];
   };
   home-manager.users.sylvester = { pkgs, ... }: {
     home.stateVersion = "23.05";
@@ -108,6 +106,8 @@
       podman-compose
       pods
       schildichat-desktop
+      xsel
+      wl-clipboard
 
       # extra gnome packages
       gnome.gnome-tweaks
@@ -120,7 +120,6 @@
       gnomeExtensions.vitals
       gnomeExtensions.quick-settings-tweaker
     ];
-
 
     programs.fish.enable = true;
     programs.fish.shellAliases = {
