@@ -106,7 +106,6 @@
       fish
       flatpak
       firefox
-      vscodium-fhs
       thunderbird
       starship
       podman
@@ -130,6 +129,17 @@
       gnomeExtensions.vitals
       gnomeExtensions.quick-settings-tweaker
     ];
+
+    # vscodium
+    programs.vscode = {
+      enable = true;
+      package = pkgs.vscodium.fhsWithPackages (
+        ps: with ps; [
+          nil
+          nixpkgs-fmt
+        ]
+      );
+    };
 
     # project management
     programs.direnv.enable = true;
@@ -388,9 +398,6 @@
   environment.systemPackages = with pkgs; [
     git
     neovim
-    #nixd # nix language server
-    nil # nix language server
-    nixpkgs-fmt # nix formatter
     wget
     exa
     ripgrep
