@@ -107,6 +107,9 @@
       schildichat-desktop
       xsel
       wl-clipboard
+      ranger
+      mlocate
+      fd
 
       # extra gnome packages
       gnome.gnome-tweaks
