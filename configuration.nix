@@ -108,7 +108,6 @@
       firefox
       thunderbird
       starship
-      podman
       podman-compose
       pods
       schildichat-desktop
@@ -438,6 +437,20 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+
+  virtualisation = {
+    podman = {
+      enable = true;
+
+      # Create a `docker` alias for podman, to use it as a drop-in replacement
+      dockerCompat = true;
+
+      # Required for containers under podman-compose to be able to talk to each other.
+      defaultNetwork.settings = {
+        dns_enabled = true;
+      };
+    };
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
