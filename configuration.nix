@@ -110,7 +110,7 @@
       starship
       podman-compose
       pods
-      schildichat-desktop
+      element-desktop
       xsel
       wl-clipboard
       ranger
