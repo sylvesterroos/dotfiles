@@ -114,9 +114,9 @@
       xsel
       wl-clipboard
       ranger
-      mlocate
+      findutils
       fd
-      logiops
+      tealdeer
 
       # extra gnome packages
       gnome.gnome-tweaks
@@ -402,6 +402,7 @@
     exa
     ripgrep
     unzip
+    logiops
 
     # needed for asdf-vm
     # nix-shell -p ncurses gcc libssh openssl libxslt fop
@@ -434,6 +435,8 @@
 
   services.flatpak.enable = true;
   services.locate.enable = true;
+  systemd.packages = [ pkgs.logiops ];
+  systemd.services.logid.wantedBy = [ "multi-user.target" ];
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
