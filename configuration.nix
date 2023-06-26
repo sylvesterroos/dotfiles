@@ -142,8 +142,8 @@
     };
 
     # project management
-    programs.direnv.enable = true;
-    programs.direnv.nix-direnv.enable = true;
+    # programs.direnv.enable = true;
+    # programs.direnv.nix-direnv.enable = true;
 
     programs.fish.enable = true;
     programs.fish.shellAliases = {
