@@ -415,6 +415,7 @@ in
     ripgrep
     unzip
     logiops
+    btop
   ];
 
   # Set variables for the global environment
