@@ -415,11 +415,6 @@ in
     ripgrep
     unzip
     logiops
-
-    # needed for asdf-vm
-    # nix-shell -p ncurses gcc libssh openssl libxslt fop
-    # autoconf
-    # libxml2
   ];
 
   # Set variables for the global environment
@@ -429,10 +424,6 @@ in
 
     EDITOR = "nvim";
     VISUAL = "nvim";
-
-    # asdf-vm
-    # KERL_CONFIGURE_OPTIONS = "--disable-debug --without-javac";
-    # KERL_BUILD_DOCS = "yes";
   };
 
   # Some programs need SUID wrappers, can be configured further or are
