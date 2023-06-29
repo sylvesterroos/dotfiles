@@ -128,6 +128,7 @@ in
       findutils
       fd
       tealdeer
+      logseq
 
       # extra gnome packages
       gnome.gnome-tweaks
