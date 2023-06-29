@@ -4,13 +4,24 @@
 
 { config, pkgs, ... }:
 
+let
+  tuxedo = import (builtins.fetchTarball "https://github.com/blitz/tuxedo-nixos/archive/master.tar.gz");
+in
 {
   imports =
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       <home-manager/nixos>
+      tuxedo.module
     ];
+  hardware.tuxedo-control-center.enable = true;
+  # required for tuxedo-control-center
+  nixpkgs.config.permittedInsecurePackages = [
+    "openssl-1.1.1u"
+    "nodejs-14.21.3"
+    "electron-13.6.9"
+  ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
