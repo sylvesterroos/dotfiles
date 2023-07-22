@@ -23,10 +23,12 @@ in
     "electron-13.6.9"
   ];
 
-  nixpkgs.overlays = [(import (builtins.fetchGit {                                                            
-                      url = "https://github.com/nix-community/nix-vscode-extensions";
-                      ref = "refs/heads/master";
-                    })).overlays.default];
+  nixpkgs.overlays = [
+    (import (builtins.fetchGit {
+      url = "https://github.com/nix-community/nix-vscode-extensions";
+      ref = "refs/heads/master";
+    })).overlays.default
+  ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -116,6 +118,8 @@ in
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.fish;
   };
+  # enable fish shell so user can use it
+  programs.fish.enable = true;
   home-manager.users.sylvester = { pkgs, ... }: {
     home.stateVersion = "23.05";
     home.packages = with pkgs; [
@@ -147,254 +151,53 @@ in
       gnomeExtensions.quick-settings-tweaker
     ];
 
-    # project management
-    # programs.direnv.enable = true;
-    # programs.direnv.nix-direnv.enable = true;
-
-    programs.fish.enable = true;
-    programs.fish.shellAliases = {
-      # changing "ls" to "exa"
-      ls = "exa -alg --color=always --group-directories-first --header"; # my preferred listing
-      la = "exa -a --color=always --group-directories-first --header"; # all files and dirs
-      ll = "exa -l --color=always --group-directories-first --header"; # long format
-      lt = "exa -aT --color=always --group-directories-first --header"; # tree listing
-
-      # dotfiles stuff
-      dot = "/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME";
-      suf = "dot config --local status.showUntrackedFiles no";
-
-      # generating a new ssh key
-      ssh-keygen-ed25519 = "ssh-keygen -t ed25519 -C (whoami)@(uname -n)";
-
-      # youtube-dl
-      yt-dl = "youtube-dl";
-      yta-aac = "youtube-dl --add-metadata --extract-audio --audio-format aac ";
-      yta-best = "youtube-dl --add-metadata --extract-audio --audio-format best ";
-      yta-flac = "youtube-dl --add-metadata --extract-audio --audio-format flac ";
-      yta-m4a = "youtube-dl --add-metadata --extract-audio --audio-format m4a ";
-      yta-mp3 = "youtube-dl --add-metadata --extract-audio --audio-format mp3 ";
-      yta-opus = "youtube-dl --add-metadata --extract-audio --audio-format opus ";
-      yta-vorbis = "youtube-dl --add-metadata --extract-audio --audio-format vorbis ";
-      yta-wav = "youtube-dl --add-metadata --extract-audio --audio-format wav ";
-      ytv-best = "youtube-dl --add-metadata -f bestvideo+bestaudio ";
-
-      # the terminal rickroll
-      rr = "curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash";
+    programs.git = {
+      enable = true;
+      diff-so-fancy.enable = true;
+      userEmail = "sylvester@thejoyofcoding.nl";
+      userName = "hyperspace";
     };
-    programs.fish.interactiveShellInit = ''
-      # asdf
-      #source $HOME/.asdf/asdf.fish
-    '';
+    programs.fish = {
+      enable = true;
+      shellAliases = {
+        # changing "ls" to "exa"
+        ls = "exa -alg --color=always --group-directories-first --header"; # my preferred listing
+        la = "exa -a --color=always --group-directories-first --header"; # all files and dirs
+        ll = "exa -l --color=always --group-directories-first --header"; # long format
+        lt = "exa -aT --color=always --group-directories-first --header"; # tree listing
+
+        # dotfiles stuff
+        dot = "/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME";
+        suf = "dot config --local status.showUntrackedFiles no";
+
+        # generating a new ssh key
+        ssh-keygen-ed25519 = "ssh-keygen -t ed25519 -C (whoami)@(uname -n)";
+
+        # youtube-dl
+        yt-dl = "youtube-dl";
+        yta-aac = "youtube-dl --add-metadata --extract-audio --audio-format aac ";
+        yta-best = "youtube-dl --add-metadata --extract-audio --audio-format best ";
+        yta-flac = "youtube-dl --add-metadata --extract-audio --audio-format flac ";
+        yta-m4a = "youtube-dl --add-metadata --extract-audio --audio-format m4a ";
+        yta-mp3 = "youtube-dl --add-metadata --extract-audio --audio-format mp3 ";
+        yta-opus = "youtube-dl --add-metadata --extract-audio --audio-format opus ";
+        yta-vorbis = "youtube-dl --add-metadata --extract-audio --audio-format vorbis ";
+        yta-wav = "youtube-dl --add-metadata --extract-audio --audio-format wav ";
+        ytv-best = "youtube-dl --add-metadata -f bestvideo+bestaudio ";
+
+        # the terminal rickroll
+        rr = "curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash";
+      };
+      interactiveShellInit = ''
+        # asdf
+        #source $HOME/.asdf/asdf.fish
+      '';
+    };
 
     programs.starship = {
       enable = true;
-
-      settings = {
-        aws = {
-          format = "\\[[$symbol($profile)(\\($region\\))(\\[$duration\\])]($style)\\]";
-        };
-        bun = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        c = {
-          format = "\\[[$symbol($version(-$name))]($style)\\]";
-        };
-        cmake = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        cmd_duration = {
-          disabled = true;
-          format = "\\[[⏱ $duration]($style)\\]";
-        };
-        cobol = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        conda = {
-          format = "\\[[$symbol$environment]($style)\\]";
-        };
-        crystal = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        daml = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        dart = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        deno = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        docker_context = {
-          format = "\\[[$symbol$context]($style)\\]";
-        };
-        dotnet = {
-          format = "\\[[$symbol($version)(🎯 $tfm)]($style)\\]";
-        };
-        elixir = {
-          format = "\\[[$symbol($version \\(OTP $otp_version\\))]($style)\\]";
-        };
-        elm = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        erlang = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        fennel = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        fossil_branch = {
-          format = "\\[[$symbol$branch]($style)\\]";
-        };
-        gcloud = {
-          format = "\\[[$symbol$account(@$domain)(\\($region\\))]($style)\\]";
-        };
-        git_branch = {
-          format = "\\[[$symbol$branch]($style)\\]";
-        };
-        git_status = {
-          format = "([\\[$all_status$ahead_behind\\]]($style))";
-        };
-        golang = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        gradle = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        guix_shell = {
-          format = "\\[[$symbol]($style)\\]";
-        };
-        haskell = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        haxe = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        helm = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        hg_branch = {
-          format = "\\[[$symbol$branch]($style)\\]";
-        };
-        java = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        julia = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        kotlin = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        kubernetes = {
-          format = "\\[[$symbol$context( \\($namespace\\))]($style)\\]";
-        };
-        lua = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        memory_usage = {
-          format = "\\[$symbol[$ram( | $swap)]($style)\\]";
-        };
-        meson = {
-          format = "\\[[$symbol$project]($style)\\]";
-        };
-        nim = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        nix_shell = {
-          format = "\\[[$symbol$state( \\($name\\))]($style)\\]";
-        };
-        nodejs = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        ocaml = {
-          format = "\\[[$symbol($version)(\\($switch_indicator$switch_name\\))]($style)\\]";
-        };
-        opa = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        openstack = {
-          format = "\\[[$symbol$cloud(\\($project\\))]($style)\\]";
-        };
-        os = {
-          format = "\\[[$symbol]($style)\\]";
-        };
-        package = {
-          format = "\\[[$symbol$version]($style)\\]";
-        };
-        perl = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        php = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        pijul_channel = {
-          format = "\\[[$symbol$channel]($style)\\]";
-        };
-        pulumi = {
-          format = "\\[[$symbol$stack]($style)\\]";
-        };
-        purescript = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        python = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        raku = {
-          format = "\\[[$symbol($version-$vm_version)]($style)\\]";
-        };
-        red = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        ruby = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        rust = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        scala = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        spack = {
-          format = "\\[[$symbol$environment]($style)\\]";
-        };
-        sudo = {
-          format = "\\[[as $symbol]($style)\\]";
-        };
-        swift = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        terraform = {
-          format = "\\[[$symbol$workspace]($style)\\]";
-        };
-        time = {
-          format = "\\[[$time]($style)\\]";
-        };
-        username = {
-          format = "\\[[$user]($style)\\]";
-        };
-        vagrant = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        vlang = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        zig = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-        solidity = {
-          format = "\\[[$symbol($version)]($style)\\]";
-        };
-      };
-    };
-
-    programs.git = {
-      enable = true;
-      userName = "Sylvester Roos";
-      userEmail = "pistrie@duck.com";
     };
   };
-
-  # enable fish shell so user can use it
-  programs.fish.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -410,31 +213,36 @@ in
     unzip
     logiops
     btop
+    nil # dependency for nix-ide
+    nixpkgs-fmt # dependency for nix-ide
     (vscode-with-extensions.override {
       vscode = vscodium;
       vscodeExtensions = with (pkgs.forVSCodeVersion "1.78.2").vscode-marketplace; [
-	zokugun.sync-settings
+        zokugun.sync-settings
         vscodevim.vim
-	alefragnani.project-manager
-	arrterian.nix-env-selector
-	gruntfuggly.todo-tree
-	jakebecker.elixir-ls
-	jdinhlife.gruvbox
-	jnoortheen.nix-ide
-	phoenixframework.phoenix
-	redhat.vscode-yaml
-	tenninebt.vscode-koverage
-	vspacecode.vspacecode
+        alefragnani.project-manager
+        arrterian.nix-env-selector
+        gruntfuggly.todo-tree
+        jakebecker.elixir-ls
+        jdinhlife.gruvbox
+        jnoortheen.nix-ide
+        phoenixframework.phoenix
+        redhat.vscode-yaml
+        tenninebt.vscode-koverage
+        vspacecode.vspacecode
 
-	# dependencies
-	zokugun.cron-tasks
-	vspacecode.whichkey
-	bodil.file-browser
-	jacobdufault.fuzzy-search
-	kahole.magit
+        # dependencies
+        zokugun.cron-tasks
+        vspacecode.whichkey
+        bodil.file-browser
+        jacobdufault.fuzzy-search
+        kahole.magit
       ];
     })
   ];
+
+  # use VSCode under wayland
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # Set variables for the global environment
   environment.variables = {
