@@ -427,6 +427,7 @@ in
 	vspacecode.vspacecode
 
 	# dependencies
+	zokugun.cron-tasks
 	vspacecode.whichkey
 	bodil.file-browser
 	jacobdufault.fuzzy-search
