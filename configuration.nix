@@ -23,6 +23,11 @@ in
     "electron-13.6.9"
   ];
 
+  nixpkgs.overlays = [(import (builtins.fetchGit {                                                            
+                      url = "https://github.com/nix-community/nix-vscode-extensions";
+                      ref = "refs/heads/master";
+                    })).overlays.default];
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # direnv: protect nix-shell from garbage collection
@@ -141,17 +146,6 @@ in
       gnomeExtensions.vitals
       gnomeExtensions.quick-settings-tweaker
     ];
-
-    # vscodium
-    programs.vscode = {
-      enable = true;
-      package = pkgs.vscodium.fhsWithPackages (
-        ps: with ps; [
-          nil
-          nixpkgs-fmt
-        ]
-      );
-    };
 
     # project management
     # programs.direnv.enable = true;
@@ -416,6 +410,29 @@ in
     unzip
     logiops
     btop
+    (vscode-with-extensions.override {
+      vscode = vscodium;
+      vscodeExtensions = with (pkgs.forVSCodeVersion "1.78.2").vscode-marketplace; [
+	zokugun.sync-settings
+        vscodevim.vim
+	alefragnani.project-manager
+	arrterian.nix-env-selector
+	gruntfuggly.todo-tree
+	jakebecker.elixir-ls
+	jdinhlife.gruvbox
+	jnoortheen.nix-ide
+	phoenixframework.phoenix
+	redhat.vscode-yaml
+	tenninebt.vscode-koverage
+	vspacecode.vspacecode
+
+	# dependencies
+	vspacecode.whichkey
+	bodil.file-browser
+	jacobdufault.fuzzy-search
+	kahole.magit
+      ];
+    })
   ];
 
   # Set variables for the global environment
