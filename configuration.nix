@@ -174,16 +174,8 @@ in
         ssh-keygen-ed25519 = "ssh-keygen -t ed25519 -C (whoami)@(uname -n)";
 
         # youtube-dl
-        yt-dl = "youtube-dl";
-        yta-aac = "youtube-dl --add-metadata --extract-audio --audio-format aac ";
-        yta-best = "youtube-dl --add-metadata --extract-audio --audio-format best ";
-        yta-flac = "youtube-dl --add-metadata --extract-audio --audio-format flac ";
-        yta-m4a = "youtube-dl --add-metadata --extract-audio --audio-format m4a ";
-        yta-mp3 = "youtube-dl --add-metadata --extract-audio --audio-format mp3 ";
-        yta-opus = "youtube-dl --add-metadata --extract-audio --audio-format opus ";
-        yta-vorbis = "youtube-dl --add-metadata --extract-audio --audio-format vorbis ";
-        yta-wav = "youtube-dl --add-metadata --extract-audio --audio-format wav ";
-        ytv-best = "youtube-dl --add-metadata -f bestvideo+bestaudio ";
+        yta-best = "yt-dlp --add-metadata --extract-audio --audio-format best ";
+        ytv-best = "yt-dlp --add-metadata -f bestvideo+bestaudio ";
 
         # the terminal rickroll
         rr = "curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash";
