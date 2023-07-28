@@ -222,6 +222,7 @@ in
         redhat.vscode-yaml
         tenninebt.vscode-koverage
         vspacecode.vspacecode
+        mtxr.sqltools
 
         # dependencies
         zokugun.cron-tasks
