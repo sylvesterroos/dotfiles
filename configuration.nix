@@ -223,6 +223,7 @@ in
         tenninebt.vscode-koverage
         vspacecode.vspacecode
         mtxr.sqltools
+        phind.phind
 
         # dependencies
         zokugun.cron-tasks
