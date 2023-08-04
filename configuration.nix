@@ -231,6 +231,7 @@ in
         bodil.file-browser
         jacobdufault.fuzzy-search
         kahole.magit
+        mtxr.sqltools-driver-pg
       ];
     })
   ];
