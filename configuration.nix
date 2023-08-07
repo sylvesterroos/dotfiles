@@ -236,9 +236,6 @@ in
     })
   ];
 
-  # use VSCode under wayland
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-
   # Set variables for the global environment
   environment.variables = {
     # fuck microsoft
