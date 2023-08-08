@@ -224,6 +224,7 @@ in
         vspacecode.vspacecode
         mtxr.sqltools
         phind.phind
+        mhutchie.git-graph
 
         # dependencies
         zokugun.cron-tasks
