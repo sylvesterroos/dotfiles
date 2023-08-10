@@ -126,6 +126,7 @@ in
       fish
       flatpak
       firefox
+      brave
       thunderbird
       starship
       podman-compose
