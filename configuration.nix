@@ -150,6 +150,7 @@ in
       gnomeExtensions.rounded-window-corners
       gnomeExtensions.vitals
       gnomeExtensions.quick-settings-tweaker
+      # gnomeExtensions.solaar-extension
     ];
 
     programs.git = {
