@@ -287,10 +287,12 @@ in
         phoenixframework.phoenix
         redhat.vscode-yaml
         tenninebt.vscode-koverage
+        # ryanluker.vscode-coverage-gutters # dependency ms-vscode.live-server not available for 1.78.2
         vspacecode.vspacecode
         mtxr.sqltools
         phind.phind
         mhutchie.git-graph
+        github.copilot
 
         # dependencies
         zokugun.cron-tasks
@@ -299,6 +301,7 @@ in
         jacobdufault.fuzzy-search
         kahole.magit
         mtxr.sqltools-driver-pg
+        # ms-vscode.live-server
       ];
     })
   ];
