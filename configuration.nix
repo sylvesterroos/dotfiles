@@ -173,6 +173,7 @@ in
       };
 
       "org/gnome/mutter" = {
+        center-new-windows = true; # gnome tweaks
         dynamic-workspaces = true;
         workspaces-only-on-primary = true;
         edge-tiling = true;
@@ -206,6 +207,14 @@ in
       "org/gnome/desktop/a11y" = {
         always-show-universal-access-status = true;
       };
+
+      # gnome tweaks
+      "org/gnome/desktop/wm/preferences" = {
+        button-layout = "close,minimize:appmenu";
+        focus-mode = "sloppy";
+        resize-with-right-button = true;
+      };
+
     };
 
     programs.git = {
