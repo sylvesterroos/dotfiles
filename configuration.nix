@@ -147,6 +147,7 @@ in
       tealdeer
       logseq
       neofetch
+      nextcloud-client
 
       # extra gnome packages
       gnome.gnome-tweaks
