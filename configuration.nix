@@ -133,7 +133,6 @@ in
       flatpak
       brave
       firefox
-      thunderbird
       celluloid
       vlc
       starship
