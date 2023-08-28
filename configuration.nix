@@ -130,9 +130,11 @@ in
     home.packages = with pkgs; [
       fish
       flatpak
-      firefox
       brave
+      firefox
       thunderbird
+      celluloid
+      vlc
       starship
       podman-compose
       pods
@@ -144,6 +146,7 @@ in
       fd
       tealdeer
       logseq
+      neofetch
 
       # extra gnome packages
       gnome.gnome-tweaks
