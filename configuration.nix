@@ -118,9 +118,14 @@ in
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.fish;
   };
+
   # enable fish shell so user can use it
   programs.fish.enable = true;
-  home-manager.users.sylvester = { pkgs, ... }: {
+
+  # enable dconf so home-manager can use it
+  programs.dconf.enable = true;
+
+  home-manager.users.sylvester = { pkgs, lib, ... }: {
     home.stateVersion = "23.05";
     home.packages = with pkgs; [
       fish
@@ -152,6 +157,53 @@ in
       gnomeExtensions.quick-settings-tweaker
       # gnomeExtensions.solaar-extension
     ];
+
+    dconf.settings = {
+      "org/gnome/desktop/search-providers/disabled" = {
+        disabled = [ "org.gnome.Epiphany.desktop" "org.gnome.Photos.desktop" ];
+        sort-order = [ "org.gnome.Documents.desktop" "org.gnome.Nautilus.desktop" "org.gnome.Contacts.desktop" ];
+      };
+
+      "org/gnome/desktop/interface" = {
+        enable-hot-corners = false;
+        show-battery-percentage = true;
+      };
+
+      "org/gnome/mutter" = {
+        dynamic-workspaces = true;
+        workspaces-only-on-primary = true;
+        edge-tiling = true;
+      };
+
+      "org/gnome/system/location" = {
+        enabled = true;
+      };
+
+      "org/gnome/desktop/privacy" = {
+        old-files-age = lib.hm.gvariant.mkUint32 30;
+        recent-files-max-age = -1;
+        remove-old-temp-files = true;
+        remove-old-trash-files = true;
+      };
+
+      "org/gnome/settings-daemon/plugins/power" = {
+        sleep-inactive-ac-type = "nothing";
+      };
+
+      "org/gnome/desktop/peripherals/touchpad" = {
+        speed = 0.22;
+        tap-to-click = true;
+        two-finger-scrolling-enabled = true;
+      };
+
+      "org/gnome/desktop/wm/keybindings" = {
+        close = [ "<Shift><Super>q" ];
+      };
+
+      "org/gnome/desktop/a11y" = {
+        always-show-universal-access-status = true;
+      };
+    };
 
     programs.git = {
       enable = true;
