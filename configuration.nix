@@ -148,6 +148,7 @@ in
       logseq
       neofetch
       nextcloud-client
+      mullvad-vpn
 
       # extra gnome packages
       gnome.gnome-tweaks
@@ -328,6 +329,7 @@ in
 
   services.flatpak.enable = true;
   services.locate.enable = true;
+  services.mullvad-vpn.enable = true;
   systemd.packages = [ pkgs.logiops ];
   systemd.services.logid.wantedBy = [ "multi-user.target" ];
 
