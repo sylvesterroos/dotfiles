@@ -172,6 +172,7 @@ in
       "org/gnome/desktop/interface" = {
         enable-hot-corners = false;
         show-battery-percentage = true;
+        monospace-font-name = "JetBrainsMono Nerd Font 10";
       };
 
       "org/gnome/mutter" = {
@@ -258,6 +259,10 @@ in
       enable = true;
     };
   };
+
+  fonts.fonts = with pkgs; [
+    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+  ];
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
