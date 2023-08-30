@@ -174,6 +174,7 @@ in
         enable-hot-corners = false;
         show-battery-percentage = true;
         monospace-font-name = "JetBrainsMono Nerd Font 10";
+        clock-show-weekday = true;
       };
 
       "org/gnome/mutter" = {
