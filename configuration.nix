@@ -32,7 +32,7 @@ in
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # direnv: protect nix-shell from garbage collection
+  # protect nix-shell from garbage collection
   nix.extraOptions = ''
     keep-outputs = true
     keep-derivations = true
@@ -149,6 +149,7 @@ in
       neofetch
       nextcloud-client
       mullvad-vpn
+      yt-dlp
 
       # extra gnome packages
       gnome.gnome-tweaks
@@ -226,10 +227,10 @@ in
       userEmail = "sylvester@thejoyofcoding.nl";
       userName = "hyperspace";
     };
+
     programs.fish = {
       enable = true;
       shellAliases = {
-        # changing "ls" to "exa"
         ls = "exa -alg --color=always --group-directories-first --header"; # my preferred listing
         la = "exa -a --color=always --group-directories-first --header"; # all files and dirs
         ll = "exa -l --color=always --group-directories-first --header"; # long format
@@ -239,12 +240,7 @@ in
         dot = "/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME";
         suf = "dot config --local status.showUntrackedFiles no";
 
-        # generating a new ssh key
         ssh-keygen-ed25519 = "ssh-keygen -t ed25519 -C (whoami)@(uname -n)";
-
-        # youtube-dl
-        yta-best = "yt-dlp --add-metadata --extract-audio --audio-format best ";
-        ytv-best = "yt-dlp --add-metadata -f bestvideo+bestaudio ";
 
         # the terminal rickroll
         rr = "curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash";
@@ -253,6 +249,12 @@ in
         # asdf
         #source $HOME/.asdf/asdf.fish
       '';
+      shellAbbrs = {
+        nsh = "nix-shell --run fish";
+
+        yta-best = "yt-dlp --add-metadata --extract-audio --audio-format best";
+        ytv-best = "yt-dlp --add-metadata -f bestvideo+bestaudio";
+      };
     };
 
     programs.starship = {
