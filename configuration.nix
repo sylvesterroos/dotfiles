@@ -260,6 +260,12 @@ in
     };
   };
 
+  xdg.mime.addedAssociations = {
+    # TODO this should open an extension, currently just opens VSCodium
+    #"x-scheme-handler/vscodium" = "codium.desktop";
+  };
+
+  fonts.fontDir.enable = true;
   fonts.fonts = with pkgs; [
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   ];
