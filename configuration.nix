@@ -287,6 +287,7 @@ in
     unzip
     logiops
     btop
+    bat
     nil # dependency for nix-ide
     nixpkgs-fmt # dependency for nix-ide
     (vscode-with-extensions.override {
