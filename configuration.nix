@@ -234,7 +234,7 @@ in
 
       # gnome tweaks
       "org/gnome/desktop/wm/preferences" = {
-        button-layout = "close,minimize:appmenu";
+        button-layout = "appmenu:minimize,close";
         focus-mode = "sloppy";
         resize-with-right-button = true;
       };
