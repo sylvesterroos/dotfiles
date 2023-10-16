@@ -173,6 +173,11 @@ in
       enable = true;
       package = pkgs.vscodium.fhsWithPackages (ps: with ps; [ nil nixpkgs-fmt ]);
     };
+
+    programs.emacs = {
+      enable = true;
+      package = pkgs.emacs29-gtk;
+    };
     dconf.settings = {
       "org/gnome/desktop/search-providers/disabled" = {
         disabled = [ "org.gnome.Epiphany.desktop" "org.gnome.Photos.desktop" ];
