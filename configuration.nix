@@ -308,6 +308,8 @@ in
   fonts.fontDir.enable = true;
   fonts.fonts = with pkgs; [
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    noto-fonts
+    inter
   ];
 
   # Allow unfree packages
