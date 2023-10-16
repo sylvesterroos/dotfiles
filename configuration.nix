@@ -340,18 +340,7 @@ in
     win-virtio
     win-spice
     gnome.adwaita-icon-theme
-
-        # dependencies
-        zokugun.cron-tasks
-        vspacecode.whichkey
-        bodil.file-browser
-        jacobdufault.fuzzy-search
-        kahole.magit
-        mtxr.sqltools-driver-pg
-        # ms-vscode.live-server
       ];
-    })
-  ];
 
   # Set variables for the global environment
   environment.variables = {
