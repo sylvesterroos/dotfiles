@@ -245,7 +245,15 @@ in
       enable = true;
       diff-so-fancy.enable = true;
       userEmail = "sylvester@thejoyofcoding.nl";
-      userName = "hyperspace";
+      userName = "Sylvester Roos";
+      extraConfig = {
+        init.defaultBranch = "master";
+        core.editor = "flatpak run re.sonny.Commit";
+      };
+      signing = {
+        key = null;
+        signByDefault = true;
+      };
     };
 
     programs.fish = {
