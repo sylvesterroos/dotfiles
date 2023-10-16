@@ -269,13 +269,8 @@ in
         suf = "dot config --local status.showUntrackedFiles no";
 
         ssh-keygen-ed25519 = "ssh-keygen -t ed25519 -C (whoami)@(uname -n)";
-
-        # the terminal rickroll
-        rr = "curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash";
       };
       interactiveShellInit = ''
-        # asdf
-        #source $HOME/.asdf/asdf.fish
       '';
       shellAbbrs = {
         nsh = "nix-shell --run fish";
