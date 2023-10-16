@@ -178,6 +178,11 @@ in
       enable = true;
       package = pkgs.emacs29-gtk;
     };
+
+    # programs.neovim = {
+    #   enable = true;
+    # };
+
     dconf.settings = {
       "org/gnome/desktop/search-providers/disabled" = {
         disabled = [ "org.gnome.Epiphany.desktop" "org.gnome.Photos.desktop" ];
