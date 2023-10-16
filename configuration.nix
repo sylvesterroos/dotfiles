@@ -118,7 +118,7 @@ in
   users.users.sylvester = {
     isNormalUser = true;
     description = "Sylvester Roos";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" "adbusers" ];
     shell = pkgs.fish;
   };
 
@@ -293,28 +293,15 @@ in
     logiops
     btop
     bat
-    nil # dependency for nix-ide
-    nixpkgs-fmt # dependency for nix-ide
-    (vscode-with-extensions.override {
-      vscode = vscodium;
-      vscodeExtensions = with (pkgs.forVSCodeVersion "1.78.2").vscode-marketplace; [
-        zokugun.sync-settings
-        vscodevim.vim
-        alefragnani.project-manager
-        arrterian.nix-env-selector
-        gruntfuggly.todo-tree
-        jakebecker.elixir-ls
-        jdinhlife.gruvbox
-        jnoortheen.nix-ide
-        phoenixframework.phoenix
-        redhat.vscode-yaml
-        tenninebt.vscode-koverage
-        # ryanluker.vscode-coverage-gutters # dependency ms-vscode.live-server not available for 1.78.2
-        vspacecode.vspacecode
-        mtxr.sqltools
-        phind.phind
-        mhutchie.git-graph
-        github.copilot
+    ### virtualization ###
+    virt-manager
+    virt-viewer
+    spice
+    spice-gtk
+    spice-protocol
+    win-virtio
+    win-spice
+    gnome.adwaita-icon-theme
 
         # dependencies
         zokugun.cron-tasks
@@ -358,8 +345,10 @@ in
     enableSSHSupport = true;
   };
 
-  # List services that you want to enable:
+  # android-tools
+  programs.adb.enable = true;
 
+  # List services that you want to enable:
   services.flatpak.enable = true;
   services.locate.enable = true;
   services.mullvad-vpn.enable = true;
@@ -369,7 +358,18 @@ in
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
+  services.spice-vdagentd.enable = true;
   virtualisation = {
+    libvirtd = {
+      enable = true;
+      qemu = {
+        swtpm.enable = true;
+        ovmf.enable = true;
+        ovmf.packages = [ pkgs.OVMFFull.fd ];
+      };
+    };
+    spiceUSBRedirection.enable = true;
+
     podman = {
       enable = true;
 
