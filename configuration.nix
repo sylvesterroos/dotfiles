@@ -330,7 +330,7 @@ in
     win-virtio
     win-spice
     gnome.adwaita-icon-theme
-      ];
+  ];
 
   # Set variables for the global environment
   environment.variables = rec {
