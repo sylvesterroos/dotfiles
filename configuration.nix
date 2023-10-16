@@ -345,6 +345,11 @@ in
 
   # a safer memory allocator to mitigate memory corruption attacks
   #environment.memoryAllocator.provider = "graphene-hardened";
+
+  # Run unpatched dynamic binaries on NixOS
+  # https://github.com/Mic92/nix-ld#usage
+  programs.nix-ld.enable = true;
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
