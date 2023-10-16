@@ -16,9 +16,9 @@ in
       tuxedo.module
     ];
   hardware.tuxedo-control-center.enable = true;
-  # required for tuxedo-control-center
   nixpkgs.config.permittedInsecurePackages = [
-    "openssl-1.1.1v"
+    # required for tuxedo-control-center
+    "openssl-1.1.1w"
     "nodejs-14.21.3"
     "electron-13.6.9"
   ];
