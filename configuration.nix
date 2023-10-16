@@ -128,38 +128,34 @@ in
     package = pkgs.gnomeExtensions.gsconnect;
   };
 
-  # enable dconf so home-manager can use it
-  programs.dconf.enable = true;
-
+  home-manager.useGlobalPkgs = true;
   home-manager.users.sylvester = { pkgs, lib, ... }: {
     home.stateVersion = "23.05";
     home.packages = with pkgs; [
       fish
-      flatpak
       brave
       firefox
+      libreoffice
+      jre_minimal # needed for languagetool extension
       celluloid
       vlc
-      starship
       podman-compose
       pods
-      element-desktop
       xsel
       wl-clipboard
       ranger
       findutils
       fd
-      tealdeer
       logseq
       neofetch
+      ## TODO enable this using home-manager -> services.nextcloud...
       nextcloud-client
       mullvad-vpn
-      yt-dlp
+      jetbrains.idea-community
 
       # extra gnome packages
       gnome.gnome-tweaks
       gnome.gnome-software
-      gnomeExtensions.gsconnect
       gnomeExtensions.appindicator
       gnomeExtensions.pano
       gnomeExtensions.dash-to-dock
@@ -238,7 +234,6 @@ in
         focus-mode = "sloppy";
         resize-with-right-button = true;
       };
-
     };
 
     programs.git = {
