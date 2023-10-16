@@ -327,6 +327,10 @@ in
     logiops
     btop
     bat
+    hunspell
+    hunspellDicts.nl_nl
+    hunspellDicts.en-us
+    hunspellDicts.en-us-large
     ### virtualization ###
     virt-manager
     virt-viewer
