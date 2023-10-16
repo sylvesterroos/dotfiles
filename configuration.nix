@@ -285,9 +285,19 @@ in
       };
     };
 
-    programs.starship = {
+    programs.tealdeer = {
       enable = true;
+      settings.updates.auto_update = true;
     };
+
+    programs.direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
+
+    programs.starship.enable = true;
+    programs.autojump.enable = true;
+    programs.yt-dlp.enable = true;
   };
 
   xdg.mime.addedAssociations = {
