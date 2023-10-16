@@ -343,6 +343,8 @@ in
     VSCODE_GALLERY_CONTROL_URL = "";
   };
 
+  # a safer memory allocator to mitigate memory corruption attacks
+  #environment.memoryAllocator.provider = "graphene-hardened";
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
