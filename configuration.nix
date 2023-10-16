@@ -169,6 +169,10 @@ in
       # gnomeExtensions.solaar-extension
     ];
 
+    programs.vscode = {
+      enable = true;
+      package = pkgs.vscodium.fhsWithPackages (ps: with ps; [ nil nixpkgs-fmt ]);
+    };
     dconf.settings = {
       "org/gnome/desktop/search-providers/disabled" = {
         disabled = [ "org.gnome.Epiphany.desktop" "org.gnome.Photos.desktop" ];
