@@ -111,6 +111,9 @@ in
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  # enable fish shell so user can use it
+  programs.fish.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.sylvester = {
     isNormalUser = true;
@@ -119,8 +122,11 @@ in
     shell = pkgs.fish;
   };
 
-  # enable fish shell so user can use it
-  programs.fish.enable = true;
+  # gsconnect
+  programs.kdeconnect = {
+    enable = true;
+    package = pkgs.gnomeExtensions.gsconnect;
+  };
 
   # enable dconf so home-manager can use it
   programs.dconf.enable = true;
