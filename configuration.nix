@@ -150,6 +150,7 @@ in
       nextcloud-client
       mullvad-vpn
       jetbrains.idea-community
+      #rtx
 
       # extra gnome packages
       gnome.gnome-tweaks
@@ -259,6 +260,7 @@ in
         ssh-keygen-ed25519 = "ssh-keygen -t ed25519 -C (whoami)@(uname -n)";
       };
       interactiveShellInit = ''
+        #rtx activate fish | source
       '';
       shellAbbrs = {
         nsh = "nix-shell --run fish";
