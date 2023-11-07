@@ -18,6 +18,8 @@ in
       tuxedo.module
     ];
   hardware.tuxedo-control-center.enable = true;
+  # required to configure the keychron QMK as a non-root user
+  hardware.keyboard.qmk.enable = true;
   nixpkgs.config.permittedInsecurePackages = [
     # required for tuxedo-control-center
     "openssl-1.1.1w"
