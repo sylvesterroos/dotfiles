@@ -163,11 +163,6 @@ in
       # gnomeExtensions.solaar-extension
     ];
 
-    programs.vscode = {
-      enable = true;
-      package = pkgs.vscodium.fhsWithPackages (ps: with ps; [ nil nixpkgs-fmt ]);
-    };
-
     programs.emacs = {
       enable = true;
       package = pkgs.emacs29-gtk;
@@ -354,6 +349,45 @@ in
     win-virtio
     win-spice
     gnome.adwaita-icon-theme
+    ### vscode ###
+    unstable.nixd # dependency for nix-ide # TODO replace with nixd
+    nixpkgs-fmt # dependency for nix-ide
+    (vscode-with-extensions.override {
+      vscode = vscodium;
+      vscodeExtensions = with (pkgs.forVSCodeVersion "1.78.2").vscode-marketplace; [
+        zokugun.sync-settings
+        vscodevim.vim
+        vspacecode.vspacecode
+        alefragnani.project-manager
+        mkhl.direnv
+        arrterian.nix-env-selector
+        gruntfuggly.todo-tree
+        jakebecker.elixir-ls
+        elixir-tools.elixir-tools
+        lexical-lsp.lexical
+        jdinhlife.gruvbox
+        jnoortheen.nix-ide
+        phoenixframework.phoenix
+        redhat.vscode-yaml
+        tenninebt.vscode-koverage
+        # ryanluker.vscode-coverage-gutters # dependency ms-vscode.live-server not available for 1.78.2
+        mtxr.sqltools
+        phind.phind
+        mhutchie.git-graph
+        # github.copilot # doesn't work with vscodium
+        #bruno-api-client.bruno
+
+        # dependencies
+        zokugun.cron-tasks
+        vspacecode.whichkey
+        bodil.file-browser
+        jacobdufault.fuzzy-search
+        kahole.magit
+        mtxr.sqltools-driver-pg
+        # ms-vscode.live-server
+      ];
+    })
+  ];
   ];
 
   # Set variables for the global environment
