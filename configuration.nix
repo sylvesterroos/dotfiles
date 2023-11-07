@@ -326,6 +326,16 @@ in
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  environment.gnome.excludePackages = with pkgs.gnome; [
+    cheese
+    geary
+    gnome-music
+    pkgs.gnome-photos
+    gnome-weather
+    totem
+    pkgs.xterm
+  ];
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
