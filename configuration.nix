@@ -165,7 +165,7 @@ in
 
     programs.emacs = {
       enable = true;
-      package = pkgs.emacs29-gtk;
+      package = pkgs.emacs29-gtk3;
     };
 
     # programs.neovim = {
