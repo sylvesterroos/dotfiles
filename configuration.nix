@@ -325,6 +325,7 @@ in
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # remove some default packages
   environment.gnome.excludePackages = with pkgs.gnome; [
     cheese
     geary
@@ -332,8 +333,8 @@ in
     pkgs.gnome-photos
     gnome-weather
     totem
-    pkgs.xterm
   ];
+  services.xserver.excludePackages = [ pkgs.xterm ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
