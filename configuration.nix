@@ -358,13 +358,14 @@ in
     win-spice
     gnome.adwaita-icon-theme
     ### vscode ###
-    unstable.nixd # dependency for nix-ide # TODO replace with nixd
+    unstable.nixd # dependency for nix-ide
     nixpkgs-fmt # dependency for nix-ide
-    (vscode-with-extensions.override {
-      vscode = vscodium;
-      vscodeExtensions = with (pkgs.forVSCodeVersion "1.78.2").vscode-marketplace; [
+    (unstable.vscode-with-extensions.override {
+      vscode = unstable.vscodium;
+      vscodeExtensions = with (pkgs.forVSCodeVersion unstable.vscodium.version).vscode-marketplace; [
         zokugun.sync-settings
         vscodevim.vim
+        asvetliakov.vscode-neovim
         vspacecode.vspacecode
         alefragnani.project-manager
         mkhl.direnv
@@ -378,10 +379,11 @@ in
         phoenixframework.phoenix
         redhat.vscode-yaml
         tenninebt.vscode-koverage
-        # ryanluker.vscode-coverage-gutters # dependency ms-vscode.live-server not available for 1.78.2
+        ryanluker.vscode-coverage-gutters
         mtxr.sqltools
         phind.phind
         mhutchie.git-graph
+        tldraw-org.tldraw-vscode
         # github.copilot # doesn't work with vscodium
         #bruno-api-client.bruno
 
@@ -392,7 +394,7 @@ in
         jacobdufault.fuzzy-search
         kahole.magit
         mtxr.sqltools-driver-pg
-        # ms-vscode.live-server
+        ms-vscode.live-server
       ];
     })
   ];
