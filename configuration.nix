@@ -185,6 +185,7 @@ in
 
       "org/gnome/desktop/interface" = {
         enable-hot-corners = false;
+        font-antialiasing = "rgba";
         show-battery-percentage = true;
         monospace-font-name = "JetBrainsMono Nerd Font 10";
         clock-show-weekday = true;
