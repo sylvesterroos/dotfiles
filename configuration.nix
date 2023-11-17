@@ -501,6 +501,7 @@ in
   system.stateVersion = "23.05"; # Did you read the comment?
 
   system.autoUpgrade.enable = true;
+  system.autoUpgrade.flags = [ "--upgrade-all" ];
 
   nix.settings.auto-optimise-store = true;
 
