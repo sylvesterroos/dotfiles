@@ -153,7 +153,6 @@ in
       ## TODO enable this using home-manager -> services.nextcloud...
       nextcloud-client
       mullvad-vpn
-      jetbrains.idea-community
       #rtx
 
       # extra gnome packages
