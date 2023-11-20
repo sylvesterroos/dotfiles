@@ -188,9 +188,9 @@ in
       package = pkgs.emacs29-pgtk;
     };
 
-    # programs.neovim = {
-    #   enable = true;
-    # };
+    programs.neovim = {
+      enable = true;
+    };
 
     dconf.settings = {
       "org/gnome/desktop/search-providers/disabled" = {
