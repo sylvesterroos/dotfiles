@@ -167,6 +167,28 @@ in
       # gnomeExtensions.solaar-extension
     ];
 
+    home.sessionVariables = rec {
+      XDG_CACHE_HOME = "$HOME/.cache";
+      XDG_CONFIG_HOME = "$HOME/.config";
+      XDG_DATA_HOME = "$HOME/.local/share";
+      XDG_STATE_HOME = "$HOME/.local/state";
+
+      # Not officially in the specification
+      XDG_BIN_HOME = "$HOME/.local/bin";
+      PATH = [
+        "${XDG_BIN_HOME}"
+      ];
+
+      # fuck microsoft
+      DOTNET_CLI_TELEMETRY_OPTOUT = "1";
+
+      # needed for vscodium
+      VSCODE_GALLERY_SERVICE_URL = "https://marketplace.visualstudio.com/_apis/public/gallery";
+      VSCODE_GALLERY_ITEM_URL = "https://marketplace.visualstudio.com/items";
+      VSCODE_GALLERY_CACHE_URL = "https://vscode.blob.core.windows.net/gallery/index";
+      VSCODE_GALLERY_CONTROL_URL = "";
+    };
+
     programs.emacs = {
       enable = true;
       package = pkgs.emacs29-gtk3;
@@ -409,28 +431,8 @@ in
 
   # Set variables for the global environment
   environment.variables = rec {
-    XDG_CACHE_HOME = "$HOME/.cache";
-    XDG_CONFIG_HOME = "$HOME/.config";
-    XDG_DATA_HOME = "$HOME/.local/share";
-    XDG_STATE_HOME = "$HOME/.local/state";
-
-    # Not officially in the specification
-    XDG_BIN_HOME = "$HOME/.local/bin";
-    PATH = [
-      "${XDG_BIN_HOME}"
-    ];
-
-    # fuck microsoft
-    DOTNET_CLI_TELEMETRY_OPTOUT = "1";
-
     EDITOR = "nvim";
     VISUAL = "nvim";
-
-    # needed for vscodium
-    VSCODE_GALLERY_SERVICE_URL = "https://marketplace.visualstudio.com/_apis/public/gallery";
-    VSCODE_GALLERY_ITEM_URL = "https://marketplace.visualstudio.com/items";
-    VSCODE_GALLERY_CACHE_URL = "https://vscode.blob.core.windows.net/gallery/index";
-    VSCODE_GALLERY_CONTROL_URL = "";
   };
 
   # a safer memory allocator to mitigate memory corruption attacks
