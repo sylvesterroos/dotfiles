@@ -289,8 +289,8 @@ in
         #rtx activate fish | source
       '';
       shellAbbrs = {
-        nsh = "nix-shell --run fish";
-        nshu = "nix-shell --run fish -I nixpkgs=channel:nixos-unstable";
+        nsh = "nix-shell --command fish";
+        nshu = "nix-shell --command fish -I nixpkgs=channel:nixos-unstable";
 
         yta-best = "yt-dlp --add-metadata --extract-audio --audio-format best";
         ytv-best = "yt-dlp --add-metadata -f bestvideo+bestaudio";
