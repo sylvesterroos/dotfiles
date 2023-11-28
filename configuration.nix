@@ -122,7 +122,7 @@ in
   users.users.sylvester = {
     isNormalUser = true;
     description = "Sylvester Roos";
-    extraGroups = [ "networkmanager" "wheel" "libvirtd" "adbusers" ];
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" "adbusers" "plugdev" ];
     shell = pkgs.fish;
   };
 
