@@ -153,7 +153,29 @@ in
       ## TODO enable this using home-manager -> services.nextcloud...
       nextcloud-client
       mullvad-vpn
-      #rtx
+      ### emacs stuff ###
+      # vterm
+      gnumake
+      cmake
+      # go
+      go
+      gopls
+      gomodifytags
+      gotests
+      gore
+      gotools
+      # markdown
+      python311Packages.grip
+      discount
+      # nix
+      nil
+      nixpkgs-fmt
+      nixfmt
+      # sh
+      shfmt
+      shellcheck
+      # json
+      nodePackages.vscode-json-languageserver
 
       # extra gnome packages
       gnome.gnome-tweaks
