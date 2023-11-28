@@ -451,7 +451,7 @@ in
   };
 
   # a safer memory allocator to mitigate memory corruption attacks
-  #environment.memoryAllocator.provider = "graphene-hardened";
+  environment.memoryAllocator.provider = "graphene-hardened";
 
   # Run unpatched dynamic binaries on NixOS
   # https://github.com/Mic92/nix-ld#usage
