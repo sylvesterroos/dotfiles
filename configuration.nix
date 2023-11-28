@@ -5,20 +5,19 @@
 { config, lib, pkgs, ... }:
 
 let
-  tuxedo = import (builtins.fetchTarball "https://github.com/blitz/tuxedo-nixos/archive/master.tar.gz");
+  tuxedo = import (builtins.fetchTarball
+    "https://github.com/blitz/tuxedo-nixos/archive/master.tar.gz");
   # to install packages from nixos-unstable, for example unstable.livebook
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
-in
-{
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      <home-manager/nixos>
-      tuxedo.module
-    ];
+in {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    <home-manager/nixos>
+    tuxedo.module
+  ];
   hardware.tuxedo-control-center.enable = true;
-  # required to configure the keychron QMK as a non-root user
+  # required to configure QMK keyboard as a non-root user
   hardware.keyboard.qmk.enable = true;
   nixpkgs.config.permittedInsecurePackages = [
     # required for tuxedo-control-center
@@ -47,9 +46,7 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Setup keyfile
-  boot.initrd.secrets = {
-    "/crypto_keyfile.bin" = null;
-  };
+  boot.initrd.secrets = { "/crypto_keyfile.bin" = null; };
 
   networking.hostName = "odysseus"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -189,7 +186,7 @@ in
       # gnomeExtensions.solaar-extension
     ];
 
-    home.sessionVariables = rec {
+    home.sessionVariables = {
       XDG_CACHE_HOME = "$HOME/.cache";
       XDG_CONFIG_HOME = "$HOME/.config";
       XDG_DATA_HOME = "$HOME/.local/share";
@@ -199,9 +196,11 @@ in
       DOTNET_CLI_TELEMETRY_OPTOUT = "1";
 
       # needed for vscodium
-      VSCODE_GALLERY_SERVICE_URL = "https://marketplace.visualstudio.com/_apis/public/gallery";
+      VSCODE_GALLERY_SERVICE_URL =
+        "https://marketplace.visualstudio.com/_apis/public/gallery";
       VSCODE_GALLERY_ITEM_URL = "https://marketplace.visualstudio.com/items";
-      VSCODE_GALLERY_CACHE_URL = "https://vscode.blob.core.windows.net/gallery/index";
+      VSCODE_GALLERY_CACHE_URL =
+        "https://vscode.blob.core.windows.net/gallery/index";
       VSCODE_GALLERY_CONTROL_URL = "";
     };
 
@@ -210,14 +209,16 @@ in
       package = pkgs.emacs29-pgtk;
     };
 
-    programs.neovim = {
-      enable = true;
-    };
+    programs.neovim = { enable = true; };
 
     dconf.settings = {
       "org/gnome/desktop/search-providers/disabled" = {
         disabled = [ "org.gnome.Epiphany.desktop" "org.gnome.Photos.desktop" ];
-        sort-order = [ "org.gnome.Documents.desktop" "org.gnome.Nautilus.desktop" "org.gnome.Contacts.desktop" ];
+        sort-order = [
+          "org.gnome.Documents.desktop"
+          "org.gnome.Nautilus.desktop"
+          "org.gnome.Contacts.desktop"
+        ];
       };
 
       "org/gnome/desktop/interface" = {
@@ -235,9 +236,7 @@ in
         edge-tiling = true;
       };
 
-      "org/gnome/system/location" = {
-        enabled = true;
-      };
+      "org/gnome/system/location" = { enabled = true; };
 
       "org/gnome/desktop/privacy" = {
         old-files-age = lib.hm.gvariant.mkUint32 30;
@@ -256,9 +255,7 @@ in
         two-finger-scrolling-enabled = true;
       };
 
-      "org/gnome/desktop/wm/keybindings" = {
-        close = [ "<Shift><Super>q" ];
-      };
+      "org/gnome/desktop/wm/keybindings" = { close = [ "<Shift><Super>q" ]; };
 
       "org/gnome/desktop/a11y" = {
         always-show-universal-access-status = true;
@@ -290,10 +287,14 @@ in
     programs.fish = {
       enable = true;
       shellAliases = {
-        ls = "exa -alg --color=always --group-directories-first --header"; # my preferred listing
-        la = "exa -a --color=always --group-directories-first --header"; # all files and dirs
-        ll = "exa -l --color=always --group-directories-first --header"; # long format
-        lt = "exa -aT --color=always --group-directories-first --header"; # tree listing
+        ls =
+          "exa -alg --color=always --group-directories-first --header"; # my preferred listing
+        la =
+          "exa -a --color=always --group-directories-first --header"; # all files and dirs
+        ll =
+          "exa -l --color=always --group-directories-first --header"; # long format
+        lt =
+          "exa -aT --color=always --group-directories-first --header"; # tree listing
 
         # dotfiles stuff
         dot = "/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME";
@@ -328,11 +329,6 @@ in
     programs.yt-dlp.enable = true;
   };
 
-  xdg.mime.addedAssociations = {
-    # TODO this should open an extension, currently just opens VSCodium
-    #"x-scheme-handler/vscodium" = "codium.desktop";
-  };
-
   fonts.fonts = with pkgs; [
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     noto-fonts
@@ -340,24 +336,22 @@ in
 
   # fixes flatpak packages with incorrect/incomplete fonts and cursor
   system.fsPackages = [ pkgs.bindfs ];
-  fileSystems =
-    let
-      mkRoSymBind = path: {
-        device = path;
-        fsType = "fuse.bindfs";
-        options = [ "ro" "resolve-symlinks" "x-gvfs-hide" ];
-      };
-      aggregatedFonts = pkgs.buildEnv {
-        name = "system-fonts";
-        paths = config.fonts.fonts;
-        pathsToLink = [ "/share/fonts" ];
-      };
-    in
-    {
-      # Create an FHS mount to support flatpak host icons/fonts
-      "/usr/share/icons" = mkRoSymBind (config.system.path + "/share/icons");
-      "/usr/share/fonts" = mkRoSymBind (aggregatedFonts + "/share/fonts");
+  fileSystems = let
+    mkRoSymBind = path: {
+      device = path;
+      fsType = "fuse.bindfs";
+      options = [ "ro" "resolve-symlinks" "x-gvfs-hide" ];
     };
+    aggregatedFonts = pkgs.buildEnv {
+      name = "system-fonts";
+      paths = config.fonts.fonts;
+      pathsToLink = [ "/share/fonts" ];
+    };
+  in {
+    # Create an FHS mount to support flatpak host icons/fonts
+    "/usr/share/icons" = mkRoSymBind (config.system.path + "/share/icons");
+    "/usr/share/fonts" = mkRoSymBind (aggregatedFonts + "/share/fonts");
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -395,57 +389,56 @@ in
     win-spice
     gnome.adwaita-icon-theme
     ### vscode ###
-    unstable.nixd # dependency for nix-ide
-    nixpkgs-fmt # dependency for nix-ide
     (unstable.vscode-with-extensions.override {
       vscode = unstable.vscodium;
-      vscodeExtensions = with (pkgs.forVSCodeVersion unstable.vscodium.version).vscode-marketplace; [
-        zokugun.sync-settings
-        vscodevim.vim
-        asvetliakov.vscode-neovim
-        vspacecode.vspacecode
-        alefragnani.project-manager
-        mkhl.direnv
-        arrterian.nix-env-selector
-        gruntfuggly.todo-tree
-        jakebecker.elixir-ls
-        elixir-tools.elixir-tools
-        lexical-lsp.lexical
-        jdinhlife.gruvbox
-        jnoortheen.nix-ide
-        phoenixframework.phoenix
-        redhat.vscode-yaml
-        tenninebt.vscode-koverage
-        ryanluker.vscode-coverage-gutters
-        mtxr.sqltools
-        phind.phind
-        mhutchie.git-graph
-        tldraw-org.tldraw-vscode
-        # github.copilot # doesn't work with vscodium
-        #bruno-api-client.bruno
+      vscodeExtensions = with (pkgs.forVSCodeVersion
+        unstable.vscodium.version).vscode-marketplace; [
+          zokugun.sync-settings
+          vscodevim.vim
+          asvetliakov.vscode-neovim
+          vspacecode.vspacecode
+          alefragnani.project-manager
+          mkhl.direnv
+          arrterian.nix-env-selector
+          gruntfuggly.todo-tree
+          jakebecker.elixir-ls
+          elixir-tools.elixir-tools
+          lexical-lsp.lexical
+          jdinhlife.gruvbox
+          phoenixframework.phoenix
+          redhat.vscode-yaml
+          tenninebt.vscode-koverage
+          ryanluker.vscode-coverage-gutters
+          mtxr.sqltools
+          phind.phind
+          mhutchie.git-graph
+          tldraw-org.tldraw-vscode
+          # github.copilot # doesn't work with vscodium
+          #bruno-api-client.bruno
 
-        # dependencies
-        zokugun.cron-tasks
-        vspacecode.whichkey
-        bodil.file-browser
-        jacobdufault.fuzzy-search
-        kahole.magit
-        mtxr.sqltools-driver-pg
-        ms-vscode.live-server
-      ];
+          # dependencies
+          zokugun.cron-tasks
+          vspacecode.whichkey
+          bodil.file-browser
+          jacobdufault.fuzzy-search
+          kahole.magit
+          mtxr.sqltools-driver-pg
+          ms-vscode.live-server
+        ];
     })
   ];
 
   # workaround for nautilus gstreamer plugin not working https://github.com/NixOS/nixpkgs/issues/195936#issuecomment-1278954466
-  environment.sessionVariables.GST_PLUGIN_SYSTEM_PATH_1_0 = lib.makeSearchPathOutput "lib" "lib/gstreamer-1.0" [
-    pkgs.gst_all_1.gst-plugins-good
-    pkgs.gst_all_1.gst-plugins-bad
-    pkgs.gst_all_1.gst-plugins-ugly
-    pkgs.gst_all_1.gst-libav
-  ];
+  environment.sessionVariables.GST_PLUGIN_SYSTEM_PATH_1_0 =
+    lib.makeSearchPathOutput "lib" "lib/gstreamer-1.0" [
+      pkgs.gst_all_1.gst-plugins-good
+      pkgs.gst_all_1.gst-plugins-bad
+      pkgs.gst_all_1.gst-plugins-ugly
+      pkgs.gst_all_1.gst-libav
+    ];
 
   # Set variables for the global environment
-  environment.variables = rec {
+  environment.variables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
   };
@@ -497,9 +490,7 @@ in
       dockerCompat = true;
 
       # Required for containers under podman-compose to be able to talk to each other.
-      defaultNetwork.settings = {
-        dns_enabled = true;
-      };
+      defaultNetwork.settings = { dns_enabled = true; };
     };
   };
 
