@@ -336,7 +336,6 @@ in
   fonts.fonts = with pkgs; [
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     noto-fonts
-    inter
   ];
 
   # fixes flatpak packages with incorrect/incomplete fonts and cursor
