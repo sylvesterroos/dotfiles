@@ -5,8 +5,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  tuxedo = import (builtins.fetchTarball
-    "https://github.com/blitz/tuxedo-nixos/archive/master.tar.gz");
+  #tuxedo = import (builtins.fetchTarball "https://github.com/blitz/tuxedo-nixos/archive/master.tar.gz");
   # to install packages from nixos-unstable, for example unstable.livebook
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
 in {
@@ -14,9 +13,13 @@ in {
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     <home-manager/nixos>
-    tuxedo.module
+    #tuxedo.module
   ];
-  hardware.tuxedo-control-center.enable = true;
+  #hardware.tuxedo-control-center.enable = true;
+  hardware.tuxedo-rs = {
+    enable = false;
+    tailor-gui.enable = false;
+  };
   # required to configure QMK keyboard as a non-root user
   hardware.keyboard.qmk.enable = true;
   nixpkgs.config.permittedInsecurePackages = [
@@ -288,13 +291,13 @@ in {
       enable = true;
       shellAliases = {
         ls =
-          "exa -alg --color=always --group-directories-first --header"; # my preferred listing
+          "eza -alg --color=always --group-directories-first --header"; # my preferred listing
         la =
-          "exa -a --color=always --group-directories-first --header"; # all files and dirs
+          "eza -a --color=always --group-directories-first --header"; # all files and dirs
         ll =
-          "exa -l --color=always --group-directories-first --header"; # long format
+          "eza -l --color=always --group-directories-first --header"; # long format
         lt =
-          "exa -aT --color=always --group-directories-first --header"; # tree listing
+          "eza -aT --color=always --group-directories-first --header"; # tree listing
 
         # dotfiles stuff
         dot = "/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME";
@@ -329,7 +332,7 @@ in {
     programs.yt-dlp.enable = true;
   };
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     noto-fonts
   ];
@@ -344,7 +347,7 @@ in {
     };
     aggregatedFonts = pkgs.buildEnv {
       name = "system-fonts";
-      paths = config.fonts.fonts;
+      paths = config.fonts.packages;
       pathsToLink = [ "/share/fonts" ];
     };
   in {
@@ -358,10 +361,8 @@ in {
 
   # remove some default packages
   environment.gnome.excludePackages = with pkgs.gnome; [
-    cheese
     geary
     gnome-music
-    pkgs.gnome-photos
     gnome-weather
     totem
   ];
@@ -373,7 +374,7 @@ in {
     git
     neovim
     wget
-    exa
+    eza
     ripgrep
     unzip
     logiops
