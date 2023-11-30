@@ -138,7 +138,6 @@ in {
     home.packages = with pkgs; [
       fish
       brave
-      firefox
       celluloid
       vlc
       podman-compose
