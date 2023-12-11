@@ -465,9 +465,6 @@ in {
     VISUAL = "nvim";
   };
 
-  # a safer memory allocator to mitigate memory corruption attacks
-  environment.memoryAllocator.provider = "graphene-hardened";
-
   # Run unpatched dynamic binaries on NixOS
   # https://github.com/Mic92/nix-ld#usage
   programs.nix-ld.enable = true;
