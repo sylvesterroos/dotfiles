@@ -234,25 +234,15 @@ in {
           "com.github.hugolabe.Wike.desktop"
           "org.gnome.gitlab.cheywood.Iotas.desktop"
           "org.gnome.Characters.desktop"
+          "org.gnome.Software.desktop"
           "org.gnome.Contacts.desktop"
           "org.gnome.clocks.desktop"
           "app.drey.Dialect.desktop"
           "com.github.finefindus.eyedropper.desktop"
           "org.gnome.seahorse.Application.desktop"
           "org.gnome.Settings.desktop"
-          "org.gnome.Software.desktop"
           "org.gnome.Epiphany.desktop"
         ];
-
-        "org/gnome/desktop/search-providers/disabled" = {
-          disabled =
-            [ "org.gnome.Epiphany.desktop" "org.gnome.Photos.desktop" ];
-          sort-order = [
-            "org.gnome.Documents.desktop"
-            "org.gnome.Nautilus.desktop"
-            "org.gnome.Contacts.desktop"
-          ];
-        };
       };
 
       "org/gnome/desktop/interface" = {
