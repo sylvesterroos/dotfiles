@@ -153,6 +153,7 @@ in {
       ## TODO enable this using home-manager -> services.nextcloud...
       nextcloud-client
       mullvad-vpn
+      jrnl
       ### emacs stuff ###
       # vterm
       gnumake
