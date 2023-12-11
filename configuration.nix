@@ -175,6 +175,8 @@ in {
       shellcheck
       # json
       nodePackages.vscode-json-languageserver
+      # copilot
+      nodePackages_latest.nodejs
 
       # extra gnome packages
       gnome.gnome-tweaks
