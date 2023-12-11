@@ -149,6 +149,7 @@ in {
       fd
       logseq
       neofetch
+      onefetch
       ## TODO enable this using home-manager -> services.nextcloud...
       nextcloud-client
       mullvad-vpn
