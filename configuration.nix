@@ -231,8 +231,8 @@ in {
         ];
         sort-order = [
           "org.gnome.Documents.desktop"
-          "org.gnome.Calculator.desktop"
           "org.gnome.Nautilus.desktop"
+          "org.gnome.Calculator.desktop"
           "org.gnome.Calendar.desktop"
           "com.github.hugolabe.Wike.desktop"
           "org.gnome.gitlab.cheywood.Iotas.desktop"
