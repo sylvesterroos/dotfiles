@@ -184,12 +184,13 @@ in {
       gnome.gnome-tweaks
       gnome.gnome-software
       gnomeExtensions.appindicator
-      gnomeExtensions.pano
       gnomeExtensions.dash-to-dock
-      gnomeExtensions.rounded-window-corners
-      gnomeExtensions.vitals
+      gnomeExtensions.gtk4-desktop-icons-ng-ding
+      gnomeExtensions.pano
       gnomeExtensions.quick-settings-tweaker
-      # gnomeExtensions.solaar-extension
+      gnomeExtensions.rounded-window-corners
+      gnomeExtensions.solaar-extension
+      gnomeExtensions.vitals
     ];
 
     home.sessionVariables = {
