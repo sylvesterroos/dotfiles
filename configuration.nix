@@ -38,12 +38,6 @@ in {
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # protect nix-shell from garbage collection
-  nix.extraOptions = ''
-    keep-outputs = true
-    keep-derivations = true
-  '';
-
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
