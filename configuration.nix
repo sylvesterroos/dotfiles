@@ -149,6 +149,7 @@ in {
       mullvad-vpn
       jrnl
       figlet # making large letters out of ordinary text
+      xwaylandvideobridge
       ### emacs stuff ###
       # vterm
       gnumake
