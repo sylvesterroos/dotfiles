@@ -185,7 +185,7 @@ in {
       gnomeExtensions.pano
       gnomeExtensions.quick-settings-tweaker
       gnomeExtensions.rounded-window-corners
-      gnomeExtensions.solaar-extension
+      #gnomeExtensions.solaar-extension
       gnomeExtensions.vitals
     ];
 
@@ -398,6 +398,7 @@ in {
     ripgrep
     unzip
     logiops
+    #solaar
     btop
     bat
     ### virtualization ###
