@@ -6,8 +6,8 @@
 
 let
   #tuxedo = import (builtins.fetchTarball "https://github.com/blitz/tuxedo-nixos/archive/master.tar.gz");
-  # to install packages from nixos-unstable, for example unstable.livebook
-  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
+  # to install packages from nixpkgs-unstable, for example unstable.livebook
+  unstable = import <nixpkgs-unstable> { config = { allowUnfree = true; }; };
 in {
   imports = [
     # Include the results of the hardware scan.
