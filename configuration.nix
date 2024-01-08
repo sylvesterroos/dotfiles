@@ -148,6 +148,7 @@ in {
       nextcloud-client
       mullvad-vpn
       jrnl
+      figlet # making large letters out of ordinary text
       ### emacs stuff ###
       # vterm
       gnumake
