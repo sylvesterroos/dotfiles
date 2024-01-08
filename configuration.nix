@@ -319,6 +319,8 @@ in {
         lt =
           "eza -aT --color=always --group-directories-first --header"; # tree listing
 
+        cat = "bat -pp"; # no line numbers, no pager
+
         # dotfiles stuff
         dot = "/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME";
         suf = "dot config --local status.showUntrackedFiles no";
