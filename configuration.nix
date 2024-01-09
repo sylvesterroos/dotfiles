@@ -27,6 +27,7 @@ in {
     "openssl-1.1.1w"
     "nodejs-14.21.3"
     "electron-13.6.9"
+    "electron-25.9.0" # logseq
   ];
 
   nixpkgs.overlays = [
