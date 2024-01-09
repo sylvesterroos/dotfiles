@@ -285,6 +285,18 @@ in {
         always-show-universal-access-status = true;
       };
 
+      "org/freedesktop/tracker/miner/files" = {
+        index-recursive-directories = [
+          "&DESKTOP"
+          "&MUSIC"
+          "&PICTURES"
+          "&VIDEOS"
+          "&DOCUMENTS"
+          "/home/sylvester/files"
+          "/home/sylvester/Backups"
+        ];
+      };
+
       # gnome tweaks
       "org/gnome/desktop/wm/preferences" = {
         button-layout = "appmenu:minimize,close";
