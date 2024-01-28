@@ -409,6 +409,7 @@ in {
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     git
+    git-lfs
     neovim
     wget
     eza
