@@ -398,6 +398,7 @@ in {
   # remove some default packages
   environment.gnome.excludePackages = with pkgs.gnome; [
     geary
+    gnome-maps
     gnome-music
     gnome-weather
     totem
