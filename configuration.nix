@@ -151,6 +151,7 @@ in {
       jrnl
       figlet # making large letters out of ordinary text
       xwaylandvideobridge
+      unstable.morewaita-icon-theme
       ### emacs stuff ###
       # vterm
       gnumake
