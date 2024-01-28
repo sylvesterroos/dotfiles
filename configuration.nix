@@ -232,10 +232,8 @@ in {
           "org.gnome.Nautilus.desktop"
           "org.gnome.Calculator.desktop"
           "org.gnome.Calendar.desktop"
-          "com.github.hugolabe.Wike.desktop"
           "org.gnome.gitlab.cheywood.Iotas.desktop"
           "org.gnome.Characters.desktop"
-          "org.gnome.Software.desktop"
           "org.gnome.Contacts.desktop"
           "org.gnome.clocks.desktop"
           "app.drey.Dialect.desktop"
@@ -243,6 +241,8 @@ in {
           "org.gnome.seahorse.Application.desktop"
           "org.gnome.Settings.desktop"
           "org.gnome.Epiphany.desktop"
+          "com.github.hugolabe.Wike.desktop"
+          "org.gnome.Software.desktop"
         ];
       };
 
