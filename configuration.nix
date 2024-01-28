@@ -420,6 +420,7 @@ in {
     btop
     bat
     ### virtualization ###
+    gnome.gnome-boxes
     virt-manager
     virt-viewer
     spice
