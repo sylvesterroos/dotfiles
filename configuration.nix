@@ -155,6 +155,8 @@ in {
       figlet # making large letters out of ordinary text
       xwaylandvideobridge
       unstable.morewaita-icon-theme
+      unstable.devenv
+
       ### emacs stuff ###
       # vterm
       gnumake
@@ -557,6 +559,9 @@ in {
   system.autoUpgrade.flags = [ "--upgrade-all" ];
 
   nix.settings.auto-optimise-store = true;
+  
+  # devenv
+  nix.settings.trusted-users = [ "root" "sylvester" ];
 
   nix.gc = {
     automatic = true;
