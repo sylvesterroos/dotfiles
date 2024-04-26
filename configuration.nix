@@ -225,7 +225,20 @@ in {
       package = pkgs.emacs29-pgtk;
     };
 
-    programs.neovim = { enable = true; };
+    programs.neovim = {
+      enable = true;
+      extraPackages = with pkgs; [
+        jq # %!jq
+        cargo # dependencies built with rust
+        gcc # telescope, luasnip
+        ripgrep # telescope
+        fd # telescope
+        fzf # telescope
+        nodePackages_latest.nodejs # copilot
+        markdownlint-cli # markdown
+        python3 # gdtoolkit
+      ];
+    };
 
     dconf.settings = {
       "org/gnome/desktop/search-providers" = {
