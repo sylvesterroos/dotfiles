@@ -195,7 +195,6 @@ in {
       gnomeExtensions.appindicator
       gnomeExtensions.dash-to-dock
       gnomeExtensions.pano
-      gnomeExtensions.pop-shell
       gnomeExtensions.quick-settings-tweaker
       gnomeExtensions.rounded-window-corners
       #gnomeExtensions.solaar-extension
