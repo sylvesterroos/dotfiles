@@ -485,8 +485,12 @@ in {
           phind.phind
           mhutchie.git-graph
           tldraw-org.tldraw-vscode
-          # github.copilot # doesn't work with vscodium
-          #bruno-api-client.bruno
+          golang.go
+          github.copilot
+          # github.copilot-chat
+          ionide.ionide-fsharp
+          ms-dotnettools.dotnet-interactive-vscode
+          mongodb.mongodb-vscode
 
           # dependencies
           zokugun.cron-tasks
@@ -496,6 +500,9 @@ in {
           kahole.magit
           mtxr.sqltools-driver-pg
           ms-vscode.live-server
+          ms-dotnettools.csharp # polyglot notebooks
+          ms-toolsai.jupyter # polyglot notebooks
+          ms-dotnettools.vscode-dotnet-runtime # csharp
         ];
     })
   ];
