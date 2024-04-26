@@ -149,23 +149,18 @@ in {
       ## TODO enable this using home-manager -> services.nextcloud...
       nextcloud-client
       mullvad-vpn
-      jrnl
       figlet # making large letters out of ordinary text
-      xwaylandvideobridge
-      unstable.morewaita-icon-theme
+      unstable.mission-center
+      unstable.livebook
+      unstable.zed-editor
       unstable.devenv
 
       ### emacs stuff ###
       # vterm
+      gcc
       gnumake
       cmake
-      # go
-      go
-      gopls
-      gomodifytags
-      gotests
-      gore
-      gotools
+      libtool
       # markdown
       python311Packages.grip
       discount
@@ -180,6 +175,19 @@ in {
       nodePackages.vscode-json-languageserver
       # copilot
       nodePackages_latest.nodejs
+
+      # go
+      unstable.jetbrains.goland
+      unstable.go
+      #unstable.delve # debugger
+      #unstable.gomodifytags
+      #unstable.gotests
+      #unstable.gore
+      #unstable.gotools
+
+      # school
+      jetbrains.rider
+      dotnet-sdk_8
 
       # extra gnome packages
       gnome.gnome-tweaks
@@ -413,7 +421,7 @@ in {
   environment.systemPackages = with pkgs; [
     git
     git-lfs
-    neovim
+    # neovim
     wget
     eza
     ripgrep
@@ -422,8 +430,9 @@ in {
     #solaar
     btop
     bat
+    unstable.morewaita-icon-theme
     ### virtualization ###
-    gnome.gnome-boxes
+    unstable.gnome.gnome-boxes
     virt-manager
     virt-viewer
     spice
@@ -433,6 +442,8 @@ in {
     win-virtio
     win-spice
     gnome.adwaita-icon-theme
+    termscp
+
     ### vscode ###
     (unstable.vscode-with-extensions.override {
       vscode = unstable.vscodium;
