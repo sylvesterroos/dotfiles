@@ -337,7 +337,10 @@ in {
       userName = "Sylvester Roos";
       extraConfig = {
         init.defaultBranch = "master";
-        core.editor = "flatpak run re.sonny.Commit";
+        core = {
+          editor = "flatpak run re.sonny.Commit";
+          autocrlf = "input"; # convert CRLF to LF on commit
+        };
       };
       signing = {
         key = null;
