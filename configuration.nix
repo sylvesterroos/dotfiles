@@ -137,8 +137,6 @@ in {
     home.packages = with pkgs; [
       fish
       brave
-      celluloid
-      vlc
       podman-compose
       pods
       xsel
