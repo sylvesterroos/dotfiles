@@ -194,8 +194,8 @@ in {
       gnome.gnome-software
       gnomeExtensions.appindicator
       gnomeExtensions.dash-to-dock
-      gnomeExtensions.gtk4-desktop-icons-ng-ding
       gnomeExtensions.pano
+      gnomeExtensions.pop-shell
       gnomeExtensions.quick-settings-tweaker
       gnomeExtensions.rounded-window-corners
       #gnomeExtensions.solaar-extension
