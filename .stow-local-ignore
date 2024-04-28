@@ -1,0 +1,5 @@
+\.git
+
+# Symlink these manually to /etc/nixos/
+configuration.nix
+hardware-configuration.nix
