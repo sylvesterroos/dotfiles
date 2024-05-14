@@ -570,7 +570,6 @@ in {
     };
   };
 
-  # enable fwupd
   services.fwupd.enable = true;
 
   # Open ports in the firewall.
@@ -591,7 +590,7 @@ in {
   system.autoUpgrade.flags = [ "--upgrade-all" ];
 
   nix.settings.auto-optimise-store = true;
-  
+
   # devenv
   nix.settings.trusted-users = [ "root" "sylvester" ];
 
