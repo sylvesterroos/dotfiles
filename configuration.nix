@@ -493,6 +493,7 @@ in {
           ionide.ionide-fsharp
           ms-dotnettools.dotnet-interactive-vscode
           mongodb.mongodb-vscode
+          geequlim.godot-tools
 
           # dependencies
           zokugun.cron-tasks
