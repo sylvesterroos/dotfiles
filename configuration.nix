@@ -136,6 +136,7 @@ in {
     home.stateVersion = "23.05";
     home.packages = with pkgs; [
       fish
+      stow
       brave
       podman-compose
       pods
@@ -362,8 +363,8 @@ in {
         cat = "bat -pp"; # no line numbers, no pager
 
         # dotfiles stuff
-        dot = "/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME";
-        suf = "dot config --local status.showUntrackedFiles no";
+        # dot = "git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME";
+        # suf = "dot config --local status.showUntrackedFiles no";
 
         ssh-keygen-ed25519 = "ssh-keygen -t ed25519 -C (whoami)@(uname -n)";
       };
