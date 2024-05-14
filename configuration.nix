@@ -155,6 +155,8 @@ in {
       unstable.livebook
       #unstable.zed-editor
       unstable.devenv
+      betterdiscordctl
+      via
 
       ### emacs stuff ###
       # vterm
