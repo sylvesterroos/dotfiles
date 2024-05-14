@@ -153,7 +153,7 @@ in {
       figlet # making large letters out of ordinary text
       unstable.mission-center
       unstable.livebook
-      unstable.zed-editor
+      #unstable.zed-editor
       unstable.devenv
 
       ### emacs stuff ###
