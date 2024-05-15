@@ -1,4 +1,5 @@
 \.git
+README.md
 
 # Symlink these manually to /etc/nixos/
 configuration.nix
