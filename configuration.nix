@@ -165,15 +165,6 @@ in {
       # copilot
       nodePackages_latest.nodejs
 
-      # go
-      unstable.jetbrains.goland
-      unstable.go
-      #unstable.delve # debugger
-      #unstable.gomodifytags
-      #unstable.gotests
-      #unstable.gore
-      #unstable.gotools
-
       # school
       jetbrains.rider
       dotnet-sdk_8
