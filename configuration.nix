@@ -564,11 +564,6 @@ in {
 
   services.fwupd.enable = true;
 
-  services.ollama = {
-    enable = true;
-    acceleration = "rocm";
-  };
-
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
