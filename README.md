@@ -24,4 +24,4 @@ To ignore certain files or directories when using Stow, you can add matching reg
 
 ### NixOS
 
-Symlink `configuration.nix` and `hardware-configuration.nix` to `/etc/nixos/`
+Symlink `configuration.nix` to `/etc/nixos/`
