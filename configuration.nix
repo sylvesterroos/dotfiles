@@ -5,29 +5,15 @@
 { config, lib, pkgs, ... }:
 
 let
-  #tuxedo = import (builtins.fetchTarball "https://github.com/blitz/tuxedo-nixos/archive/master.tar.gz");
-  # to install packages from nixpkgs-unstable, for example unstable.livebook
   unstable = import <nixpkgs-unstable> { config = { allowUnfree = true; }; };
 in {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     <home-manager/nixos>
-    #tuxedo.module
   ];
-  #hardware.tuxedo-control-center.enable = true;
-  hardware.tuxedo-rs = {
-    enable = false;
-    tailor-gui.enable = false;
-  };
-  # required to configure QMK keyboard as a non-root user
-  hardware.keyboard.qmk.enable = true;
-  nixpkgs.config.permittedInsecurePackages = [
-    # required for tuxedo-control-center
-    "openssl-1.1.1w"
-    "nodejs-14.21.3"
-    "electron-13.6.9"
-  ];
+
+  hardware.keyboard.qmk.enable = true; # configure QMK keyboard as non-root user
 
   nixpkgs.overlays = [
     (import (builtins.fetchGit {
