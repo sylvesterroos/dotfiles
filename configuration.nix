@@ -167,6 +167,7 @@ in {
 
       # school
       jetbrains.rider
+      jetbrains.idea-ultimate
       dotnet-sdk_8
 
       # extra gnome packages
