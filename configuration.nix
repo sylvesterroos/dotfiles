@@ -512,8 +512,11 @@ in {
   };
 
   # Run unpatched dynamic binaries on NixOS
-  # https://github.com/Mic92/nix-ld#usage
-  programs.nix-ld.enable = true;
+  programs.nix-ld = {
+    enable = true;
+    # https://www.reddit.com/r/NixOS/s/CxHHvGyXVx
+    libraries = pkgs.steam-run.fhsenv.args.multiPkgs pkgs;
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
