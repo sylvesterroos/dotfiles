@@ -4,8 +4,7 @@
 
 { config, lib, pkgs, ... }:
 
-let
-  unstable = import <nixpkgs-unstable> { config = { allowUnfree = true; }; };
+let unstable = import <nixpkgs-unstable> { config = { allowUnfree = true; }; };
 in {
   imports = [
     # Include the results of the hardware scan.
