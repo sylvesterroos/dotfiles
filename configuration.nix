@@ -174,6 +174,7 @@ in {
       # extra gnome packages
       gnome.gnome-tweaks
       gnome.gnome-software
+      gnomeExtensions.alphabetical-app-grid
       gnomeExtensions.appindicator
       gnomeExtensions.dash-to-dock
       gnomeExtensions.pano
