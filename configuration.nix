@@ -169,6 +169,7 @@ in {
       jetbrains.rider
       jetbrains.idea-ultimate
       dotnet-sdk_8
+      archi
 
       # extra gnome packages
       gnome.gnome-tweaks
