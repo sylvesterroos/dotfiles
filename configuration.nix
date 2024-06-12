@@ -135,13 +135,11 @@ in {
       fd
       neofetch
       onefetch
-      ## TODO enable this using home-manager -> services.nextcloud...
       nextcloud-client
-      mullvad-vpn
       figlet # making large letters out of ordinary text
       unstable.mission-center
       unstable.livebook
-      #unstable.zed-editor
+      unstable.zed-editor
       unstable.devenv
       betterdiscordctl
       via
@@ -526,7 +524,10 @@ in {
   # List services that you want to enable:
   services.flatpak.enable = true;
   services.locate.enable = true;
-  services.mullvad-vpn.enable = true;
+  services.mullvad-vpn = {
+    enable = true;
+    package = pkgs.mullvad-vpn;
+  };
   systemd.packages = [ pkgs.logiops ];
   systemd.services.logid.wantedBy = [ "multi-user.target" ];
 
