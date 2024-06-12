@@ -31,6 +31,9 @@ in {
   # Setup keyfile
   boot.initrd.secrets = { "/crypto_keyfile.bin" = null; };
 
+  # boot splash screen
+  boot.plymouth = { enable = true; };
+
   networking.hostName = "odysseus"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
