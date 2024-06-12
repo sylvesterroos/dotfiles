@@ -126,7 +126,6 @@ in {
     home.packages = with pkgs; [
       fish
       stow
-      brave
       podman-compose
       pods
       xsel
