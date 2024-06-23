@@ -2,10 +2,21 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let unstable = import <nixpkgs-unstable> { config = { allowUnfree = true; }; };
-in {
+let
+  unstable = import <nixpkgs-unstable> {
+    config = {
+      allowUnfree = true;
+    };
+  };
+in
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -15,23 +26,32 @@ in {
   hardware.keyboard.qmk.enable = true; # configure QMK keyboard as non-root user
 
   nixpkgs.overlays = [
-    (import (builtins.fetchGit {
-      url = "https://github.com/nix-community/nix-vscode-extensions";
-      ref = "refs/heads/master";
-    })).overlays.default
+    (import (
+      builtins.fetchGit {
+        url = "https://github.com/nix-community/nix-vscode-extensions";
+        ref = "refs/heads/master";
+      }
+    )).overlays.default
   ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Setup keyfile
-  boot.initrd.secrets = { "/crypto_keyfile.bin" = null; };
+  boot.initrd.secrets = {
+    "/crypto_keyfile.bin" = null;
+  };
 
   # boot splash screen
-  boot.plymouth = { enable = true; };
+  boot.plymouth = {
+    enable = true;
+  };
 
   networking.hostName = "odysseus"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -109,7 +129,13 @@ in {
   users.users.sylvester = {
     isNormalUser = true;
     description = "Sylvester Roos";
-    extraGroups = [ "networkmanager" "wheel" "libvirtd" "adbusers" "plugdev" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "libvirtd"
+      "adbusers"
+      "plugdev"
+    ];
     shell = pkgs.fish;
   };
 
@@ -120,261 +146,260 @@ in {
   };
 
   home-manager.useGlobalPkgs = true;
-  home-manager.users.sylvester = { pkgs, lib, ... }: {
-    home.stateVersion = "23.05";
-    home.packages = with pkgs; [
-      fish
-      stow
-      podman-compose
-      pods
-      xsel
-      wl-clipboard
-      ranger
-      findutils
-      fd
-      neofetch
-      onefetch
-      nextcloud-client
-      figlet # making large letters out of ordinary text
-      unstable.mission-center
-      unstable.livebook
-      unstable.zed-editor
-      unstable.devenv
-      betterdiscordctl
-      via
+  home-manager.users.sylvester =
+    { pkgs, lib, ... }:
+    {
+      home.stateVersion = "23.05";
+      home.packages = with pkgs; [
+        fish
+        stow
+        podman-compose
+        pods
+        xsel
+        wl-clipboard
+        ranger
+        findutils
+        fd
+        neofetch
+        onefetch
+        nextcloud-client
+        figlet # making large letters out of ordinary text
+        unstable.mission-center
+        unstable.livebook
+        # unstable.zed-editor
+        unstable.devenv
+        betterdiscordctl
+        via
+        gitleaks
 
-      ### emacs stuff ###
-      # vterm
-      gcc
-      gnumake
-      cmake
-      libtool
-      # markdown
-      python311Packages.grip
-      discount
-      # nix
-      nil
-      nixpkgs-fmt
-      nixfmt
-      # sh
-      shfmt
-      shellcheck
-      # json
-      nodePackages.vscode-json-languageserver
-      # copilot
-      nodePackages_latest.nodejs
+        ### emacs stuff ###
+        # vterm
+        gcc
+        gnumake
+        cmake
+        libtool
+        # markdown
+        python311Packages.grip
+        discount
+        # sh
+        shfmt
+        shellcheck
+        # json
+        nodePackages.vscode-json-languageserver
+        # copilot
+        nodePackages_latest.nodejs
 
-      # school
-      jetbrains.rider
-      jetbrains.idea-ultimate
-      dotnet-sdk_8
-      archi
+        # school
+        jetbrains.rider
+        jetbrains.idea-ultimate
+        dotnet-sdk_8
+        archi
 
-      # extra gnome packages
-      gnome.gnome-tweaks
-      gnome.gnome-software
-      gnomeExtensions.alphabetical-app-grid
-      gnomeExtensions.appindicator
-      gnomeExtensions.dash-to-dock
-      gnomeExtensions.pano
-      gnomeExtensions.quick-settings-tweaker
-      gnomeExtensions.rounded-window-corners
-      #gnomeExtensions.solaar-extension
-      gnomeExtensions.vitals
-    ];
-
-    home.sessionVariables = {
-      XDG_CACHE_HOME = "$HOME/.cache";
-      XDG_CONFIG_HOME = "$HOME/.config";
-      XDG_DATA_HOME = "$HOME/.local/share";
-      XDG_STATE_HOME = "$HOME/.local/state";
-
-      # fuck microsoft
-      DOTNET_CLI_TELEMETRY_OPTOUT = "1";
-
-      # needed for vscodium
-      VSCODE_GALLERY_SERVICE_URL =
-        "https://marketplace.visualstudio.com/_apis/public/gallery";
-      VSCODE_GALLERY_ITEM_URL = "https://marketplace.visualstudio.com/items";
-      VSCODE_GALLERY_CACHE_URL =
-        "https://vscode.blob.core.windows.net/gallery/index";
-      VSCODE_GALLERY_CONTROL_URL = "";
-    };
-
-    programs.emacs = {
-      enable = true;
-      package = pkgs.emacs29-pgtk;
-    };
-
-    programs.neovim = {
-      enable = true;
-      extraPackages = with pkgs; [
-        jq # %!jq
-        cargo # dependencies built with rust
-        gcc # telescope, luasnip
-        ripgrep # telescope
-        fd # telescope
-        fzf # telescope
-        nodePackages_latest.nodejs # copilot
-        markdownlint-cli # markdown
-        python3 # gdtoolkit
+        # extra gnome packages
+        gnome.gnome-tweaks
+        gnome.gnome-software
+        gnomeExtensions.alphabetical-app-grid
+        gnomeExtensions.appindicator
+        gnomeExtensions.dash-to-dock
+        gnomeExtensions.pano
+        gnomeExtensions.quick-settings-tweaker
+        gnomeExtensions.rounded-window-corners
+        #gnomeExtensions.solaar-extension
+        gnomeExtensions.vitals
       ];
-    };
 
-    dconf.settings = {
-      "org/gnome/desktop/search-providers" = {
-        disabled = [
-          "org.gnome.Epiphany.desktop"
-          "org.gnome.Photos.desktop"
-          "org.gnome.clocks.desktop"
-        ];
-        enabled = [
-          "com.github.hugolabe.Wike.desktop"
-          "org.gnome.gitlab.cheywood.Iotas.desktop"
-        ];
-        sort-order = [
-          "org.gnome.Documents.desktop"
-          "org.gnome.Nautilus.desktop"
-          "org.gnome.Calculator.desktop"
-          "org.gnome.Calendar.desktop"
-          "org.gnome.gitlab.cheywood.Iotas.desktop"
-          "org.gnome.Characters.desktop"
-          "org.gnome.Contacts.desktop"
-          "org.gnome.clocks.desktop"
-          "app.drey.Dialect.desktop"
-          "com.github.finefindus.eyedropper.desktop"
-          "org.gnome.seahorse.Application.desktop"
-          "org.gnome.Settings.desktop"
-          "org.gnome.Epiphany.desktop"
-          "com.github.hugolabe.Wike.desktop"
-          "org.gnome.Software.desktop"
-        ];
+      home.sessionVariables = {
+        XDG_CACHE_HOME = "$HOME/.cache";
+        XDG_CONFIG_HOME = "$HOME/.config";
+        XDG_DATA_HOME = "$HOME/.local/share";
+        XDG_STATE_HOME = "$HOME/.local/state";
+
+        # fuck microsoft
+        DOTNET_CLI_TELEMETRY_OPTOUT = "1";
+
+        # needed for vscodium
+        VSCODE_GALLERY_SERVICE_URL = "https://marketplace.visualstudio.com/_apis/public/gallery";
+        VSCODE_GALLERY_ITEM_URL = "https://marketplace.visualstudio.com/items";
+        VSCODE_GALLERY_CACHE_URL = "https://vscode.blob.core.windows.net/gallery/index";
+        VSCODE_GALLERY_CONTROL_URL = "";
       };
 
-      "org/gnome/desktop/interface" = {
-        enable-hot-corners = false;
-        font-antialiasing = "rgba";
-        show-battery-percentage = true;
-        monospace-font-name = "JetBrainsMono Nerd Font 10";
-        clock-show-weekday = true;
+      programs.emacs = {
+        enable = true;
+        package = pkgs.emacs29-pgtk;
       };
 
-      "org/gnome/mutter" = {
-        center-new-windows = true; # gnome tweaks
-        dynamic-workspaces = true;
-        workspaces-only-on-primary = true;
-        edge-tiling = true;
-      };
-
-      "org/gnome/system/location" = { enabled = true; };
-
-      "org/gnome/desktop/privacy" = {
-        old-files-age = lib.hm.gvariant.mkUint32 30;
-        recent-files-max-age = -1;
-        remove-old-temp-files = true;
-        remove-old-trash-files = true;
-      };
-
-      "org/gnome/settings-daemon/plugins/power" = {
-        sleep-inactive-ac-type = "nothing";
-      };
-
-      "org/gnome/desktop/peripherals/touchpad" = {
-        speed = 0.22;
-        tap-to-click = true;
-        two-finger-scrolling-enabled = true;
-      };
-
-      "org/gnome/desktop/wm/keybindings" = { close = [ "<Shift><Super>q" ]; };
-
-      "org/gnome/desktop/a11y" = {
-        always-show-universal-access-status = true;
-      };
-
-      "org/freedesktop/tracker/miner/files" = {
-        index-recursive-directories = [
-          "&DESKTOP"
-          "&MUSIC"
-          "&PICTURES"
-          "&VIDEOS"
-          "&DOCUMENTS"
-          "/home/sylvester/files"
-          "/home/sylvester/Backups"
+      programs.neovim = {
+        enable = true;
+        package = unstable.neovim-unwrapped;
+        extraPackages = with pkgs; [
+          jq # %!jq
+          cargo # dependencies built with rust
+          gcc # telescope, luasnip
+          go # golsp
+          ripgrep # telescope
+          fd # telescope
+          fzf # telescope
+          nodePackages_latest.nodejs # copilot
+          markdownlint-cli # markdown
+          nixfmt-rfc-style
         ];
       };
 
-      # gnome tweaks
-      "org/gnome/desktop/wm/preferences" = {
-        button-layout = "appmenu:minimize,close";
-        focus-mode = "sloppy";
-        resize-with-right-button = true;
-      };
-    };
+      dconf.settings = {
+        "org/gnome/desktop/search-providers" = {
+          disabled = [
+            "org.gnome.Epiphany.desktop"
+            "org.gnome.Photos.desktop"
+            "org.gnome.clocks.desktop"
+          ];
+          enabled = [
+            "com.github.hugolabe.Wike.desktop"
+            "org.gnome.gitlab.cheywood.Iotas.desktop"
+          ];
+          sort-order = [
+            "org.gnome.Documents.desktop"
+            "org.gnome.Nautilus.desktop"
+            "org.gnome.Calculator.desktop"
+            "org.gnome.Calendar.desktop"
+            "org.gnome.gitlab.cheywood.Iotas.desktop"
+            "org.gnome.Characters.desktop"
+            "org.gnome.Contacts.desktop"
+            "org.gnome.clocks.desktop"
+            "app.drey.Dialect.desktop"
+            "com.github.finefindus.eyedropper.desktop"
+            "org.gnome.seahorse.Application.desktop"
+            "org.gnome.Settings.desktop"
+            "org.gnome.Epiphany.desktop"
+            "com.github.hugolabe.Wike.desktop"
+            "org.gnome.Software.desktop"
+          ];
+        };
 
-    programs.git = {
-      enable = true;
-      diff-so-fancy.enable = true;
-      userEmail = "sylvester@thejoyofcoding.nl";
-      userName = "Sylvester Roos";
-      extraConfig = {
-        init.defaultBranch = "master";
-        core = {
-          editor = "flatpak run re.sonny.Commit";
-          autocrlf = "input"; # convert CRLF to LF on commit
+        "org/gnome/desktop/interface" = {
+          enable-hot-corners = false;
+          font-antialiasing = "rgba";
+          show-battery-percentage = true;
+          monospace-font-name = "JetBrainsMono Nerd Font 10";
+          clock-show-weekday = true;
+        };
+
+        "org/gnome/mutter" = {
+          center-new-windows = true; # gnome tweaks
+          dynamic-workspaces = true;
+          workspaces-only-on-primary = true;
+          edge-tiling = true;
+        };
+
+        "org/gnome/system/location" = {
+          enabled = true;
+        };
+
+        "org/gnome/desktop/privacy" = {
+          old-files-age = lib.hm.gvariant.mkUint32 30;
+          recent-files-max-age = -1;
+          remove-old-temp-files = true;
+          remove-old-trash-files = true;
+        };
+
+        "org/gnome/settings-daemon/plugins/power" = {
+          sleep-inactive-ac-type = "nothing";
+        };
+
+        "org/gnome/desktop/peripherals/touchpad" = {
+          speed = 0.22;
+          tap-to-click = true;
+          two-finger-scrolling-enabled = true;
+        };
+
+        "org/gnome/desktop/wm/keybindings" = {
+          close = [ "<Shift><Super>q" ];
+        };
+
+        "org/gnome/desktop/a11y" = {
+          always-show-universal-access-status = true;
+        };
+
+        "org/freedesktop/tracker/miner/files" = {
+          index-recursive-directories = [
+            "&DESKTOP"
+            "&MUSIC"
+            "&PICTURES"
+            "&VIDEOS"
+            "&DOCUMENTS"
+            "/home/sylvester/files"
+            "/home/sylvester/Backups"
+          ];
+        };
+
+        # gnome tweaks
+        "org/gnome/desktop/wm/preferences" = {
+          button-layout = "appmenu:minimize,close";
+          focus-mode = "sloppy";
+          resize-with-right-button = true;
         };
       };
-      signing = {
-        key = null;
-        signByDefault = true;
+
+      programs.git = {
+        enable = true;
+        diff-so-fancy.enable = true;
+        userEmail = "sylvester@thejoyofcoding.nl";
+        userName = "Sylvester Roos";
+        extraConfig = {
+          init.defaultBranch = "master";
+          core = {
+            editor = "flatpak run re.sonny.Commit";
+            autocrlf = "input"; # convert CRLF to LF on commit
+          };
+        };
+        signing = {
+          key = null;
+          signByDefault = true;
+        };
       };
-    };
 
-    programs.fish = {
-      enable = true;
-      shellAliases = {
-        ls =
-          "eza -alg --color=always --group-directories-first --header"; # my preferred listing
-        la =
-          "eza -a --color=always --group-directories-first --header"; # all files and dirs
-        ll =
-          "eza -l --color=always --group-directories-first --header"; # long format
-        lt =
-          "eza -aT --color=always --group-directories-first --header"; # tree listing
+      programs.fish = {
+        enable = true;
+        shellAliases = {
+          ls = "eza -alg --color=always --group-directories-first --header"; # my preferred listing
+          la = "eza -a --color=always --group-directories-first --header"; # all files and dirs
+          ll = "eza -l --color=always --group-directories-first --header"; # long format
+          lt = "eza -aT --color=always --group-directories-first --header"; # tree listing
 
-        cat = "bat -pp"; # no line numbers, no pager
+          cat = "bat -pp"; # no line numbers, no pager
 
-        # dotfiles stuff
-        # dot = "git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME";
-        # suf = "dot config --local status.showUntrackedFiles no";
+          # dotfiles stuff
+          # dot = "git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME";
+          # suf = "dot config --local status.showUntrackedFiles no";
 
-        ssh-keygen-ed25519 = "ssh-keygen -t ed25519 -C (whoami)@(uname -n)";
+          ssh-keygen-ed25519 = "ssh-keygen -t ed25519 -C (whoami)@(uname -n)";
+        };
+        interactiveShellInit = ''
+          #rtx activate fish | source
+        '';
+        shellAbbrs = {
+          nsh = "nix-shell --run fish";
+          nshu = "nix-shell --run fish -I nixpkgs=channel:nixpkgs-unstable";
+
+          yta-best = "yt-dlp --add-metadata --extract-audio --audio-format best";
+          ytv-best = "yt-dlp --add-metadata -f bestvideo+bestaudio";
+        };
       };
-      interactiveShellInit = ''
-        #rtx activate fish | source
-      '';
-      shellAbbrs = {
-        nsh = "nix-shell --run fish";
-        nshu = "nix-shell --run fish -I nixpkgs=channel:nixpkgs-unstable";
 
-        yta-best = "yt-dlp --add-metadata --extract-audio --audio-format best";
-        ytv-best = "yt-dlp --add-metadata -f bestvideo+bestaudio";
+      programs.tealdeer = {
+        enable = true;
+        settings.updates.auto_update = true;
       };
-    };
 
-    programs.tealdeer = {
-      enable = true;
-      settings.updates.auto_update = true;
-    };
+      programs.direnv = {
+        enable = true;
+        nix-direnv.enable = true;
+      };
 
-    programs.direnv = {
-      enable = true;
-      nix-direnv.enable = true;
+      programs.starship.enable = true;
+      programs.autojump.enable = true;
+      programs.yt-dlp.enable = true;
     };
-
-    programs.starship.enable = true;
-    programs.autojump.enable = true;
-    programs.yt-dlp.enable = true;
-  };
 
   fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
@@ -383,22 +408,28 @@ in {
 
   # fixes flatpak packages with incorrect/incomplete fonts and cursor
   system.fsPackages = [ pkgs.bindfs ];
-  fileSystems = let
-    mkRoSymBind = path: {
-      device = path;
-      fsType = "fuse.bindfs";
-      options = [ "ro" "resolve-symlinks" "x-gvfs-hide" ];
+  fileSystems =
+    let
+      mkRoSymBind = path: {
+        device = path;
+        fsType = "fuse.bindfs";
+        options = [
+          "ro"
+          "resolve-symlinks"
+          "x-gvfs-hide"
+        ];
+      };
+      aggregatedFonts = pkgs.buildEnv {
+        name = "system-fonts";
+        paths = config.fonts.packages;
+        pathsToLink = [ "/share/fonts" ];
+      };
+    in
+    {
+      # Create an FHS mount to support flatpak host icons/fonts
+      "/usr/share/icons" = mkRoSymBind (config.system.path + "/share/icons");
+      "/usr/share/fonts" = mkRoSymBind (aggregatedFonts + "/share/fonts");
     };
-    aggregatedFonts = pkgs.buildEnv {
-      name = "system-fonts";
-      paths = config.fonts.packages;
-      pathsToLink = [ "/share/fonts" ];
-    };
-  in {
-    # Create an FHS mount to support flatpak host icons/fonts
-    "/usr/share/icons" = mkRoSymBind (config.system.path + "/share/icons");
-    "/usr/share/fonts" = mkRoSymBind (aggregatedFonts + "/share/fonts");
-  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -444,59 +475,59 @@ in {
     ### vscode ###
     (unstable.vscode-with-extensions.override {
       vscode = unstable.vscodium;
-      vscodeExtensions = with (pkgs.forVSCodeVersion
-        unstable.vscodium.version).vscode-marketplace; [
-          zokugun.sync-settings
-          vscodevim.vim
-          asvetliakov.vscode-neovim
-          vspacecode.vspacecode
-          alefragnani.project-manager
-          mkhl.direnv
-          arrterian.nix-env-selector
-          gruntfuggly.todo-tree
-          jakebecker.elixir-ls
-          elixir-tools.elixir-tools
-          lexical-lsp.lexical
-          jdinhlife.gruvbox
-          phoenixframework.phoenix
-          redhat.vscode-yaml
-          tenninebt.vscode-koverage
-          ryanluker.vscode-coverage-gutters
-          mtxr.sqltools
-          phind.phind
-          mhutchie.git-graph
-          tldraw-org.tldraw-vscode
-          golang.go
-          github.copilot
-          # github.copilot-chat
-          ionide.ionide-fsharp
-          ms-dotnettools.dotnet-interactive-vscode
-          mongodb.mongodb-vscode
-          geequlim.godot-tools
+      vscodeExtensions = with (pkgs.forVSCodeVersion unstable.vscodium.version).vscode-marketplace; [
+        zokugun.sync-settings
+        vscodevim.vim
+        asvetliakov.vscode-neovim
+        vspacecode.vspacecode
+        alefragnani.project-manager
+        mkhl.direnv
+        arrterian.nix-env-selector
+        gruntfuggly.todo-tree
+        jakebecker.elixir-ls
+        elixir-tools.elixir-tools
+        lexical-lsp.lexical
+        jdinhlife.gruvbox
+        phoenixframework.phoenix
+        redhat.vscode-yaml
+        tenninebt.vscode-koverage
+        ryanluker.vscode-coverage-gutters
+        mtxr.sqltools
+        phind.phind
+        mhutchie.git-graph
+        tldraw-org.tldraw-vscode
+        golang.go
+        github.copilot
+        # github.copilot-chat
+        ionide.ionide-fsharp
+        ms-dotnettools.dotnet-interactive-vscode
+        mongodb.mongodb-vscode
+        geequlim.godot-tools
 
-          # dependencies
-          zokugun.cron-tasks
-          vspacecode.whichkey
-          bodil.file-browser
-          jacobdufault.fuzzy-search
-          kahole.magit
-          mtxr.sqltools-driver-pg
-          ms-vscode.live-server
-          ms-dotnettools.csharp # polyglot notebooks
-          ms-toolsai.jupyter # polyglot notebooks
-          ms-dotnettools.vscode-dotnet-runtime # csharp
-        ];
+        # dependencies
+        zokugun.cron-tasks
+        vspacecode.whichkey
+        bodil.file-browser
+        jacobdufault.fuzzy-search
+        kahole.magit
+        mtxr.sqltools-driver-pg
+        ms-vscode.live-server
+        ms-dotnettools.csharp # polyglot notebooks
+        ms-toolsai.jupyter # polyglot notebooks
+        ms-dotnettools.vscode-dotnet-runtime # csharp
+      ];
     })
   ];
 
   # workaround for nautilus gstreamer plugin not working https://github.com/NixOS/nixpkgs/issues/195936#issuecomment-1278954466
   environment.sessionVariables.GST_PLUGIN_SYSTEM_PATH_1_0 =
-    lib.makeSearchPathOutput "lib" "lib/gstreamer-1.0" [
-      pkgs.gst_all_1.gst-plugins-good
-      pkgs.gst_all_1.gst-plugins-bad
-      pkgs.gst_all_1.gst-plugins-ugly
-      pkgs.gst_all_1.gst-libav
-    ];
+    lib.makeSearchPathOutput "lib" "lib/gstreamer-1.0"
+      [
+        pkgs.gst_all_1.gst-plugins-good
+        pkgs.gst_all_1.gst-plugins-bad
+        pkgs.gst_all_1.gst-plugins-ugly
+        pkgs.gst_all_1.gst-libav
+      ];
 
   # Set variables for the global environment
   environment.variables = {
@@ -554,7 +585,9 @@ in {
       dockerCompat = true;
 
       # Required for containers under podman-compose to be able to talk to each other.
-      defaultNetwork.settings = { dns_enabled = true; };
+      defaultNetwork.settings = {
+        dns_enabled = true;
+      };
     };
   };
 
@@ -580,7 +613,10 @@ in {
   nix.settings.auto-optimise-store = true;
 
   # devenv
-  nix.settings.trusted-users = [ "root" "sylvester" ];
+  nix.settings.trusted-users = [
+    "root"
+    "sylvester"
+  ];
 
   nix.gc = {
     automatic = true;
