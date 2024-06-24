@@ -344,7 +344,7 @@ in
         enable = true;
         diff-so-fancy.enable = true;
         userEmail = "sylvester@thejoyofcoding.nl";
-        userName = "Sylvester Roos";
+        userName = "Sylvester";
         extraConfig = {
           init.defaultBranch = "master";
           core = {
