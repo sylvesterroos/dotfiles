@@ -207,12 +207,6 @@ in
         # copilot
         nodePackages_latest.nodejs
 
-        # school
-        jetbrains.rider
-        jetbrains.idea-ultimate
-        dotnet-sdk_8
-        archi
-
         # extra gnome packages
         gnome.gnome-tweaks
         gnome.gnome-software
