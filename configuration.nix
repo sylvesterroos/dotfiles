@@ -212,7 +212,9 @@ in
         gnome.gnome-software
         gnomeExtensions.alphabetical-app-grid
         gnomeExtensions.appindicator
+        gnomeExtensions.blur-my-shell
         gnomeExtensions.dash-to-dock
+        gnomeExtensions.night-theme-switcher
         gnomeExtensions.pano
         gnomeExtensions.quick-settings-tweaker
         gnomeExtensions.rounded-window-corners
