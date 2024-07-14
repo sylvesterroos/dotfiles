@@ -15,6 +15,12 @@ let
       allowUnfree = true;
     };
   };
+
+  gc-settings = {
+    automatic = true;
+    frequency = "daily";
+    options = "--delete-older-than 14d";
+  };
 in
 {
   imports = [
@@ -149,6 +155,8 @@ in
   home-manager.users.sylvester =
     { pkgs, lib, ... }:
     {
+      nix.gc = gc-settings;
+
       home.stateVersion = "23.05";
       home.packages = with pkgs; [
         fish
@@ -629,8 +637,8 @@ in
   ];
 
   nix.gc = {
-    automatic = true;
-    dates = "daily";
-    options = "--delete-older-than 14d";
+    automatic = gc-settings.automatic;
+    dates = gc-settings.frequency;
+    options = gc-settings.options;
   };
 }
