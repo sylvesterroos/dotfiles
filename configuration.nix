@@ -509,16 +509,9 @@ in
         tenninebt.vscode-koverage
         ryanluker.vscode-coverage-gutters
         mtxr.sqltools
-        phind.phind
         mhutchie.git-graph
-        tldraw-org.tldraw-vscode
-        golang.go
         github.copilot
         # github.copilot-chat
-        ionide.ionide-fsharp
-        ms-dotnettools.dotnet-interactive-vscode
-        mongodb.mongodb-vscode
-        geequlim.godot-tools
 
         # dependencies
         zokugun.cron-tasks
@@ -528,9 +521,6 @@ in
         kahole.magit
         mtxr.sqltools-driver-pg
         ms-vscode.live-server
-        ms-dotnettools.csharp # polyglot notebooks
-        ms-toolsai.jupyter # polyglot notebooks
-        ms-dotnettools.vscode-dotnet-runtime # csharp
       ];
     })
   ];
