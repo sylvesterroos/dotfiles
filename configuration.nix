@@ -172,6 +172,16 @@ in
         via
         gitleaks
 
+        ### magit ###
+        (pkgs.linkFarm "magit" {
+          "bin/magit" = pkgs.substituteAll {
+            src = ./magit/magit.bash;
+            isExecutable = true;
+            inherit (unstable) emacs;
+            init_el = ./magit/init.el;
+          };
+        })
+
         ### emacs stuff ###
         # vterm
         gcc
