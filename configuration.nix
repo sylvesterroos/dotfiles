@@ -257,6 +257,8 @@ in
           nodePackages_latest.nodejs # copilot
           markdownlint-cli # markdown
           nixfmt-rfc-style
+          typescript # tsserver
+          nodePackages.typescript-language-server # tsserver
         ];
       };
 
