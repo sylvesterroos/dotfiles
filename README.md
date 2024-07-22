@@ -2,20 +2,25 @@
 
 ## Basic usage
 
-Everything starts from the `~/.dotfiles` directory. Make sure to clone this repository to that directory
+Everything starts from the `~/.dotfiles` directory. Make sure to clone this repository to that directory:
+
+```sh
+git clone https://gitlab.com/sylvesterroos/dotfiles.git ~/.dotfiles
+```
 
 ### GNU Stow
 
 Let Stow create the symbolic links from this directory to the equivalent structure in the home directory by using:
 
 ```sh
-stow .
+stow --dir=~/.dotfiles --target=~/
+
 ```
 
-Running this inside the `~/.dotfiles` directory is equivalent to running:
+If your current directory is `~/.dotfiles` you can simply run:
 
 ```sh
-stow --dir=~/.dotfiles --target=~/
+stow .
 ```
 
 #### Ignoring files and directories
@@ -24,4 +29,6 @@ To ignore certain files or directories when using Stow, you can add matching reg
 
 ### NixOS
 
-Symlink `configuration.nix` to `/etc/nixos/`
+The configuration file contained in the `~/.dotfiles` directory is not known to the `nixos-rebuild` command. To fix this you should do one of the following:
+- Symlink `configuration.nix` to `/etc/nixos/`
+- Or, run `nixos-rebuild -I nixos-config=$HOME/.dotfiles/configuration.nix` instead of `nixos-rebuild`
