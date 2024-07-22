@@ -1,0 +1,78 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run the `open default settings` command
+// from the command palette or from `Zed` application menu.
+{
+  "auto_update": false,
+  "vim_mode": true,
+  "ui_font_size": 20,
+  "buffer_font_size": 18,
+  "show_copilot_suggestions": true,
+  "features": {
+    "copilot": true
+  },
+  "languages": {
+    "Markdown": {
+      "preferred_line_length": 80
+    },
+    "Elixir": {
+      "language_servers": [
+        "elixir-ls",
+        "!next-ls",
+        "!lexical"
+      ],
+      "format_on_save": {
+        "external": {
+          "command": "mix",
+          "arguments": [
+            "format",
+            "--stdin-filename",
+            "{buffer_path}",
+            "-"
+          ]
+        }
+      }
+    }
+  },
+  "project_panel": {
+    "dock": "right"
+  },
+  "soft_wrap": "none",
+  "cursor_blink": false,
+  "scrollbar": {
+    "show": "never"
+  },
+  "base_keymap": "VSCode",
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "Gruvbox Dark"
+  },
+  "terminal": {
+    "dock": "bottom",
+    "blinking": "on",
+    "font_size": 16,
+    "line_height": {
+      "custom": 1.25
+    },
+    "env": {
+      "GIT_EDITOR": "zed --wait"
+    }
+  },
+  "inlay_hints": {
+    "enabled": true
+  },
+  "lsp": {
+    "tailwindcss-language-server": {
+      "settings": {
+        "includeLanguages": {
+          "elixir": "html"
+        }
+      }
+    }
+  }
+}
