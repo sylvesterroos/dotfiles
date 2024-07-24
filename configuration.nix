@@ -530,6 +530,8 @@ in
     VISUAL = "nvim";
   };
 
+  environment.memoryAllocator.provider = "graphene-hardened-light";
+
   # Run unpatched dynamic binaries on NixOS
   programs.nix-ld = {
     enable = true;
