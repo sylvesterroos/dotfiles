@@ -195,23 +195,6 @@ in
           };
         })
 
-        ### emacs stuff ###
-        # vterm
-        gcc
-        gnumake
-        cmake
-        libtool
-        # markdown
-        python311Packages.grip
-        discount
-        # sh
-        shfmt
-        shellcheck
-        # json
-        nodePackages.vscode-json-languageserver
-        # copilot
-        nodePackages_latest.nodejs
-
         # extra gnome packages
         gnome.gnome-tweaks
         gnome.gnome-software
