@@ -20,20 +20,11 @@
       "preferred_line_length": 80
     },
     "Elixir": {
-      "language_servers": [
-        "elixir-ls",
-        "!next-ls",
-        "!lexical"
-      ],
+      "language_servers": ["!elixir-ls", "!next-ls", "!lexical"],
       "format_on_save": {
         "external": {
           "command": "mix",
-          "arguments": [
-            "format",
-            "--stdin-filename",
-            "{buffer_path}",
-            "-"
-          ]
+          "arguments": ["format", "--stdin-filename", "{buffer_path}", "-"]
         }
       }
     }
@@ -55,12 +46,13 @@
   "terminal": {
     "dock": "bottom",
     "blinking": "on",
-    "font_size": 16,
+    "font_size": 18,
     "line_height": {
       "custom": 1.25
     },
     "env": {
-      "GIT_EDITOR": "zed --wait"
+      "EDITOR": "zed --wait"
+      // "GIT_EDITOR": "zed --wait"
     }
   },
   "inlay_hints": {
