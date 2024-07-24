@@ -454,7 +454,7 @@ in
   environment.systemPackages = with pkgs; [
     git
     git-lfs
-    # neovim
+    neovim
     wget
     eza
     ripgrep
