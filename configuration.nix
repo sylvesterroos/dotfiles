@@ -444,6 +444,7 @@ in
     gnome-maps
     gnome-music
     gnome-weather
+    seahorse
     totem
   ];
   services.xserver.excludePackages = [ pkgs.xterm ];
