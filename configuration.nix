@@ -464,6 +464,8 @@ in
     btop
     bat
     unstable.morewaita-icon-theme
+    termscp
+
     ### virtualization ###
     unstable.gnome.gnome-boxes
     virt-manager
@@ -475,7 +477,6 @@ in
     win-virtio
     win-spice
     gnome.adwaita-icon-theme
-    termscp
 
     ### vscode ###
     (unstable.vscode-with-extensions.override {
