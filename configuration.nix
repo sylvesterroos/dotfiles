@@ -207,7 +207,6 @@ in
         gnomeExtensions.quick-settings-tweaker
         gnomeExtensions.rounded-window-corners
         #gnomeExtensions.solaar-extension
-        gnomeExtensions.vitals
       ];
 
       home.sessionVariables = {
