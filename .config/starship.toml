@@ -1,3 +1,8 @@
+### Prompt-wide configuration
+command_timeout = 750
+
+### Segment configuration
+
 [aws]
 format = '\[[$symbol($profile)(\($region\))(\[$duration\])]($style)\]'
 
@@ -190,4 +195,3 @@ format = '\[[$symbol($version)]($style)\]'
 
 [solidity]
 format = '\[[$symbol($version)]($style)\]'
- 
