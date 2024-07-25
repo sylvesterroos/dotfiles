@@ -94,6 +94,9 @@ in
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
+  # enable gnome browser connector
+  services.gnome.gnome-browser-connector.enable = true;
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
