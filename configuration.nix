@@ -597,9 +597,9 @@ in
 
   services.fwupd.enable = true;
 
-  nixpkgs.config.rocmSupport = true;
   services.ollama = {
     enable = true;
+    package = unstable.ollama;
   };
 
   # Open ports in the firewall.
