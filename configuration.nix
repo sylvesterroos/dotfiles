@@ -246,7 +246,6 @@ in
           fzf # telescope
           nodePackages_latest.nodejs # copilot
           markdownlint-cli # markdown
-          nixfmt-rfc-style
           typescript # tsserver
           nodePackages.typescript-language-server # tsserver
         ];
@@ -454,6 +453,7 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    nixfmt-rfc-style
     git
     git-lfs
     neovim
