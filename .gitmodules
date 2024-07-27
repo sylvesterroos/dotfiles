@@ -1,3 +1,0 @@
-[submodule "magit"]
-	path = magit
-	url = https://gitlab.com/ex_nix/magit.git
