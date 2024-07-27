@@ -177,12 +177,7 @@ in
         figlet # making large letters out of ordinary text
         unstable.mission-center
         unstable.livebook
-        # unstable.zed-editor
-        (pkgs.buildFHSUserEnv {
-          name = "zed";
-          targetPkgs = pkgs: [ unstable.zed-editor ];
-          runScript = "zed";
-        })
+        unstable.zed-editor
         unstable.devenv
         betterdiscordctl
         via
