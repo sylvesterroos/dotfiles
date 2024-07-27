@@ -1,0 +1,3 @@
+[submodule "nixos/pkgs/magit/magit"]
+	path = nixos/pkgs/magit/magit
+	url = git@gitlab.com:sylvesterroos/magit-nix.git
