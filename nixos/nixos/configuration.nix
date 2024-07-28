@@ -8,8 +8,6 @@
   pkgs,
   ...
 }:
-let
-in
 {
   # You can import other NixOS modules here
   imports = [
@@ -147,14 +145,12 @@ in
   ];
   services.xserver.excludePackages = [ pkgs.xterm ];
 
-  # enable gnome browser connector
   services.gnome.gnome-browser-connector.enable = true;
 
-  # gsconnect
-  programs.kdeconnect = {
-    enable = true;
-    package = pkgs.gnomeExtensions.gsconnect;
-  };
+  # programs.kdeconnect = {
+  #   enable = true;
+  #   package = pkgs.gnomeExtensions.gsconnect;
+  # };
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -248,68 +244,7 @@ in
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    nixfmt-rfc-style
-    git
-    git-lfs
-    neovim
-    wget
-    eza
-    ripgrep
-    unzip
-    logiops
-    #solaar
-    btop
-    bat
-    morewaita-icon-theme
-    termscp
-
-    ### virtualization ###
-    virt-manager
-    virt-viewer
-    spice
-    spice-gtk
-    spice-protocol
-    virtiofsd
-    win-virtio
-    win-spice
-
-    ### vscode ###
-    # (unstable.vscode-with-extensions.override {
-    #   vscode = unstable.vscodium;
-    #   vscodeExtensions = with (pkgs.forVSCodeVersion unstable.vscodium.version).vscode-marketplace; [
-    #     zokugun.sync-settings
-    #     vscodevim.vim
-    #     asvetliakov.vscode-neovim
-    #     vspacecode.vspacecode
-    #     alefragnani.project-manager
-    #     mkhl.direnv
-    #     arrterian.nix-env-selector
-    #     gruntfuggly.todo-tree
-    #     jakebecker.elixir-ls
-    #     elixir-tools.elixir-tools
-    #     lexical-lsp.lexical
-    #     jdinhlife.gruvbox
-    #     phoenixframework.phoenix
-    #     redhat.vscode-yaml
-    #     tenninebt.vscode-koverage
-    #     ryanluker.vscode-coverage-gutters
-    #     mtxr.sqltools
-    #     mhutchie.git-graph
-    #     github.copilot
-    #     # github.copilot-chat
-    #
-    #     # dependencies
-    #     zokugun.cron-tasks
-    #     vspacecode.whichkey
-    #     bodil.file-browser
-    #     jacobdufault.fuzzy-search
-    #     kahole.magit
-    #     mtxr.sqltools-driver-pg
-    #     ms-vscode.live-server
-    #   ];
-    # })
-  ];
+  environment.systemPackages = (import ./packages.nix { inherit pkgs; });
 
   # workaround for nautilus gstreamer plugin not working https://github.com/NixOS/nixpkgs/issues/195936#issuecomment-1278954466
   environment.sessionVariables.GST_PLUGIN_SYSTEM_PATH_1_0 =
@@ -393,28 +328,7 @@ in
     package = pkgs.ollama;
   };
 
-  services.kanata = {
-    enable = true;
-    keyboards = {
-      capsToEscCtrl = {
-        # do not specify `devices` to use all keyboards
-        # devices = [ "/dev/input/by-path/platform-i8042-serio-0-event-kbd" ];
-        extraDefCfg = "process-unmapped-keys yes";
-        config = # lisp
-          ''
-            (defsrc
-             caps
-            )
-            (defalias
-             escctrl (tap-hold 100 100 esc lctrl)
-            )
-            (deflayer base
-              @escctrl
-            )
-          '';
-      };
-    };
-  };
+  services.kanata = (import ./kanata.nix { });
 
   # This setups a SSH server. Very important if you're setting up a headless system.
   # Feel free to remove if you don't need it.
