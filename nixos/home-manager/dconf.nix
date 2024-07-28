@@ -1,5 +1,78 @@
 { lib, ... }:
 {
+  "org/gnome/desktop/wm/keybindings" = {
+    # Alt+F4 is a terrible keybind
+    close = [ "<Shift><Super>q" ];
+
+    # Full-screen with title/navigation bar
+    toggle-fullscreen = [ "<Shift>F11" ];
+  };
+
+  # Use 6 fixed workspaces instead of dynamic mode
+  "org/gnome/mutter" = {
+    dynamic-workspaces = false;
+  };
+  "org/gnome/desktop/wm/preferences" = {
+    num-workspaces = 6;
+  };
+
+  # Use alt for pinned apps
+  "org/gnome/shell/keybindings" = {
+    switch-to-application-1 = [ "<Alt>1" ];
+    switch-to-application-2 = [ "<Alt>2" ];
+    switch-to-application-3 = [ "<Alt>3" ];
+    switch-to-application-4 = [ "<Alt>4" ];
+    switch-to-application-5 = [ "<Alt>5" ];
+    switch-to-application-6 = [ "<Alt>6" ];
+    switch-to-application-7 = [ "<Alt>7" ];
+    switch-to-application-8 = [ "<Alt>8" ];
+    switch-to-application-9 = [ "<Alt>9" ];
+  };
+
+  # Use super for workspaces
+  "org/gnome/desktop/wm/keybindings" = {
+    switch-to-workspace-1 = [ "<Super>1" ];
+    switch-to-workspace-2 = [ "<Super>2" ];
+    switch-to-workspace-3 = [ "<Super>3" ];
+    switch-to-workspace-4 = [ "<Super>4" ];
+    switch-to-workspace-5 = [ "<Super>5" ];
+    switch-to-workspace-6 = [ "<Super>6" ];
+  };
+
+  # Move windows to specific workspaces
+  "org/gnome/desktop/wm/keybindings" = {
+    move-to-workspace-1 = [ "<Shift><Super>1" ];
+    move-to-workspace-2 = [ "<Shift><Super>2" ];
+    move-to-workspace-3 = [ "<Shift><Super>3" ];
+    move-to-workspace-4 = [ "<Shift><Super>4" ];
+    move-to-workspace-5 = [ "<Shift><Super>5" ];
+    move-to-workspace-6 = [ "<Shift><Super>6" ];
+  };
+
+  # # Set flameshot (with the sh fix for starting under Wayland) on alternate print screen key
+  "org/gnome/settings-daemon/plugins/media-keys" = {
+    custom-keybindings = [
+      "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+    ];
+  };
+  "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+    binding = "<Control>Print";
+    command = "script --command 'flameshot gui' /dev/null";
+    name = "Flameshot";
+  };
+
+  # Configure tactile
+  "org/gnome/shell/extensions/tactile" = {
+    col-0 = 1;
+    row-0 = 1;
+    col-1 = 2;
+    col-2 = 1;
+    col-3 = 0;
+    row-1 = 1;
+    row-2 = 0;
+    gap-size = 32;
+  };
+
   "org/gnome/desktop/search-providers" = {
     disabled = [
       "org.gnome.Epiphany.desktop"
@@ -39,7 +112,6 @@
 
   "org/gnome/mutter" = {
     center-new-windows = true; # gnome tweaks
-    dynamic-workspaces = true;
     workspaces-only-on-primary = true;
     edge-tiling = true;
   };
@@ -63,10 +135,6 @@
     speed = 0.22;
     tap-to-click = true;
     two-finger-scrolling-enabled = true;
-  };
-
-  "org/gnome/desktop/wm/keybindings" = {
-    close = [ "<Shift><Super>q" ];
   };
 
   "org/gnome/desktop/a11y" = {

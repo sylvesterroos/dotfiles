@@ -21,6 +21,7 @@ with pkgs;
   via
   gitleaks
   magit
+  flameshot
 
   # extra gnome packages
   gnome-tweaks
@@ -34,4 +35,5 @@ with pkgs;
   gnomeExtensions.quick-settings-tweaker
   gnomeExtensions.rounded-window-corners
   #gnomeExtensions.solaar-extension
+  gnomeExtensions.tactile
 ]
