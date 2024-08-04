@@ -16,12 +16,20 @@
     "copilot": true
   },
   "languages": {
+    "Nix": {
+      "formatter": {
+        "external": {
+          "command": "nixfmt",
+          "arguments": []
+        }
+      }
+    },
     "Markdown": {
       "preferred_line_length": 80
     },
     "Elixir": {
       "language_servers": ["!elixir-ls", "!next-ls", "!lexical"],
-      "format_on_save": {
+      "formatter": {
         "external": {
           "command": "mix",
           "arguments": ["format", "--stdin-filename", "{buffer_path}", "-"]
