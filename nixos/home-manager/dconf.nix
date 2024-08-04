@@ -49,7 +49,7 @@
     move-to-workspace-6 = [ "<Shift><Super>6" ];
   };
 
-  # # Set flameshot (with the sh fix for starting under Wayland) on alternate print screen key
+  # Set flameshot (with the fix for starting under Wayland) on alternate print screen key
   "org/gnome/settings-daemon/plugins/media-keys" = {
     custom-keybindings = [
       "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
@@ -71,35 +71,6 @@
     row-1 = 1;
     row-2 = 0;
     gap-size = 32;
-  };
-
-  "org/gnome/desktop/search-providers" = {
-    disabled = [
-      "org.gnome.Epiphany.desktop"
-      "org.gnome.Photos.desktop"
-      "org.gnome.clocks.desktop"
-    ];
-    enabled = [
-      "com.github.hugolabe.Wike.desktop"
-      "org.gnome.gitlab.cheywood.Iotas.desktop"
-    ];
-    sort-order = [
-      "org.gnome.Documents.desktop"
-      "org.gnome.Nautilus.desktop"
-      "org.gnome.Calculator.desktop"
-      "org.gnome.Calendar.desktop"
-      "org.gnome.gitlab.cheywood.Iotas.desktop"
-      "org.gnome.Characters.desktop"
-      "org.gnome.Contacts.desktop"
-      "org.gnome.clocks.desktop"
-      "app.drey.Dialect.desktop"
-      "com.github.finefindus.eyedropper.desktop"
-      "org.gnome.seahorse.Application.desktop"
-      "org.gnome.Settings.desktop"
-      "org.gnome.Epiphany.desktop"
-      "com.github.hugolabe.Wike.desktop"
-      "org.gnome.Software.desktop"
-    ];
   };
 
   "org/gnome/desktop/interface" = {
@@ -137,20 +108,9 @@
     two-finger-scrolling-enabled = true;
   };
 
+  # easy access to "Large Text" for HiDPI screens
   "org/gnome/desktop/a11y" = {
     always-show-universal-access-status = true;
-  };
-
-  "org/freedesktop/tracker/miner/files" = {
-    index-recursive-directories = [
-      "&DESKTOP"
-      "&MUSIC"
-      "&PICTURES"
-      "&VIDEOS"
-      "&DOCUMENTS"
-      "/home/sylvester/files"
-      "/home/sylvester/Backups"
-    ];
   };
 
   # gnome tweaks
