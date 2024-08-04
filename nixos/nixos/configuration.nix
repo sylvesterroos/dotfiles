@@ -262,7 +262,8 @@
     VISUAL = "nvim";
   };
 
-  environment.memoryAllocator.provider = "graphene-hardened";
+  # disabled because it breaks Loupe
+  # environment.memoryAllocator.provider = "graphene-hardened";
 
   # Run unpatched dynamic binaries on NixOS
   programs.nix-ld = {
