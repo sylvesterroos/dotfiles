@@ -16,11 +16,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    nixos-cosmic = {
-      url = "github:lilyinstarlight/nixos-cosmic";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -28,7 +23,6 @@
       self,
       nixpkgs,
       home-manager,
-      nixos-cosmic,
       ...
     }@inputs:
     let
@@ -71,15 +65,6 @@
           modules = [
             # > The main nixos configuration file <
             ./nixos/configuration.nix
-
-            # cosmic
-            {
-              nix.settings = {
-                substituters = [ "https://cosmic.cachix.org/" ];
-                trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-              };
-            }
-            nixos-cosmic.nixosModules.default
           ];
         };
       };
