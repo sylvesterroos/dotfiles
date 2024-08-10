@@ -75,6 +75,9 @@
 
   dconf.settings = (import ./dconf.nix { inherit lib; });
 
+  programs.command-not-found.enable = false;
+  programs.nix-index.enable = true;
+
   programs.neovim = (import ./neovim.nix { inherit pkgs; });
 
   programs.git = (import ./git.nix { });
