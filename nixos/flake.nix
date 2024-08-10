@@ -16,6 +16,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    tuxedo-nixos = {
+      url = "github:sylvesterroos/tuxedo-nixos";
+    };
   };
 
   outputs =
@@ -23,6 +27,7 @@
       self,
       nixpkgs,
       home-manager,
+      tuxedo-nixos,
       ...
     }@inputs:
     let
@@ -65,6 +70,14 @@
           modules = [
             # > The main nixos configuration file <
             ./nixos/configuration.nix
+
+            tuxedo-nixos.nixosModules.default
+            {
+              hardware.tuxedo-control-center = {
+                enable = true;
+                package = tuxedo-nixos.packages.x86_64-linux.default;
+              };
+            }
           ];
         };
       };
