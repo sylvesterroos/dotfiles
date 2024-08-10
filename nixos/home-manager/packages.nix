@@ -22,6 +22,8 @@ with pkgs;
   gitleaks
   magit
   flameshot
+  elixir_1_17
+  nixd
 
   # extra gnome packages
   gnome-tweaks
