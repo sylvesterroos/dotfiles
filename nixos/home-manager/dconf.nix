@@ -73,6 +73,67 @@
     gap-size = 32;
   };
 
+  # Configure just-perfection
+  "org/gnome/shell/extensions/just-perfection" = {
+    animation = 5;
+  };
+
+  # Configure blur-my-shell
+  "org/gnome/shell/extensions/blur-my-shell/appfolder" = {
+    blur = false;
+  };
+  "org/gnome/shell/extensions/blur-my-shell/lockscreen" = {
+    blur = false;
+  };
+  "org/gnome/shell/extensions/blur-my-shell/screenshot" = {
+    blur = false;
+    pipeline = "pipeline_default";
+  };
+  "org/gnome/shell/extensions/blur-my-shell/window-list" = {
+    blur = false;
+    brightness = 0.6;
+    sigma = 30;
+  };
+  "org/gnome/shell/extensions/blur-my-shell/panel" = {
+    blur = false;
+    pipeline = "pipeline_default";
+  };
+  "org/gnome/shell/extensions/blur-my-shell/overview" = {
+    blur = true;
+  };
+  "org/gnome/shell/extensions/blur-my-shell/dash-to-dock" = {
+    blur = true;
+    brightness = 0.6;
+    sigma = 30;
+    static-blur = true;
+    style-dash-to-dock = 0;
+  };
+
+  # Configure space-bar
+  "org/gnome/shell/extensions/space-bar/behavior" = {
+    smart-workspace-names = false;
+  };
+
+  "org/gnome/shell/extensions/space-bar/shortcuts" = {
+    enable-activate-workspace-shortcuts = false;
+    enable-move-to-workspace-shortcuts = true;
+    open-menu = [ ];
+  };
+
+  # Configure vitals
+  "org/gnome/shell/extensions/vitals" = {
+    hide-icons = false;
+    hot-sensors = [
+      "_processor_frequency_"
+      "_processor_usage_"
+      "_memory_usage_"
+      "_storage_free_"
+      "_temperature_k10temp_tctl_"
+    ];
+    icon-style = 1;
+    network-speed-format = 1;
+  };
+
   "org/gnome/desktop/interface" = {
     enable-hot-corners = false;
     font-antialiasing = "rgba";

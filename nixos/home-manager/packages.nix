@@ -32,10 +32,13 @@ with pkgs;
   gnomeExtensions.appindicator
   gnomeExtensions.blur-my-shell
   gnomeExtensions.dash-to-dock
+  gnomeExtensions.just-perfection
   gnomeExtensions.night-theme-switcher
   gnomeExtensions.pano
   gnomeExtensions.quick-settings-tweaker
   gnomeExtensions.rounded-window-corners
   #gnomeExtensions.solaar-extension
+  gnomeExtensions.space-bar
   gnomeExtensions.tactile
+  gnomeExtensions.vitals
 ]
