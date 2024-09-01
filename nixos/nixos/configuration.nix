@@ -88,6 +88,9 @@
       };
     };
 
+  # required to configure QMK keyboard as a non-root user
+  hardware.keyboard.qmk.enable = true;
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
