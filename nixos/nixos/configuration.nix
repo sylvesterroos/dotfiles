@@ -148,10 +148,10 @@
 
   services.gnome.gnome-browser-connector.enable = true;
 
-  # programs.kdeconnect = {
-  #   enable = true;
-  #   package = pkgs.gnomeExtensions.gsconnect;
-  # };
+  programs.kdeconnect = {
+    enable = true;
+    package = pkgs.gnomeExtensions.gsconnect;
+  };
 
   # Configure keymap in X11
   services.xserver.xkb = {

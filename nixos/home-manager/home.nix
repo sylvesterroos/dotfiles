@@ -68,10 +68,10 @@
 
   programs.home-manager.enable = true;
 
-  services.kdeconnect = {
-    enable = true;
-    package = pkgs.gnomeExtensions.gsconnect;
-  };
+  # services.kdeconnect = {
+  #   enable = true;
+  #   package = pkgs.gnomeExtensions.gsconnect;
+  # };
 
   dconf.settings = (import ./dconf.nix { inherit lib; });
 
