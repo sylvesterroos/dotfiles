@@ -2,7 +2,8 @@
   {
     "context": "Editor || Workspace",
     "bindings": {
-      "ctrl-shift-e": "workspace::ToggleRightDock",
+      "ctrl-alt-e": "workspace::ToggleRightDock",
+      "ctrl-alt-b": "workspace::ToggleLeftDock",
       "ctrl-x": "pane::CloseActiveItem"
     }
   },

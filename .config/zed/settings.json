@@ -7,10 +7,18 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "assistant": {
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-4"
+    },
+    "version": "2"
+  },
   "auto_update": false,
   "vim_mode": true,
   "ui_font_size": 20,
   "buffer_font_size": 18,
+  "buffer_font_family": "JetBrainsMono Nerd Font",
   "show_copilot_suggestions": true,
   "features": {
     "copilot": true
@@ -28,7 +36,8 @@
       "preferred_line_length": 80
     },
     "Elixir": {
-      "language_servers": ["!elixir-ls", "!next-ls", "!lexical"],
+      "language_servers": ["elixir-ls", "!lexical", "!next-ls"],
+      "wrap_guides": [98],
       "formatter": {
         "external": {
           "command": "mix",
@@ -48,7 +57,7 @@
   "base_keymap": "VSCode",
   "theme": {
     "mode": "system",
-    "light": "One Light",
+    "light": "Catppuccin Latte",
     "dark": "Gruvbox Dark"
   },
   "terminal": {
@@ -57,22 +66,9 @@
     "font_size": 18,
     "line_height": {
       "custom": 1.25
-    },
-    "env": {
-      "EDITOR": "zed --wait"
-      // "GIT_EDITOR": "zed --wait"
     }
   },
   "inlay_hints": {
     "enabled": true
-  },
-  "lsp": {
-    "tailwindcss-language-server": {
-      "settings": {
-        "includeLanguages": {
-          "elixir": "html"
-        }
-      }
-    }
   }
 }
