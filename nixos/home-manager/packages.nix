@@ -22,7 +22,7 @@ with pkgs;
   gitleaks
   magit
   flameshot
-  elixir_1_17
+  beam.packages.erlang_27.elixir_1_17
   nixd
 
   # extra gnome packages
