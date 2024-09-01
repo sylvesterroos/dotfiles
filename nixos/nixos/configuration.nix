@@ -138,9 +138,9 @@
   # remove some default packages
   environment.gnome.excludePackages = with pkgs; [
     geary
-    gnome.gnome-maps
-    gnome.gnome-music
-    gnome.gnome-weather
+    gnome-maps
+    gnome-music
+    gnome-weather
     seahorse
     totem
   ];

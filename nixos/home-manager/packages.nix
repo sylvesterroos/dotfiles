@@ -29,7 +29,8 @@ with pkgs;
 
   # extra gnome packages
   gnome-tweaks
-  gnome.gnome-software
+  gnome-software
+  gnome-extension-manager
   gnomeExtensions.alphabetical-app-grid
   gnomeExtensions.appindicator
   gnomeExtensions.blur-my-shell
