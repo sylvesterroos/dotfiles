@@ -28,6 +28,22 @@ To ignore certain files or directories when using Stow, you can add matching reg
 
 ### NixOS
 
-The configuration file contained in the `~/.dotfiles` directory is not known by the `nixos-rebuild` command. To fix this you should do one of the following:
-- Symlink `configuration.nix` to `/etc/nixos/`
-- Or, run `nixos-rebuild -I nixos-config=$HOME/.dotfiles/configuration.nix` instead of `nixos-rebuild`
+To update the system, run:
+```sh
+nix flake update $HOME/.dotfiles/system
+
+# or make use of the included abbreviation
+update
+```
+
+To rebuild the system, run:
+```sh
+sudo nixos-rebuild --flake path:$HOME/.dotfiles/system#odysseus switch
+
+# or make use of the included abbreviation
+rebuild switch
+```
+
+> **NOTE**
+>
+> Abbreviations, unlike aliases, get expanded to the full command.
