@@ -26,7 +26,6 @@
     {
       self,
       nixpkgs,
-      home-manager,
       tuxedo-nixos,
       ...
     }@inputs:
