@@ -12,7 +12,8 @@
     alias :q="exit"
   '';
   shellAbbrs = {
-    rebuild-system = "sudo nixos-rebuild --flake path:$HOME/.dotfiles/nixos#odysseus";
+    update = "nix flake update $HOME/.dotfiles/system";
+    rebuild = "sudo nixos-rebuild --flake path:$HOME/.dotfiles/system#odysseus";
 
     nsh = "nix-shell --run fish";
     # nshu = "nix-shell --run fish -I nixpkgs=channel:nixpkgs-unstable";
