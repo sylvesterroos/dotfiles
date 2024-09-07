@@ -12,7 +12,7 @@
     alias :q="exit"
   '';
   shellAbbrs = {
-    update = "nix flake update $HOME/.dotfiles/system";
+    update = "nix flake update --commit-lock-file $HOME/.dotfiles/system";
     rebuild = "sudo nixos-rebuild --flake path:$HOME/.dotfiles/system#odysseus";
 
     nsh = "nix-shell --run fish";
