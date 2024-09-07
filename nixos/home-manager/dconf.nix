@@ -133,20 +133,6 @@
     open-menu = [ ];
   };
 
-  # Configure vitals
-  "org/gnome/shell/extensions/vitals" = {
-    hide-icons = false;
-    hot-sensors = [
-      "_processor_frequency_"
-      "_processor_usage_"
-      "_memory_usage_"
-      "_storage_free_"
-      "_temperature_k10temp_tctl_"
-    ];
-    icon-style = 1;
-    network-speed-format = 1;
-  };
-
   "org/gnome/desktop/interface" = {
     enable-hot-corners = false;
     font-antialiasing = "rgba";

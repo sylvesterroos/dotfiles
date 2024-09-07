@@ -42,6 +42,4 @@ with pkgs;
   gnomeExtensions.rounded-window-corners
   #gnomeExtensions.solaar-extension
   gnomeExtensions.space-bar
-  gnomeExtensions.tactile
-  gnomeExtensions.vitals
 ]
