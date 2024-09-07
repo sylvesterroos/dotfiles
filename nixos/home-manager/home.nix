@@ -94,6 +94,10 @@
     nix-direnv.enable = true;
   };
 
+  programs.gh = {
+    enable = true;
+  };
+
   programs.vscode = {
     enable = true;
     package = pkgs.vscode-fhs;

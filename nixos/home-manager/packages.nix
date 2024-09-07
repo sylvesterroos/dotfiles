@@ -24,8 +24,6 @@ with pkgs;
   flameshot
   beam.packages.erlang_27.elixir_1_17
   nixd
-  gh
-  gh-copilot # gh-copilot suggest "print hello world"
 
   # extra gnome packages
   gnome-tweaks
