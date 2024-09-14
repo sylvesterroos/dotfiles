@@ -14,7 +14,18 @@ with pkgs;
   nextcloud-client
   figlet # making large letters out of ordinary text
   mission-center
-  livebook
+  # TODO extract to livebook.nix
+  (writeShellApplication {
+    name = "livebook";
+    runtimeInputs = [
+      gcc # some dependencies require compilation
+      gnumake
+    ];
+    text = ''
+      export LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH
+      exec ${livebook}/bin/livebook "$@"
+    '';
+  })
   zed-editor
   devenv
   betterdiscordctl
