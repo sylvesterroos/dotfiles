@@ -28,8 +28,4 @@
     gpg.format = "ssh";
     user.signingKey = "~/.ssh/id_ed25519";
   };
-  # signing = {
-  #   key = null; # use GPG key with same email as userEmail
-  #   signByDefault = true;
-  # };
 }
