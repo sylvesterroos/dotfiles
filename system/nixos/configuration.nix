@@ -322,6 +322,7 @@
     };
   };
 
+  programs.virt-manager.enable = true;
   services.spice-vdagentd.enable = true;
   virtualisation = {
     libvirtd = {
@@ -333,6 +334,9 @@
           enable = true;
           packages = [ pkgs.OVMFFull.fd ];
         };
+        vhostUserPackages = [
+          pkgs.virtiofsd
+        ];
       };
     };
     spiceUSBRedirection.enable = true;

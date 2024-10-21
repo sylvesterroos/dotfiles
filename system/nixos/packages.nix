@@ -18,12 +18,6 @@ with pkgs;
   jq
 
   ### virtualization ###
-  virt-manager
-  virt-viewer
-  spice
-  spice-gtk
-  spice-protocol
-  virtiofsd
   win-virtio
   win-spice
 ]
