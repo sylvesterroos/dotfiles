@@ -21,6 +21,7 @@ with pkgs;
     runtimeInputs = [
       gcc # some dependencies require compilation
       gnumake
+      cargo # some dependencies use rustler
     ];
     text = ''
       export LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH
