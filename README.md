@@ -30,7 +30,7 @@ To ignore certain files or directories when using Stow, you can add matching reg
 
 To update the system, run:
 ```sh
-nix flake update --commit-lock-file $HOME/.dotfiles/system
+nix flake update --commit-lock-file --flake $HOME/.dotfiles/system
 
 # or make use of the included abbreviation
 update
