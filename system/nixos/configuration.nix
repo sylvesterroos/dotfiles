@@ -88,6 +88,11 @@
       };
     };
 
+  boot.kernel.sysctl = {
+    # enable SysRq shortcuts
+    "kernel.sysrq" = 1;
+  };
+
   # required to configure QMK keyboard as a non-root user
   hardware.keyboard.qmk.enable = true;
 
