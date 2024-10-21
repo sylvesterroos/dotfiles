@@ -281,7 +281,7 @@
     libraries =
       with pkgs;
       [
-        libgcc # exgboost
+        libgcc.lib # xgboost
       ]
       ++ (steam-run.fhsenv.args.multiPkgs pkgs);
   };
