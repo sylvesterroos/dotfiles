@@ -1,10 +1,12 @@
-{ pkgs, ... }:
+{ pkgs }:
+
 {
   enable = true;
   package = pkgs.neovim-unwrapped;
   extraPackages = with pkgs; [
     cargo # dependencies built with rust
     gcc # telescope, luasnip
+    gnumake # avante
     go # golsp
     ripgrep # telescope
     fd # telescope
