@@ -142,6 +142,7 @@
 
   # remove some default packages
   environment.gnome.excludePackages = with pkgs; [
+    epiphany
     geary
     gnome-maps
     gnome-music
