@@ -1,8 +1,14 @@
-{ ... }:
+{ }:
+
 {
   enable = true;
 
-  diff-so-fancy.enable = true;
+  # TODO:
+  # set delta: navigate = true, side-by-side = true, line-numbers = true
+  # set merge: conflictStyle = zdiff3
+  # view the manual
+  delta.enable = true;
+  diff-so-fancy.enable = false;
 
   userEmail = "sylvester@thejoyofcoding.nl";
   userName = "Sylvester Roos";
