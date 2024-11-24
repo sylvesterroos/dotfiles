@@ -51,6 +51,28 @@
           "arguments": ["format", "--stdin-filename", "{buffer_path}", "-"]
         }
       }
+    },
+    "Python": {
+      "language_servers": ["pyright", "ruff"],
+      "formatter": [
+        {
+          "language_server": {
+            "name": "ruff"
+          }
+        }
+      ]
+    }
+  },
+  "lsp": {
+    "ruff": {
+      "initialization_options": {
+        "settings": {
+          "lineLength": 80,
+          "lint": {
+            "extendSelect": ["I"]
+          }
+        }
+      }
     }
   },
   "project_panel": {
