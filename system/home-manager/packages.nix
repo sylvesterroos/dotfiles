@@ -21,6 +21,7 @@ with pkgs;
     runtimeInputs = [
       gcc # some dependencies require compilation
       gnumake
+      cmake
       cargo # some dependencies use rustler
     ];
     text = ''
