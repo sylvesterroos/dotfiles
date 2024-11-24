@@ -8,6 +8,7 @@
   pkgs,
   ...
 }:
+
 {
   # You can import other home-manager modules here
   imports = [
@@ -64,6 +65,11 @@
 
     # fuck microsoft
     DOTNET_CLI_TELEMETRY_OPTOUT = "1";
+  };
+  systemd.user.sessionVariables = {
+    # macos-like font rendering
+    # https://blog.aktsbot.in/no-more-blurry-fonts.html
+    FREETYPE_PROPERTIES = "cff:no-stem-darkening=0 autofitter:no-stem-darkening=0";
   };
 
   programs.home-manager.enable = true;

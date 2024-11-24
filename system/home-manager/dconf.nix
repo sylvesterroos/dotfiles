@@ -1,4 +1,5 @@
-{ lib, ... }:
+{ lib }:
+
 {
   "org/gnome/desktop/wm/keybindings" = {
     # Alt+F4 is a terrible keybind
@@ -178,5 +179,11 @@
     button-layout = "appmenu:minimize,close";
     focus-mode = "sloppy";
     resize-with-right-button = true;
+  };
+
+  "org/gnome/desktop/interface" = {
+    # macos-like fonts
+    # https://x.com/luciascarlet/status/1857965489424589000
+    font-hinting = "none";
   };
 }
