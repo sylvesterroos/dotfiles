@@ -50,7 +50,7 @@ with pkgs;
   gnomeExtensions.night-theme-switcher
   gnomeExtensions.pano
   gnomeExtensions.quick-settings-tweaker
-  gnomeExtensions.rounded-window-corners
+  gnomeExtensions.rounded-window-corners-reborn
   #gnomeExtensions.solaar-extension
   gnomeExtensions.space-bar
   gnomeExtensions.tactile
