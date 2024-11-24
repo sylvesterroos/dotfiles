@@ -36,7 +36,7 @@ with pkgs;
   magit
   flameshot
   beam.packages.erlang_27.elixir_1_17
-  nixd
+  nil
 
   # extra gnome packages
   gnome-tweaks
