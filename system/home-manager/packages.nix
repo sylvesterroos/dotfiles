@@ -1,4 +1,5 @@
-{ pkgs, ... }:
+{ pkgs }:
+
 with pkgs;
 [
   cachix
@@ -14,7 +15,6 @@ with pkgs;
   onefetch
   nextcloud-client
   figlet # making large letters out of ordinary text
-  mission-center
   # TODO extract to livebook.nix
   (writeShellApplication {
     name = "livebook";
