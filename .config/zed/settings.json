@@ -38,7 +38,12 @@
       "preferred_line_length": 80
     },
     "Elixir": {
-      "language_servers": ["elixir-ls", "!lexical", "!next-ls"],
+      "language_servers": [
+        "elixir-ls",
+        "!lexical",
+        "!next-ls",
+        "tailwindcss-intellisense"
+      ],
       "wrap_guides": [98],
       "formatter": {
         "external": {
