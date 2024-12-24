@@ -99,6 +99,7 @@
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
+    mise.enable = true;
   };
 
   programs.gh = {
@@ -108,6 +109,11 @@
   programs.vscode = {
     enable = true;
     package = pkgs.vscode-fhs;
+  };
+
+  # allow for more granular control over elixir versions
+  programs.mise = {
+    enable = true;
   };
 
   programs.starship.enable = true;

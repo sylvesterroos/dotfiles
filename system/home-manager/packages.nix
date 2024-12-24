@@ -36,8 +36,8 @@ with pkgs;
   gitleaks
   magit
   flameshot
-  beam.packages.erlang_27.elixir_1_17
-  nil
+  erlang_27 # global erlang for global elixir from mise
+  nil # nix lsp
 
   # extra gnome packages
   gnome-tweaks
