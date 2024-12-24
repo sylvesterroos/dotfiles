@@ -20,7 +20,11 @@
 
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
+    ./dconf.nix
+    ./fish.nix
+    ./git.nix
     ./lf.nix
+    ./neovim.nix
   ];
 
   nixpkgs = {
@@ -80,16 +84,8 @@
   #   package = pkgs.gnomeExtensions.gsconnect;
   # };
 
-  dconf.settings = (import ./dconf.nix { inherit lib; });
-
   programs.command-not-found.enable = false;
   programs.nix-index.enable = true;
-
-  programs.neovim = (import ./neovim.nix { inherit pkgs; });
-
-  programs.git = (import ./git.nix { });
-
-  programs.fish = (import ./fish.nix { });
 
   programs.tealdeer = {
     enable = true;
