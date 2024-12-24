@@ -40,15 +40,26 @@
 
     # Use super for workspaces
     "org/gnome/desktop/wm/keybindings" = {
+      # empty lists to let spacebar handle this behavior
       switch-to-workspace-1 = [
-        "<Super>1"
+        # "<Super>1"
         "<Super>Home"
       ];
-      switch-to-workspace-2 = [ "<Super>2" ];
-      switch-to-workspace-3 = [ "<Super>3" ];
-      switch-to-workspace-4 = [ "<Super>4" ];
-      switch-to-workspace-5 = [ "<Super>5" ];
-      switch-to-workspace-6 = [ "<Super>6" ];
+      switch-to-workspace-2 = [
+        # "<Super>2"
+      ];
+      switch-to-workspace-3 = [
+        # "<Super>3"
+      ];
+      switch-to-workspace-4 = [
+        # "<Super>4"
+      ];
+      switch-to-workspace-5 = [
+        # "<Super>5"
+      ];
+      switch-to-workspace-6 = [
+        # "<Super>6"
+      ];
     };
 
     # Move windows to specific workspaces
@@ -134,12 +145,16 @@
     # Configure space-bar
     "org/gnome/shell/extensions/space-bar/behavior" = {
       smart-workspace-names = false;
+      toggle-overview = false;
+      scroll-wheel = "disabled";
     };
-
     "org/gnome/shell/extensions/space-bar/shortcuts" = {
-      enable-activate-workspace-shortcuts = false;
-      enable-move-to-workspace-shortcuts = true;
+      enable-activate-workspace-shortcuts = true;
+      back-and-forth = true;
+      enable-move-to-workspace-shortcuts = false; # handled already
       open-menu = [ ];
+      move-workspace-left = [ ];
+      move-workspace-right = [ ];
     };
 
     "org/gnome/desktop/interface" = {
