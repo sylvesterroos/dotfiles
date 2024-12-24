@@ -38,6 +38,7 @@ with pkgs;
   flameshot
   erlang_27 # global erlang for global elixir from mise
   nil # nix lsp
+  radicle-node
 
   # extra gnome packages
   gnome-tweaks
