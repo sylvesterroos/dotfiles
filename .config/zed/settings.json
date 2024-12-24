@@ -95,7 +95,8 @@
     "font_size": 18,
     "line_height": {
       "custom": 1.25
-    }
+    },
+    "detect_venv": "off" // direnv does this
   },
   "inlay_hints": {
     "enabled": true
