@@ -20,6 +20,14 @@
     tuxedo-nixos = {
       url = "github:sylvesterroos/tuxedo-nixos";
     };
+
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+    };
+
+    nix-alien = {
+      url = "github:thiagokokada/nix-alien";
+    };
   };
 
   outputs =
