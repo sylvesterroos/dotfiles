@@ -4,13 +4,21 @@
   programs.fish = {
     enable = true;
     shellAliases = {
-      ls = "eza -alg --color=always --group-directories-first --header";
+      ls = ''
+        eza \
+            --all \
+            --long \
+            --grid \
+            --group-directories-first \
+            --header \
+            --icons=auto \
+            --git \
+            --git-repos-no-status
+      '';
 
       cat = "bat -pp"; # no line numbers, no pager
 
       ssh-keygen-ed25519 = "ssh-keygen -t ed25519 -C (whoami)@(uname -n)";
-
-      ":q" = "exit";
     };
     interactiveShellInit = '''';
     shellAbbrs = {
