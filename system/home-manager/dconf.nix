@@ -103,7 +103,7 @@
       col-3 = 0;
       row-1 = 1;
       row-2 = 0;
-      gap-size = 32;
+      gap-size = 12;
     };
 
     # Configure just-perfection
