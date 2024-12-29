@@ -4,17 +4,7 @@
   programs.fish = {
     enable = true;
     shellAliases = {
-      ls = ''
-        eza \
-            --all \
-            --long \
-            --grid \
-            --group-directories-first \
-            --header \
-            --icons=auto \
-            --git \
-            --git-repos-no-status
-      '';
+      ls = "eza --all --long --group --color=always --group-directories-first --header --icons=auto --git --git-repos-no-status";
 
       cat = "bat -pp"; # no line numbers, no pager
 
