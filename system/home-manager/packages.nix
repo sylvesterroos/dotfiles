@@ -15,20 +15,6 @@ with pkgs;
   onefetch
   nextcloud-client
   figlet # making large letters out of ordinary text
-  # TODO extract to livebook.nix
-  (writeShellApplication {
-    name = "livebook";
-    runtimeInputs = [
-      gcc # some dependencies require compilation
-      gnumake
-      cmake
-      cargo # some dependencies use rustler
-    ];
-    text = ''
-      export LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH
-      exec ${livebook}/bin/livebook "$@"
-    '';
-  })
   zed-editor
   devenv
   betterdiscordctl
@@ -36,11 +22,13 @@ with pkgs;
   gitleaks
   magit
   flameshot
-  erlang_27 # global erlang for global elixir from mise
+  beam.packages.erlang_27.elixir_1_18
   nil # nix lsp
   radicle-node
   ghostty
   nix-alien
+
+  (import ./livebook.nix { inherit pkgs; })
 
   # extra gnome packages
   gnome-tweaks

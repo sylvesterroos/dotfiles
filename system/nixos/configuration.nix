@@ -21,6 +21,7 @@
 
     # You can also split up your configuration and import pieces of it here:
     # ./users.nix
+    ./kanata.nix
 
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
@@ -374,8 +375,6 @@
     enable = true;
     package = pkgs.ollama;
   };
-
-  services.kanata = (import ./kanata.nix { });
 
   # This setups a SSH server. Very important if you're setting up a headless system.
   # Feel free to remove if you don't need it.
