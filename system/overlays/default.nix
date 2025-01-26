@@ -1,14 +1,13 @@
 # This file defines overlays
 { inputs, ... }:
 {
-  # This one brings our custom packages from the 'pkgs' directory
   additions =
     final: prev:
-    (import ../pkgs final.pkgs)
-    // {
-      ghostty = inputs.ghostty.packages.${prev.system}.default;
-      nix-alien = inputs.nix-alien.packages.${prev.system}.default;
-    };
+    {
+      ghostty-git = inputs.ghostty.packages.${prev.system}.default;
+    }
+    # This one brings our custom packages from the 'pkgs' directory
+    // (import ../pkgs final.pkgs);
 
   # This one contains whatever you want to overlay
   # You can change versions, add patches, set compilation flags, anything really.
