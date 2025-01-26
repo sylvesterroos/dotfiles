@@ -285,13 +285,6 @@
   # Run unpatched dynamic binaries on NixOS
   programs.nix-ld = {
     enable = true;
-    # https://www.reddit.com/r/NixOS/s/CxHHvGyXVx
-    libraries =
-      with pkgs;
-      [
-        libgcc.lib # xgboost
-      ]
-      ++ (steam-run.fhsenv.args.multiPkgs pkgs);
   };
 
   # Some programs need SUID wrappers, can be configured further or are
