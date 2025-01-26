@@ -17,17 +17,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    tuxedo-nixos = {
-      url = "github:sylvesterroos/tuxedo-nixos";
-    };
-
     ghostty = {
       url = "github:ghostty-org/ghostty";
+      inputs.nixpkgs-unstable.follows = "nixpkgs";
     };
 
-    nix-alien = {
-      url = "github:thiagokokada/nix-alien";
-    };
+    tuxedo-nixos.url = "github:sylvesterroos/tuxedo-nixos";
+    nix-alien.url = "github:thiagokokada/nix-alien";
   };
 
   outputs =
