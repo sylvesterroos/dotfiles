@@ -67,6 +67,15 @@
         flake-registry = "";
         # Workaround for https://github.com/NixOS/nix/issues/9574
         nix-path = config.nix.nixPath;
+
+        trusted-substituters = [
+          # flox
+          "https://cache.flox.dev"
+        ];
+        trusted-public-keys = [
+          # flox
+          "flox-cache-public-1:7F4OyH7ZCnFhcze3fJdfyXYLQw/aV7GEed86nQ7IsOs="
+        ];
       };
       # Opinionated: disable channels
       channel.enable = false;
