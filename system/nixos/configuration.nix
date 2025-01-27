@@ -86,12 +86,6 @@
 
       settings.auto-optimise-store = true;
 
-      # devenv
-      settings.trusted-users = [
-        "root"
-        "sylvester"
-      ];
-
       gc = {
         automatic = outputs.gc-settings.automatic;
         dates = outputs.gc-settings.frequency;
