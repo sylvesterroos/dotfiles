@@ -70,7 +70,7 @@
 
         auto-optimise-store = true;
 
-        settings.trusted-users = [
+        trusted-users = [
           "root"
           # when flakes want to add extra-substituters
           "sylvester"
