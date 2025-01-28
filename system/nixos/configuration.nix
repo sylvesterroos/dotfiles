@@ -68,23 +68,21 @@
         # Workaround for https://github.com/NixOS/nix/issues/9574
         nix-path = config.nix.nixPath;
 
-        trusted-substituters = [
-          # flox
-          "https://cache.flox.dev"
-        ];
-        trusted-public-keys = [
-          # flox
-          "flox-cache-public-1:7F4OyH7ZCnFhcze3fJdfyXYLQw/aV7GEed86nQ7IsOs="
+        auto-optimise-store = true;
+
+        settings.trusted-users = [
+          "root"
+          # when flakes want to add extra-substituters
+          "sylvester"
         ];
       };
+
       # Opinionated: disable channels
       channel.enable = false;
 
       # Opinionated: make flake registry and nix path match flake inputs
       registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
       nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
-
-      settings.auto-optimise-store = true;
 
       gc = {
         automatic = outputs.gc-settings.automatic;
