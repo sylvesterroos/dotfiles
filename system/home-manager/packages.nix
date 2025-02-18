@@ -15,16 +15,14 @@ with pkgs;
   onefetch
   nextcloud-client
   figlet # making large letters out of ordinary text
-  zed-editor
   devenv
   betterdiscordctl
   via
   gitleaks
   magit
-  flameshot
   gitu # git porcelain outside of emacs
   beam.packages.erlang_27.elixir_1_18
-  nil # nix lsp
+  nil
   radicle-node
   nix-alien
   virt-manager
