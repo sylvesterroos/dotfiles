@@ -27,6 +27,8 @@ with pkgs;
   nil # nix lsp
   radicle-node
   nix-alien
+  virt-manager
+  gnome-boxes
 
   (import ./livebook.nix { inherit pkgs; })
 
