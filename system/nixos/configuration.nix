@@ -237,12 +237,11 @@
       "/usr/share/fonts" = mkRoSymBind (aggregatedFonts + "/share/fonts");
     };
 
-  programs.fish.enable = true;
   users.users = {
     sylvester = {
       isNormalUser = true;
       description = "Sylvester Roos";
-      shell = pkgs.fish;
+      shell = pkgs.bashInteractive;
       extraGroups = [
         "networkmanager"
         "wheel"

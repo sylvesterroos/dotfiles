@@ -67,6 +67,19 @@
     homeDirectory = "/home/sylvester";
   };
 
+  programs.bash = {
+    enable = true;
+    initExtra = # bash
+      ''
+        # use fish as the shell, but keep bash as the login shell
+        if [[ $(${lib.getExe' pkgs.procps "ps"} --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
+        then
+          shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
+          exec ${lib.getExe pkgs.fish} $LOGIN_OPTION
+        fi
+      '';
+  };
+
   # Add stuff for your user as you see fit:
   home.packages = (import ./packages.nix { inherit pkgs; });
 
@@ -87,11 +100,6 @@
 
   programs.home-manager.enable = true;
 
-  # services.kdeconnect = {
-  #   enable = true;
-  #   package = pkgs.gnomeExtensions.gsconnect;
-  # };
-
   programs.command-not-found.enable = false;
   programs.nix-index.enable = true;
 
@@ -111,23 +119,19 @@
     mise.enable = true;
   };
 
-  programs.gh = {
-    enable = true;
-  };
-
   programs.vscode = {
     enable = true;
     package = pkgs.vscode-fhs;
   };
 
-  # allow for more granular control over elixir versions
-  programs.mise = {
-    enable = true;
-  };
-
+  programs.gh.enable = true;
+  programs.mise.enable = true;
   programs.starship.enable = true;
   programs.autojump.enable = true;
   programs.yt-dlp.enable = true;
+  programs.zed-editor.enable = true;
+
+  services.flameshot.enable = true;
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
