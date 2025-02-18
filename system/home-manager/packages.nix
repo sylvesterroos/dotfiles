@@ -25,7 +25,6 @@ with pkgs;
   beam.packages.erlang_27.elixir_1_18
   nil # nix lsp
   radicle-node
-  ghostty
   nix-alien
 
   (import ./livebook.nix { inherit pkgs; })

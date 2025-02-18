@@ -88,6 +88,11 @@
   programs.command-not-found.enable = false;
   programs.nix-index.enable = true;
 
+  programs.ghostty = {
+    enable = true;
+    package = pkgs.ghostty-git;
+  };
+
   programs.tealdeer = {
     enable = true;
     settings.updates.auto_update = true;

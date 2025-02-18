@@ -17,11 +17,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    ghostty = {
-      url = "github:ghostty-org/ghostty";
-      inputs.nixpkgs-unstable.follows = "nixpkgs";
-    };
-
+    ghostty.url = "github:ghostty-org/ghostty";
     tuxedo-nixos.url = "github:sylvesterroos/tuxedo-nixos";
     nix-alien.url = "github:thiagokokada/nix-alien";
   };
