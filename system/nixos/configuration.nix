@@ -279,6 +279,9 @@
   environment.variables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
+
+    # https://consoledonottrack.com/
+    DO_NOT_TRACK = 1;
   };
 
   # disabled because it breaks Loupe
