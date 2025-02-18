@@ -7,6 +7,9 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "inline_completions": {
+    "disabled_globs": [".env", "lib/advent_of_code/day_*.ex"]
+  },
   "show_inline_completions": false, // use alt+\ for inline completions. inline completions mess with code completions
   "assistant": {
     "default_model": {
@@ -31,7 +34,7 @@
       "formatter": {
         "external": {
           "command": "nixfmt",
-          "arguments": []
+          "arguments": ["--quiet", "--"]
         }
       }
     },
@@ -54,8 +57,14 @@
       }
     },
     "Python": {
-      "language_servers": ["pyright", "ruff"],
+      "language_servers": ["pyright", "!ruff"],
       "formatter": [
+        {
+          "code_actions": {
+            "source.organizeImports.ruff": true,
+            "source.fixAll.ruff": false
+          }
+        },
         {
           "language_server": {
             "name": "ruff"
@@ -65,15 +74,14 @@
     }
   },
   "lsp": {
-    "ruff": {
-      "initialization_options": {
-        "settings": {
-          "lineLength": 80,
-          "lint": {
-            "extendSelect": ["I"]
-          }
+    "nil": {
+      // "settings": {
+      "nix": {
+        "flake": {
+          "autoEvalInputs": true
         }
       }
+      // }
     }
   },
   "project_panel": {
@@ -88,7 +96,7 @@
   "theme": {
     "mode": "system",
     "light": "Catppuccin Latte",
-    "dark": "Gruvbox Dark Hard"
+    "dark": "Catppuccin Macchiato"
   },
   "terminal": {
     "dock": "bottom",
@@ -98,6 +106,9 @@
       "custom": 1.25
     },
     "detect_venv": "off" // direnv does this
+  },
+  "file_types": {
+    "env": [".env*"]
   },
   "inlay_hints": {
     "enabled": true
