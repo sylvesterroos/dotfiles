@@ -270,11 +270,6 @@
         pkgs.gst_all_1.gst-libav
       ];
 
-  programs.nautilus-open-any-terminal = {
-    enable = true;
-    terminal = "ghostty";
-  };
-
   # Set variables for the global environment
   environment.variables = {
     EDITOR = "nvim";
