@@ -22,6 +22,7 @@ with pkgs;
   gitleaks
   magit
   flameshot
+  gitu # git porcelain outside of emacs
   beam.packages.erlang_27.elixir_1_18
   nil # nix lsp
   radicle-node

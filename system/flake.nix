@@ -20,6 +20,7 @@
     ghostty.url = "github:ghostty-org/ghostty";
     tuxedo-nixos.url = "github:sylvesterroos/tuxedo-nixos";
     nix-alien.url = "github:thiagokokada/nix-alien";
+    gitu.url = "github:altsem/gitu";
   };
 
   outputs =
