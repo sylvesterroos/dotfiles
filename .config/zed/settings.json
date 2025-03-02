@@ -7,10 +7,10 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
-  "inline_completions": {
+  "edit_predictions": {
     "disabled_globs": [".env", "lib/advent_of_code/day_*.ex"]
   },
-  "show_inline_completions": false, // use alt+\ for inline completions. inline completions mess with code completions
+  "show_edit_predictions": false, // use alt+\ for inline completions. inline completions mess with code completions
   "assistant": {
     "default_model": {
       "provider": "copilot_chat",

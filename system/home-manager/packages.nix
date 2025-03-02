@@ -19,7 +19,6 @@ with pkgs;
   betterdiscordctl
   via
   gitleaks
-  magit
   gitu # git porcelain outside of emacs
   beam.packages.erlang_27.elixir_1_18
   nil
