@@ -78,7 +78,7 @@
       // "settings": {
       "nix": {
         "flake": {
-          "autoEvalInputs": true
+          "autoEvalInputs": false
         }
       }
       // }
@@ -96,7 +96,7 @@
   "theme": {
     "mode": "system",
     "light": "Catppuccin Latte",
-    "dark": "Catppuccin Macchiato"
+    "dark": "Gruvbox Dark Hard"
   },
   "terminal": {
     "dock": "bottom",
