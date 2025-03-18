@@ -51,14 +51,6 @@
     };
   };
 
-  nix = {
-    settings = {
-      # avoid rebuilding gitu
-      extra-substituters = [ "https://gitu.cachix.org" ];
-      extra-trusted-public-keys = [ "gitu.cachix.org-1:iUIaNys1l3W1LF/M8OXzaTl7N/OinGOlzdUJUSc+5eY=" ];
-    };
-  };
-
   nix.gc = outputs.gc-settings;
 
   home = {

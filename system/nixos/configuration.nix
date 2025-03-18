@@ -77,6 +77,17 @@
           # when flakes want to add extra-substituters
           "sylvester"
         ];
+
+        extra-substituters = [
+          "https://devenv.cachix.org"
+          "https://ghostty.cachix.org"
+          "https://gitu.cachix.org"
+        ];
+        extra-trusted-public-keys = [
+          "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+          "ghostty.cachix.org-1:QB389yTa6gTyneehvqG58y0WnHjQOqgnA+wBnpWWxns="
+          "gitu.cachix.org-1:iUIaNys1l3W1LF/M8OXzaTl7N/OinGOlzdUJUSc+5eY="
+        ];
       };
 
       # Opinionated: disable channels
