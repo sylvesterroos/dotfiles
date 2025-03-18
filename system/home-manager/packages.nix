@@ -49,4 +49,5 @@ with pkgs;
   #gnomeExtensions.solaar-extension
   gnomeExtensions.space-bar
   gnomeExtensions.tactile
+  gnomeExtensions.wiggle
 ]
