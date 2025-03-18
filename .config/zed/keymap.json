@@ -1,13 +1,5 @@
 [
   {
-    "context": "Editor || Workspace",
-    "bindings": {
-      "ctrl-alt-e": "workspace::ToggleRightDock",
-      "ctrl-alt-b": "workspace::ToggleLeftDock",
-      "ctrl-x": "pane::CloseActiveItem"
-    }
-  },
-  {
     "context": "Workspace",
     "bindings": {
       "ctrl-`": "workspace::ToggleBottomDock"
@@ -16,45 +8,30 @@
   {
     "context": "Editor && VimControl && !VimWaiting && !menu",
     "bindings": {
-      "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
-      "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
-      "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
-      "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"],
-      "space g g": [
-        "task::Spawn",
-        {
-          "task_name": "magit"
-        }
-      ],
-      "g ]": "editor::GoToDiagnostic",
-      "g [": "editor::GoToPrevDiagnostic",
-      "g shift-r": "editor::FindAllReferences",
-      "shift-k": "editor::Hover",
-      "g a": "editor::ToggleCodeActions",
-      "g r": "editor::Rename",
-      "[ x": "editor::SelectLargerSyntaxNode",
-      "] x": "editor::SelectSmallerSyntaxNode"
+      "ctrl-w h": "workspace::ActivatePaneLeft",
+      "ctrl-w l": "workspace::ActivatePaneRight",
+      "ctrl-w k": "workspace::ActivatePaneUp",
+      "ctrl-w j": "workspace::ActivatePaneDown"
+      // "g shift-r": "editor::FindAllReferences",
+      // "g a": "editor::ToggleCodeActions",
+      // "g r": "editor::Rename",
+      // "[ x": "editor::SelectLargerSyntaxNode",
+      // "] x": "editor::SelectSmallerSyntaxNode"
     }
   },
   {
-    "context": "Editor && vim_mode == normal",
+    "context": "vim_mode == visual",
     "bindings": {
-      "g c c": "editor::ToggleComments"
-    }
-  },
-  {
-    "context": "Editor && vim_mode == visual",
-    "bindings": {
-      "g c": "editor::ToggleComments"
+      "shift-s": ["vim::PushAddSurrounds", {}]
     }
   },
   {
     "context": "Dock",
     "bindings": {
-      "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
-      "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
-      "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
-      "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"]
+      "ctrl-w h": "workspace::ActivatePaneLeft",
+      "ctrl-w l": "workspace::ActivatePaneRight",
+      "ctrl-w k": "workspace::ActivatePaneUp",
+      "ctrl-w j": "workspace::ActivatePaneDown"
     }
   }
 ]

@@ -22,7 +22,7 @@
   "auto_update": false,
   "vim_mode": true,
   "ui_font_size": 20,
-  "buffer_font_size": 18,
+  "buffer_font_size": 18.0,
   "buffer_font_family": "JetBrainsMono Nerd Font",
   "show_copilot_suggestions": true,
   "features": {
@@ -48,13 +48,10 @@
         "!next-ls",
         "tailwindcss-intellisense"
       ],
-      "wrap_guides": [98],
-      "formatter": {
-        "external": {
-          "command": "mix",
-          "arguments": ["format", "--stdin-filename", "{buffer_path}", "-"]
-        }
-      }
+      "wrap_guides": [98]
+    },
+    "HEEX": {
+      "wrap_guides": [98]
     },
     "Python": {
       "language_servers": ["pyright", "!ruff"],
