@@ -11,7 +11,6 @@ with pkgs;
   ripgrep
   unzip
   logiops
-  #solaar
   btop
   bat
   morewaita-icon-theme
