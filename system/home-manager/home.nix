@@ -96,7 +96,7 @@
 
   programs.ghostty = {
     enable = true;
-    package = pkgs.ghostty-git;
+    package = pkgs.ghostty;
   };
 
   programs.tealdeer = {
