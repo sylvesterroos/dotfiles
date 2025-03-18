@@ -17,8 +17,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    tuxedo-nixos = {
+      url = "github:sylvesterroos/tuxedo-nixos";
+      # url = "github:chmanie/tuxedo-nixos";
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     ghostty.url = "github:ghostty-org/ghostty";
-    tuxedo-nixos.url = "github:sylvesterroos/tuxedo-nixos";
     nix-alien.url = "github:thiagokokada/nix-alien";
     gitu.url = "github:altsem/gitu";
   };
@@ -72,12 +77,6 @@
             ./nixos/configuration.nix
 
             tuxedo-nixos.nixosModules.default
-            {
-              hardware.tuxedo-control-center = {
-                enable = true;
-                package = tuxedo-nixos.packages.x86_64-linux.default;
-              };
-            }
           ];
         };
       };
