@@ -23,7 +23,6 @@
     ./dconf.nix
     ./fish.nix
     ./git.nix
-    ./lf.nix
     ./neovim.nix
   ];
 
