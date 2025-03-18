@@ -26,6 +26,7 @@ with pkgs;
   nix-alien
   virt-manager
   gnome-boxes
+  kdePackages.discover
 
   (import ./livebook.nix { inherit pkgs; })
 
