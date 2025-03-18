@@ -120,6 +120,7 @@
   programs.starship.enable = true;
   programs.autojump.enable = true;
   programs.yt-dlp.enable = true;
+  programs.yazi.enable = true;
   programs.zed-editor.enable = true;
 
   services.flameshot.enable = true;
