@@ -21,6 +21,25 @@
       ytv-best = "yt-dlp --add-metadata -f bestvideo+bestaudio";
     };
     functions = {
+      mkfile = {
+        body = # fish
+          ''
+            if test "$argv[1]" = "--help"
+                echo "Creates a new file and any necessary parent directories."
+                echo "Usage: mkfile path/to/new/file.txt"
+                return 0
+            end
+
+            if test (count $argv) = 0
+                echo "mkfile: missing directory and/or file operand"
+                echo "Try 'mkfile --help' for more information."
+                return 1
+            end
+
+            mkdir -p (dirname $argv[1]) && touch $argv[1]
+          '';
+      };
+
       ghcs = {
         body = # fish
           ''
