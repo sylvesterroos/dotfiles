@@ -18,10 +18,5 @@
     // * `always` — always show the terminal pane, add and focus the corresponding task's tab in it (default)
     // * `never` — avoid changing current terminal pane focus, but still add/reuse the task's tab there
     "reveal": "always"
-  },
-  {
-    "label": "magit",
-    "command": "magit",
-    "env": { "EDITOR": "zed --wait" }
   }
 ]
