@@ -4,12 +4,15 @@
   programs.git = {
     enable = true;
 
-    # TODO:
-    # set delta: navigate = true, side-by-side = true, line-numbers = true
-    # set merge: conflictStyle = zdiff3
-    # view the manual
-    delta.enable = true;
-    diff-so-fancy.enable = false;
+    delta = {
+      enable = true;
+      options = {
+        line-numbers = true;
+        side-by-side = true;
+        navigate = true;
+        conflictStyle = "zdiff3";
+      };
+    };
 
     userEmail = "sylvester@thejoyofcoding.nl";
     userName = "Sylvester Roos";
@@ -29,11 +32,13 @@
 
       push.autoSetupRemote = true;
 
+      # Sign all commits using ssh key
       commit.gpgSign = true;
       tag.gpgSign = true;
-
       gpg.format = "ssh";
-      user.signingKey = "~/.ssh/id_ed25519";
+      # should contain "* $(cat ~/.ssh/id_ed25519.pub)"
+      gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
+      user.signingkey = "~/.ssh/id_ed25519.pub";
     };
   };
 }
