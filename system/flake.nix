@@ -23,6 +23,7 @@
       # inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     ghostty.url = "github:ghostty-org/ghostty";
     nix-alien.url = "github:thiagokokada/nix-alien";
     gitu.url = "github:altsem/gitu";
@@ -33,6 +34,7 @@
       self,
       nixpkgs,
       tuxedo-nixos,
+      nixos-hardware,
       ...
     }@inputs:
     let
@@ -77,6 +79,7 @@
             ./nixos/configuration.nix
 
             tuxedo-nixos.nixosModules.default
+            nixos-hardware.nixosModules.tuxedo-pulse-15-gen2
           ];
         };
       };
