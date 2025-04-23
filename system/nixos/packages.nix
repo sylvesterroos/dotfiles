@@ -16,6 +16,7 @@ with pkgs;
   morewaita-icon-theme
   termscp
   jq
+  fzf
 
   ### virtualization ###
   win-virtio

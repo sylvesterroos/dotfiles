@@ -40,6 +40,41 @@
           '';
       };
 
+      ###
+      # Git functions
+      ###
+
+      gw = {
+        description = "Navigate to a git worktree using fzf";
+        body = # fish
+          ''
+            # Check if inside git worktree
+            git rev-parse --is-inside-git-dir >/dev/null 2>&1
+            if test $status -ne 0
+                echo "Not in a git directory"
+                return 1
+            end
+
+            # Get worktree list, filter out (bare), extract paths, use fzf for selection
+            set -l selected (git worktree list |
+                grep -v "(bare)" |
+                fzf --height 40% --border --prompt="Select worktree: " |
+                awk '{print $1}'
+            )
+
+            # If a worktree was selected, navigate to it
+            if test -n "$selected"
+                cd "$selected"
+            else
+                echo "No worktree selected."
+            end
+          '';
+      };
+
+      ###
+      # GitHub Copilot CLI
+      ###
+
       ghcs = {
         body = # fish
           ''
