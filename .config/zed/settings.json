@@ -8,24 +8,32 @@
 // from the command palette or from `Zed` application menu.
 {
   "edit_predictions": {
-    "disabled_globs": [".env", "lib/advent_of_code/day_*.ex"]
+    "disabled_globs": [".env"],
+    "mode": "subtle",
+    "copilot": {
+      "proxy": null,
+      "proxy_no_verify": null
+    },
+    "enabled_in_assistant": false
   },
-  "show_edit_predictions": false, // use alt+\ for inline completions. inline completions mess with code completions
+  "show_edit_predictions": false,
   "assistant": {
+    "inline_assistant_model": {
+      "provider": "copilot_chat",
+      "model": "gemini-2.0-flash-001"
+    },
     "default_model": {
       "provider": "copilot_chat",
-      "model": "claude-3-5-sonnet"
+      "model": "gemini-2.5-pro"
     },
-    "version": "2",
-    "enable_experimental_live_diffs": true
+    "version": "2"
   },
-  "auto_update": false,
+  "features": {
+    "edit_prediction_provider": "copilot"
+  },
   "vim_mode": true,
   "buffer_font_family": "JetBrainsMono Nerd Font",
   "show_copilot_suggestions": true,
-  "features": {
-    "copilot": true
-  },
   "languages": {
     "Nix": {
       "language_servers": ["nil", "!nixd"],
@@ -52,12 +60,13 @@
       "wrap_guides": [98]
     },
     "Python": {
-      "language_servers": ["pyright", "!ruff"],
+      "language_servers": ["pyright", "ruff"],
+      "format_on_save": "on",
       "formatter": [
         {
           "code_actions": {
             "source.organizeImports.ruff": true,
-            "source.fixAll.ruff": false
+            "source.fixAll.ruff": true
           }
         },
         {
@@ -70,13 +79,11 @@
   },
   "lsp": {
     "nil": {
-      // "settings": {
       "nix": {
         "flake": {
           "autoEvalInputs": false
         }
       }
-      // }
     }
   },
   "project_panel": {
@@ -84,13 +91,10 @@
   },
   "soft_wrap": "none",
   "cursor_blink": false,
-  "scrollbar": {
-    "show": "never"
-  },
   "base_keymap": "VSCode",
   "theme": {
     "mode": "system",
-    "light": "Catppuccin Latte",
+    "light": "Ayu Light",
     "dark": "Gruvbox Dark Hard"
   },
   "terminal": {
