@@ -58,7 +58,7 @@
             # Get worktree list, filter out (bare), extract paths, use fzf for selection
             set -l selected (git worktree list |
                 grep -v "(bare)" |
-                fzf --height 40% --border --prompt="Select worktree: " |
+                fzf --height 40% --border --prompt="Select worktree: " --query="$argv[1]" |
                 awk '{print $1}'
             )
 
