@@ -21,8 +21,6 @@
   },
   "auto_update": false,
   "vim_mode": true,
-  "ui_font_size": 20,
-  "buffer_font_size": 18.0,
   "buffer_font_family": "JetBrainsMono Nerd Font",
   "show_copilot_suggestions": true,
   "features": {
@@ -98,10 +96,7 @@
   "terminal": {
     "dock": "bottom",
     "blinking": "on",
-    "font_size": 18,
-    "line_height": {
-      "custom": 1.25
-    },
+    "line_height": "standard",
     "detect_venv": "off" // direnv does this
   },
   "file_types": {
