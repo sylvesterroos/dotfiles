@@ -184,7 +184,10 @@
   };
 
   # Enable CUPS to print documents.
-  services.printing.enable = true;
+  services.printing = {
+    enable = true;
+    drivers = with pkgs; [ cups-brother-mfcl2800dw ];
+  };
   services.avahi = {
     enable = true;
     nssmdns4 = true;
