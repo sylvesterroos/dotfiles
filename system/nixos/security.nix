@@ -6,8 +6,4 @@
     execWheelOnly = true;
     wheelNeedsPassword = true;
   };
-
-  environment.systemPackages = lib.mkMerge [
-    [ (lib.hiPrio pkgs.uutils-coreutils-noprefix) ]
-  ];
 }
