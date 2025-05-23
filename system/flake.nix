@@ -17,6 +17,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
+
     tuxedo-nixos = {
       url = "github:sylvesterroos/tuxedo-nixos";
       # url = "github:chmanie/tuxedo-nixos";
@@ -33,6 +35,7 @@
     {
       self,
       nixpkgs,
+      determinate,
       tuxedo-nixos,
       nixos-hardware,
       ...
@@ -78,6 +81,7 @@
             # > The main nixos configuration file <
             ./nixos/configuration.nix
 
+            determinate.nixosModules.default
             tuxedo-nixos.nixosModules.default
             nixos-hardware.nixosModules.tuxedo-pulse-15-gen2
           ];
