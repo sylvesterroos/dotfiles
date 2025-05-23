@@ -58,52 +58,44 @@
     };
   };
 
-  nix =
-    let
-      flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
-    in
-    {
-      settings = {
-        # Enable flakes and new 'nix' command
-        experimental-features = "nix-command flakes";
-        # Opinionated: disable global registry
-        flake-registry = "";
-        # Workaround for https://github.com/NixOS/nix/issues/9574
-        nix-path = config.nix.nixPath;
+  nix = {
+    settings = {
+      # No longer needed because of Determinate Nix
+      # experimental-features = "nix-command flakes";
+      # auto-optimise-store = true;
+      # gc = {
+      #   automatic = outputs.gc-settings.automatic;
+      #   dates = outputs.gc-settings.frequency;
+      #   options = outputs.gc-settings.options;
+      # };
 
-        auto-optimise-store = true;
+      # Opinionated: disable global registry. The global registry is a bloated list of someones favorites.
+      flake-registry = "";
 
-        trusted-users = [
-          "root"
-          # when flakes want to add extra-substituters
-          "sylvester"
-        ];
+      trusted-users = [
+        # when flakes want to add extra-substituters
+        "sylvester"
+      ];
 
-        extra-substituters = [
-          "https://devenv.cachix.org"
-          "https://ghostty.cachix.org"
-          "https://gitu.cachix.org"
-        ];
-        extra-trusted-public-keys = [
-          "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
-          "ghostty.cachix.org-1:QB389yTa6gTyneehvqG58y0WnHjQOqgnA+wBnpWWxns="
-          "gitu.cachix.org-1:iUIaNys1l3W1LF/M8OXzaTl7N/OinGOlzdUJUSc+5eY="
-        ];
-      };
+      extra-substituters = [
+        "https://devenv.cachix.org"
+        "https://ghostty.cachix.org"
+        "https://gitu.cachix.org"
+      ];
+      extra-trusted-public-keys = [
+        "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+        "nixpkgs-python.cachix.org-1:hxjI7pFxTyuTHn2NkvWCrAUcNZLNS3ZAvfYNuYifcEU="
+        "ghostty.cachix.org-1:QB389yTa6gTyneehvqG58y0WnHjQOqgnA+wBnpWWxns="
+        "gitu.cachix.org-1:iUIaNys1l3W1LF/M8OXzaTl7N/OinGOlzdUJUSc+5eY="
+      ];
 
-      # Opinionated: disable channels
-      channel.enable = false;
-
-      # Opinionated: make flake registry and nix path match flake inputs
-      registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
-      nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
-
-      gc = {
-        automatic = outputs.gc-settings.automatic;
-        dates = outputs.gc-settings.frequency;
-        options = outputs.gc-settings.options;
-      };
+      # Enable Determinate Nix's lazy trees
+      lazy-trees = true;
     };
+
+    # Opinionated: disable channels
+    channel.enable = false;
+  };
 
   boot.kernel.sysctl = {
     # enable SysRq shortcuts
