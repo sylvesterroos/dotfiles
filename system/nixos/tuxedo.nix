@@ -1,13 +1,10 @@
 { inputs, ... }:
 
 {
-  hardware.tuxedo-control-center = {
-    enable = true;
-    package = inputs.tuxedo-nixos.packages.x86_64-linux.default;
-  };
+  hardware.tuxedo-drivers.enable = true;
 
-  hardware.tuxedo-rs = {
+  hardware.tuxedo-control-center = {
     enable = false;
-    tailor-gui.enable = false;
+    package = inputs.tuxedo-nixos.packages.x86_64-linux.default;
   };
 }
