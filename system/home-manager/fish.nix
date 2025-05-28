@@ -12,9 +12,6 @@
     };
     interactiveShellInit = '''';
     shellAbbrs = {
-      update = "nix flake update --commit-lock-file --flake $HOME/.dotfiles/system";
-      rebuild = "sudo nixos-rebuild --flake $HOME/.dotfiles/system#odysseus";
-
       nsh = "nix-shell --run fish";
 
       yta-best = "yt-dlp --add-metadata --extract-audio --audio-format best";

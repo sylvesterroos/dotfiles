@@ -26,9 +26,10 @@
     };
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    ghostty.url = "github:ghostty-org/ghostty";
     nix-alien.url = "github:thiagokokada/nix-alien";
     gitu.url = "github:altsem/gitu";
+    radicle-desktop.url = "git+https://seed.radicle.xyz/z4D5UCArafTzTQpDZNQRuqswh3ury.git";
+    watt.url = "github:NotAShelf/watt";
   };
 
   outputs =
@@ -38,6 +39,7 @@
       determinate,
       tuxedo-nixos,
       nixos-hardware,
+      watt,
       ...
     }@inputs:
     let
@@ -84,6 +86,7 @@
             determinate.nixosModules.default
             tuxedo-nixos.nixosModules.default
             nixos-hardware.nixosModules.tuxedo-pulse-15-gen2
+            watt.nixosModules.default
           ];
         };
       };

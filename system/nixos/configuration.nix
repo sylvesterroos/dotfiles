@@ -21,7 +21,9 @@
 
     # You can also split up your configuration and import pieces of it here:
     # ./users.nix
+    ./nh.nix
     ./tuxedo.nix
+    ./power.nix
     ./security.nix
     ./tailscale.nix
     ./kanata.nix
@@ -79,13 +81,11 @@
 
       extra-substituters = [
         "https://devenv.cachix.org"
-        "https://ghostty.cachix.org"
         "https://gitu.cachix.org"
       ];
       extra-trusted-public-keys = [
         "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
         "nixpkgs-python.cachix.org-1:hxjI7pFxTyuTHn2NkvWCrAUcNZLNS3ZAvfYNuYifcEU="
-        "ghostty.cachix.org-1:QB389yTa6gTyneehvqG58y0WnHjQOqgnA+wBnpWWxns="
         "gitu.cachix.org-1:iUIaNys1l3W1LF/M8OXzaTl7N/OinGOlzdUJUSc+5eY="
       ];
 
@@ -296,29 +296,6 @@
   };
   systemd.packages = [ pkgs.logiops ];
   systemd.services.logid.wantedBy = [ "multi-user.target" ];
-
-  services.power-profiles-daemon.enable = false;
-  services.tlp = {
-    enable = true;
-    settings = {
-      CPU_BOOST_ON_AC = 1;
-      CPU_BOOST_ON_BAT = 0;
-      CPU_SCALING_GOVERNOR_ON_AC = "performance";
-      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-    };
-  };
-  services.thermald.enable = true;
-
-  # https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/2669
-  services.pipewire.wireplumber.extraConfig = {
-    "10-disable-camera" = {
-      "wireplumber.profiles" = {
-        main = {
-          "monitor.libcamera" = "disabled";
-        };
-      };
-    };
-  };
 
   virtualisation = {
     libvirtd = {
