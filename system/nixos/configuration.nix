@@ -65,11 +65,6 @@
       # No longer needed because of Determinate Nix
       # experimental-features = "nix-command flakes";
       # auto-optimise-store = true;
-      # gc = {
-      #   automatic = outputs.gc-settings.automatic;
-      #   dates = outputs.gc-settings.frequency;
-      #   options = outputs.gc-settings.options;
-      # };
 
       # Opinionated: disable global registry. The global registry is a bloated list of someones favorites.
       flake-registry = "";
@@ -95,6 +90,12 @@
 
     # Opinionated: disable channels
     channel.enable = false;
+
+    gc = {
+      automatic = outputs.gc-settings.automatic;
+      dates = outputs.gc-settings.frequency;
+      options = outputs.gc-settings.options;
+    };
   };
 
   boot.kernel.sysctl = {
