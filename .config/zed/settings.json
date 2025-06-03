@@ -7,34 +7,6 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
-  "context_servers": {
-    "Tidewave": {
-      "command": {
-        "path": "/home/sylvester/.local/bin/mcp-proxy",
-        "args": ["http://localhost:4000/tidewave/mcp"],
-        "env": null
-      },
-      "settings": {}
-    }
-  },
-  "language_models": {
-    "openai": {
-      "api_url": "https://openrouter.ai/api/v1",
-      "available_models": [
-        {
-          "name": "deepseek/deepseek-r1:free",
-          "display_name": "DeepSeek R1 (free)",
-          "max_tokens": 164000
-        },
-        {
-          "name": "meta-llama/llama-4-scout:free",
-          "display_name": "OpenRouter (free)",
-          "max_tokens": 256000
-        }
-      ],
-      "version": "1"
-    }
-  },
   "edit_predictions": {
     "disabled_globs": [".env"],
     "mode": "subtle",
