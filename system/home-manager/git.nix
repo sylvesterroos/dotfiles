@@ -40,5 +40,10 @@
       gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
       user.signingkey = "~/.ssh/id_ed25519.pub";
     };
+
+    aliases = {
+      # Perfect for the daily standup
+      yesterday = "log --since='yesterday.midnight' --until='midnight' --all --no-merges --oneline --author=hello@sylvesterroos.com";
+    };
   };
 }
