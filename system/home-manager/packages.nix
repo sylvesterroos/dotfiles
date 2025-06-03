@@ -29,8 +29,8 @@ with pkgs;
   gnome-boxes
   kdePackages.discover
 
-  valent
-  gnomeExtensions.valent
+  # valent
+  # gnomeExtensions.valent
 
   (import ./livebook.nix { inherit pkgs; })
 

@@ -168,7 +168,7 @@
   services.gnome.gnome-browser-connector.enable = true;
 
   programs.kdeconnect = {
-    enable = false;
+    enable = true;
     package = pkgs.gnomeExtensions.gsconnect;
   };
 
