@@ -61,6 +61,7 @@
     "edit_prediction_provider": "copilot"
   },
   "vim_mode": true,
+  "vertical_scroll_margin": 10,
   "buffer_font_family": "JetBrainsMono Nerd Font",
   "show_copilot_suggestions": true,
   "languages": {
@@ -123,7 +124,7 @@
   "base_keymap": "VSCode",
   "theme": {
     "mode": "system",
-    "light": "Ayu Light",
+    "light": "Catppuccin Latte",
     "dark": "Gruvbox Dark Hard"
   },
   "terminal": {
