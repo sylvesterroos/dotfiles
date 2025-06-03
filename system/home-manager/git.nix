@@ -14,7 +14,7 @@
       };
     };
 
-    userEmail = "sylvester@thejoyofcoding.nl";
+    userEmail = "hello@sylvesterroos.com";
     userName = "Sylvester Roos";
 
     lfs.enable = true;
