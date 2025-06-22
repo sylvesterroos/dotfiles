@@ -18,7 +18,10 @@
   },
   "show_edit_predictions": false,
   "agent": {
-    "default_profile": "write",
+    "play_sound_when_agent_done": true,
+    "dock": "left",
+    "always_allow_tool_actions": true,
+    "default_profile": "ask",
     "inline_assistant_model": {
       "provider": "copilot_chat",
       "model": "gpt-4.1"
