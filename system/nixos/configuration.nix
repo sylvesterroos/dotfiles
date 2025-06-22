@@ -283,10 +283,6 @@
     # enableSSHSupport = true;
   };
 
-  programs.ssh = {
-    startAgent = true;
-  };
-
   # android-tools
   programs.adb.enable = true;
 
