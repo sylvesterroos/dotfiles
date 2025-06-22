@@ -28,6 +28,7 @@ with pkgs;
   virt-manager
   gnome-boxes
   kdePackages.discover
+  zotero
 
   # valent
   # gnomeExtensions.valent
