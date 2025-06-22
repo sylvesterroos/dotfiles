@@ -1,57 +1,44 @@
 { ... }:
 {
-  services.superfreq = {
-    enable = true;
-    settings = {
-      charger = {
-        governor = "performance";
-        turbo = "auto";
-        enable_auto_turbo = true;
-        turbo_auto_settings = {
-          load_threshold_high = 70.0;
-          load_threshold_low = 30.0;
-          temp_threshold_high = 75.0;
-          initial_turbo_state = false;
+  services.watt =
+    let
+      min_freq_mhz = 800;
+      tuxedo_pulse_15_gen_2_max_freq_mhz = 4300;
+    in
+    {
+      enable = true;
+      settings = {
+        charger = {
+          governor = "performance";
+          battery_charge_thresholds = [
+            40
+            80
+          ];
+          min_freq_mhz = min_freq_mhz;
+          max_freq_mhz = tuxedo_pulse_15_gen_2_max_freq_mhz;
         };
-        epp = "performance";
-        epb = "balance_performance";
-        platform_profile = "performance";
-        battery_charge_thresholds = [
-          40
-          80
-        ];
-      };
 
-      battery = {
-        governor = "powersave";
-        turbo = "auto";
-        enable_auto_turbo = true;
-        turbo_auto_settings = {
-          load_threshold_high = 80.0;
-          load_threshold_low = 40.0;
-          temp_threshold_high = 70.0;
-          initial_turbo_state = false;
+        battery = {
+          governor = "powersave";
+          min_freq_mhz = min_freq_mhz;
+          max_freq_mhz = builtins.floor (tuxedo_pulse_15_gen_2_max_freq_mhz * 0.75);
         };
-        epp = "power";
-        epb = "balance_power";
-        platform_profile = "low-power";
-      };
 
-      daemon = {
-        poll_interval_sec = 5;
-        adaptive_interval = true;
-        min_poll_interval_sec = 1;
-        max_poll_interval_sec = 30;
-        throttle_on_battery = true;
-        log_level = "Info";
-        stats_file_path = "/var/run/superfreq-stats";
-      };
+        daemon = {
+          poll_interval_sec = 5;
+          adaptive_interval = true;
+          min_poll_interval_sec = 1;
+          max_poll_interval_sec = 30;
+          throttle_on_battery = true;
+          log_level = "Info";
+          stats_file_path = "/var/run/watt-stats";
+        };
 
-      power_supply_ignore_list = {
-        mouse_battery = "hidpp_battery_0";
+        power_supply_ignore_list = {
+          mouse_battery = "hidpp_battery_0";
+        };
       };
     };
-  };
 
   services.power-profiles-daemon.enable = false;
 
@@ -65,5 +52,5 @@
     };
   };
 
-  services.thermald.enable = false;
+  services.thermald.enable = true;
 }
