@@ -616,15 +616,15 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1747926146,
+        "lastModified": 1749668624,
         "ref": "refs/heads/main",
-        "rev": "33dd37714b7dbf56a11339a4c6f56f11d8b85351",
-        "revCount": 488,
+        "rev": "dab7b4455e897c2dd1fa3e9711654880c4f90237",
+        "revCount": 506,
         "type": "git",
         "url": "https://seed.radicle.xyz/z4D5UCArafTzTQpDZNQRuqswh3ury.git"
       },
       "original": {
-        "rev": "33dd37714b7dbf56a11339a4c6f56f11d8b85351",
+        "rev": "dab7b4455e897c2dd1fa3e9711654880c4f90237",
         "type": "git",
         "url": "https://seed.radicle.xyz/z4D5UCArafTzTQpDZNQRuqswh3ury.git"
       }
