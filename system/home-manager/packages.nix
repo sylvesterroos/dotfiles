@@ -23,7 +23,6 @@ with pkgs;
   beam.packages.erlang_27.elixir_1_18
   nil
   radicle-node
-  radicle-desktop
   nix-alien
   virt-manager
   gnome-boxes

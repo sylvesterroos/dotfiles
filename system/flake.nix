@@ -28,8 +28,6 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nix-alien.url = "github:thiagokokada/nix-alien";
     gitu.url = "github:altsem/gitu";
-    # Find latest release at https://app.radicle.xyz/nodes/seed.radicle.xyz/rad:z4D5UCArafTzTQpDZNQRuqswh3ury/history
-    radicle-desktop.url = "git+https://seed.radicle.xyz/z4D5UCArafTzTQpDZNQRuqswh3ury.git?rev=dab7b4455e897c2dd1fa3e9711654880c4f90237";
     watt.url = "github:NotAShelf/watt";
   };
 

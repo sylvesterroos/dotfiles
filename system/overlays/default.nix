@@ -6,7 +6,6 @@
     {
       nix-alien = inputs.nix-alien.packages.${prev.system}.default;
       gitu = inputs.gitu.packages.${prev.system}.default;
-      radicle-desktop = inputs.radicle-desktop.packages.${prev.system}.default;
     }
     # This one brings our custom packages from the 'pkgs' directory
     // (import ../pkgs final.pkgs);
