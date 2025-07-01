@@ -5,6 +5,7 @@ with pkgs;
   nixfmt-rfc-style
   git
   git-lfs
+  helix
   neovim
   wget
   eza

@@ -23,7 +23,7 @@
     ./dconf.nix
     ./fish.nix
     ./git.nix
-    ./neovim.nix
+    ./helix.nix
   ];
 
   nixpkgs = {
