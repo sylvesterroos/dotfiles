@@ -20,7 +20,7 @@
   "agent": {
     "play_sound_when_agent_done": true,
     "dock": "left",
-    "always_allow_tool_actions": true,
+    "always_allow_tool_actions": false,
     "default_profile": "ask",
     "inline_assistant_model": {
       "provider": "copilot_chat",
