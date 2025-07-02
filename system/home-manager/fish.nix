@@ -12,12 +12,30 @@
     };
     interactiveShellInit = '''';
     shellAbbrs = {
-      nsh = "nix-shell --run fish";
+      nsf = {
+        expansion = "nix shell nixpkgs#% --command fish";
+        position = "command";
+        setCursor = true;
+      };
 
       yta-best = "yt-dlp --add-metadata --extract-audio --audio-format best";
       ytv-best = "yt-dlp --add-metadata -f bestvideo+bestaudio";
     };
     functions = {
+      ns = {
+        description = "Expand a nix shell command for a given package";
+        body = # fish
+          ''
+            if test (count $argv) -eq 0
+                echo "Usage: expand_nix <package>"
+                return 1
+            end
+            set pkg $argv[1]
+            # replace the entire buffer with the expanded nix shell command
+            commandline -r "nix shell nixpkgs#$pkg -c $pkg"
+          '';
+      };
+
       mkfile = {
         body = # fish
           ''
