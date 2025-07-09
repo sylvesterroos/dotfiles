@@ -19,12 +19,6 @@
 
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
 
-    tuxedo-nixos = {
-      url = "github:sylvesterroos/tuxedo-nixos";
-      # url = "github:chmanie/tuxedo-nixos";
-      # inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nix-alien.url = "github:thiagokokada/nix-alien";
     gitu.url = "github:altsem/gitu";
@@ -36,7 +30,6 @@
       self,
       nixpkgs,
       determinate,
-      tuxedo-nixos,
       nixos-hardware,
       watt,
       ...
@@ -83,7 +76,6 @@
             ./nixos/configuration.nix
 
             determinate.nixosModules.default
-            tuxedo-nixos.nixosModules.default
             nixos-hardware.nixosModules.tuxedo-pulse-15-gen2
             watt.nixosModules.default
           ];
