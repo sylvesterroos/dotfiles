@@ -73,7 +73,7 @@
           };
           modules = [
             # > The main nixos configuration file <
-            ./nixos/configuration.nix
+            ./odysseus/configuration.nix
 
             determinate.nixosModules.default
             nixos-hardware.nixosModules.tuxedo-pulse-15-gen2
