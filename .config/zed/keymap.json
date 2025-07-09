@@ -21,6 +21,14 @@
     }
   },
   {
+    "context": "vim_mode == normal",
+    "bindings": {
+      // leader (t)oggle (l)eft / (r)ight
+      "space t l": "workspace::ToggleLeftDock",
+      "space t r": "workspace::ToggleRightDock"
+    }
+  },
+  {
     "context": "vim_mode == visual",
     "bindings": {
       "shift-s": ["vim::PushAddSurrounds", {}]
