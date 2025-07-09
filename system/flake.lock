@@ -129,22 +129,6 @@
         "type": "github"
       }
     },
-    "flake-compat_3": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1673956053,
-        "narHash": "sha256-4gtG9iQuiKITOjNQQeQIpoIB6b16fm+504Ch3sNKLd8=",
-        "owner": "edolstra",
-        "repo": "flake-compat",
-        "rev": "35bb57c0c8d8b62bbfd284272c928ceb64ddbde9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "edolstra",
-        "repo": "flake-compat",
-        "type": "github"
-      }
-    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
@@ -454,22 +438,6 @@
     },
     "nixpkgs_6": {
       "locked": {
-        "lastModified": 1679318992,
-        "narHash": "sha256-uoj5Oy6hruIHuxzfQZtcalObe5kPrX9v+ClUMFEOzmE=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "e2c97799da5f5cd87adfa5017fba971771e123ef",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-22.11",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_7": {
-      "locked": {
         "lastModified": 1746904237,
         "narHash": "sha256-3e+AVBczosP5dCLQmMoMEogM57gmZ2qrVSrmq9aResQ=",
         "owner": "NixOS",
@@ -492,7 +460,6 @@
         "nix-alien": "nix-alien",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_5",
-        "tuxedo-nixos": "tuxedo-nixos",
         "watt": "watt"
       }
     },
@@ -513,28 +480,9 @@
         "type": "github"
       }
     },
-    "tuxedo-nixos": {
-      "inputs": {
-        "flake-compat": "flake-compat_3",
-        "nixpkgs": "nixpkgs_6"
-      },
-      "locked": {
-        "lastModified": 1723120958,
-        "narHash": "sha256-2zBh4E1hxWWvbg/5X4lH5tIF5NWep7t1aTbPuY/jDG0=",
-        "owner": "sylvesterroos",
-        "repo": "tuxedo-nixos",
-        "rev": "579d91969ec621bc6f09592145ef862cf19dc3a9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "sylvesterroos",
-        "repo": "tuxedo-nixos",
-        "type": "github"
-      }
-    },
     "watt": {
       "inputs": {
-        "nixpkgs": "nixpkgs_7"
+        "nixpkgs": "nixpkgs_6"
       },
       "locked": {
         "lastModified": 1749377316,
