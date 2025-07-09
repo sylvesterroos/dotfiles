@@ -36,6 +36,7 @@
     "edit_prediction_provider": "copilot"
   },
   "vim_mode": true,
+  "helix_mode": false,
   "hide_mouse": "never",
   "vertical_scroll_margin": 10,
   "buffer_font_family": "JetBrainsMono Nerd Font",

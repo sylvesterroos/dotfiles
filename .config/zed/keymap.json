@@ -1,3 +1,4 @@
+// VIM CONFIG
 [
   {
     "context": "Workspace",
@@ -35,3 +36,287 @@
     }
   }
 ]
+
+// HELIX CONFIG
+// [
+//   {
+//     "context": "Editor && (vim_mode == normal || vim_mode == visual || vim_mode == helix_normal) && !VimWaiting && !menu",
+//     "bindings": {
+//       // put key-bindings here if you want them to work in normal & visual mode
+//       // Git
+//       "space g h d": "editor::ToggleSelectedDiffHunks",
+//       "space g h r": "git::Restore",
+//       "space g b": "git::Blame",
+//       "space g o": "editor::OpenPermalinkToLine",
+
+//       // File find
+//       "space f s": "workspace::Save",
+//       "space f t": "project_panel::ToggleFocus",
+//       "space f g": "pane::DeploySearch",
+//       "space f p": "pane::DeploySearch",
+//       "space f y": "workspace::CopyRelativePath",
+//       "space f Y": "editor::CopyFileName",
+//       "space w h": "workspace::ActivatePaneLeft",
+//       "space w l": "workspace::ActivatePaneRight",
+//       "space w k": "workspace::ActivatePaneUp",
+//       "space w j": "workspace::ActivatePaneDown",
+//       "space w d": "pane::CloseAllItems",
+
+//       "space w s": "pane::SplitHorizontal",
+//       "space w v": "pane::SplitVertical",
+//       "space w w": "workspace::ActivateNextPane",
+//       "alt-j": "editor::MoveLineDown",
+//       "alt-k": "editor::MoveLineUp",
+//       // Toggle inlay hints
+//       "space t i": "editor::ToggleInlayHints",
+//       "U": "vim::Redo",
+//       "g e": "vim::EndOfDocument",
+//       "g c": "editor::ToggleComments",
+//       "g h": "editor::Hover",
+//       // + Buffers
+//       // Switch between buffers
+//       "g p": "pane::ActivatePreviousItem",
+//       "g n": "pane::ActivateNextItem",
+//       "g l": "vim::SelectNext",
+
+//       "space b p": "pane::ActivatePreviousItem",
+//       "space b n": "pane::ActivateNextItem",
+//       // Close active panel
+//       "g q": "pane::CloseActiveItem",
+
+//       "alt -": "vim::TemporaryNormal",
+//       // Matchings
+//       "m i g": ["workspace::SendKeystrokes", "v i \""],
+//       "m i q": ["workspace::SendKeystrokes", "v i '"],
+//       "m i b": ["workspace::SendKeystrokes", "v i {"],
+//       "m i r": ["workspace::SendKeystrokes", "v i ("],
+//       "m i s": ["workspace::SendKeystrokes", "v i ["],
+//       "m i a": ["workspace::SendKeystrokes", "v i <"],
+//       "m a g": ["workspace::SendKeystrokes", "v a \""],
+//       "m a q": ["workspace::SendKeystrokes", "v a '"],
+//       "m a b": ["workspace::SendKeystrokes", "v a {"],
+//       "m a s": ["workspace::SendKeystrokes", "v a ["],
+//       "m a r": ["workspace::SendKeystrokes", "v a ("],
+//       "m a a": ["workspace::SendKeystrokes", "v a <"],
+//       "m s q": ["workspace::SendKeystrokes", "v m s ' escape"],
+//       "m s g": ["workspace::SendKeystrokes", "v m s \" escape"],
+//       "m s b": ["workspace::SendKeystrokes", "v m s { escape"],
+//       "m s s": ["workspace::SendKeystrokes", "v m s [ escape"],
+//       "m s a": ["workspace::SendKeystrokes", "v m s < escape"],
+//       "m s r": ["workspace::SendKeystrokes", "v m s ( escape"],
+//       "m c g": ["workspace::SendKeystrokes", "alt - c s \""],
+//       "shift-c": "editor::AddSelectionBelow",
+
+//       // Toggle soft wrap
+//       "space u w": "editor::ToggleSoftWrap",
+
+//       // NOTE: Toggle Zen mode, not fully working yet
+//       "space t z": "workspace::ToggleCenteredLayout",
+//       "space t t": "workspace::ToggleBottomDock",
+//       "space t k": "task::Spawn",
+//       "space t s": "theme_selector::Toggle",
+//       "space g g": ["task::Spawn", { "task_name": "lazygit" }],
+//       "space s p": ["task::Spawn", { "task_name": "Find in Files" }],
+//       // Open markdown preview
+//       "space t P": "markdown::OpenPreview",
+//       "space t p": "markdown::OpenPreviewToTheSide",
+
+//       // Search word under cursor
+//       "space f w": "pane::DeploySearch",
+
+//       // Chat with AI
+//       "space a c": "agent::ToggleFocus",
+//       // Go to file with `gf`
+//       "g f": "editor::OpenSelectedFilename",
+//       "space p p": "projects::OpenRecent",
+//       "alt-o": "vim::SelectLargerSyntaxNode"
+//     }
+//   },
+//   {
+//     "context": "Editor && (vim_mode == normal || vim_mode == helix_normal) && !VimWaiting && !menu",
+//     "bindings": {
+//       // put key-bindings here if you want them to work only in normal mode
+//       // Window movement bindings
+//       // Ctrl jklk to move between panes
+//       // "ctrl-h": "workspace::ActivatePaneLeft",
+//       // "ctrl-l": "workspace::ActivatePaneRight",
+//       // "ctrl-k": "workspace::ActivatePaneUp",
+//       // "ctrl-j": "workspace::ActivatePaneDown",
+
+//       // +LSP
+//       "space c a": "editor::ToggleCodeActions",
+//       "space c f": "editor::Format",
+//       "space c r": "editor::Rename",
+//       "g d": "editor::GoToDefinition",
+//       "g D": "editor::GoToDefinitionSplit",
+//       "g i": "editor::GoToImplementation",
+//       "g I": "editor::GoToImplementationSplit",
+//       "g t": "editor::GoToTypeDefinition",
+//       "g T": "editor::GoToTypeDefinitionSplit",
+//       "g r": "editor::FindAllReferences",
+//       "] d": "editor::GoToDiagnostic",
+//       "[ d": "editor::GoToPreviousDiagnostic",
+//       // TODO: Go to next/prev error
+//       "] e": "editor::GoToDiagnostic",
+//       "[ e": "editor::GoToPreviousDiagnostic",
+//       // Symbol search
+//       "space c s": "outline::Toggle",
+//       "space c S": "project_symbols::Toggle",
+//       // Diagnostics
+//       "space c x": "diagnostics::Deploy",
+
+//       // +Git
+//       // Git prev/next hunk
+//       "] h": "editor::GoToHunk",
+//       "[ h": "editor::GoToPreviousHunk",
+
+//       // TODO: git diff is not ready yet, refer https://github.com/zed-industries/zed/issues/8665#issuecomment-2194000497
+
+//       "ctrl-q": "pane::CloseActiveItem",
+//       "space b d": "pane::CloseActiveItem",
+//       // Close other items
+//       "space b o": "pane::CloseInactiveItems",
+//       // Save file
+//       "ctrl-s": "workspace::Save",
+//       // File finder
+//       "space space": "file_finder::Toggle",
+//       // TODO: Open other files
+//       // Show project panel with current file
+//       "space f e": "pane::RevealInProjectPanel"
+//     }
+//   },
+//   {
+//     "context": "Editor && (vim_mode == insert) && !VimWaiting && !menu",
+//     "bindings": {
+//       // put key-bindings here if you want them to work only in normal mode
+//       "ctrl-k": "editor::DeleteToEndOfLine"
+//     }
+//   },
+//   // Empty pane, set of keybindings that are available when there is no active editor
+//   {
+//     "context": "EmptyPane || SharedScreen",
+//     "bindings": {
+//       // Open file finder
+//       "space space": "file_finder::Toggle",
+//       // Open recent project
+//       "space p p": "projects::OpenRecent"
+//     }
+//   },
+//   {
+//     "context": "Editor && (vim_mode == visual) && !VimWaiting && !menu",
+//     "bindings": {
+//       // visual, visual line & visual block modes
+//       "g c": "editor::ToggleComments",
+//       "m s": ["vim::PushAddSurrounds", {}],
+//       "m c": ["vim::PushChangeSurrounds", {}]
+//     }
+//   },
+//   // Toggle terminal
+//   {
+//     "context": "Workspace",
+//     "bindings": {
+//       "ctrl-`": "terminal_panel::ToggleFocus"
+//     }
+//   },
+//   {
+//     "context": "Terminal",
+//     "bindings": {
+//       "ctrl-h": "workspace::ActivatePaneLeft",
+//       "ctrl-l": "workspace::ActivatePaneRight",
+//       "ctrl-k": "workspace::ActivatePaneUp",
+//       "ctrl-j": "workspace::ActivatePaneDown",
+//       "alt-1": "terminal::ToggleViMode"
+//     }
+//   },
+//   // File panel (netrw)
+//   {
+//     "context": "ProjectPanel && not_editing",
+//     "bindings": {
+//       "a": "project_panel::NewFile",
+//       "A": "project_panel::NewDirectory",
+//       "r": "project_panel::Rename",
+//       "d": "project_panel::Delete",
+//       "x": "project_panel::Cut",
+//       "c": "project_panel::Copy",
+//       "p": "project_panel::Paste",
+//       "y": "workspace::CopyRelativePath",
+//       // Close project panel as project file panel on the right
+//       "q": "workspace::ToggleLeftDock",
+//       "space e": "workspace::ToggleRightDock",
+//       // Navigate between panel
+//       "ctrl-h": "workspace::ActivatePaneLeft",
+//       "ctrl-l": "workspace::ActivatePaneRight",
+//       "ctrl-k": "workspace::ActivatePaneUp",
+//       "ctrl-j": "workspace::ActivatePaneDown",
+//       "space w h": "workspace::ActivatePaneLeft",
+//       "space w l": "workspace::ActivatePaneRight",
+//       "space w k": "workspace::ActivatePaneUp",
+//       "space w j": "workspace::ActivatePaneDown"
+//     }
+//   },
+//   // Panel nagivation
+//   {
+//     "context": "Dock",
+//     "bindings": {
+//       "ctrl-w h": "workspace::ActivatePaneLeft",
+//       "ctrl-w l": "workspace::ActivatePaneRight",
+//       "ctrl-w k": "workspace::ActivatePaneUp",
+//       "ctrl-w j": "workspace::ActivatePaneDown"
+//     }
+//   },
+
+//   {
+//     "context": "Dock && (vim_mode == helix_normal)",
+//     "bindings": {
+//       "space w h": "workspace::ActivatePaneLeft",
+//       "space w l": "workspace::ActivatePaneRight",
+//       "space w k": "workspace::ActivatePaneUp",
+//       "space w j": "workspace::ActivatePaneDown",
+//       "q": "workspace::ToggleRightDock"
+//     }
+//   },
+//   {
+//     "context": "Workspace",
+//     "bindings": {
+//       // Map VSCode like keybindings
+//       "cmd-b": "workspace::ToggleRightDock"
+//     }
+//   },
+//   {
+//     "context": "vim_operator == a || vim_operator == i || vim_operator == cs",
+//     "bindings": {
+//       "w": "vim::Word",
+//       "shift-w": ["vim::Word", { "ignore_punctuation": true }],
+//       // Subword TextObject
+//       // "w": "vim::Subword",
+//       // "shift-w": ["vim::Subword", { "ignore_punctuation": true }],
+//       "t": "vim::Tag",
+//       "s": "vim::Sentence",
+//       "p": "vim::Paragraph",
+//       "'": "vim::Quotes",
+//       "`": "vim::BackQuotes",
+//       "\"": "vim::DoubleQuotes",
+//       "q": "vim::AnyQuotes",
+//       "g": "vim::AnyQuotes",
+//       "|": "vim::VerticalBars",
+//       "(": "vim::Parentheses",
+//       ")": "vim::Parentheses",
+//       // "b": "vim::Parentheses",
+//       "b": "vim::AnyBrackets",
+//       "[": "vim::SquareBrackets",
+//       "]": "vim::SquareBrackets",
+//       "r": "vim::SquareBrackets",
+//       "{": "vim::CurlyBrackets",
+//       "}": "vim::CurlyBrackets",
+//       "shift-b": "vim::CurlyBrackets",
+//       "<": "vim::AngleBrackets",
+//       ">": "vim::AngleBrackets",
+//       "a": "vim::Argument",
+//       "i": "vim::IndentObj",
+//       "shift-i": ["vim::IndentObj", { "include_below": true }],
+//       "f": "vim::Method",
+//       "c": "vim::Class",
+//       "e": "vim::EntireFile"
+//     }
+//   }
+// ]
