@@ -93,11 +93,6 @@
     # Opinionated: disable channels
     channel.enable = false;
 
-    gc = {
-      automatic = outputs.gc-settings.automatic;
-      dates = outputs.gc-settings.frequency;
-      options = outputs.gc-settings.options;
-    };
   };
 
   boot.kernel.sysctl = {

@@ -51,7 +51,6 @@
     };
   };
 
-  nix.gc = outputs.gc-settings;
 
   home = {
     username = "sylvester";

@@ -58,11 +58,6 @@
       # These are usually stuff you would upstream into home-manager
       homeManagerModules = import ./modules/home-manager;
 
-      gc-settings = {
-        automatic = true;
-        frequency = "daily";
-        options = "--delete-older-than 14d";
-      };
 
       # NixOS configuration entrypoint
       # Available through 'nixos-rebuild --flake .#your-hostname'
