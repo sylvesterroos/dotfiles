@@ -32,8 +32,6 @@ with pkgs;
   # valent
   # gnomeExtensions.valent
 
-  (import ./livebook.nix { inherit pkgs; })
-
   # extra gnome packages
   gnome-tweaks
   gnome-software
