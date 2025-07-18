@@ -18,6 +18,7 @@
     # Or modules from other flakes (such as nixos-hardware):
     # inputs.hardware.nixosModules.common-cpu-amd
     # inputs.hardware.nixosModules.common-ssd
+    inputs.nixos-hardware.nixosModules.tuxedo-pulse-15-gen2
 
     # You can also split up your configuration and import pieces of it here:
     # ./users.nix

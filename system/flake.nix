@@ -30,7 +30,6 @@
       self,
       nixpkgs,
       determinate,
-      nixos-hardware,
       watt,
       ...
     }@inputs:
@@ -70,7 +69,6 @@
             ./odysseus/configuration.nix
 
             determinate.nixosModules.default
-            nixos-hardware.nixosModules.tuxedo-pulse-15-gen2
             watt.nixosModules.default
           ];
         };
