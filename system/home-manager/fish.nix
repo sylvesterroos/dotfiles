@@ -55,6 +55,86 @@
           '';
       };
 
+      prune-direnv-gcroots = {
+        description = ''
+          Finds all `.direnv` and `.devenv` gcroots and removes them. Additionally runs `direnv deny` in the associated projects.
+
+          Useful when you have a bunch of scattered Devenv projects that are causing the nix store to balloon.
+        '';
+        body = # fish
+          ''
+            function contains_direnv_or_devenv
+                set path $argv[1]
+                if string match -q -r '/\.direnv/|/\.devenv/' $path
+                    return 0
+                else
+                    return 1
+                end
+            end
+
+            # Function: Walk up from the given path until we find a directory named .direnv or .devenv,
+            # then return its parent directory (the project root).
+            function find_env_project_root
+                set path $argv[1]
+                while test "$path" != "/"
+                    # If the current directory is .direnv or .devenv, return its parent
+                    if test (basename $path) = ".direnv" -o (basename $path) = ".devenv"
+                        echo (dirname $path)
+                        return 0
+                    end
+                    # Move up one directory
+                    set path (dirname $path)
+                end
+                return 1
+            end
+
+            set deny_dirs
+            set symlinks_to_remove
+
+            # Loop through all symlinks in /nix/var/nix/gcroots/auto/
+            for symlink in (fd -t l . /nix/var/nix/gcroots/auto/)
+                # Get the symlink target (single follow)
+                set target (readlink $symlink)
+                # Resolve relative symlink targets to absolute paths
+                if test (string sub -l 1 -- $target) = "/"
+                    set resolved_target $target
+                else
+                    set resolved_target (realpath (dirname $symlink)/$target)
+                end
+
+                # If the resolved target contains .direnv or .devenv, find the project root
+                if contains_direnv_or_devenv $resolved_target
+                    set parent_dir (find_env_project_root $resolved_target)
+                    if test -n "$parent_dir"
+                        set deny_dirs $deny_dirs $parent_dir
+                        set symlinks_to_remove $symlinks_to_remove $symlink
+                    end
+                end
+            end
+
+            # Deduplicate the list of project roots
+            set deny_dirs (printf "%s\n" $deny_dirs | sort -u)
+
+            # Run direnv deny in each unique project root
+            for d in $deny_dirs
+                echo "Running direnv deny in $d"
+                pushd $d
+                direnv deny
+                popd
+            end
+
+            echo "Total direnvs denied: "(count $deny_dirs)
+
+            # Remove the gcroot symlinks
+            for s in $symlinks_to_remove
+                echo "Removing gcroot symlink $s pointing to $(readlink $s)"
+                sudo rm $s
+            end
+
+            echo "Total gcroot symlinks removed: "(count $symlinks_to_remove)
+          '';
+      };
+
       ###
       # Git functions
       ###
