@@ -25,7 +25,6 @@ with pkgs;
   radicle-node
   nix-alien
   virt-manager
-  gnome-boxes
   kdePackages.discover
   zotero
 
