@@ -51,7 +51,6 @@
     };
   };
 
-
   home = {
     username = "sylvester";
     homeDirectory = "/home/sylvester";
@@ -106,7 +105,6 @@
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
-    mise.enable = true;
   };
 
   programs.vscode = {
@@ -115,7 +113,6 @@
   };
 
   programs.gh.enable = true;
-  programs.mise.enable = true;
   programs.starship.enable = true;
   programs.autojump.enable = true;
   programs.yt-dlp.enable = true;
