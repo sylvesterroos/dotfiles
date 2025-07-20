@@ -14,7 +14,7 @@
       };
     };
 
-    userEmail = "hello@sylvesterroos.com";
+    userEmail = "sylvester@sylvesterroos.com";
     userName = "Sylvester Roos";
 
     lfs.enable = true;
