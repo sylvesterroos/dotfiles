@@ -24,6 +24,7 @@
     ./fish.nix
     ./git.nix
     ./helix.nix
+    ./systemd.nix
   ];
 
   nixpkgs = {
