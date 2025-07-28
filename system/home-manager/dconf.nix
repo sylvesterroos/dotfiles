@@ -132,7 +132,7 @@
       pipeline = "pipeline_default";
     };
     "org/gnome/shell/extensions/blur-my-shell/overview" = {
-      blur = true;
+      blur = false;
     };
     "org/gnome/shell/extensions/blur-my-shell/dash-to-dock" = {
       blur = true;
