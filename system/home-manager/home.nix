@@ -20,6 +20,7 @@
 
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
+    ./packages.nix
     ./dconf.nix
     ./fish.nix
     ./git.nix
@@ -71,8 +72,6 @@
   };
 
   # Add stuff for your user as you see fit:
-  home.packages = (import ./packages.nix { inherit pkgs; });
-
   home.sessionVariables = {
     XDG_CACHE_HOME = "$HOME/.cache";
     XDG_CONFIG_HOME = "$HOME/.config";
