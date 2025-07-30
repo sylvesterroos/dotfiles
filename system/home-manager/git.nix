@@ -1,6 +1,11 @@
-{ ... }:
-
+{ pkgs, ... }:
 {
+  programs.jujutsu = {
+    enable = true;
+  };
+
+  home.packages = with pkgs; [ jjui ];
+
   programs.git = {
     enable = true;
 
