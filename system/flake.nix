@@ -28,8 +28,9 @@
   outputs =
     {
       self,
-      nixpkgs,
       determinate,
+      nixpkgs,
+      home-manager,
       watt,
       ...
     }@inputs:
@@ -46,7 +47,7 @@
       # Accessible through 'nix build', 'nix shell', etc
       packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
       # Formatter for your nix files, available through 'nix fmt'
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
 
       # Your custom packages and modifications, exported as overlays
       overlays = import ./overlays { inherit inputs; };
@@ -70,6 +71,17 @@
 
             determinate.nixosModules.default
             watt.nixosModules.default
+          ];
+        };
+      };
+
+      homeConfigurations = {
+        "sylvester@odysseus" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [
+            # > Our main home-manager configuration file <
+            ./home-manager/home.nix
           ];
         };
       };

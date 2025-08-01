@@ -1,10 +1,13 @@
 { pkgs, ... }:
 {
+  home.packages = with pkgs; [
+    gitu
+    jjui
+  ];
+
   programs.jujutsu = {
     enable = true;
   };
-
-  home.packages = with pkgs; [ jjui ];
 
   programs.git = {
     enable = true;

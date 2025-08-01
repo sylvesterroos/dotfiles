@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ ... }:
 
 {
   security.sudo-rs = {
@@ -6,4 +6,6 @@
     execWheelOnly = true;
     wheelNeedsPassword = true;
   };
+
+  environment.memoryAllocator.provider = "graphene-hardened-light";
 }

@@ -1,5 +1,3 @@
-# This is your home-manager configuration file
-# Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 {
   inputs,
   outputs,
@@ -19,12 +17,11 @@
     # inputs.nix-colors.homeManagerModules.default
 
     # You can also split up your configuration and import pieces of it here:
-    # ./nvim.nix
-    ./packages.nix
     ./dconf.nix
     ./fish.nix
     ./git.nix
     ./helix.nix
+    ./packages.nix
     ./systemd.nix
   ];
 
@@ -56,19 +53,6 @@
   home = {
     username = "sylvester";
     homeDirectory = "/home/sylvester";
-  };
-
-  programs.bash = {
-    enable = true;
-    initExtra = # bash
-      ''
-        # use fish as the shell, but keep bash as the login shell
-        if [[ $(${lib.getExe' pkgs.procps "ps"} --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
-        then
-          shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
-          exec ${lib.getExe pkgs.fish} $LOGIN_OPTION
-        fi
-      '';
   };
 
   # Add stuff for your user as you see fit:

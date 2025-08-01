@@ -3,7 +3,7 @@
 {
   services.kanata = {
     # use gnome-tweaks when a simple caps -> esc is needed
-    enable = false;
+    enable = true;
     keyboards = {
       capsToEscCtrl = {
         # do not specify `devices` to use all keyboards

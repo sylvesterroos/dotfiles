@@ -18,23 +18,32 @@
     # Or modules from other flakes (such as nixos-hardware):
     # inputs.hardware.nixosModules.common-cpu-amd
     # inputs.hardware.nixosModules.common-ssd
-    inputs.nixos-hardware.nixosModules.tuxedo-pulse-15-gen2
 
     # You can also split up your configuration and import pieces of it here:
-    # ./users.nix
-    ./nh.nix
-    ./tuxedo.nix
-    ./power.nix
-    ./security.nix
-    ./tailscale.nix
-    ./kanata.nix
+    ./audio.nix
+    ./avahi.nix
+    ./bootloader.nix
+    ./firewall.nix
+    ./flatpak.nix
+    ./gnome.nix
     ./livebook.nix
+    ./logiops.nix
+    ./nh.nix
+    ./nix-ld.nix
+    ./packages.nix
+    ./podman.nix
+    ./power.nix
+    ./printing.nix
+    ./qmk.nix
+    ./security.nix
+    ./ssh.nix
+    ./tailscale.nix
+    ./tuxedo.nix
+    ./users.nix
+    ./virtual-machines.nix
 
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
-
-    # Import home-managers's NixOS modules
-    inputs.home-manager.nixosModules.home-manager
   ];
 
   nixpkgs = {
@@ -95,32 +104,6 @@
 
     # Opinionated: disable channels
     channel.enable = false;
-
-  };
-
-  boot.kernel.sysctl = {
-    # enable SysRq shortcuts
-    "kernel.sysrq" = 1;
-  };
-
-  # required to configure QMK keyboard as a non-root user
-  hardware.keyboard.qmk.enable = true;
-
-  # Bootloader.
-  boot.loader.systemd-boot = {
-    enable = true;
-    memtest86.enable = true;
-  };
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  # Setup keyfile
-  boot.initrd.secrets = {
-    "/crypto_keyfile.bin" = null;
-  };
-
-  # boot splash screen
-  boot.plymouth = {
-    enable = true;
   };
 
   networking.hostName = "odysseus";
@@ -146,79 +129,6 @@
     LC_TIME = "en_IE.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
-
-  # remove some default packages
-  environment.gnome.excludePackages = with pkgs; [
-    epiphany
-    evince
-    geary
-    gnome-maps
-    gnome-music
-    gnome-weather
-    seahorse
-    totem
-  ];
-  services.xserver.excludePackages = [ pkgs.xterm ];
-
-  services.gnome.gnome-browser-connector.enable = true;
-
-  programs.kdeconnect = {
-    enable = true;
-    package = pkgs.gnomeExtensions.gsconnect;
-  };
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "altgr-intl";
-  };
-
-  # Enable CUPS to print documents.
-  services.printing = {
-    enable = true;
-    drivers = with pkgs; [ cups-brother-mfcl2800dw ];
-  };
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
-  };
-
-  # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
-  home-manager = {
-    extraSpecialArgs = {
-      inherit inputs outputs;
-    };
-    users = {
-      # Import your home-manager configuration
-      sylvester = import ../home-manager/home.nix;
-    };
-  };
-
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
     nerd-fonts.zed-mono
@@ -226,38 +136,6 @@
 
     libre-baskerville # times new roman alternative
   ];
-
-  users.users = {
-    sylvester = {
-      isNormalUser = true;
-      description = "Sylvester Roos";
-      shell = pkgs.bashInteractive;
-      extraGroups = [
-        "networkmanager"
-        "wheel"
-        "libvirtd"
-        "adbusers"
-        "plugdev"
-        "podman"
-      ];
-    };
-  };
-  # create non-default groups so they can be assigned
-  users.groups.podman = { };
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = (import ./packages.nix { inherit pkgs; });
-
-  # workaround for nautilus gstreamer plugin not working https://github.com/NixOS/nixpkgs/issues/195936#issuecomment-1278954466
-  environment.sessionVariables.GST_PLUGIN_SYSTEM_PATH_1_0 =
-    lib.makeSearchPathOutput "lib" "lib/gstreamer-1.0"
-      [
-        pkgs.gst_all_1.gst-plugins-good
-        pkgs.gst_all_1.gst-plugins-bad
-        pkgs.gst_all_1.gst-plugins-ugly
-        pkgs.gst_all_1.gst-libav
-      ];
 
   # Set variables for the global environment
   environment.variables = {
@@ -268,94 +146,14 @@
     DO_NOT_TRACK = 1;
   };
 
-  # disabled because it breaks Loupe
-  # environment.memoryAllocator.provider = "graphene-hardened";
-
-  # Run unpatched dynamic binaries on NixOS
-  programs.nix-ld = {
-    enable = true;
-  };
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
   programs.gnupg.agent = {
     enable = true;
-    # enableSSHSupport = true;
   };
 
   # android-tools
   programs.adb.enable = true;
 
-  # List services that you want to enable:
-  services.flatpak.enable = true;
-  services.locate.enable = true;
-  services.mullvad-vpn = {
-    enable = true;
-    package = pkgs.mullvad-vpn;
-  };
-  systemd.packages = [ pkgs.logiops ];
-  systemd.services.logid.wantedBy = [ "multi-user.target" ];
-
-  virtualisation = {
-    libvirtd = {
-      enable = true;
-      qemu = {
-        package = pkgs.qemu_kvm;
-        swtpm.enable = true;
-        ovmf = {
-          enable = true;
-          packages = [ pkgs.OVMFFull.fd ];
-        };
-        vhostUserPackages = [
-          pkgs.virtiofsd
-        ];
-      };
-    };
-    spiceUSBRedirection.enable = true;
-
-    containers.enable = true;
-    podman = {
-      enable = true;
-
-      # Create a `docker` alias for podman, to use it as a drop-in replacement
-      dockerCompat = true;
-
-      # let docker tools find the podman socket
-      # user needs to be in the podman group
-      dockerSocket.enable = true;
-
-      # Required for containers under podman-compose to be able to talk to each other.
-      defaultNetwork.settings = {
-        dns_enabled = true;
-      };
-    };
-  };
-
   services.fwupd.enable = true;
-
-  # This setups a SSH server. Very important if you're setting up a headless system.
-  # Feel free to remove if you don't need it.
-  services.openssh = {
-    enable = true;
-    settings = {
-      # Opinionated: forbid root login through SSH.
-      PermitRootLogin = "no";
-      # Opinionated: use keys only.
-      # Remove if you want to SSH using passwords
-      PasswordAuthentication = false;
-    };
-  };
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  networking.firewall.enable = false;
-
-  # TODO does this work with flakes?
-  # system.autoUpgrade.enable = true;
-  # system.autoUpgrade.flags = [ "--upgrade-all" ];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";

@@ -18,14 +18,13 @@
     betterdiscordctl
     via
     gitleaks
-    gitu # git porcelain outside of emacs
     beam.packages.erlang_27.elixir_1_18
     nil
     radicle-node
     nix-alien
-    virt-manager
     kdePackages.discover
     zotero
+    gradia
 
     # valent
     # gnomeExtensions.valent
