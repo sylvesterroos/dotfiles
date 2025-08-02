@@ -75,7 +75,7 @@
     channel.enable = false;
   };
 
-  networking.hostName = "odysseus";
+  networking.hostName = "creek";
 
   # Enable networking
   networking.networkmanager.enable = true;

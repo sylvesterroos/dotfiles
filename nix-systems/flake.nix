@@ -64,12 +64,12 @@
     homeManagerModules = import ./modules/home-manager;
 
     nixosConfigurations = {
-      odysseus = nixpkgs.lib.nixosSystem {
+      creek = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit inputs outputs;
         };
         modules = [
-          ./odysseus/configuration.nix
+          ./hosts/creek/configuration.nix
 
           determinate.nixosModules.default
           watt.nixosModules.default
@@ -78,11 +78,11 @@
     };
 
     homeConfigurations = {
-      "sylvester@odysseus" = home-manager.lib.homeManagerConfiguration {
+      "sylvester@creek" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [
-          ./home-manager/home.nix
+          ./hosts/creek/home-manager/home.nix
         ];
       };
     };

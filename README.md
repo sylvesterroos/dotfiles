@@ -30,20 +30,22 @@ To ignore certain files or directories when using Stow, you can add matching reg
 
 To update the system, run:
 ```sh
-nix flake update --commit-lock-file --flake $HOME/.dotfiles/system
+nh os switch --update
 
-# or make use of the included abbreviation
-update
+# or
+
+nix flake update --commit-lock-file --flake $HOME/.dotfiles/system
 ```
 
 To rebuild the system, run:
 ```sh
-sudo nixos-rebuild --flake path:$HOME/.dotfiles/system#odysseus switch
-
-# or make use of the included abbreviation
-rebuild switch
+nh os switch --hostname my_hostname
 ```
 
-> **NOTE**
->
-> Abbreviations, unlike aliases, get expanded to the full command.
+#### Home Manager
+
+To switch your user profile with Home Manager, use:
+
+```sh
+nh home switch
+```
