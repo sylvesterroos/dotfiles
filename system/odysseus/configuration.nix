@@ -7,9 +7,7 @@
   config,
   pkgs,
   ...
-}:
-
-{
+}: {
   # You can import other NixOS modules here
   imports = [
     # If you want to use modules your own flake exports (from modules/nixos):
@@ -73,35 +71,6 @@
   };
 
   nix = {
-    settings = {
-      # No longer needed because of Determinate Nix
-      # experimental-features = "nix-command flakes";
-      # auto-optimise-store = true;
-
-      # Opinionated: disable global registry. The global registry is a bloated list of someones favorites.
-      flake-registry = "";
-
-      trusted-users = [
-        # when flakes want to add extra-substituters
-        "sylvester"
-      ];
-
-      extra-substituters = [
-        "https://install.determinate.systems"
-        "https://devenv.cachix.org"
-        "https://gitu.cachix.org"
-      ];
-      extra-trusted-public-keys = [
-        "cache.flakehub.com-3:hJuILl5sVK4iKm86JzgdXW12Y2Hwd5G07qKtHTOcDCM="
-        "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
-        "nixpkgs-python.cachix.org-1:hxjI7pFxTyuTHn2NkvWCrAUcNZLNS3ZAvfYNuYifcEU="
-        "gitu.cachix.org-1:iUIaNys1l3W1LF/M8OXzaTl7N/OinGOlzdUJUSc+5eY="
-      ];
-
-      # Enable Determinate Nix's lazy trees
-      lazy-trees = true;
-    };
-
     # Opinionated: disable channels
     channel.enable = false;
   };
