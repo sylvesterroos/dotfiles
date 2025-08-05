@@ -10,7 +10,7 @@
       "formatter": {
         "external": {
           "command": "sh",
-          "arguments": ["-c", "cd system && nix fmt"]
+          "arguments": ["-c", "cd nix-systems && nix fmt"]
         }
       }
     }
