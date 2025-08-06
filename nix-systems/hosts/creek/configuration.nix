@@ -73,6 +73,8 @@
   nix = {
     # Opinionated: disable channels
     channel.enable = false;
+
+    settings.trusted-users = ["sylvester"];
   };
 
   networking.hostName = "creek";

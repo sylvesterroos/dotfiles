@@ -13,7 +13,6 @@
     ];
 
     flake-registry = "";
-    trusted-users = ["sylvester"];
     lazy-trees = true;
   };
 
