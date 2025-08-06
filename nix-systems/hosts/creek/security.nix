@@ -7,5 +7,6 @@
     wheelNeedsPassword = true;
   };
 
-  environment.memoryAllocator.provider = "graphene-hardened-light";
+  # Loupe doesn't work with 'graphene-hardened*'
+  # environment.memoryAllocator.provider = "graphene-hardened-light";
 }
