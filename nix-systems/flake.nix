@@ -60,16 +60,14 @@
     forAllSystems = nixpkgs.lib.genAttrs systems;
 
     lib = nixpkgs.lib;
-    flakeDir = toString ./.;
 
-    loadModules = path: extraArgs:
+    loadModules = path:
       import ./lib/load-modules.nix {
-        inherit lib inputs outputs path;
-        extraArgs = extraArgs // {inherit flakeDir;};
+        inherit lib path inputs outputs;
       };
 
-    commonNixosModules = loadModules ./modules/common/nixos {inherit inputs outputs;};
-    commonHomeModules = loadModules ./modules/common/home-manager {inherit inputs outputs;};
+    commonNixosModules = loadModules ./modules/common/nixos;
+    commonHomeModules = loadModules ./modules/common/home-manager;
   in {
     # Your custom packages
     # Accessible through 'nix build', 'nix shell', etc

@@ -8,8 +8,6 @@
   ...
 }: {
   imports = [
-    ./git.nix
-    ./packages.nix
     # ./plasma.nix
   ];
 

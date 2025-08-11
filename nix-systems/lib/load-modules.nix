@@ -1,9 +1,8 @@
 {
   lib,
-  inputs,
-  outputs,
   path,
-  extraArgs ? {},
+  inputs ? {},
+  outputs ? {},
 }: let
   files = lib.attrNames (lib.filterAttrs
     (name: type: type == "regular" && lib.hasSuffix ".nix" name)
@@ -11,12 +10,8 @@
 
   modules =
     map (
-      file: {
-        config,
-        pkgs,
-        ...
-      } @ args:
-        import (path + "/${file}") (args // extraArgs)
+      file:
+        import (path + "/${file}")
     )
     files;
 in

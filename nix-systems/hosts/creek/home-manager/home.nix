@@ -17,12 +17,6 @@
 
     # You can also split up your configuration and import pieces of it here:
     ./dconf.nix
-    ./fish.nix
-    ./git.nix
-    ./ghostty.nix
-    ./helix.nix
-    ./packages.nix
-    ./systemd.nix
   ];
 
   nixpkgs = {

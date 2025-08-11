@@ -19,27 +19,11 @@
     # inputs.hardware.nixosModules.common-ssd
 
     # You can also split up your configuration and import pieces of it here:
-    ./audio.nix
-    ./avahi.nix
     ./bootloader.nix
-    ./firewall.nix
-    ./flatpak.nix
     ./gnome.nix
-    ./livebook.nix
-    # ./logiops.nix
-    (import ./nh.nix {flakeDir = "/home/sylvester/.dotfiles/nix-systems";})
-    ./nix-ld.nix
-    ./packages.nix
-    ./podman.nix
     ./power.nix
-    ./printing.nix
-    ./qmk.nix
-    ./security.nix
-    ./ssh.nix
-    ./tailscale.nix
     ./tuxedo.nix
     ./users.nix
-    ./virtual-machines.nix
 
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
