@@ -1,11 +1,9 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   home.packages = with pkgs; [
     cachix
     stow
     podman-compose
     pods
-    xsel
     wl-clipboard
     ranger
     findutils
@@ -24,6 +22,9 @@
     nix-alien
     zotero
     gradia
+    discord
+    bitwarden-desktop
+    spotify
 
     # valent
     # gnomeExtensions.valent

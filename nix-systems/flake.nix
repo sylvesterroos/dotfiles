@@ -12,6 +12,12 @@
       "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
     ];
 
+    experimental-features = [
+      "flakes"
+      "nix-command"
+      "pipe-operator"
+    ];
+
     flake-registry = "";
     lazy-trees = true;
   };
@@ -23,6 +29,12 @@
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
     };
 
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
@@ -46,6 +58,18 @@
     # This is a function that generates an attribute by calling a function you
     # pass to it, with each system as an argument
     forAllSystems = nixpkgs.lib.genAttrs systems;
+
+    lib = nixpkgs.lib;
+    flakeDir = toString ./.;
+
+    loadModules = path: extraArgs:
+      import ./lib/load-modules.nix {
+        inherit lib inputs outputs path;
+        extraArgs = extraArgs // {inherit flakeDir;};
+      };
+
+    commonNixosModules = loadModules ./modules/common/nixos {inherit inputs outputs;};
+    commonHomeModules = loadModules ./modules/common/home-manager {inherit inputs outputs;};
   in {
     # Your custom packages
     # Accessible through 'nix build', 'nix shell', etc
@@ -63,26 +87,49 @@
     homeManagerModules = import ./modules/home-manager;
 
     nixosConfigurations = {
-      creek = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs outputs;
-        };
-        modules = [
-          ./hosts/creek/configuration.nix
+      creek = lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules =
+          [
+            ./hosts/creek/configuration.nix
 
-          determinate.nixosModules.default
-          watt.nixosModules.default
-        ];
+            determinate.nixosModules.default
+            watt.nixosModules.default
+          ]
+          ++ commonNixosModules;
+      };
+
+      delta = lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules =
+          [
+            ./hosts/delta/configuration.nix
+
+            determinate.nixosModules.default
+          ]
+          ++ commonNixosModules;
       };
     };
 
     homeConfigurations = {
       "sylvester@creek" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {inherit inputs outputs;};
-        modules = [
-          ./hosts/creek/home-manager/home.nix
-        ];
+        modules =
+          [
+            ./hosts/creek/home-manager/home.nix
+          ]
+          ++ commonHomeModules;
+      };
+
+      "sylvester@delta" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        extraSpecialArgs = {inherit inputs outputs;};
+        modules =
+          [
+            ./hosts/delta/home-manager/home.nix
+          ]
+          ++ commonHomeModules;
       };
     };
   };
