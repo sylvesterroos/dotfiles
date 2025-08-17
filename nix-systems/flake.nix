@@ -37,6 +37,11 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.2";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
     gitu.url = "github:altsem/gitu";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";

@@ -10,6 +10,8 @@
   ...
 }: {
   imports = [
+    inputs.lanzaboote.nixosModules.lanzaboote
+
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
 
