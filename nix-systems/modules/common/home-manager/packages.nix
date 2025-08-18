@@ -25,6 +25,7 @@
     discord
     bitwarden-desktop
     spotify
+    jellyfin-media-player
 
     # valent
     # gnomeExtensions.valent
