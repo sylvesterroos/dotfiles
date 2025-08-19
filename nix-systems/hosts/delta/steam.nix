@@ -6,4 +6,6 @@
     remotePlay.openFirewall = true;
     protontricks.enable = true;
   };
+
+  environment.systemPackages = with pkgs; [mangojuice];
 }
