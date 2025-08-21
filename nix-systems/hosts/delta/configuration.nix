@@ -18,6 +18,7 @@
     ./bootloader.nix
     ./brave.nix
     ./filesystems.nix
+    ./heroic.nix
     ./plasma.nix
     ./steam.nix
   ];
