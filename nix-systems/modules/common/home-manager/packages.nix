@@ -13,7 +13,6 @@
     nextcloud-client
     figlet # making large letters out of ordinary text
     devenv
-    betterdiscordctl
     via
     gitleaks
     beam.packages.erlang_27.elixir_1_18
@@ -23,6 +22,7 @@
     zotero
     gradia
     discord
+    goofcord
     bitwarden-desktop
     spotify
     jellyfin-media-player
