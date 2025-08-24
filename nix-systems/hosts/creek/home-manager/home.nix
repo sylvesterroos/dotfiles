@@ -18,6 +18,7 @@
     ./dconf.nix
     ./fish.nix
     ./git.nix
+    ./ghostty.nix
     ./helix.nix
     ./packages.nix
     ./systemd.nix
@@ -73,11 +74,6 @@
 
   programs.command-not-found.enable = false;
   programs.nix-index.enable = true;
-
-  programs.ghostty = {
-    enable = true;
-    package = pkgs.ghostty;
-  };
 
   programs.tealdeer = {
     enable = true;
