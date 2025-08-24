@@ -22,7 +22,6 @@
     nil
     radicle-node
     nix-alien
-    kdePackages.discover
     zotero
     gradia
 
