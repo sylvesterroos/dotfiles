@@ -5,7 +5,7 @@
     installBatSyntax = true;
     settings = {
       # theme = "light:catppuccin-latte,dark:catppuccin-macchiato";
-      theme = "light:catppuccin-latte";
+      theme = "light:catppuccin-latte,dark:Ghostty Default StyleDark";
       keybind = [
         "shift+ctrl+r=reload_config"
 
