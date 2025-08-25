@@ -1,5 +1,8 @@
-{ pkgs, ... }:
 {
+  pkgs,
+  lib,
+  ...
+}: {
   home.packages = with pkgs; [
     gitu
     jjui
@@ -31,7 +34,7 @@
       init.defaultBranch = "master";
 
       core = {
-        editor = "flatpak run re.sonny.Commit";
+        editor = "${lib.getExe pkgs.commit}";
 
         autocrlf = "input"; # convert CRLF to LF on commit
       };
