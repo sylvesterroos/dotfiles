@@ -26,5 +26,6 @@
     bitwarden-desktop
     spotify
     jellyfin-media-player
+    calibre
   ];
 }
