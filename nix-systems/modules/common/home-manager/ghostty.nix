@@ -1,4 +1,4 @@
-{pkgs,...}: {
+{pkgs, ...}: {
   programs.ghostty = {
     enable = true;
     package = pkgs.ghostty;
@@ -6,6 +6,8 @@
     settings = {
       # theme = "light:catppuccin-latte,dark:catppuccin-macchiato";
       theme = "light:catppuccin-latte,dark:Ghostty Default StyleDark";
+      # On Plasma we also want the nice GTK menu bar
+      window-decoration = "client";
       keybind = [
         "shift+ctrl+r=reload_config"
 
@@ -21,5 +23,4 @@
       ];
     };
   };
-
 }
