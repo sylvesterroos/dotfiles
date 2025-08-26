@@ -9,6 +9,7 @@
 }: {
   imports = [
     # ./plasma.nix
+    ./prism-launcher.nix
   ];
 
   nixpkgs = {
