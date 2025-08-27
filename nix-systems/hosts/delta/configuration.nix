@@ -65,10 +65,6 @@
     LC_TIME = "en_IE.UTF-8";
   };
 
-  # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
-
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
