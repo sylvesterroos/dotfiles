@@ -55,10 +55,8 @@
 
   outputs = {
     self,
-    determinate,
     nixpkgs,
     home-manager,
-    watt,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -99,9 +97,6 @@
         modules =
           [
             ./hosts/creek/configuration.nix
-
-            determinate.nixosModules.default
-            watt.nixosModules.default
           ]
           ++ commonNixosModules;
       };
@@ -111,8 +106,6 @@
         modules =
           [
             ./hosts/delta/configuration.nix
-
-            determinate.nixosModules.default
           ]
           ++ commonNixosModules;
       };

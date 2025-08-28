@@ -10,6 +10,7 @@
   ...
 }: {
   imports = [
+    inputs.determinate.nixosModules.default
     inputs.lanzaboote.nixosModules.lanzaboote
 
     # Include the results of the hardware scan.
