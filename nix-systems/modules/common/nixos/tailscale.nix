@@ -1,10 +1,8 @@
-{ ... }:
-
-{
+{pkgs, ...}: {
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "client";
   };
 
-  # services.resolved.enable = true;
+  environment.systemPackages = with pkgs; [trayscale];
 }
