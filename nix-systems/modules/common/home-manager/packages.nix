@@ -27,5 +27,6 @@
     spotify
     jellyfin-media-player
     calibre
+    qbittorrent
   ];
 }
