@@ -54,7 +54,8 @@
     },
     "Elixir": {
       "language_servers": [
-        "elixir-ls",
+        "expert",
+        "!elixir-ls",
         "!lexical",
         "!next-ls",
         "tailwindcss-intellisense"
