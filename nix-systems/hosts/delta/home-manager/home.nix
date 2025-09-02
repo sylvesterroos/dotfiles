@@ -7,6 +7,7 @@
   ...
 }: {
   imports = [
+    ./packages.nix
     # ./plasma-settings.nix
     ./prism-launcher.nix
   ];
