@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   # Enable the GNOME Desktop Environment.
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
@@ -22,6 +21,8 @@
     enable = true;
     package = pkgs.gnomeExtensions.gsconnect;
   };
+
+  xdg.terminal-exec.enable = true;
 
   environment.systemPackages = with pkgs; [
     gnome-tweaks
