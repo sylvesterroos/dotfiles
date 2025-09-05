@@ -22,7 +22,6 @@
     zotero
     gradia
     discord
-    goofcord
     bitwarden-desktop
     spotify
     jellyfin-media-player
