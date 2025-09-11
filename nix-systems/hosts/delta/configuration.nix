@@ -35,6 +35,13 @@
     };
   };
 
+  nix = {
+    # Opinionated: disable channels
+    channel.enable = false;
+
+    settings.trusted-users = ["sylvester"];
+  };
+
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
