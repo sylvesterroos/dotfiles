@@ -42,13 +42,7 @@
   "buffer_font_family": "JetBrainsMono Nerd Font",
   "languages": {
     "Nix": {
-      "language_servers": ["nil", "!nixd"],
-      "formatter": {
-        "external": {
-          "command": "nix",
-          "arguments": ["fmt"]
-        }
-      }
+      "language_servers": ["nil", "!nixd"]
     },
     "Markdown": {
       "preferred_line_length": 80
