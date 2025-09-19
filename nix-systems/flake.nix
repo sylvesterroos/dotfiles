@@ -4,11 +4,9 @@
   nixConfig = {
     extra-substituters = [
       "https://devenv.cachix.org"
-      "https://gitu.cachix.org"
     ];
 
     extra-trusted-public-keys = [
-      "cache.flakehub.com-3:hJuILl5sVK4iKm86JzgdXW12Y2Hwd5G07qKtHTOcDCM="
       "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
     ];
 
