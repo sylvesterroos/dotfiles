@@ -12,6 +12,7 @@
   imports = [
     inputs.determinate.nixosModules.default
     inputs.lanzaboote.nixosModules.lanzaboote
+    inputs.chaotic.nixosModules.default
 
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -42,7 +43,7 @@
     settings.trusted-users = ["sylvester"];
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
+  boot.kernelPackages = pkgs.linuxPackages_cachyos;
 
   networking.hostName = "delta"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
