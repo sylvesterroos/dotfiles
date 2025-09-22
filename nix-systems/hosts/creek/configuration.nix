@@ -64,7 +64,7 @@
     settings.trusted-users = ["sylvester"];
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
+  boot.kernelPackages = pkgs.linuxPackages_zen;
 
   networking.hostName = "creek";
 
