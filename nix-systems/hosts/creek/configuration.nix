@@ -60,8 +60,6 @@
   nix = {
     # Opinionated: disable channels
     channel.enable = false;
-
-    settings.trusted-users = ["sylvester"];
   };
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
