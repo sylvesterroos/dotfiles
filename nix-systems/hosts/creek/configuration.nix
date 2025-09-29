@@ -12,7 +12,7 @@
   # You can import other NixOS modules here
   imports = [
     # If you want to use modules your own flake exports (from modules/nixos):
-    # outputs.nixosModules.example
+    outputs.nixosModules.nix
 
     # Or modules from other flakes (such as nixos-hardware):
     # inputs.hardware.nixosModules.common-cpu-amd
@@ -121,4 +121,9 @@
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";
+
+  my.nix = {
+    devenv.enable = true;
+    gitu.enable = true;
+  };
 }

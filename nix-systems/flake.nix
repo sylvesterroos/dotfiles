@@ -2,20 +2,10 @@
   description = "My Nix config";
 
   nixConfig = {
-    extra-substituters = [
-      "https://devenv.cachix.org"
-      "https://gitu.cachix.org"
-    ];
-
-    extra-trusted-public-keys = [
-      "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
-      "gitu.cachix.org-1:iUIaNys1l3W1LF/M8OXzaTl7N/OinGOlzdUJUSc+5eY="
-    ];
-
     experimental-features = [
       "flakes"
       "nix-command"
-      "pipe-operator"
+      "pipe-operators"
     ];
 
     flake-registry = "";

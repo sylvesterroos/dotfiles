@@ -10,6 +10,8 @@
   ...
 }: {
   imports = [
+    outputs.nixosModules.nix
+
     inputs.determinate.nixosModules.default
     inputs.lanzaboote.nixosModules.lanzaboote
     inputs.chaotic.nixosModules.default
@@ -132,4 +134,9 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
+
+  my.nix = {
+    devenv.enable = true;
+    gitu.enable = true;
+  };
 }
