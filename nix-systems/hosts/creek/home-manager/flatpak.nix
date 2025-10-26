@@ -6,7 +6,7 @@
   services.flatpak = {
     enable = true;
     packages = [
-      # TODO: add "eu.betterbird.Betterbird"
+      "eu.betterbird.Betterbird"
       "io.github.kelvinnovais.Kasasa"
       "com.github.iwalton3.jellyfin-media-player"
     ];
