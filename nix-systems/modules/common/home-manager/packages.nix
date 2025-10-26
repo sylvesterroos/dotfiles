@@ -24,7 +24,6 @@
     discord
     bitwarden-desktop
     spotify
-    jellyfin-media-player
     calibre
     qbittorrent
   ];

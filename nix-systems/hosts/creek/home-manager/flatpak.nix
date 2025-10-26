@@ -8,6 +8,7 @@
     packages = [
       # TODO: add "eu.betterbird.Betterbird"
       "io.github.kelvinnovais.Kasasa"
+      "com.github.iwalton3.jellyfin-media-player"
     ];
     update.auto = {
       enable = true;
