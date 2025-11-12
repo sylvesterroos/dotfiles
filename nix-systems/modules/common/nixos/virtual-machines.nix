@@ -16,7 +16,7 @@
 
   environment.systemPackages = with pkgs; [
     virt-manager
-    win-virtio
+    virtio-win
     win-spice
   ];
 }

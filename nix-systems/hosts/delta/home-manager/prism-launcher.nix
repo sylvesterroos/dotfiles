@@ -4,7 +4,7 @@
       additionalPrograms = [gamescope];
 
       jdks = [
-        graalvm-ce
+        graalvmPackages.graalvm-ce
         jdk21
         jdk17
         jdk8
