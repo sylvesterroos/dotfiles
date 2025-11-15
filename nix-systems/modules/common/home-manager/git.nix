@@ -1,8 +1,4 @@
-{
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     gitu
     jjui
@@ -21,6 +17,10 @@
       navigate = true;
       conflictStyle = "zdiff3";
     };
+  };
+
+  programs.lazygit = {
+    enable = true;
   };
 
   programs.git = {
@@ -52,7 +52,7 @@
 
       aliases = {
         # Perfect for the daily standup
-        yesterday = "log --since='yesterday.midnight' --until='midnight' --all --no-merges --oneline --author=hello@sylvesterroos.com";
+        yesterday = "log --since='yesterday.midnight' --until='midnight' --all --no-merges --oneline --author=sylvester@sylvesterroos.com";
       };
     };
 
