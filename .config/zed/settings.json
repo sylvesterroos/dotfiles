@@ -98,7 +98,10 @@
     "dock": "bottom",
     "blinking": "on",
     "line_height": "standard",
-    "detect_venv": "off" // direnv does this
+    "detect_venv": "off", // direnv does this
+    "env": {
+      "GIT_EDITOR": "zed --wait"
+    }
   },
   "file_types": {
     "env": [".env*"]
