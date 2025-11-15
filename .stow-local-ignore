@@ -1,4 +1,6 @@
 \.git
 README.md
 
-nixos
+/\.envrc
+/nix-systems/
+/\.zed/
