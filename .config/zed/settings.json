@@ -7,6 +7,22 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "context_servers": {
+    "tidewave-mcp": {
+      "source": "extension",
+      "enabled": true,
+      "settings": {}
+    }
+  },
+  "title_bar": {
+    "show_user_picture": false
+  },
+  "tabs": {
+    "git_status": true
+  },
+  "calls": {
+    "mute_on_join": true
+  },
   "edit_predictions": {
     "disabled_globs": [".env"],
     "mode": "subtle",
@@ -19,18 +35,40 @@
   "show_edit_predictions": false,
   "agent": {
     "use_modifier_to_send": true,
+    "profiles": {
+      "ask": {
+        "name": "Ask",
+        "context_servers": {
+          "tidewave-mcp": {
+            "tools": {
+              "search_package_docs": true,
+              "project_eval": false,
+              "get_source_location": true,
+              "get_logs": true,
+              "get_ecto_schemas": true,
+              "execute_sql_query": false,
+              "get_docs": true
+            }
+          }
+        }
+      }
+    },
     "play_sound_when_agent_done": true,
-    "dock": "left",
-    "always_allow_tool_actions": false,
+    "dock": "right",
     "default_profile": "ask",
     "inline_assistant_model": {
       "provider": "copilot_chat",
-      "model": "gpt-4.1"
+      "model": "gpt-5-mini"
     },
     "default_model": {
       "provider": "copilot_chat",
-      "model": "claude-sonnet-4"
-    }
+      "model": "gpt-5-mini"
+    },
+    "commit_message_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-5-mini"
+    },
+    "model_parameters": []
   },
   "features": {
     "edit_prediction_provider": "copilot"
@@ -64,12 +102,8 @@
       "language_servers": ["pyright", "ruff"],
       "format_on_save": "on",
       "formatter": [
-        {
-          "code_actions": {
-            "source.organizeImports.ruff": true,
-            "source.fixAll.ruff": true
-          }
-        },
+        { "code_action": "source.organizeImports.ruff" },
+        { "code_action": "source.fixAll.ruff" },
         {
           "language_server": {
             "name": "ruff"
