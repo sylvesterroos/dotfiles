@@ -35,7 +35,6 @@
       init.defaultBranch = "master";
 
       core = {
-        editor = "${lib.getExe pkgs.commit}";
         autocrlf = "input"; # convert CRLF to LF on commit
       };
 

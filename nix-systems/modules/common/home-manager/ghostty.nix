@@ -1,13 +1,13 @@
 {pkgs, ...}: {
   programs.ghostty = {
     enable = true;
-    package = pkgs.ghostty;
+    package = if pkgs.stdenv.isLinux then pkgs.ghostty else pkgs.ghostty-bin;
     installBatSyntax = true;
     settings = {
       # theme = "light:catppuccin-latte,dark:catppuccin-macchiato";
       theme = "light:Catppuccin Latte,dark:Ghostty Default Style Dark";
       # On Plasma we also want the nice GTK menu bar
-      window-decoration = "client";
+      window-decoration = if pkgs.stdenv.isLinux then "client" else "auto";
       keybind = [
         "shift+ctrl+r=reload_config"
 

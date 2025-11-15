@@ -1,6 +1,4 @@
 {
-  description = "My Nix config";
-
   nixConfig = {
     experimental-features = [
       "flakes"
@@ -9,7 +7,6 @@
     ];
 
     flake-registry = "";
-    lazy-trees = true;
   };
 
   inputs = {
@@ -18,6 +15,11 @@
 
     home-manager = {
       url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-darwin = {
+      url = "https://flakehub.com/f/nix-darwin/nix-darwin/0.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -49,11 +51,12 @@
     self,
     nixpkgs,
     home-manager,
+    nix-darwin,
     ...
   } @ inputs: let
     inherit (self) outputs;
     # Supported systems for your flake packages, shell, etc.
-    systems = ["x86_64-linux"];
+    systems = ["x86_64-linux" "aarch64-darwin"];
     # This is a function that generates an attribute by calling a function you
     # pass to it, with each system as an argument
     forAllSystems = nixpkgs.lib.genAttrs systems;
@@ -123,6 +126,23 @@
           ]
           ++ commonHomeModules;
       };
+
+      "sylvester@Sylvesters-MacBook-Pro" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+        extraSpecialArgs = {inherit inputs outputs;};
+        modules =
+          [
+            ./hosts/macbook/home-manager/home.nix
+          ]
+          ++ commonHomeModules;
+      };
+    };
+
+    darwinConfigurations."Sylvesters-MacBook-Pro" = nix-darwin.lib.darwinSystem {
+      specialArgs = {inherit self inputs outputs;};
+      modules = [
+        ./hosts/macbook/configuration.nix
+      ];
     };
   };
 }
