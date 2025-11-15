@@ -1,14 +1,16 @@
-{ ... }:
-
 {
+  pkgs,
+  lib,
+  ...
+}: {
   programs.fish = {
     enable = true;
     shellAliases = {
-      ls = "eza --all --long --group --color=always --group-directories-first --header --icons=auto --git --git-repos-no-status";
+      ls = "${lib.getExe pkgs.eza} --all --long --group --color=always --group-directories-first --header --icons=auto --git --git-repos-no-status";
 
-      cat = "bat -pp"; # no line numbers, no pager
+      cat = "${lib.getExe pkgs.bat} -pp"; # no line numbers, no pager
 
-      ssh-keygen-ed25519 = "ssh-keygen -t ed25519 -C (whoami)@(uname -n)";
+      ssh-keygen-ed25519 = "${lib.getExe' pkgs.openssh "ssh-keygen"} -t ed25519 -C (whoami)@(uname -n)";
     };
     interactiveShellInit = '''';
     shellAbbrs = {
@@ -18,13 +20,14 @@
         setCursor = true;
       };
 
-      yta-best = "yt-dlp --add-metadata --extract-audio --audio-format best";
-      ytv-best = "yt-dlp --add-metadata -f bestvideo+bestaudio";
+      yta-best = "${lib.getExe pkgs.yt-dlp} --add-metadata --extract-audio --audio-format best";
+      ytv-best = "${lib.getExe pkgs.yt-dlp} --add-metadata -f bestvideo+bestaudio";
     };
     functions = {
       ns = {
         description = "Expand a nix shell command for a given package";
-        body = # fish
+        body =
+          # fish
           ''
             if test (count $argv) -eq 0
                 echo "Usage: expand_nix <package>"
@@ -37,7 +40,8 @@
       };
 
       mkfile = {
-        body = # fish
+        body =
+          # fish
           ''
             if test "$argv[1]" = "--help"
                 echo "Creates a new file and any necessary parent directories."
@@ -61,7 +65,8 @@
 
           Useful when you have a bunch of scattered Devenv projects that are causing the nix store to balloon.
         '';
-        body = # fish
+        body =
+          # fish
           ''
             function contains_direnv_or_devenv
                 set path $argv[1]
@@ -92,7 +97,7 @@
             set symlinks_to_remove
 
             # Loop through all symlinks in /nix/var/nix/gcroots/auto/
-            for symlink in (fd -t l . /nix/var/nix/gcroots/auto/)
+            for symlink in (${lib.getExe pkgs.fd} -t l . /nix/var/nix/gcroots/auto/)
                 # Get the symlink target (single follow)
                 set target (readlink $symlink)
                 # Resolve relative symlink targets to absolute paths
@@ -141,7 +146,8 @@
 
       gw = {
         description = "Navigate to a git worktree using fzf";
-        body = # fish
+        body =
+          # fish
           ''
             # Check if inside git worktree
             git rev-parse --is-inside-git-dir >/dev/null 2>&1
@@ -153,7 +159,7 @@
             # Get worktree list, filter out (bare), extract paths, use fzf for selection
             set -l selected (git worktree list |
                 grep -v "(bare)" |
-                fzf --height 40% --border --prompt="Select worktree: " --query="$argv[1]" |
+                ${lib.getExe pkgs.fzf} --height 40% --border --prompt="Select worktree: " --query="$argv[1]" |
                 awk '{print $1}'
             )
 
