@@ -1,9 +1,14 @@
-{inputs, ...}: {
+{
+  inputs,
+  pkgs,
+  lib,
+  ...
+}: {
   imports = [
     inputs.nix-flatpak.homeManagerModules.nix-flatpak
   ];
 
-  services.flatpak = {
+  services.flatpak = lib.mkIf pkgs.stdenv.isLinux {
     enable = true;
     packages = [
       "eu.betterbird.Betterbird"
