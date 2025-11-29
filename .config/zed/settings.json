@@ -7,6 +7,8 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  // Tell Zed to use direnv and direnv can use a flake.nix environment
+  "load_direnv": "shell_hook",
   "context_servers": {
     "tidewave-mcp": {
       "source": "extension",
