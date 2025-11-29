@@ -17,6 +17,8 @@
     # You can also split up your configuration and import pieces of it here:
     ./dconf.nix
     ./packages.nix
+    # TODO: expose as option that can be enabled
+    ../../../modules/home-manager/zed.nix
   ];
 
   nixpkgs = {
@@ -85,7 +87,6 @@
   programs.autojump.enable = true;
   programs.yt-dlp.enable = true;
   programs.yazi.enable = true;
-  programs.zed-editor.enable = true;
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
