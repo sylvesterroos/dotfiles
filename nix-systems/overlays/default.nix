@@ -2,7 +2,7 @@
 {inputs, ...}: {
   additions = final: prev:
     {
-      nix-alien = inputs.nix-alien.packages.${prev.system}.default;
+      nix-alien = inputs.nix-alien.packages.${prev.stdenv.hostPlatform.system}.default;
     }
     # This one brings our custom packages from the 'pkgs' directory
     // (import ../pkgs final.pkgs);
@@ -26,7 +26,7 @@
   # };
   stable-packages = final: _prev: {
     stable = import inputs.nixpkgs-stable {
-      system = final.system;
+      system = final.stdenv.hostPlatform.system;
       config.allowUnfree = true;
     };
   };
