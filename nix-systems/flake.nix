@@ -55,7 +55,7 @@
   } @ inputs: let
     inherit (self) outputs;
     # Supported systems for your flake packages, shell, etc.
-    systems = ["x86_64-linux" "aarch64-darwin"];
+    systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin"];
     # This is a function that generates an attribute by calling a function you
     # pass to it, with each system as an argument
     forAllSystems = nixpkgs.lib.genAttrs systems;
@@ -102,6 +102,14 @@
             ./hosts/delta/configuration.nix
           ]
           ++ commonNixosModules;
+      };
+
+      raspberry-pi = lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules =
+        [
+          ./hosts/raspberry-pi/configuration.nix
+        ];
       };
     };
 
