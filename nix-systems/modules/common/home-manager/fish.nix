@@ -146,20 +146,24 @@
 
       gw = {
         description = "Navigate to a git worktree using fzf";
-        body =
+        body = let
+          git = lib.getExe pkgs.git;
+          fzf = lib.getExe pkgs.fzf;
+        in
           # fish
           ''
             # Check if inside git worktree
-            git rev-parse --is-inside-git-dir >/dev/null 2>&1
+            ${git} rev-parse --is-inside-git-dir >/dev/null 2>&1
             if test $status -ne 0
                 echo "Not in a git directory"
                 return 1
             end
 
             # Get worktree list, filter out (bare), extract paths, use fzf for selection
-            set -l selected (git worktree list |
+            set -l selected (
+                ${git} worktree list |
                 grep -v "(bare)" |
-                ${lib.getExe pkgs.fzf} --height 40% --border --prompt="Select worktree: " --query="$argv[1]" |
+                ${fzf} --height 40% --border --prompt="Select worktree: " --query="$argv[1]" |
                 awk '{print $1}'
             )
 
