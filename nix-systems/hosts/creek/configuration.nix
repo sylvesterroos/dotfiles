@@ -119,6 +119,9 @@
   # Or disable the firewall altogether.
   networking.firewall.enable = false;
 
+  # TODO: extract to common modules
+  documentation.man.generateCaches = false;
+
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";
 

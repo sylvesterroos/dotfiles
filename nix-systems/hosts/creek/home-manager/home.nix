@@ -88,6 +88,9 @@
   programs.yt-dlp.enable = true;
   programs.yazi.enable = true;
 
+  # TODO: extract to common modules
+  programs.man.generateCaches = false;
+
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 
