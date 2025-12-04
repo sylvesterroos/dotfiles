@@ -22,6 +22,7 @@
     ./bootloader.nix
     ./filesystems.nix
     ./heroic.nix
+    ./lact.nix
     ./plasma.nix
     ./steam.nix
   ];
