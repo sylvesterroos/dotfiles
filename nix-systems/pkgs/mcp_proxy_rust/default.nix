@@ -9,7 +9,7 @@
   sources = {
     "x86_64-linux" = {
       url = "https://github.com/tidewave-ai/mcp_proxy_rust/releases/download/v${version}/mcp-proxy-x86_64-unknown-linux-gnu.tar.gz";
-      sha256 = lib.fakeSha256;
+      sha256 = "sha256-EIB7x5zhEaC+dkOxin+xgzFDnHDuEAWN0b7j9l58DmY=";
     };
     "aarch64-darwin" = {
       url = "https://github.com/tidewave-ai/mcp_proxy_rust/releases/download/v${version}/mcp-proxy-aarch64-apple-darwin.tar.gz";
@@ -30,6 +30,10 @@ in
 
     nativeBuildInputs = lib.optionals stdenv.isLinux [
       autoPatchelfHook
+    ];
+
+    buildInputs = lib.optionals stdenv.isLinux [
+      stdenv.cc.cc.lib
     ];
 
     sourceRoot = ".";
