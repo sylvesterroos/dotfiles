@@ -12,7 +12,7 @@
   # You can import other NixOS modules here
   imports = [
     # If you want to use modules your own flake exports (from modules/nixos):
-    outputs.nixosModules.nix
+    outputs.nixosModules.my
 
     # Or modules from other flakes (such as nixos-hardware):
     # inputs.hardware.nixosModules.common-cpu-amd
@@ -97,8 +97,7 @@
 
   # Set variables for the global environment
   environment.variables = {
-    EDITOR = lib.getExe pkgs.helix;
-    VISUAL = lib.getExe pkgs.helix;
+    EDITOR = lib.getExe pkgs.neovim;
 
     # https://consoledonottrack.com/
     DO_NOT_TRACK = 1;
@@ -108,7 +107,6 @@
     enable = true;
   };
 
-  # android-tools
   programs.adb.enable = true;
 
   services.fwupd.enable = true;
@@ -124,9 +122,4 @@
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";
-
-  my.nix = {
-    devenv.enable = true;
-    gitu.enable = true;
-  };
 }

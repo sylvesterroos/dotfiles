@@ -1,9 +1,32 @@
-{pkgs, ...}: {
-  programs.zed-editor.enable = true;
+{
+  pkgs,
+  lib,
+  inputs,
+  config,
+  ...
+}:
+with lib; let
+  cfg = config.my.zed-editor;
+in {
+  options.my.zed-editor = {
+    enable =
+      mkEnableOption "zed-editor"
+      // {
+        default = true;
+      };
+  };
 
-  home.packages = with pkgs; [
-    (pkgs.writeShellScriptBin "zed" ''
-      exec zeditor "$@"
-    '')
-  ];
+  config = mkIf cfg.enable {
+    programs.zed-editor.enable = true;
+
+    home.sessionVariables = {
+      VISUAL = pkgs.zed-editor;
+    };
+
+    home.packages = with pkgs; [
+      (pkgs.writeShellScriptBin "zed" ''
+        exec ${lib.getExe pkgs.zed-editor} "$@"
+      '')
+    ];
+  };
 }

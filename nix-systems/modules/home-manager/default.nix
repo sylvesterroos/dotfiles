@@ -3,4 +3,9 @@
 {
   # List your module files here
   # my-module = import ./my-module.nix;
+  my = {
+    imports = [
+      ./zed.nix
+    ];
+  };
 }
