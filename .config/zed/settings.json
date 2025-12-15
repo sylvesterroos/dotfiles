@@ -25,7 +25,6 @@
   "load_direnv": "shell_hook",
   "context_servers": {
     "tidewave-mcp": {
-      "source": "extension",
       "enabled": true,
       "settings": {}
     }
@@ -73,12 +72,12 @@
     "dock": "right",
     "default_profile": "ask",
     "inline_assistant_model": {
-      "provider": "copilot_chat",
-      "model": "gpt-5-mini"
+      "provider": "lmstudio",
+      "model": "mistralai/devstral-small-2-2512"
     },
     "default_model": {
-      "provider": "copilot_chat",
-      "model": "gpt-5-mini"
+      "provider": "lmstudio",
+      "model": "mistralai/devstral-small-2-2512"
     },
     "commit_message_model": {
       "provider": "copilot_chat",
@@ -103,8 +102,8 @@
     },
     "Elixir": {
       "language_servers": [
-        "expert",
-        "!elixir-ls",
+        "!expert",
+        "elixir-ls",
         "!lexical",
         "!next-ls",
         "tailwindcss-intellisense"
