@@ -59,16 +59,6 @@
     # This is a function that generates an attribute by calling a function you
     # pass to it, with each system as an argument
     forAllSystems = nixpkgs.lib.genAttrs systems;
-
-    lib = nixpkgs.lib;
-
-    loadModules = path:
-      import ./lib/load-modules.nix {
-        inherit lib path inputs outputs;
-      };
-
-    commonNixosModules = loadModules ./modules/common/nixos;
-    commonHomeModules = loadModules ./modules/common/home-manager;
   in {
     # Your custom packages
     # Accessible through 'nix build', 'nix shell', etc
@@ -86,28 +76,23 @@
     homeManagerModules = import ./modules/home-manager;
 
     nixosConfigurations = {
-      creek = lib.nixosSystem {
+      creek = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
-        modules =
-          [
-            ./hosts/creek/configuration.nix
-          ]
-          ++ commonNixosModules;
+        modules = [
+          ./hosts/creek/configuration.nix
+        ];
       };
 
-      delta = lib.nixosSystem {
+      delta = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
-        modules =
-          [
-            ./hosts/delta/configuration.nix
-          ]
-          ++ commonNixosModules;
+        modules = [
+          ./hosts/delta/configuration.nix
+        ];
       };
 
-      raspberry-pi = lib.nixosSystem {
+      raspberry-pi = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
-        modules =
-        [
+        modules = [
           ./hosts/raspberry-pi/configuration.nix
         ];
       };
@@ -117,31 +102,25 @@
       "sylvester@creek" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {inherit inputs outputs;};
-        modules =
-          [
-            ./hosts/creek/home-manager/home.nix
-          ]
-          ++ commonHomeModules;
+        modules = [
+          ./hosts/creek/home-manager/home.nix
+        ];
       };
 
       "sylvester@delta" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {inherit inputs outputs;};
-        modules =
-          [
-            ./hosts/delta/home-manager/home.nix
-          ]
-          ++ commonHomeModules;
+        modules = [
+          ./hosts/delta/home-manager/home.nix
+        ];
       };
 
       "sylvester@Sylvesters-MacBook-Pro" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.aarch64-darwin;
         extraSpecialArgs = {inherit inputs outputs;};
-        modules =
-          [
-            ./hosts/macbook/home-manager/home.nix
-          ]
-          ++ commonHomeModules;
+        modules = [
+          ./hosts/macbook/home-manager/home.nix
+        ];
       };
     };
 

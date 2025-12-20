@@ -14,32 +14,30 @@
       "args": [],
       "projects": [
         {
-          "paths": [
-            "/home/sylvester/.dotfiles/./"
-          ]
-        }
-      ]
-    }
+          "paths": ["/home/sylvester/.dotfiles/./"],
+        },
+      ],
+    },
   ],
   // Tell Zed to use direnv and direnv can use a flake.nix environment
   "load_direnv": "shell_hook",
   "title_bar": {
-    "show_user_picture": false
+    "show_user_picture": false,
   },
   "tabs": {
-    "git_status": true
+    "git_status": true,
   },
   "calls": {
-    "mute_on_join": true
+    "mute_on_join": true,
   },
   "edit_predictions": {
     "disabled_globs": [".env"],
     "mode": "subtle",
     "copilot": {
       "proxy": null,
-      "proxy_no_verify": null
+      "proxy_no_verify": null,
     },
-    "enabled_in_text_threads": false
+    "enabled_in_text_threads": false,
   },
   "show_edit_predictions": false,
   "agent": {
@@ -56,31 +54,31 @@
               "get_logs": true,
               "get_ecto_schemas": true,
               "execute_sql_query": false,
-              "get_docs": true
-            }
-          }
-        }
-      }
+              "get_docs": true,
+            },
+          },
+        },
+      },
     },
     "play_sound_when_agent_done": true,
     "dock": "right",
     "default_profile": "ask",
     "inline_assistant_model": {
-      "provider": "lmstudio",
-      "model": "mistralai/devstral-small-2-2512"
+      "provider": "copilot_chat",
+      "model": "gpt-5-mini",
     },
     "default_model": {
-      "provider": "lmstudio",
-      "model": "mistralai/devstral-small-2-2512"
+      "provider": "copilot_chat",
+      "model": "gpt-5-mini",
     },
     "commit_message_model": {
       "provider": "copilot_chat",
-      "model": "gpt-5-mini"
+      "model": "gpt-5-mini",
     },
-    "model_parameters": []
+    "model_parameters": [],
   },
   "features": {
-    "edit_prediction_provider": "copilot"
+    "edit_prediction_provider": "copilot",
   },
   "vim_mode": true,
   "helix_mode": false,
@@ -89,10 +87,10 @@
   "buffer_font_family": "JetBrainsMono Nerd Font",
   "languages": {
     "Nix": {
-      "language_servers": ["nil", "!nixd"]
+      "language_servers": ["nil", "!nixd"],
     },
     "Markdown": {
-      "preferred_line_length": 80
+      "preferred_line_length": 80,
     },
     "Elixir": {
       "language_servers": [
@@ -100,12 +98,12 @@
         "elixir-ls",
         "!lexical",
         "!next-ls",
-        "tailwindcss-intellisense"
+        "tailwindcss-intellisense",
       ],
-      "wrap_guides": [98]
+      "wrap_guides": [98],
     },
     "HEEX": {
-      "wrap_guides": [98]
+      "wrap_guides": [98],
     },
     "Python": {
       "language_servers": ["pyright", "ruff"],
@@ -115,14 +113,14 @@
         { "code_action": "source.fixAll.ruff" },
         {
           "language_server": {
-            "name": "ruff"
-          }
-        }
-      ]
-    }
+            "name": "ruff",
+          },
+        },
+      ],
+    },
   },
   "project_panel": {
-    "dock": "right"
+    "dock": "right",
   },
   "soft_wrap": "none",
   "cursor_blink": false,
@@ -130,12 +128,12 @@
   "theme": {
     "mode": "system",
     "light": "Catppuccin Latte",
-    "dark": "Gruvbox Dark Hard"
+    "dark": "Gruvbox Dark Hard",
   },
   "icon_theme": {
     "mode": "system",
     "light": "Colored Zed Icons Theme Light",
-    "dark": "Colored Zed Icons Theme Dark"
+    "dark": "Colored Zed Icons Theme Dark",
   },
   "terminal": {
     "dock": "bottom",
@@ -143,13 +141,13 @@
     "line_height": "standard",
     "detect_venv": "off", // direnv does this
     "env": {
-      "GIT_EDITOR": "zed --wait"
-    }
+      "GIT_EDITOR": "zed --wait",
+    },
   },
   "file_types": {
-    "env": [".env*"]
+    "env": [".env*"],
   },
   "inlay_hints": {
-    "enabled": true
-  }
+    "enabled": true,
+  },
 }

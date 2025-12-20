@@ -7,18 +7,18 @@
   ...
 }: {
   imports = [
+    outputs.homeManagerModules.my
+
     # ./plasma-settings.nix
     ./packages.nix
     ./prism-launcher.nix
-    # TODO: expose as option that can be enabled
-    ../../../modules/home-manager/zed.nix
   ];
 
   nixpkgs = {
     overlays = [
       outputs.overlays.additions
       outputs.overlays.modifications
-      outputs.overlays.stable-packages
+      # outputs.overlays.stable-packages
     ];
     config = {
       allowUnfree = true;

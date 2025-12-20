@@ -9,7 +9,7 @@
   # You can import other home-manager modules here
   imports = [
     # If you want to use modules your own flake exports (from modules/home-manager):
-    # outputs.homeManagerModules.example
+    outputs.homeManagerModules.my
 
     # Or modules exported from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModules.default
@@ -30,6 +30,8 @@
     };
   };
 
+  my.zed-editor.enable = false;
+
   home.username = "sylvester";
   home.homeDirectory = "/Users/sylvester";
 
@@ -40,7 +42,6 @@
     eza
     bat
     ripgrep
-    brave
     prettier # for javascript projects
     mcp_proxy_rust
   ];
