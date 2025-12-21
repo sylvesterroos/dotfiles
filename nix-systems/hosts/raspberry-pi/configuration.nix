@@ -38,26 +38,11 @@
     };
   };
 
-  fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-uuid/46d67494-b781-464f-9584-723c39358dc7";
-      fsType = "xfs";
-      options = ["relatime" "inode64"];
-      neededForBoot = true;
-    };
-
-    "/boot" = {
-      device = "/dev/disk/by-uuid/44444444-4444-4444-8888-888888888888";
-      fsType = "ext4";
-      options = ["noatime"];
-      neededForBoot = true;
-    };
-  };
-
   networking.hostName = "raspberry-pi";
 
   users.users = {
     sylvester = {
+      initialPassword = "password";
       isNormalUser = true;
       description = "Sylvester Roos";
       shell = pkgs.fish;
@@ -90,6 +75,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    git
     neovim
     nil
   ];

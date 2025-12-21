@@ -91,6 +91,7 @@
       };
 
       raspberry-pi = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
         specialArgs = {inherit inputs outputs;};
         modules = [
           ./hosts/raspberry-pi/configuration.nix
