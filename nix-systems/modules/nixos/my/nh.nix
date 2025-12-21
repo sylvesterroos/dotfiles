@@ -4,11 +4,11 @@
   ...
 }:
 with lib; let
-  cfg = config.my.nix-hydra;
+  cfg = config.my.nh;
 in {
-  options.my.nix-hydra = {
+  options.my.nh = {
     enable =
-      mkEnableOption "nix-hydra"
+      mkEnableOption "nh"
       // {
         default = true;
       };

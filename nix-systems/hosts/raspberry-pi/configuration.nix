@@ -7,8 +7,11 @@
   ...
 }: {
   imports = [
+    outputs.nixosModules.my
+
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
     inputs.determinate.nixosModules.default
+    inputs.sops-nix.nixosModules.sops
 
     ./hardware-configuration.nix
   ];
@@ -17,7 +20,6 @@
     overlays = [
       outputs.overlays.additions
       outputs.overlays.modifications
-      outputs.overlays.stable-packages
     ];
 
     config = {
@@ -83,33 +85,28 @@
   documentation.man.generateCaches = false;
 
   ###
-  # Services
+  # My
   ###
 
-  services.openssh.enable = true;
-
-  services.tailscale = {
-    enable = true;
-    useRoutingFeatures = "client";
+  my = {
+    audio.enable = false;
+    avahi.enable = false;
+    brave-browser.enable = false;
+    nixos-flatpak.enable = false;
+    keyboard.enable = false;
+    logiops.enable = false;
+    podman.enable = false;
+    printing.enable = false;
+    virtual-machines.enable = false;
   };
+
+  ###
+  # Services
+  ###
 
   ###
   # Programs
   ###
-
-  programs.nix-ld = {
-    enable = true;
-  };
-
-  programs.nh = {
-    enable = true;
-    clean = {
-      enable = true;
-      dates = "weekly";
-      extraArgs = "--nogcroots --keep-since 14d";
-    };
-    flake = "/home/sylvester/.dotfiles/nix-systems";
-  };
 
   system.stateVersion = "26.05";
 }
