@@ -1,16 +1,15 @@
 {
   pkgs,
   lib,
-  inputs,
   config,
   ...
 }:
 with lib; let
-  cfg = config.my.packages;
+  cfg = config.my.home-manager-packages;
 in {
-  options.my.packages = {
+  options.my.home-manager-packages = {
     enable =
-      mkEnableOption "packages"
+      mkEnableOption "home-manager-packages"
       // {
         default = true;
       };
