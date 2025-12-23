@@ -9,10 +9,12 @@
   imports = [
     outputs.nixosModules.my
 
-    inputs.nixos-hardware.nixosModules.raspberry-pi-4
     inputs.determinate.nixosModules.default
+    inputs.fin_man.nixosModules.default
+    inputs.nixos-hardware.nixosModules.raspberry-pi-4
     inputs.sops-nix.nixosModules.sops
 
+    ./fin_man.nix
     ./hardware-configuration.nix
   ];
 
@@ -20,6 +22,8 @@
     overlays = [
       outputs.overlays.additions
       outputs.overlays.modifications
+
+      inputs.fin_man.overlays.default
     ];
 
     config = {
@@ -99,6 +103,10 @@
     printing.enable = false;
     virtual-machines.enable = false;
   };
+
+  my.postgresql.dbaUsers = [
+    {userName = "sylvester";}
+  ];
 
   ###
   # Services
