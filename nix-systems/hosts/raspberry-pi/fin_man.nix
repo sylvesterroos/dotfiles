@@ -8,6 +8,7 @@
     enable = true;
     server = {
       secretKeyBaseFile = config.sops.secrets."fin_man/secret_key_base".path;
+      listenAddress = "0.0.0.0";
     };
   };
   services.postgresql = {
@@ -21,7 +22,6 @@
     port = toString config.services.postgresql.settings.port;
   in {
     DATABASE_URL = lib.mkForce "postgresql:///${dbname}?host=${socket}&port=${port}";
-    # TODO: set to reverse proxy virtual host
-    PHX_HOST = "localhost";
+    PHX_HOST = "raspberry-pi";
   };
 }
