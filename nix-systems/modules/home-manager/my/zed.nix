@@ -20,7 +20,8 @@ in {
     programs.zed-editor.enable = true;
 
     home.sessionVariables = {
-      VISUAL = pkgs.zed-editor;
+      VISUAL = lib.getExe pkgs.zed-editor;
+      GIT_EDITOR = "${lib.getExe pkgs.zed-editor} --wait";
     };
 
     home.packages = with pkgs; [
