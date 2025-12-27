@@ -27,10 +27,21 @@ in {
         "eu.betterbird.Betterbird"
         "io.github.kelvinnovais.Kasasa"
         "com.github.iwalton3.jellyfin-media-player"
+        "org.pgadmin.pgadmin4"
       ];
+
       update.auto = {
         enable = true;
         onCalendar = "daily";
+      };
+
+      overrides = {
+        "org.pgadmin.pgadmin4".Context = {
+          filesystems = [
+            "/run/postgresql"
+            "/run/user/1000"
+          ];
+        };
       };
     };
   };

@@ -48,7 +48,7 @@
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nix-alien.url = "github:thiagokokada/nix-alien";
-    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
+    nix-flatpak.url = "https://flakehub.com/f/gmodena/nix-flatpak/0.*";
 
     fin_man = {
       url = "git+ssh://git@github.com/sylvesterroos/fin_man";
