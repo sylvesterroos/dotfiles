@@ -22,7 +22,5 @@ in {
       # The module is only useful when configuring Obsidian using Nix as well
       enable = true;
     };
-
-    home.packages = with pkgs; [obsidian];
   };
 }

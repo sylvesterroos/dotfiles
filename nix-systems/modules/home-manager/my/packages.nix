@@ -27,7 +27,6 @@ in {
         gitleaks
         neofetch
         onefetch
-        radicle-node
         ranger
         stow
         zotero
@@ -41,6 +40,7 @@ in {
         gradia
         nextcloud-client
         nix-alien
+        obsidian
         podman-compose
         podman-desktop
         podman-tui
