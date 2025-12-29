@@ -14,8 +14,12 @@
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
     inputs.sops-nix.nixosModules.sops
 
+    ./caddy.nix
+    ./ddns-updater.nix
     ./fin_man.nix
     ./hardware-configuration.nix
+    ./jellyfin.nix
+    ./srv.nix
   ];
 
   nixpkgs = {

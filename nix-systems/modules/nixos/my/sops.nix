@@ -33,5 +33,7 @@ in {
     sops.age.keyFile = "/home/sylvester/.config/sops/age/keys.txt";
 
     sops.secrets."fin_man/secret_key_base" = {};
+
+    sops.secrets.ddns-updater-config = {};
   };
 }
