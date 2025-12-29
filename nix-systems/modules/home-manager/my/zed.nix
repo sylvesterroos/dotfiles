@@ -24,7 +24,7 @@ in {
       GIT_EDITOR = "${lib.getExe pkgs.zed-editor} --wait";
     };
 
-    home.packages = with pkgs; [
+    home.packages = [
       (pkgs.writeShellScriptBin "zed" ''
         exec ${lib.getExe pkgs.zed-editor} "$@"
       '')
