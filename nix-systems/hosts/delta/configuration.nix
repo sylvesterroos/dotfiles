@@ -18,6 +18,7 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
 
+    ./b550i-aorus-sleep-fix.nix
     ./bootloader.nix
     ./filesystems.nix
     ./heroic.nix
