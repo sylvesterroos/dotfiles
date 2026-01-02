@@ -12,11 +12,14 @@ in {
     enable =
       mkEnableOption "systemd-services"
       // {
-        default = true;
+        default =
+          if pkgs.stdenv.isLinux
+          then true
+          else false;
       };
   };
 
-  config = mkIf cfg.enable (lib.mkIf pkgs.stdenv.isLinux {
+  config = {
     systemd.user = let
       foliateBackupServiceName = "foliate-backup";
     in {
@@ -58,5 +61,5 @@ in {
         };
       };
     };
-  });
+  };
 }
