@@ -16,6 +16,7 @@
 
     ./caddy.nix
     ./ddns-updater.nix
+    ./fail2ban.nix
     ./fin_man.nix
     ./hardware-configuration.nix
     ./jellyfin.nix
