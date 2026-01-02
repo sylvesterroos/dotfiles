@@ -2,10 +2,16 @@
   programs.steam = {
     enable = true;
     extraCompatPackages = with pkgs; [proton-ge-bin];
-    extraPackages = with pkgs; [gamescope gamemode mangohud];
+    # extraPackages = with pkgs; [];
     remotePlay.openFirewall = true;
     protontricks.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [mangojuice];
+  programs.gamemode.enable = true;
+  programs.gamescope.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    mangohud
+    mangojuice
+  ];
 }
