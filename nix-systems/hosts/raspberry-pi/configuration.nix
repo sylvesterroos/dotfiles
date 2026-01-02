@@ -20,6 +20,7 @@
     ./hardware-configuration.nix
     ./jellyfin.nix
     ./srv.nix
+    ./vaultwarden.nix
   ];
 
   nixpkgs = {

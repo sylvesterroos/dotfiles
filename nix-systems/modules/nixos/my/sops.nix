@@ -35,5 +35,7 @@ in {
     sops.secrets."fin_man/secret_key_base" = {};
 
     sops.secrets.ddns-updater-config = {};
+
+    sops.secrets."vaultwarden/vaultwarden.env" = {};
   };
 }
