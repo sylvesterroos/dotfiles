@@ -14,7 +14,6 @@
 
     inputs.determinate.nixosModules.default
     inputs.lanzaboote.nixosModules.lanzaboote
-    inputs.chaotic.nixosModules.default
 
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -44,7 +43,7 @@
     channel.enable = false;
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_cachyos;
+  boot.kernelPackages = pkgs.linuxPackages_xanmod;
 
   networking.hostName = "delta"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
