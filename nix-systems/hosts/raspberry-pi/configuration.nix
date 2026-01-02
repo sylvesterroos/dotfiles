@@ -89,6 +89,7 @@
     git
     neovim
     nil
+    yazi
   ];
 
   documentation.man.generateCaches = false;
