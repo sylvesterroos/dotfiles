@@ -28,6 +28,7 @@ in {
         "io.github.kelvinnovais.Kasasa"
         "com.github.iwalton3.jellyfin-media-player"
         "org.pgadmin.pgadmin4"
+        "com.usebottles.bottles"
       ];
 
       update.auto = {
