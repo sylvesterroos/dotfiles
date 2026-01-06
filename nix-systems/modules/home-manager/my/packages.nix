@@ -27,6 +27,7 @@ in {
         gitleaks
         stable.llm
         neofetch
+        nil
         onefetch
         ranger
         stow
