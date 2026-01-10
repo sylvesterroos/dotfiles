@@ -19,6 +19,10 @@ in {
     services.livebook = {
       enableUserService = true;
       package = pkgs.livebook;
+      environment = {
+        LIVEBOOK_PORT = 20123;
+        LIVEBOOK_TOKEN_ENABLED = false;
+      };
       extraPackages = with pkgs; [
         gcc
         gnumake
