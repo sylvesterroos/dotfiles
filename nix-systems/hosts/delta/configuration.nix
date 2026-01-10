@@ -14,11 +14,11 @@
 
     inputs.determinate.nixosModules.default
     inputs.lanzaboote.nixosModules.lanzaboote
+    inputs.nixos-hardware.nixosModules.gigabyte-b550
 
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
 
-    ./b550i-aorus-sleep-fix.nix
     ./bootloader.nix
     ./filesystems.nix
     ./heroic.nix
