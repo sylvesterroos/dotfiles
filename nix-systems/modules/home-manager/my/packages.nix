@@ -25,7 +25,6 @@ in {
         fd
         figlet # making large letters out of ordinary text
         gitleaks
-        stable.llm
         neofetch
         nil
         onefetch
