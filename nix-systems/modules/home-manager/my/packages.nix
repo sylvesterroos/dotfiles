@@ -18,6 +18,7 @@ in {
   config = mkIf cfg.enable {
     home.packages = with pkgs;
       [
+        amp-cli
         beam.packages.erlang_28.elixir_1_19
         cachix
         dbeaver-bin
