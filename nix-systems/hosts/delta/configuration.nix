@@ -22,6 +22,7 @@
     ./bootloader.nix
     ./filesystems.nix
     ./heroic.nix
+    ./immich-ml.nix
     ./lact.nix
     ./plasma.nix
     ./steam.nix
@@ -117,6 +118,7 @@
 
   my = {
     livebook.enable = true;
+    podman.enable = true;
   };
 
   # This value determines the NixOS release from which the default
