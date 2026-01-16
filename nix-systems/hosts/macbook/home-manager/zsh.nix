@@ -10,7 +10,9 @@
       zshConfigLastInit = lib.mkAfter ''
         export PATH="$PATH:/Users/sylvester/.lmstudio/bin"
 
-        if [[ $(ps -o command= -p "$PPID" | awk '{print $1}') != 'fish' ]]
+        # TODO: Remove the final condition when zed#35759 is fixed:
+        # https://github.com/zed-industries/zed/issues/35759
+        if [[ $(ps -o command= -p "$PPID" | awk '{print $1}') != 'fish' && -z "''${ZSH_EXECUTION_STRING+x}" ]]
         then
             exec fish -l
         fi
