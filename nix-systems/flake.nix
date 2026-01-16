@@ -10,11 +10,11 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
+    nixpkgs-stable.url = "https://flakehub.com/f/NixOS/nixpkgs/*";
 
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "https://flakehub.com/f/nix-community/home-manager/0.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
