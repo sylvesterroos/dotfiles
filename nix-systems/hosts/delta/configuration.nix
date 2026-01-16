@@ -79,7 +79,7 @@
   users.users.sylvester = {
     isNormalUser = true;
     description = "Sylvester Roos";
-    shell = pkgs.fish;
+    shell = pkgs.bash;
     extraGroups = ["networkmanager" "wheel"];
   };
   programs.fish.enable = true;

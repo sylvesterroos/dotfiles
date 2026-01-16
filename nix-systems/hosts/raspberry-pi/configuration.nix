@@ -57,7 +57,7 @@
       initialPassword = "password";
       isNormalUser = true;
       description = "Sylvester Roos";
-      shell = pkgs.fish;
+      shell = pkgs.bash;
       extraGroups = [
         "wheel"
         "networkmanager"

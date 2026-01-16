@@ -35,6 +35,7 @@
   ###
 
   my = {
+    bash.enable = false;
     llm.enable = false;
     zed-editor.enable = false;
   };
