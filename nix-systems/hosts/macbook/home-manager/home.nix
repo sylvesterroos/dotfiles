@@ -30,7 +30,14 @@
     };
   };
 
-  my.zed-editor.enable = false;
+  ###
+  # My
+  ###
+
+  my = {
+    llm.enable = false;
+    zed-editor.enable = false;
+  };
 
   home.username = "sylvester";
   home.homeDirectory = "/Users/sylvester";
@@ -45,6 +52,11 @@
     prettier # for javascript projects
     mcp_proxy_rust
   ];
+
+  home.sessionVariables = {
+    EDITOR = lib.getExe pkgs.neovim;
+    VISUAL = "zed";
+  };
 
   #programs.command-not-found.enable = false;
   #programs.nix-index.enable = true;

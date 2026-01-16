@@ -17,10 +17,5 @@
       '';
     in
       lib.mkMerge [zshConfigLastInit];
-
-    sessionVariables = {
-      EDITOR = lib.getExe pkgs.neovim;
-      VISUAL = lib.getExe pkgs.neovim;
-    };
   };
 }

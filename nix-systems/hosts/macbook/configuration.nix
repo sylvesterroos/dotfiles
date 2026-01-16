@@ -30,17 +30,13 @@
 
   users.users.sylvester = {
     home = "/Users/sylvester";
-    shell = pkgs.zsh;
-    uid = 501;
   };
-  users.knownUsers = ["sylvester"];
 
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
   };
   programs.fish.enable = true;
-  environment.shells = with pkgs; [zsh fish];
 
   # environment.systemPackages = with pkgs; [
   # ];

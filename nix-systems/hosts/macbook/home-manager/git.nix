@@ -11,4 +11,8 @@
       };
     };
   };
+
+  home.sessionVariables = {
+    GIT_EDITOR = "zed --wait";
+  };
 }
