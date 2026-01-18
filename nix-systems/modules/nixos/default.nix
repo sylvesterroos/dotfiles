@@ -3,15 +3,5 @@
 {
   # List your module files here
   # my-module = import ./my-module.nix;
-  my =
-    let
-      dir = ./my;
-      autoImports = builtins.map (f: dir + "/${f}") (
-        builtins.filter (f: builtins.match ".*\\.nix" f != null) (builtins.attrNames (builtins.readDir dir))
-      );
-    in
-    {
-      imports = autoImports ++ [
-      ];
-    };
+  my = import ./my;
 }
