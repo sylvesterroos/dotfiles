@@ -22,8 +22,7 @@ in
       package = if pkgs.stdenv.isLinux then pkgs.ghostty else pkgs.ghostty-bin;
       installBatSyntax = true;
       settings = {
-        # theme = "light:catppuccin-latte,dark:catppuccin-macchiato";
-        theme = "light:Catppuccin Latte,dark:Ghostty Default Style Dark";
+        theme = "light:GitHub Light Colorblind,dark:GitHub Dark Colorblind";
         # On Plasma we also want the nice GTK menu bar
         window-decoration = if pkgs.stdenv.isLinux then "client" else "auto";
         keybind = [
