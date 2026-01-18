@@ -4,21 +4,21 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.printing;
-in {
+in
+{
   options.my.printing = {
-    enable =
-      mkEnableOption "printing"
-      // {
-        default = true;
-      };
+    enable = mkEnableOption "printing" // {
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {
     services.printing = {
       enable = true;
-      drivers = with pkgs; [cups-brother-mfcl2800dw];
+      drivers = with pkgs; [ cups-brother-mfcl2800dw ];
     };
   };
 }

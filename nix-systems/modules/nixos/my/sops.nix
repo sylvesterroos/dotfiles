@@ -5,19 +5,19 @@
   lib,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.sops-nix;
-in {
+in
+{
   imports = [
     inputs.sops-nix.nixosModules.sops
   ];
 
   options.my.sops-nix = {
-    enable =
-      mkEnableOption "sops-nix"
-      // {
-        default = true;
-      };
+    enable = mkEnableOption "sops-nix" // {
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {
@@ -32,10 +32,10 @@ in {
 
     sops.age.keyFile = "/home/sylvester/.config/sops/age/keys.txt";
 
-    sops.secrets."fin_man/secret_key_base" = {};
+    sops.secrets."fin_man/secret_key_base" = { };
 
-    sops.secrets.ddns-updater-config = {};
+    sops.secrets.ddns-updater-config = { };
 
-    sops.secrets."vaultwarden/vaultwarden.env" = {};
+    sops.secrets."vaultwarden/vaultwarden.env" = { };
   };
 }

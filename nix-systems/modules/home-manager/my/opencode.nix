@@ -3,15 +3,15 @@
   lib,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.opencode;
-in {
+in
+{
   options.my.opencode = {
-    enable =
-      mkEnableOption "opencode"
-      // {
-        default = true;
-      };
+    enable = mkEnableOption "opencode" // {
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {

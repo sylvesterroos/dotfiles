@@ -3,15 +3,15 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.avahi;
-in {
+in
+{
   options.my.avahi = {
-    enable =
-      mkEnableOption "avahi"
-      // {
-        default = false;
-      };
+    enable = mkEnableOption "avahi" // {
+      default = false;
+    };
   };
 
   config = mkIf cfg.enable {

@@ -5,15 +5,15 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.obsidian;
-in {
+in
+{
   options.my.obsidian = {
-    enable =
-      mkEnableOption "obsidian"
-      // {
-        default = false;
-      };
+    enable = mkEnableOption "obsidian" // {
+      default = false;
+    };
   };
 
   config = mkIf cfg.enable {

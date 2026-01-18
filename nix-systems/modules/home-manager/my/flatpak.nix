@@ -5,19 +5,19 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.nix-flatpak;
-in {
+in
+{
   imports = [
     inputs.nix-flatpak.homeManagerModules.nix-flatpak
   ];
 
   options.my.nix-flatpak = {
-    enable =
-      mkEnableOption "nix-flatpak"
-      // {
-        default = true;
-      };
+    enable = mkEnableOption "nix-flatpak" // {
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {

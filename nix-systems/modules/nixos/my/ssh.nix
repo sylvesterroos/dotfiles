@@ -3,15 +3,15 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.nixos.ssh;
-in {
+in
+{
   options.my.nixos.ssh = {
-    enable =
-      mkEnableOption "SSH server"
-      // {
-        default = true;
-      };
+    enable = mkEnableOption "SSH server" // {
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {

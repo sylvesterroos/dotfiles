@@ -3,15 +3,15 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.nh;
-in {
+in
+{
   options.my.nh = {
-    enable =
-      mkEnableOption "nh"
-      // {
-        default = true;
-      };
+    enable = mkEnableOption "nh" // {
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {

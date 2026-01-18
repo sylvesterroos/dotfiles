@@ -3,7 +3,8 @@
   stdenv,
   fetchurl,
   autoPatchelfHook,
-}: let
+}:
+let
   version = "0.2.3";
 
   sources = {
@@ -20,37 +21,40 @@
   platform = "${stdenv.hostPlatform.parsed.cpu.name}-${stdenv.hostPlatform.parsed.kernel.name}";
   source = sources.${platform} or (throw "Unsupported platform: ${platform}");
 in
-  stdenv.mkDerivation {
-    pname = "mcp-proxy-rust";
-    inherit version;
+stdenv.mkDerivation {
+  pname = "mcp-proxy-rust";
+  inherit version;
 
-    src = fetchurl {
-      inherit (source) url sha256;
-    };
+  src = fetchurl {
+    inherit (source) url sha256;
+  };
 
-    nativeBuildInputs = lib.optionals stdenv.isLinux [
-      autoPatchelfHook
+  nativeBuildInputs = lib.optionals stdenv.isLinux [
+    autoPatchelfHook
+  ];
+
+  buildInputs = lib.optionals stdenv.isLinux [
+    stdenv.cc.cc.lib
+  ];
+
+  sourceRoot = ".";
+
+  installPhase = ''
+    runHook preInstall
+
+    mkdir -p $out/bin
+    cp mcp-proxy $out/bin/
+    chmod +x $out/bin/mcp-proxy
+
+    runHook postInstall
+  '';
+
+  meta = with lib; {
+    homepage = "https://github.com/tidewave-ai/mcp_proxy_rust";
+    license = licenses.unfree;
+    platforms = [
+      "x86_64-linux"
+      "aarch64-darwin"
     ];
-
-    buildInputs = lib.optionals stdenv.isLinux [
-      stdenv.cc.cc.lib
-    ];
-
-    sourceRoot = ".";
-
-    installPhase = ''
-      runHook preInstall
-
-      mkdir -p $out/bin
-      cp mcp-proxy $out/bin/
-      chmod +x $out/bin/mcp-proxy
-
-      runHook postInstall
-    '';
-
-    meta = with lib; {
-      homepage = "https://github.com/tidewave-ai/mcp_proxy_rust";
-      license = licenses.unfree;
-      platforms = ["x86_64-linux" "aarch64-darwin"];
-    };
-  }
+  };
+}

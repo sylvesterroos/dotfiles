@@ -3,15 +3,15 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.nixos-flatpak;
-in {
+in
+{
   options.my.nixos-flatpak = {
-    enable =
-      mkEnableOption "NixOS Flatpak support"
-      // {
-        default = true;
-      };
+    enable = mkEnableOption "NixOS Flatpak support" // {
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {

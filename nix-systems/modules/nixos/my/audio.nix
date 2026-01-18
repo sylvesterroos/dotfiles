@@ -3,15 +3,15 @@
   lib,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.audio;
-in {
+in
+{
   options.my.audio = {
-    enable =
-      mkEnableOption "audio"
-      // {
-        default = true;
-      };
+    enable = mkEnableOption "audio" // {
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {

@@ -5,15 +5,15 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.helix-editor;
-in {
+in
+{
   options.my.helix-editor = {
-    enable =
-      mkEnableOption "helix-editor"
-      // {
-        default = true;
-      };
+    enable = mkEnableOption "helix-editor" // {
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {

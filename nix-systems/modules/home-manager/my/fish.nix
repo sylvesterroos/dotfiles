@@ -4,15 +4,15 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.fish;
-in {
+in
+{
   options.my.fish = {
-    enable =
-      mkEnableOption "fish-shell"
-      // {
-        default = true;
-      };
+    enable = mkEnableOption "fish-shell" // {
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {
@@ -22,7 +22,7 @@ in {
         ls = "${lib.getExe pkgs.eza} --all --long --group --color=always --group-directories-first --header --icons=auto --git --git-repos-no-status";
         cat = "${lib.getExe pkgs.bat} -pp"; # no line numbers, no pager
       };
-      interactiveShellInit = '''';
+      interactiveShellInit = "";
       shellAbbrs = {
         nsf = {
           expansion = "nix shell nixpkgs#% --command fish";
@@ -155,10 +155,11 @@ in {
 
         gw = {
           description = "Navigate to a git worktree using fzf";
-          body = let
-            git = lib.getExe pkgs.git;
-            fzf = lib.getExe pkgs.fzf;
-          in
+          body =
+            let
+              git = lib.getExe pkgs.git;
+              fzf = lib.getExe pkgs.fzf;
+            in
             # fish
             ''
               # Check if inside git worktree

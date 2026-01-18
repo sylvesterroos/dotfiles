@@ -4,15 +4,15 @@
   pkgs,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.nixos-packages;
-in {
+in
+{
   options.my.nixos-packages = {
-    enable =
-      mkEnableOption "nixos-packages"
-      // {
-        default = true;
-      };
+    enable = mkEnableOption "nixos-packages" // {
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {

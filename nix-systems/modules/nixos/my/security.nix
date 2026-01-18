@@ -3,15 +3,15 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.security;
-in {
+in
+{
   options.my.security = {
-    enable =
-      mkEnableOption "security"
-      // {
-        default = true;
-      };
+    enable = mkEnableOption "security" // {
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {

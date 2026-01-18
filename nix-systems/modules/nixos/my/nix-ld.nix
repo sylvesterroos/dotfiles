@@ -3,15 +3,15 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.nix-ld;
-in {
+in
+{
   options.my.nix-ld = {
-    enable =
-      mkEnableOption "nix-ld"
-      // {
-        default = true;
-      };
+    enable = mkEnableOption "nix-ld" // {
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {

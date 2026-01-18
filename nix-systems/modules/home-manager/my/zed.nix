@@ -5,15 +5,15 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.zed-editor;
-in {
+in
+{
   options.my.zed-editor = {
-    enable =
-      mkEnableOption "zed-editor"
-      // {
-        default = true;
-      };
+    enable = mkEnableOption "zed-editor" // {
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {

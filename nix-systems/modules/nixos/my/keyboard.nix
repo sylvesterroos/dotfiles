@@ -4,15 +4,15 @@
   pkgs,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.keyboard;
-in {
+in
+{
   options.my.keyboard = {
-    enable =
-      mkEnableOption "keyboard"
-      // {
-        default = true;
-      };
+    enable = mkEnableOption "keyboard" // {
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {

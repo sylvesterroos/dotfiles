@@ -8,7 +8,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   imports = [
     outputs.nixosModules.my
 
@@ -80,7 +81,10 @@
     isNormalUser = true;
     description = "Sylvester Roos";
     shell = pkgs.bash;
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
   };
   programs.fish.enable = true;
 

@@ -1,7 +1,8 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   home.packages = with pkgs; [
     (prismlauncher.override {
-      additionalPrograms = [gamescope];
+      additionalPrograms = [ gamescope ];
 
       jdks = [
         graalvmPackages.graalvm-ce

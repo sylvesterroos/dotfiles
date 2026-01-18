@@ -4,15 +4,15 @@
   pkgs,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.brave-browser;
-in {
+in
+{
   options.my.brave-browser = {
-    enable =
-      mkEnableOption "brave-browser"
-      // {
-        default = true;
-      };
+    enable = mkEnableOption "brave-browser" // {
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {

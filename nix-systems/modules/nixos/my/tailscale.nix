@@ -4,15 +4,15 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.tailscale;
-in {
+in
+{
   options.my.tailscale = {
-    enable =
-      mkEnableOption "tailscale"
-      // {
-        default = true;
-      };
+    enable = mkEnableOption "tailscale" // {
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {
@@ -21,6 +21,6 @@ in {
       useRoutingFeatures = "client";
     };
 
-    environment.systemPackages = with pkgs; [trayscale];
+    environment.systemPackages = with pkgs; [ trayscale ];
   };
 }

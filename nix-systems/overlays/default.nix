@@ -1,6 +1,8 @@
 # This file defines overlays
-{inputs, ...}: {
-  additions = final: prev:
+{ inputs, ... }:
+{
+  additions =
+    final: prev:
     {
       nix-alien = inputs.nix-alien.packages.${prev.stdenv.hostPlatform.system}.default;
     }

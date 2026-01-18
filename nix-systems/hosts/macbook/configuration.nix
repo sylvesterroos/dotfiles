@@ -6,7 +6,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   imports = [
     inputs.determinate.darwinModules.default
   ];
@@ -25,7 +26,9 @@
       outputs.overlays.modifications
       outputs.overlays.stable-packages
     ];
-    config = {allowUnfree = true;};
+    config = {
+      allowUnfree = true;
+    };
   };
 
   users.users.sylvester = {

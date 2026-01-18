@@ -4,19 +4,20 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.home-manager-packages;
-in {
+in
+{
   options.my.home-manager-packages = {
-    enable =
-      mkEnableOption "home-manager-packages"
-      // {
-        default = true;
-      };
+    enable = mkEnableOption "home-manager-packages" // {
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs;
+    home.packages =
+      with pkgs;
       [
         amp-cli
         beam.packages.erlang_28.elixir_1_19

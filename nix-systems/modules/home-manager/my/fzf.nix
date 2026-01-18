@@ -5,15 +5,15 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.fzf;
-in {
+in
+{
   options.my.fzf = {
-    enable =
-      mkEnableOption "fzf"
-      // {
-        default = true;
-      };
+    enable = mkEnableOption "fzf" // {
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {

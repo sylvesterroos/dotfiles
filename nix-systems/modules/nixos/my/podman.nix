@@ -3,15 +3,15 @@
   lib,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.podman;
-in {
+in
+{
   options.my.podman = {
-    enable =
-      mkEnableOption "podman"
-      // {
-        default = false;
-      };
+    enable = mkEnableOption "podman" // {
+      default = false;
+    };
   };
 
   config = mkIf cfg.enable {

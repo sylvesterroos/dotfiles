@@ -2,9 +2,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   PORT = 8222;
-in {
+in
+{
   services.vaultwarden = {
     enable = true;
     backupDir = "/var/local/vaultwarden/backup";
@@ -81,31 +83,37 @@ in {
   };
 
   environment.etc = {
-    "fail2ban/filter.d/vaultwarden.local".text = lib.mkDefault (lib.mkAfter ''
-      [INCLUDES]
-      before = common.conf
+    "fail2ban/filter.d/vaultwarden.local".text = lib.mkDefault (
+      lib.mkAfter ''
+        [INCLUDES]
+        before = common.conf
 
-      [Definition]
-      failregex = ^.*?Username or password is incorrect\. Try again\. IP: <ADDR>\. Username:.*$
-      ignoreregex =
-    '');
+        [Definition]
+        failregex = ^.*?Username or password is incorrect\. Try again\. IP: <ADDR>\. Username:.*$
+        ignoreregex =
+      ''
+    );
 
-    "fail2ban/filter.d/vaultwarden-admin.local".text = lib.mkDefault (lib.mkAfter ''
-      [INCLUDES]
-      before = common.conf
+    "fail2ban/filter.d/vaultwarden-admin.local".text = lib.mkDefault (
+      lib.mkAfter ''
+        [INCLUDES]
+        before = common.conf
 
-      [Definition]
-      failregex = ^.*Invalid admin token\. IP: <ADDR>.*$
-      ignoreregex =
-    '');
+        [Definition]
+        failregex = ^.*Invalid admin token\. IP: <ADDR>.*$
+        ignoreregex =
+      ''
+    );
 
-    "fail2ban/filter.d/vaultwarden-totp.local".text = lib.mkDefault (lib.mkAfter ''
-      [INCLUDES]
-      before = common.conf
+    "fail2ban/filter.d/vaultwarden-totp.local".text = lib.mkDefault (
+      lib.mkAfter ''
+        [INCLUDES]
+        before = common.conf
 
-      [Definition]
-      failregex = ^.*\[ERROR\] Invalid TOTP code! Server time: (.*) UTC IP: <ADDR>$
-      ignoreregex =
-    '');
+        [Definition]
+        failregex = ^.*\[ERROR\] Invalid TOTP code! Server time: (.*) UTC IP: <ADDR>$
+        ignoreregex =
+      ''
+    );
   };
 }

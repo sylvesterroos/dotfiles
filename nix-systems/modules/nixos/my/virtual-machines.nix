@@ -4,15 +4,15 @@
   pkgs,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.virtual-machines;
-in {
+in
+{
   options.my.virtual-machines = {
-    enable =
-      mkEnableOption "virtual-machines"
-      // {
-        default = false;
-      };
+    enable = mkEnableOption "virtual-machines" // {
+      default = false;
+    };
   };
 
   config = mkIf cfg.enable {

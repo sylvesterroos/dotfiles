@@ -4,7 +4,8 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.llm;
 
   llm = pkgs.stable.python3Packages.llm.withPlugins {
@@ -15,16 +16,15 @@ with lib; let
     llm-jq = true;
     llm-openrouter = true;
   };
-in {
+in
+{
   options.my.llm = {
-    enable =
-      mkEnableOption "llm"
-      // {
-        default = true;
-      };
+    enable = mkEnableOption "llm" // {
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {
-    home.packages = [llm];
+    home.packages = [ llm ];
   };
 }

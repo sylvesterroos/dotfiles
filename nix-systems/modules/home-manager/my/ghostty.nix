@@ -5,33 +5,27 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.ghostty;
-in {
+in
+{
   options.my.ghostty = {
-    enable =
-      mkEnableOption "ghostty"
-      // {
-        default = true;
-      };
+    enable = mkEnableOption "ghostty" // {
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {
     programs.ghostty = {
       enable = true;
-      package =
-        if pkgs.stdenv.isLinux
-        then pkgs.ghostty
-        else pkgs.ghostty-bin;
+      package = if pkgs.stdenv.isLinux then pkgs.ghostty else pkgs.ghostty-bin;
       installBatSyntax = true;
       settings = {
         # theme = "light:catppuccin-latte,dark:catppuccin-macchiato";
         theme = "light:Catppuccin Latte,dark:Ghostty Default Style Dark";
         # On Plasma we also want the nice GTK menu bar
-        window-decoration =
-          if pkgs.stdenv.isLinux
-          then "client"
-          else "auto";
+        window-decoration = if pkgs.stdenv.isLinux then "client" else "auto";
         keybind = [
           "shift+ctrl+r=reload_config"
 

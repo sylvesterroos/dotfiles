@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   users.users = {
     sylvester = {
       isNormalUser = true;
