@@ -1,5 +1,8 @@
 {
   "amp.mcpServers": {
+    "tidewave": {
+      "url": "http://localhost:4000/tidewave/mcp"
+    },
     "AstroDocs": {
       "url": "https://mcp.docs.astro.build/mcp"
     }
