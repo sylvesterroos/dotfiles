@@ -39,7 +39,6 @@ in
         calibre
         commit
         discord
-        foliate
         gradia
         nextcloud-client
         nix-alien
