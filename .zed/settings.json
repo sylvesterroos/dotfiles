@@ -9,10 +9,10 @@
       "language_servers": ["nil", "!nixd"],
       "formatter": {
         "external": {
-          "command": "sh",
-          "arguments": ["-c", "cd nix-systems && nix fmt"]
-        }
-      }
-    }
-  }
+          "command": "nix",
+          "arguments": ["fmt"],
+        },
+      },
+    },
+  },
 }
