@@ -48,7 +48,7 @@
   # ];
 
   environment.variables = {
-    NH_DARWIN_FLAKE = "$HOME/.dotfiles/nix-systems";
+    NH_DARWIN_FLAKE = "$HOME/.dotfiles";
   };
 
   fonts.packages = with pkgs; [

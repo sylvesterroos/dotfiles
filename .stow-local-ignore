@@ -1,6 +1,14 @@
 \.git
 README.md
+\.envrc
+\.zed
 
-/\.envrc
-/nix-systems/
-/\.zed/
+# Nix files
+flake\.nix
+flake\.lock
+\.sops\.yaml
+hosts
+modules
+overlays
+pkgs
+secrets
