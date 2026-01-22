@@ -114,8 +114,6 @@
   # Or disable the firewall altogether.
   networking.firewall.enable = false;
 
-  documentation.man.generateCaches = false;
-
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
   ];

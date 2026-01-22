@@ -98,8 +98,6 @@
     yazi
   ];
 
-  documentation.man.generateCaches = false;
-
   environment.variables = {
     EDITOR = lib.getExe pkgs.neovim;
   };
