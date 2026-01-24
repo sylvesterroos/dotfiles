@@ -31,6 +31,8 @@
     };
   };
 
+  networking.hostName = "Sylvesters-MacBook-Pro";
+
   users.users.sylvester = {
     home = "/Users/sylvester";
   };
