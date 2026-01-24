@@ -7,6 +7,9 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "git_panel": {
+    "tree_view": true
+  },
   "ssh_connections": [
     {
       "host": "raspberry-pi",
@@ -69,7 +72,7 @@
     },
     "default_model": {
       "provider": "copilot_chat",
-      "model": "gpt-5-mini",
+      "model": "claude-sonnet-4.5",
     },
     "commit_message_model": {
       "provider": "copilot_chat",
