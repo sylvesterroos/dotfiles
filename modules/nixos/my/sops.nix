@@ -37,5 +37,7 @@ in
     sops.secrets.ddns-updater-config = { };
 
     sops.secrets."vaultwarden/vaultwarden.env" = { };
+
+    sops.secrets."nix-signing-keys/delta" = { };
   };
 }
