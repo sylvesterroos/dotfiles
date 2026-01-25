@@ -112,9 +112,14 @@
           ];
         };
 
-        raspberry-pi = inputs.nixpkgs-stable.lib.nixosSystem {
+        raspberry-pi = inputs.nixpkgs-stable.lib.nixosSystem rec {
           system = "aarch64-linux";
-          specialArgs = { inherit inputs outputs; };
+          specialArgs = {
+            inherit inputs outputs;
+            # TODO: remove once PR is merged
+            # https://github.com/NixOS/nixpkgs/pull/481056
+            patchedNixpkgsStable = outputs.overlays.patched-nixpkgs-stable system;
+          };
           modules = [
             ./hosts/raspberry-pi/configuration.nix
           ];

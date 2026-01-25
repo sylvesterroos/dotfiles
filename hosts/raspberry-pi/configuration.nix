@@ -21,6 +21,7 @@
     ./fail2ban.nix
     ./fin_man.nix
     ./hardware-configuration.nix
+    ./immich.nix
     ./jellyfin.nix
     ./postgresql.nix
     ./srv.nix
