@@ -22,6 +22,7 @@
     ./fin_man.nix
     ./hardware-configuration.nix
     ./jellyfin.nix
+    ./postgresql.nix
     ./srv.nix
     ./vaultwarden.nix
   ];

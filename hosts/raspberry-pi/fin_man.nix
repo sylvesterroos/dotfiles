@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   lib,
   ...
 }:
@@ -11,11 +10,6 @@
       secretKeyBaseFile = config.sops.secrets."fin_man/secret_key_base".path;
       listenAddress = "0.0.0.0";
     };
-  };
-  services.postgresql = {
-    package = pkgs.postgresql_18_jit;
-    # non-default port so we don't get in the way of development postgres instances
-    settings.port = 5431;
   };
   systemd.services.fin_man.environment =
     let
