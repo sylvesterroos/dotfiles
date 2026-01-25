@@ -17,6 +17,7 @@
 
     ./caddy.nix
     ./ddns-updater.nix
+    ./dns.nix
     ./fail2ban.nix
     ./fin_man.nix
     ./hardware-configuration.nix
