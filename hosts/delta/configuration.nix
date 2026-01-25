@@ -46,6 +46,8 @@
     channel.enable = false;
   };
 
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   boot.kernelPackages = pkgs.linuxPackages_xanmod;
 
   networking.hostName = "delta"; # Define your hostname.

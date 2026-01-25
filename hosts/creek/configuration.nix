@@ -63,6 +63,8 @@
     channel.enable = false;
   };
 
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
   networking.hostName = "creek";
