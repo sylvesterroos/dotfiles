@@ -15,7 +15,6 @@ let
 in
 {
   home.packages = [
-    pkgs.nushell
     prune-git-worktrees
   ];
 }
