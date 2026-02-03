@@ -19,6 +19,7 @@
     ./git.nix
     ./zsh.nix
     ./prune-git-worktrees
+    ./add-git-worktree
   ];
 
   nixpkgs = {
