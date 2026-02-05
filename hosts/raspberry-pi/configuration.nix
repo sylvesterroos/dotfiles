@@ -25,6 +25,7 @@
     ./jellyfin.nix
     ./postgresql.nix
     ./srv.nix
+    ./torrents.nix
     ./vaultwarden.nix
   ];
 
@@ -116,7 +117,7 @@
     nixos-flatpak.enable = false;
     keyboard.enable = false;
     logiops.enable = false;
-    podman.enable = false;
+    podman.enable = true;
     printing.enable = false;
     virtual-machines.enable = false;
   };

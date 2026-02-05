@@ -39,5 +39,7 @@ in
     sops.secrets."vaultwarden/vaultwarden.env" = { };
 
     sops.secrets."nix-signing-keys/delta" = { };
+
+    sops.secrets."gluetun/env" = { };
   };
 }
