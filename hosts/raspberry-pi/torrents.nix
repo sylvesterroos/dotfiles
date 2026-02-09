@@ -48,6 +48,7 @@ in
           WIREGUARD_ENDPOINT_PORT = "443";
           TZ = "Europe/Amsterdam";
           UPDATER_PERIOD = "24h";
+          FIREWALL_OUTBOUND_SUBNETS = "192.168.1.0/24";
         };
         environmentFiles = [
           config.sops.secrets."gluetun/env".path
