@@ -95,6 +95,9 @@
     LC_TIME = "en_IE.UTF-8";
   };
 
+  # Prevents compilation of glibc-locales-aarch64-linux on remote (emulated?) builders
+  i18n.supportedLocales = [ "all" ];
+
   environment.systemPackages = with pkgs; [
     git
     neovim
