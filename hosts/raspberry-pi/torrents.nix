@@ -2,21 +2,38 @@
   config,
   lib,
   ...
-}: {
+}:
+let
+  ports = {
+    httpProxy = 8888;
+    shadowsocks = 8388;
+    prowlarr = 9696;
+    radarr = 7878;
+    sonarr = 8989;
+    flaresolverr = 8191;
+  };
+
+  mkPort =
+    hostPort: containerPort: protocol:
+    "${toString hostPort}:${toString containerPort}${
+      lib.optionalString (protocol != null) "/${protocol}"
+    }";
+  mkPortTcp = hostPort: containerPort: mkPort hostPort containerPort "tcp";
+  mkPortUdp = hostPort: containerPort: mkPort hostPort containerPort "udp";
+  mkPortAny = hostPort: containerPort: mkPort hostPort containerPort null;
+in
+{
   virtualisation.oci-containers = lib.mkIf config.my.podman.enable {
     containers = {
       gluetun = {
         image = "qmcgaw/gluetun";
         ports = [
-          "8888:8888/tcp" # HTTP proxy
-          "8388:8388/tcp" # Shadowsocks
-          "8388:8388/udp" # Shadowsocks
-          "9696:9696" # prowlarr
-          "9091:9091" # transmission
-          "51413:51413"
-          "51413:51413/udp"
-          "7878:7878" # radarr
-          "8989:8989" # sonarr
+          (mkPortTcp ports.httpProxy ports.httpProxy)
+          (mkPortTcp ports.shadowsocks ports.shadowsocks)
+          (mkPortUdp ports.shadowsocks ports.shadowsocks)
+          (mkPortAny ports.prowlarr ports.prowlarr)
+          (mkPortAny ports.radarr ports.radarr)
+          (mkPortAny ports.sonarr ports.sonarr)
         ];
         volumes = [
           "gluetun:/gluetun"
@@ -41,7 +58,7 @@
 
       prowlarr = {
         image = "lscr.io/linuxserver/prowlarr:latest";
-        dependsOn = ["gluetun"];
+        dependsOn = [ "gluetun" ];
         environment = {
           PUID = "1000";
           PGID = "1000";
@@ -50,12 +67,12 @@
         volumes = [
           "prowlarr:/config"
         ];
-        extraOptions = ["--network=container:gluetun"];
+        extraOptions = [ "--network=container:gluetun" ];
       };
 
       flaresolverr = {
         image = "ghcr.io/flaresolverr/flaresolverr:latest";
-        ports = ["8191:8191"];
+        ports = [ (mkPortAny ports.flaresolverr ports.flaresolverr) ];
         environment = {
           LOG_LEVEL = "info";
           LOG_HTML = "false";
@@ -66,7 +83,7 @@
 
       radarr = {
         image = "lscr.io/linuxserver/radarr:latest";
-        dependsOn = ["gluetun"];
+        dependsOn = [ "gluetun" ];
         environment = {
           PUID = "1000";
           PGID = "1000";
@@ -77,12 +94,12 @@
           "/srv/media/movies:/movies"
           "/srv/downloads:/downloads"
         ];
-        extraOptions = ["--network=container:gluetun"];
+        extraOptions = [ "--network=container:gluetun" ];
       };
 
       sonarr = {
         image = "lscr.io/linuxserver/sonarr:latest";
-        dependsOn = ["gluetun"];
+        dependsOn = [ "gluetun" ];
         environment = {
           PUID = "1000";
           PGID = "1000";
@@ -93,7 +110,7 @@
           "/srv/media/series:/tv"
           "/srv/downloads:/downloads"
         ];
-        extraOptions = ["--network=container:gluetun"];
+        extraOptions = [ "--network=container:gluetun" ];
       };
     };
   };
@@ -102,4 +119,16 @@
     "d /srv/downloads 2775 sylvester users -"
   ];
 
+  networking.firewall.allowedTCPPorts = [
+    ports.httpProxy
+    ports.shadowsocks
+    ports.prowlarr
+    ports.radarr
+    ports.sonarr
+    ports.flaresolverr
+  ];
+
+  networking.firewall.allowedUDPPorts = [
+    ports.shadowsocks
+  ];
 }

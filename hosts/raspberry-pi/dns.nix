@@ -19,6 +19,13 @@ in
       address = domainAddresses;
       no-resolv = true;
       cache-size = 1000;
+      # Only listen on specific interfaces, not podman networks
+      interface = [
+        "end0" # Main ethernet interface
+        "wlan0" # WiFi interface
+        "tailscale0" # Tailscale interface
+      ];
+      bind-dynamic = true; # Bind to interfaces even if they're down
     };
   };
 
