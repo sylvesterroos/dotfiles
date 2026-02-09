@@ -11,6 +11,7 @@ let
     radarr = 7878;
     sonarr = 8989;
     flaresolverr = 8191;
+    qbittorrent = 8085;
   };
 
   mkPort =
@@ -34,6 +35,7 @@ in
           (mkPortAny ports.prowlarr ports.prowlarr)
           (mkPortAny ports.radarr ports.radarr)
           (mkPortAny ports.sonarr ports.sonarr)
+          (mkPortAny ports.qbittorrent ports.qbittorrent)
         ];
         volumes = [
           "gluetun:/gluetun"
@@ -112,6 +114,23 @@ in
         ];
         extraOptions = [ "--network=container:gluetun" ];
       };
+
+      qbittorrent = {
+        image = "lscr.io/linuxserver/qbittorrent:latest";
+        dependsOn = [ "gluetun" ];
+        environment = {
+          PUID = "1000";
+          PGID = "1000";
+          TZ = "Europe/Amsterdam";
+          WEBUI_PORT = toString ports.qbittorrent;
+          DOCKER_MODS = "ghcr.io/vuetorrent/vuetorrent-lsio-mod:latest";
+        };
+        volumes = [
+          "qbittorrent:/config"
+          "/srv/downloads:/downloads"
+        ];
+        extraOptions = [ "--network=container:gluetun" ];
+      };
     };
   };
 
@@ -126,6 +145,7 @@ in
     ports.radarr
     ports.sonarr
     ports.flaresolverr
+    ports.qbittorrent
   ];
 
   networking.firewall.allowedUDPPorts = [
