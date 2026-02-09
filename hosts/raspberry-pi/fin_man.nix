@@ -5,7 +5,7 @@
 }:
 {
   services.fin_man = {
-    enable = true;
+    enable = false;
     server = {
       secretKeyBaseFile = config.sops.secrets."fin_man/secret_key_base".path;
       listenAddress = "0.0.0.0";
