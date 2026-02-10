@@ -8,7 +8,7 @@
 // from the command palette or from `Zed` application menu.
 {
   "git_panel": {
-    "tree_view": true
+    "tree_view": true,
   },
   "ssh_connections": [
     {
@@ -34,6 +34,7 @@
     "mute_on_join": true,
   },
   "edit_predictions": {
+    "provider": "copilot",
     "disabled_globs": [".env"],
     "mode": "subtle",
     "copilot": {
@@ -44,6 +45,17 @@
   },
   "show_edit_predictions": false,
   "agent": {
+    "tool_permissions": {
+      "tools": {
+        "terminal": {
+          "always_allow": [
+            {
+              "pattern": "^ls\\s",
+            },
+          ],
+        },
+      },
+    },
     "use_modifier_to_send": true,
     "profiles": {
       "ask": {
@@ -68,7 +80,7 @@
     "default_profile": "ask",
     "inline_assistant_model": {
       "provider": "copilot_chat",
-      "model": "gpt-5-mini",
+      "model": "claude-sonnet-4.5",
     },
     "default_model": {
       "provider": "copilot_chat",
@@ -79,9 +91,6 @@
       "model": "gpt-5-mini",
     },
     "model_parameters": [],
-  },
-  "features": {
-    "edit_prediction_provider": "copilot",
   },
   "vim_mode": true,
   "helix_mode": false,
