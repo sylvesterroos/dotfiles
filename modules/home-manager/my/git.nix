@@ -26,14 +26,11 @@ in
       enable = true;
     };
 
-    programs.delta = {
+    programs.difftastic = {
       enable = true;
-      enableGitIntegration = true;
-      options = {
-        line-numbers = true;
-        side-by-side = true;
-        navigate = true;
-        conflictStyle = "zdiff3";
+      git = {
+        enable = true;
+        diffToolMode = true;
       };
     };
 
