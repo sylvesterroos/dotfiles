@@ -11,7 +11,8 @@
     enable = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    kdePackages.filelight
+  environment.systemPackages = with pkgs.kdePackages; [
+    filelight
+    kclock
   ];
 }
