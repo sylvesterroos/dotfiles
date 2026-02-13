@@ -1,11 +1,12 @@
 def main [substring: string] {
   git fetch --prune origin
 
-  let matching_branches = (git branch -r
+  let matching_branches = (git branch -a
     | lines
     | str trim
     | where { not ($in | str contains "->") }
-    | each { $in | str replace "origin/" "" }
+    | each { $in | str replace -r '^\* ' '' | str replace "remotes/origin/" "" }
+    | uniq
     | where { $in | str contains $substring }
   )
 
