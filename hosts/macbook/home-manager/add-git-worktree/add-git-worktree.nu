@@ -1,37 +1,21 @@
-def main [substring: string] {
+def main [substring?: string] {
   git fetch --prune origin
 
-  let matching_branches = (git branch -a
+  let branches = (git branch -a
     | lines
     | str trim
     | where { not ($in | str contains "->") }
     | each { $in | str replace -r '^\* ' '' | str replace "remotes/origin/" "" }
     | uniq
-    | where { $in | str contains $substring }
   )
 
-  if ($matching_branches | is-empty) {
-    print $"No branches found matching '($substring)'"
+  let query = ($substring | default "")
+
+  let branch = ($branches | str join "\n" | fzf --height=~50% --border --prompt="Select branch: " --query $query | str trim)
+
+  if ($branch | is-empty) {
     return
   }
-
-  print "Matching branches:"
-  $matching_branches | enumerate | each { |it| print $"  ($it.index): ($it.item)" }
-  print ""
-
-  let selection = (try {
-    input "Select branch number: " | str trim | into int
-  } catch {
-    print "\nInvalid selection."
-    return
-  })
-
-  if $selection < 0 or $selection >= ($matching_branches | length) {
-    print "Selection out of range."
-    return
-  }
-
-  let branch = ($matching_branches | get $selection)
 
   let worktrees = (git worktree list --porcelain
     | split row "\n\n"

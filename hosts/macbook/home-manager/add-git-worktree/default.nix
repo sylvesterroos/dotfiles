@@ -5,7 +5,7 @@ let
       "--prefix"
       "PATH"
       ":"
-      "${lib.makeBinPath [ pkgs.git ]}"
+      "${lib.makeBinPath [ pkgs.git pkgs.fzf ]}"
     ];
   };
 
