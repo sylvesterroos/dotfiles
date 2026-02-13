@@ -173,7 +173,7 @@ in
               set -l selected (
                   ${git} worktree list |
                   grep -v "(bare)" |
-                  ${fzf} --height 40% --border --prompt="Select worktree: " --query="$argv[1]" |
+                  ${fzf} --height=~50% --border --prompt="Select worktree: " --query="$argv[1]" |
                   awk '{print $1}'
               )
 
