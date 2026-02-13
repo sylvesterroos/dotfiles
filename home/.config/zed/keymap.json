@@ -42,6 +42,30 @@
       "ctrl-w k": "workspace::ActivatePaneUp",
       "ctrl-w j": "workspace::ActivatePaneDown"
     }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "ctrl-shift-l": "pane::SplitRight"
+    }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "ctrl-shift-h": "pane::SplitLeft"
+    }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "ctrl-shift-k": "pane::SplitUp"
+    }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "ctrl-shift-j": "pane::SplitDown"
+    }
   }
 ]
 
