@@ -159,4 +159,16 @@
   "inlay_hints": {
     "enabled": true,
   },
+  "lsp": {
+    "nil": {
+      "settings": {
+        "nix": {
+          "flake": {
+            "autoArchive": true,
+            "nixpkgsInputName": "nixpkgs",
+          },
+        },
+      },
+    },
+  },
 }
