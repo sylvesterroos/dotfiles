@@ -3,8 +3,8 @@
   {
     "context": "Workspace",
     "bindings": {
-      "ctrl-`": "workspace::ToggleBottomDock"
-    }
+      "ctrl-`": "workspace::ToggleBottomDock",
+    },
   },
   {
     "context": "Editor && VimControl && !VimWaiting && !menu",
@@ -12,27 +12,27 @@
       "ctrl-w h": "workspace::ActivatePaneLeft",
       "ctrl-w l": "workspace::ActivatePaneRight",
       "ctrl-w k": "workspace::ActivatePaneUp",
-      "ctrl-w j": "workspace::ActivatePaneDown"
+      "ctrl-w j": "workspace::ActivatePaneDown",
       // "g shift-r": "editor::FindAllReferences",
       // "g a": "editor::ToggleCodeActions",
       // "g r": "editor::Rename",
       // "[ x": "editor::SelectLargerSyntaxNode",
       // "] x": "editor::SelectSmallerSyntaxNode"
-    }
+    },
   },
   {
     "context": "vim_mode == normal",
     "bindings": {
       // leader (t)oggle (l)eft / (r)ight
       "space t l": "workspace::ToggleLeftDock",
-      "space t r": "workspace::ToggleRightDock"
-    }
+      "space t r": "workspace::ToggleRightDock",
+    },
   },
   {
     "context": "vim_mode == visual",
     "bindings": {
-      "shift-s": "vim::PushAddSurrounds"
-    }
+      "shift-s": "vim::PushAddSurrounds",
+    },
   },
   {
     "context": "Dock",
@@ -40,33 +40,39 @@
       "ctrl-w h": "workspace::ActivatePaneLeft",
       "ctrl-w l": "workspace::ActivatePaneRight",
       "ctrl-w k": "workspace::ActivatePaneUp",
-      "ctrl-w j": "workspace::ActivatePaneDown"
-    }
+      "ctrl-w j": "workspace::ActivatePaneDown",
+    },
   },
   {
     "context": "Terminal",
     "bindings": {
-      "ctrl-shift-l": "pane::SplitRight"
-    }
+      "ctrl-shift-l": "pane::SplitRight",
+    },
   },
   {
     "context": "Terminal",
     "bindings": {
-      "ctrl-shift-h": "pane::SplitLeft"
-    }
+      "ctrl-shift-h": "pane::SplitLeft",
+    },
   },
   {
     "context": "Terminal",
     "bindings": {
-      "ctrl-shift-k": "pane::SplitUp"
-    }
+      "ctrl-shift-k": "pane::SplitUp",
+    },
   },
   {
     "context": "Terminal",
     "bindings": {
-      "ctrl-shift-j": "pane::SplitDown"
-    }
-  }
+      "ctrl-shift-j": "pane::SplitDown",
+    },
+  },
+  {
+    "context": "Editor && vim_mode == normal",
+    "bindings": {
+      "space g g": ["task::Spawn", { "task_name": "gitu" }],
+    },
+  },
 ]
 
 // HELIX CONFIG
