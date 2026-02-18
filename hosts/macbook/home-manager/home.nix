@@ -63,7 +63,6 @@
     settings.updates.auto_update = true;
   };
 
-  programs.autojump.enable = true;
   programs.gh.enable = true;
   programs.gpg.enable = true;
   programs.mise.enable = true;

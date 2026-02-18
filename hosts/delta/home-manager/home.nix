@@ -53,7 +53,6 @@
   #   package = pkgs.vscode-fhs;
   # };
 
-  programs.autojump.enable = true;
   programs.command-not-found.enable = false;
   programs.gh.enable = true;
   programs.nix-index.enable = true;
