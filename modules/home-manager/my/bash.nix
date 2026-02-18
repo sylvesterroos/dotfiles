@@ -7,11 +7,22 @@
 with lib;
 let
   cfg = config.my.bash;
+
+  shellCommands = {
+    fish = "${pkgs.fish}/bin/fish";
+    nu = "${pkgs.nushell}/bin/nu";
+  };
 in
 {
   options.my.bash = {
     enable = mkEnableOption "bash-shell" // {
       default = true;
+    };
+
+    alternativeShell = mkOption {
+      type = types.nullOr (types.enum (builtins.attrNames shellCommands));
+      default = null;
+      description = "Alternative shell to exec into from bash (e.g. \"fish\" or \"nu\").";
     };
   };
 
@@ -19,19 +30,13 @@ in
     programs.bash = {
       enable = true;
 
-      initExtra =
-        let
-          bashConfig = lib.mkAfter ''
-            if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
-            then
-              shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
-              exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
-            fi
-          '';
-        in
-        lib.mkMerge [
-          (lib.mkIf config.my.fish.enable bashConfig)
-        ];
+      initExtra = mkIf (cfg.alternativeShell != null) (lib.mkAfter ''
+        if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "${cfg.alternativeShell}" && -z ''${BASH_EXECUTION_STRING} ]]
+        then
+          shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
+          exec ${shellCommands.${cfg.alternativeShell}} $LOGIN_OPTION
+        fi
+      '');
     };
   };
 }

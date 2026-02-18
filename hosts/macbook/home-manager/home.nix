@@ -33,16 +33,6 @@
     };
   };
 
-  ###
-  # My
-  ###
-
-  my = {
-    bash.enable = false;
-    llm.enable = false;
-    zed-editor.enable = false;
-  };
-
   home.username = "sylvester";
   home.homeDirectory = "/Users/sylvester";
 
@@ -81,6 +71,16 @@
   programs.mise.enable = true;
   programs.starship.enable = true;
   programs.yazi.enable = true;
+
+  ###
+  # My
+  ###
+
+  my = {
+    bash.enable = false;
+    llm.enable = false;
+    zed-editor.enable = false;
+  };
 
   home.stateVersion = "25.11";
 }

@@ -61,6 +61,14 @@
   programs.yazi.enable = true;
   programs.yt-dlp.enable = true;
 
+  ###
+  # My
+  ###
+
+  my = {
+    bash.alternativeShell = "nu";
+  };
+
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 

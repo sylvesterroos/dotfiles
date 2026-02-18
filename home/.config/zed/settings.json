@@ -117,6 +117,17 @@
     "HEEX": {
       "wrap_guides": [98],
     },
+    "Nu": {
+      "format_on_save": "on",
+      "formatter": {
+        "external": {
+          "command": "topiary",
+          "arguments": ["format", "--language", "nu"],
+          // "command": "nufmt",
+          // "arguments": ["--stdin"],
+        },
+      },
+    },
     "Python": {
       "language_servers": ["pyright", "ruff"],
       "format_on_save": "on",

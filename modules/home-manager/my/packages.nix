@@ -32,6 +32,7 @@ in
         onefetch
         ranger
         stow
+        topiary
         zotero
       ]
       ++ lib.optionals pkgs.stdenv.isLinux [

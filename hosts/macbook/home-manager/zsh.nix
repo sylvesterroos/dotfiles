@@ -14,9 +14,10 @@
 
           # TODO: Remove the final condition when zed#35759 is fixed:
           # https://github.com/zed-industries/zed/issues/35759
-          if [[ $(ps -o command= -p "$PPID" | awk '{print $1}') != 'fish' && -z "''${ZSH_EXECUTION_STRING+x}" ]]
+          if [[ $(ps -o command= -p "$PPID" | awk '{print $1}') != 'nu' && -z "''${ZSH_EXECUTION_STRING+x}" ]]
           then
-              exec fish -l
+              [[ -o login ]] && LOGIN_OPTION='--login' || LOGIN_OPTION=""
+              exec ${pkgs.nushell}/bin/nu $LOGIN_OPTION
           fi
         '';
       in
