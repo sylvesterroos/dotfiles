@@ -18,8 +18,6 @@
     # You can also split up your configuration and import pieces of it here:
     ./git.nix
     ./zsh.nix
-    ./prune-git-worktrees
-    ./add-git-worktree
   ];
 
   nixpkgs = {

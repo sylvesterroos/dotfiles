@@ -21,6 +21,8 @@ in
 
       configFile.source = ./config.nu;
 
+      extraConfig = builtins.readFile ./functions/gw.nu;
+
       shellAliases = {
         vi = "hx";
         vim = "hx";
