@@ -55,6 +55,11 @@
       inputs.nixpkgs.follows = "nixpkgs-stable";
       inputs.nixpkgs-unstable.follows = "nixpkgs";
     };
+
+    fpatch = {
+      url = "/home/sylvester/Code/fpatch";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

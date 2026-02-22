@@ -26,6 +26,7 @@ in
         devenv
         fd
         figlet # making large letters out of ordinary text
+        fpatch
         gitleaks
         neofetch
         nil

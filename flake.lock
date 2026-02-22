@@ -287,6 +287,22 @@
         "type": "github"
       }
     },
+    "fpatch": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "narHash": "sha256-05c9b+N3OGIdS0SlMTR/fj101jEwCXnqpe/tIp3HBBg=",
+        "path": "/home/sylvester/Code/fpatch",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/sylvester/Code/fpatch",
+        "type": "path"
+      }
+    },
     "git-hooks": {
       "inputs": {
         "flake-compat": [
@@ -762,6 +778,7 @@
       "inputs": {
         "determinate": "determinate",
         "fin_man": "fin_man",
+        "fpatch": "fpatch",
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
         "nix-alien": "nix-alien",
