@@ -27,19 +27,27 @@ in
       ssh-to-age
     ];
 
-    sops.defaultSopsFile = "${inputs.self}/secrets/secrets.yaml";
-    sops.defaultSopsFormat = "yaml";
+    sops = {
+      defaultSopsFile = "${inputs.self}/secrets/secrets.yaml";
+      defaultSopsFormat = "yaml";
 
-    sops.age.keyFile = "/home/sylvester/.config/sops/age/keys.txt";
+      age.keyFile = "/home/sylvester/.config/sops/age/keys.txt";
 
-    sops.secrets."fin_man/secret_key_base" = { };
+      secrets = {
+        "fin_man/secret_key_base" = { };
 
-    sops.secrets.ddns-updater-config = { };
+        ddns-updater-config = { };
 
-    sops.secrets."vaultwarden/vaultwarden.env" = { };
+        "vaultwarden/vaultwarden.env" = { };
 
-    sops.secrets."nix-signing-keys/delta" = { };
+        "nix-signing-keys/delta" = { };
 
-    sops.secrets."gluetun/env" = { };
+        "wireguard/protonvpn_nl/private_key" = {
+          owner = "systemd-network";
+          group = "systemd-network";
+          mode = "0440";
+        };
+      };
+    };
   };
 }

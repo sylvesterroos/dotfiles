@@ -1,5 +1,7 @@
 { config, ... }:
 {
+  users.groups.media.members = with config.users.users; [ sylvester.name ];
+
   # string with six fields separated by whitespace:
   #   <type> <path> <mode> <owner> <group> <age>
   #
@@ -13,17 +15,18 @@
   systemd.tmpfiles.rules =
     let
       sylvester = config.users.users.sylvester.name;
+      media = config.users.groups.media.name;
     in
     [
-      "d /srv/media 0755 ${sylvester} users -"
+      "d /srv/media 0755 ${sylvester} ${media} -"
 
-      "d /srv/media/movies/public 2775 ${sylvester} users -"
-      "d /srv/media/movies/private 2775 ${sylvester} users -"
+      "d /srv/media/movies/public 2775 ${sylvester} ${media} -"
+      "d /srv/media/movies/private 2775 ${sylvester} ${media} -"
 
-      "d /srv/media/series/public 2775 ${sylvester} users -"
-      "d /srv/media/series/private 2775 ${sylvester} users -"
+      "d /srv/media/series/public 2775 ${sylvester} ${media} -"
+      "d /srv/media/series/private 2775 ${sylvester} ${media} -"
 
-      "d /srv/media/music/public 2775 ${sylvester} users -"
-      "d /srv/media/music/private 2775 ${sylvester} users -"
+      "d /srv/media/music/public 2775 ${sylvester} ${media} -"
+      "d /srv/media/music/private 2775 ${sylvester} ${media} -"
     ];
 }

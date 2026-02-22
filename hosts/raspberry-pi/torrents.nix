@@ -1,155 +1,120 @@
 {
   config,
-  lib,
+  pkgs,
   ...
 }:
 let
-  ports = {
-    httpProxy = 8888;
-    shadowsocks = 8388;
-    prowlarr = 9696;
-    radarr = 7878;
-    sonarr = 8989;
-    flaresolverr = 8191;
-    qbittorrent = 8085;
-  };
-
-  mkPort =
-    hostPort: containerPort: protocol:
-    "${toString hostPort}:${toString containerPort}${
-      lib.optionalString (protocol != null) "/${protocol}"
-    }";
-  mkPortTcp = hostPort: containerPort: mkPort hostPort containerPort "tcp";
-  mkPortUdp = hostPort: containerPort: mkPort hostPort containerPort "udp";
-  mkPortAny = hostPort: containerPort: mkPort hostPort containerPort null;
+  vpnTable = 1000;
+  qbUser = config.users.users.qbittorrent.name;
 in
 {
-  virtualisation.oci-containers = lib.mkIf config.my.podman.enable {
-    containers = {
-      gluetun = {
-        image = "qmcgaw/gluetun";
-        ports = [
-          (mkPortTcp ports.httpProxy ports.httpProxy)
-          (mkPortTcp ports.shadowsocks ports.shadowsocks)
-          (mkPortUdp ports.shadowsocks ports.shadowsocks)
-          (mkPortAny ports.prowlarr ports.prowlarr)
-          (mkPortAny ports.radarr ports.radarr)
-          (mkPortAny ports.sonarr ports.sonarr)
-          (mkPortAny ports.qbittorrent ports.qbittorrent)
-        ];
-        volumes = [
-          "gluetun:/gluetun"
-        ];
-        environment = {
-          VPN_SERVICE_PROVIDER = "windscribe";
-          VPN_TYPE = "wireguard";
-          SERVER_REGIONS = "Netherlands";
-          WIREGUARD_ADDRESSES = "100.112.161.64/32";
-          WIREGUARD_ENDPOINT_PORT = "443";
-          TZ = "Europe/Amsterdam";
-          UPDATER_PERIOD = "24h";
-          FIREWALL_OUTBOUND_SUBNETS = "192.168.1.0/24";
-        };
-        environmentFiles = [
-          config.sops.secrets."gluetun/env".path
-        ];
-        extraOptions = [
-          "--cap-add=NET_ADMIN"
-          "--device=/dev/net/tun:/dev/net/tun"
-        ];
-      };
+  assertions = [
+    {
+      assertion = config.services.qbittorrent.enable -> config.networking.wg-quick.interfaces ? wg0;
+      message = "qbittorrent requires the wg0 WireGuard interface to be configured.";
+    }
+  ];
 
-      prowlarr = {
-        image = "lscr.io/linuxserver/prowlarr:latest";
-        dependsOn = [ "gluetun" ];
-        environment = {
-          PUID = "1000";
-          PGID = "1000";
-          TZ = "Europe/Amsterdam";
-        };
-        volumes = [
-          "prowlarr:/config"
-        ];
-        extraOptions = [ "--network=container:gluetun" ];
-      };
+  networking.firewall.checkReversePath = "loose";
 
-      flaresolverr = {
-        image = "ghcr.io/flaresolverr/flaresolverr:latest";
-        ports = [ (mkPortAny ports.flaresolverr ports.flaresolverr) ];
-        environment = {
-          LOG_LEVEL = "info";
-          LOG_HTML = "false";
-          CAPTCHA_SOLVER = "none";
-          TZ = "Europe/Amsterdam";
-        };
-      };
+  networking.wg-quick.interfaces.wg0 = {
+    privateKeyFile = config.sops.secrets."wireguard/protonvpn_nl/private_key".path;
+    address = [ "10.2.0.2/32" ];
+    dns = [ "10.2.0.1" ];
+    table = "off";
 
-      radarr = {
-        image = "lscr.io/linuxserver/radarr:latest";
-        dependsOn = [ "gluetun" ];
-        environment = {
-          PUID = "1000";
-          PGID = "1000";
-          TZ = "Europe/Amsterdam";
-        };
-        volumes = [
-          "radarr:/config"
-          "/srv/media/movies:/movies"
-          "/srv/downloads:/downloads"
+    peers = [
+      {
+        publicKey = "lK9RKsf9y5/jehblqhoSGV7FtlErG7QqLy13G3IV2Ao=";
+        allowedIPs = [
+          "0.0.0.0/0"
         ];
-        extraOptions = [ "--network=container:gluetun" ];
-      };
+        endpoint = "46.29.25.5:51820";
+        persistentKeepalive = 25;
+      }
+    ];
 
-      sonarr = {
-        image = "lscr.io/linuxserver/sonarr:latest";
-        dependsOn = [ "gluetun" ];
-        environment = {
-          PUID = "1000";
-          PGID = "1000";
-          TZ = "Europe/Amsterdam";
-        };
-        volumes = [
-          "sonarr:/config"
-          "/srv/media/series:/tv"
-          "/srv/downloads:/downloads"
-        ];
-        extraOptions = [ "--network=container:gluetun" ];
-      };
+    postUp = ''
+      ip route add default dev wg0 table ${toString vpnTable}
+      ip rule add uidrange $(id -u ${qbUser})-$(id -u ${qbUser}) table ${toString vpnTable} priority 30001
+      ip rule add uidrange $(id -u ${qbUser})-$(id -u ${qbUser}) table main suppress_prefixlength 0 priority 30000
+      ip -6 route add unreachable default table ${toString vpnTable}
+    '';
 
-      qbittorrent = {
-        image = "lscr.io/linuxserver/qbittorrent:latest";
-        dependsOn = [ "gluetun" ];
-        environment = {
-          PUID = "1000";
-          PGID = "1000";
-          TZ = "Europe/Amsterdam";
-          WEBUI_PORT = toString ports.qbittorrent;
-          DOCKER_MODS = "ghcr.io/vuetorrent/vuetorrent-lsio-mod:latest";
+    preDown = ''
+      ip -6 route del unreachable default table ${toString vpnTable} || true
+      ip rule del uidrange $(id -u ${qbUser})-$(id -u ${qbUser}) table ${toString vpnTable} priority 30001 || true
+      ip rule del uidrange $(id -u ${qbUser})-$(id -u ${qbUser}) table main suppress_prefixlength 0 priority 30000 || true
+      ip route del default dev wg0 table ${toString vpnTable} || true
+    '';
+  };
+
+  services = {
+    prowlarr = {
+      enable = true;
+      openFirewall = true;
+    };
+
+    flaresolverr = {
+      enable = true;
+      openFirewall = true;
+    };
+
+    radarr = {
+      enable = true;
+      openFirewall = true;
+    };
+
+    sonarr = {
+      enable = true;
+      openFirewall = true;
+    };
+
+    qbittorrent = {
+      enable = true;
+      webuiPort = 8085;
+      openFirewall = true;
+      serverConfig = {
+        BitTorrent = {
+          Session = {
+            DefaultSavePath = "/srv/downloads";
+            GlobalMaxSeedingMinutes = 10000;
+            ShareLimitAction = "Stop";
+          };
         };
-        volumes = [
-          "qbittorrent:/config"
-          "/srv/downloads:/downloads"
-        ];
-        extraOptions = [ "--network=container:gluetun" ];
+        Preferences = {
+          LegalNotice.Accepted = true;
+          WebUI = {
+            AlternativeUIEnabled = true;
+            RootFolder = "${pkgs.vuetorrent}/share/vuetorrent";
+            Username = "sylvester";
+            Password_PBKDF2 = "@ByteArray(SHulZq5Q8ROK0j5lDSRv5g==:lN1jwNif0jvZr5sc9rowJaU7n+l5K3OqK7D8A2Ij/RXC0jjj04YXtZp+oPoyYoxZ4hBa2xbE4q7DniDHJ9YHYQ==)";
+          };
+        };
       };
     };
   };
 
-  systemd.tmpfiles.rules = [
-    "d /srv/downloads 2775 sylvester users -"
-  ];
+  systemd.services.qbittorrent = {
+    after = [ "wg-quick-wg0.service" ];
+    requires = [ "wg-quick-wg0.service" ];
+  };
 
-  networking.firewall.allowedTCPPorts = [
-    ports.httpProxy
-    ports.shadowsocks
-    ports.prowlarr
-    ports.radarr
-    ports.sonarr
-    ports.flaresolverr
-    ports.qbittorrent
-  ];
+  users.groups.media = {
+    members = with config.users.users; [
+      sylvester.name
+      qbittorrent.name
+      radarr.name
+      sonarr.name
+    ];
+  };
 
-  networking.firewall.allowedUDPPorts = [
-    ports.shadowsocks
-  ];
+  systemd.tmpfiles.rules =
+    let
+      sylvester = config.users.users.sylvester.name;
+      media = config.users.groups.media.name;
+    in
+    [
+      "d /srv/downloads 2775 ${sylvester} ${media} -"
+    ];
 }
