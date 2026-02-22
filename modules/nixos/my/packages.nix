@@ -1,7 +1,7 @@
 {
-  lib,
   config,
   pkgs,
+  lib,
   ...
 }:
 with lib;
@@ -18,19 +18,19 @@ in
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       alejandra
-      neovim
-      wget
-      eza
-      ripgrep
-      unzip
-      logiops
-      btop
       bat
-      morewaita-icon-theme
-      termscp
-      jq
-      inetutils
+      btop
+      eza
       fzf
+      inetutils
+      jq
+      logiops
+      morewaita-icon-theme
+      neovim
+      ripgrep
+      termscp
+      unzip
+      wget
     ];
   };
 }
