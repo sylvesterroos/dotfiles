@@ -49,6 +49,13 @@
   },
   "show_edit_predictions": false,
   "agent": {
+    "favorite_models": [
+      {
+        "provider": "copilot_chat",
+        "model": "claude-sonnet-4.6",
+        "enable_thinking": false
+      }
+    ],
     "tool_permissions": {
       "tools": {
         "terminal": {
@@ -84,11 +91,11 @@
     "default_profile": "ask",
     "inline_assistant_model": {
       "provider": "copilot_chat",
-      "model": "claude-sonnet-4.5",
+      "model": "claude-sonnet-4.6",
     },
     "default_model": {
       "provider": "copilot_chat",
-      "model": "claude-sonnet-4.5",
+      "model": "claude-sonnet-4.6",
     },
     "commit_message_model": {
       "provider": "copilot_chat",
