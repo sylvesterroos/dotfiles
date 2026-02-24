@@ -92,6 +92,7 @@
 
   my = {
     bash.alternativeShell = "nu";
+    radicle.alias = "sylvesterroos-creek";
   };
 
   # Nicely reload system units when changing configs

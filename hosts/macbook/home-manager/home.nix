@@ -75,6 +75,7 @@
 
   my = {
     bash.enable = false;
+    radicle.alias = "sylvesterroos-mac";
     llm.enable = false;
     zed-editor.enable = false;
   };

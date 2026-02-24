@@ -66,6 +66,7 @@
 
   my = {
     bash.alternativeShell = "nu";
+    radicle.alias = "sylvesterroos-delta";
   };
 
   # Nicely reload system units when changing configs
