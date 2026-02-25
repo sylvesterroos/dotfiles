@@ -294,13 +294,18 @@
         ]
       },
       "locked": {
-        "narHash": "sha256-KpaPakIsTRVbaO9Tb4E+l9stAjBjQQVyn2ppMu/V/ls=",
-        "path": "/home/sylvester/Code/fpatch",
-        "type": "path"
+        "lastModified": 1771956406,
+        "narHash": "sha256-fTmozQIh1ooNHUrgz60Ie//zIGMD982CZu02RDHcMBw=",
+        "ref": "master",
+        "rev": "a58585684697535b94acceaa41b19fdff488545d",
+        "revCount": 5,
+        "type": "git",
+        "url": "https://iris.radicle.xyz/zMSZ5oGbdEzVg1ygAArrK67F5mXo"
       },
       "original": {
-        "path": "/home/sylvester/Code/fpatch",
-        "type": "path"
+        "ref": "master",
+        "type": "git",
+        "url": "https://iris.radicle.xyz/zMSZ5oGbdEzVg1ygAArrK67F5mXo"
       }
     },
     "git-hooks": {

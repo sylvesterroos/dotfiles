@@ -57,7 +57,7 @@
     };
 
     fpatch = {
-      url = "/home/sylvester/Code/fpatch";
+      url = "git+https://iris.radicle.xyz/zMSZ5oGbdEzVg1ygAArrK67F5mXo";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
