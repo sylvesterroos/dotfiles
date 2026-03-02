@@ -18,7 +18,7 @@
       media = config.users.groups.media.name;
     in
     [
-      "d /srv/media 0755 ${sylvester} ${media} -"
+      "d /srv/media 0775 ${sylvester} ${media} -"
 
       "d /srv/media/movies/public 2775 ${sylvester} ${media} -"
       "d /srv/media/movies/private 2775 ${sylvester} ${media} -"
