@@ -38,7 +38,7 @@ in
       ]
       ++ lib.optionals pkgs.stdenv.isLinux [
         bitwarden-desktop
-        calibre
+        stable.calibre
         commit
         discord
         gradia
