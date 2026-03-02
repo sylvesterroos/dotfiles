@@ -56,10 +56,6 @@
       inputs.nixpkgs-unstable.follows = "nixpkgs";
     };
 
-    fpatch = {
-      url = "git+https://iris.radicle.xyz/zMSZ5oGbdEzVg1ygAArrK67F5mXo";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =

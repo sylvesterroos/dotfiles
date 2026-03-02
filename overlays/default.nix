@@ -20,7 +20,6 @@ in
     final: prev:
     {
       nix-alien = inputs.nix-alien.packages.${prev.stdenv.hostPlatform.system}.default;
-      fpatch = inputs.fpatch.packages.${prev.stdenv.hostPlatform.system}.default;
     }
     # This one brings our custom packages from the 'pkgs' directory
     // (import ../pkgs final.pkgs);

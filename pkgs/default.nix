@@ -3,4 +3,5 @@
 pkgs: {
   # example = pkgs.callPackage ./example { };
   mcp_proxy_rust = pkgs.callPackage ./mcp_proxy_rust { };
+  mpatch = pkgs.callPackage ./mpatch { };
 }

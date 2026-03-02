@@ -287,27 +287,6 @@
         "type": "github"
       }
     },
-    "fpatch": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1771956406,
-        "narHash": "sha256-fTmozQIh1ooNHUrgz60Ie//zIGMD982CZu02RDHcMBw=",
-        "ref": "master",
-        "rev": "a58585684697535b94acceaa41b19fdff488545d",
-        "revCount": 5,
-        "type": "git",
-        "url": "https://iris.radicle.xyz/zMSZ5oGbdEzVg1ygAArrK67F5mXo"
-      },
-      "original": {
-        "ref": "master",
-        "type": "git",
-        "url": "https://iris.radicle.xyz/zMSZ5oGbdEzVg1ygAArrK67F5mXo"
-      }
-    },
     "git-hooks": {
       "inputs": {
         "flake-compat": [
@@ -783,7 +762,6 @@
       "inputs": {
         "determinate": "determinate",
         "fin_man": "fin_man",
-        "fpatch": "fpatch",
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
         "nix-alien": "nix-alien",
