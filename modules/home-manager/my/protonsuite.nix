@@ -39,11 +39,7 @@ in
           proton-pass
           proton-authenticator
         ];
-
-        notes = lib.optionals pkgs.stdenv.isLinux [
-          standardnotes
-        ];
       in
-      [ ] ++ protonmail ++ protonvpn ++ protonpass ++ notes;
+      [ ] ++ protonmail ++ protonvpn ++ protonpass;
   };
 }
