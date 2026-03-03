@@ -7,6 +7,11 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "agent_servers": {
+    "opencode": {
+      "type": "registry",
+    },
+  },
   "tab_bar": {
     "show_pinned_tabs_in_separate_row": true,
   },
@@ -53,8 +58,8 @@
       {
         "provider": "copilot_chat",
         "model": "claude-sonnet-4.6",
-        "enable_thinking": false
-      }
+        "enable_thinking": false,
+      },
     ],
     "tool_permissions": {
       "tools": {
@@ -162,8 +167,8 @@
   "base_keymap": "VSCode",
   "theme": {
     "mode": "system",
-    "light": "Catppuccin Latte",
-    "dark": "Gruvbox Dark Hard",
+    "light": "GitHub Light Colorblind",
+    "dark": "GitHub Dark Colorblind",
   },
   "icon_theme": {
     "mode": "system",
