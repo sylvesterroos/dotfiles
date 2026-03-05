@@ -114,12 +114,13 @@
   ###
 
   my = {
+    appimage.enable = false;
     audio.enable = false;
     avahi.enable = false;
     brave-browser.enable = false;
-    nixos-flatpak.enable = false;
     keyboard.enable = false;
     logiops.enable = false;
+    nixos-flatpak.enable = false;
     podman.enable = true;
     printing.enable = false;
     virtual-machines.enable = false;
