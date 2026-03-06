@@ -44,6 +44,7 @@
 
   nix = {
     channel.enable = false;
+    settings.cores = 3;
   };
 
   boot = {
@@ -58,6 +59,13 @@
       generic-extlinux-compatible.enable = true;
     };
   };
+
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 4096;
+    }
+  ];
 
   networking.hostName = "raspberry-pi";
 
