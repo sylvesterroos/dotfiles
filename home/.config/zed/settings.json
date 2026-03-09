@@ -167,7 +167,7 @@
   "base_keymap": "VSCode",
   "theme": {
     "mode": "system",
-    "light": "GitHub Light Colorblind",
+    "light": "Catppuccin Latte",
     "dark": "GitHub Dark Colorblind",
   },
   "icon_theme": {
