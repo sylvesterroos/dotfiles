@@ -34,7 +34,6 @@ in
         ranger
         stow
         topiary
-        zotero
       ]
       ++ lib.optionals pkgs.stdenv.isLinux [
         bitwarden-desktop
@@ -53,6 +52,7 @@ in
         signal-desktop
         spotify
         wl-clipboard
+        zotero
       ];
   };
 }
