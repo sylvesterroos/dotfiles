@@ -28,7 +28,7 @@ in
         figlet # making large letters out of ordinary text
         gitleaks
         mpatch
-        neofetch
+        fastfetch
         nil
         onefetch
         ranger
