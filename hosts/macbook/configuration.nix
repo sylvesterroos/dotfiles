@@ -50,7 +50,7 @@
   # ];
 
   environment.variables = {
-    NH_DARWIN_FLAKE = "$HOME/.dotfiles";
+    NH_FLAKE = "$HOME/.dotfiles";
   };
 
   fonts.packages = with pkgs; [
