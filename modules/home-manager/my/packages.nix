@@ -22,7 +22,6 @@ in
         amp-cli
         beam.packages.erlang_28.elixir_1_19
         cachix
-        dbeaver-bin
         devenv
         fd
         figlet # making large letters out of ordinary text
@@ -39,6 +38,7 @@ in
         bitwarden-desktop
         stable.calibre
         commit
+        dbeaver-bin
         discord
         gradia
         nextcloud-client
