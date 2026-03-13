@@ -26,6 +26,7 @@
     ./jellyfin.nix
     ./postgresql.nix
     ./srv.nix
+    ./syncthing.nix
     ./torrents.nix
     ./vaultwarden.nix
   ];
