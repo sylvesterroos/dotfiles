@@ -67,6 +67,7 @@
   my = {
     bash.alternativeShell = "nu";
     radicle.alias = "sylvesterroos-delta";
+    syncthing-client.enable = true;
   };
 
   # Nicely reload system units when changing configs

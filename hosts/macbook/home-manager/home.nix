@@ -75,8 +75,9 @@
 
   my = {
     bash.enable = false;
-    radicle.alias = "sylvesterroos-mac";
     llm.enable = false;
+    radicle.alias = "sylvesterroos-mac";
+    syncthing-client.enable = true;
     zed-editor.enable = false;
   };
 
