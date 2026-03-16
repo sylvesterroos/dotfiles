@@ -7,7 +7,7 @@
     dataDir = "/home/sylvester/.local/share/syncthing";
     configDir = "/home/sylvester/.config/syncthing";
     openDefaultPorts = true;
-    extraFlags = [];
+    extraFlags = [ ];
     guiAddress = "0.0.0.0:8384";
     overrideDevices = true;
     overrideFolders = true;
@@ -24,14 +24,18 @@
           id = "RIPWL5Z-TW2KRNY-D37ODDG-6GVWNSM-BB5BQ5N-L4GF5N3-KETQZGC-XONJ5AY";
           addresses = [ "dynamic" ];
         };
+        # "creek" = {
+        #   id = "BBBBBBB-...";
+        #   addresses = [ "dynamic" ];
+        # };
         # "windows-desktop" = {
         #   id = "BBBBBBB-...";
         #   addresses = [ "dynamic" ];
         # };
-        # "macbook" = {
-        #   id = "CCCCCCC-...";
-        #   addresses = [ "dynamic" ];
-        # };
+        "macbook" = {
+          id = "MUZ2AKA-7YSWPBY-IJIV6DE-2JHBXXY-XNAFOZW-UUFZEQW-YHNMXJR-Y5UCUQJ";
+          addresses = [ "dynamic" ];
+        };
         # "android" = {
         #   id = "DDDDDDD-...";
         #   addresses = [ "dynamic" ];
