@@ -83,7 +83,6 @@
 
   programs.gh.enable = true;
   programs.yt-dlp.enable = true;
-  programs.yazi.enable = true;
 
   ###
   # My
