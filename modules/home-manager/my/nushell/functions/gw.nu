@@ -5,6 +5,7 @@ def assert-git [] {
     _ => { error make {msg: "Not in a git directory"} }
   }
 }
+
 def parse-worktrees [] {
   git worktree list --porcelain
   | split row "\n\n"
@@ -16,6 +17,7 @@ def parse-worktrees [] {
   | flatten
   | update branch { str replace 'refs/heads/' '' }
 }
+
 # Switch between git worktrees
 def --env gw [] {
   assert-git
@@ -30,18 +32,27 @@ def --env gw [] {
   }
   cd $selected.worktree
 }
-# Add a new git worktree from a remote branch
-def --env "gw add" [] {
+
+# Add a new git worktree from a local or remote branch
+def --env "gw add" [
+  --base: string = "develop"
+] {
   assert-git
   git fetch --prune origin
   let worktrees = parse-worktrees
-  let develop = $worktrees | where branch == "develop" | first
-  if ($develop | is-empty) { error make {msg: "No develop worktree found"} }
-  let branches = git branch -r
+  let base = $worktrees | where branch == $base | first
+  if ($base | is-empty) { error make {msg: $"No ($base) worktree found"} }
+  let remote_branches = git branch -r
     | lines
     | str trim
     | where { $in !~ 'HEAD' }
     | each { str replace 'origin/' '' }
+  let local_branches = git branch
+    | lines
+    | str trim
+    | where { not ($in | str starts-with '*') }
+  let existing = $worktrees | get branch | uniq
+  let branches = $remote_branches | append $local_branches | uniq | where { $in not-in $existing }
   let selected = try {
     $branches | input list --fuzzy "Select branch:"
   } catch {|err|
@@ -50,10 +61,11 @@ def --env "gw add" [] {
       _ => { error make {msg: $err.msg} }
     }
   }
-  let worktree_path = $develop.worktree | path dirname | path join $selected
+  let worktree_path = $base.worktree | path dirname | path join $selected
   git worktree add $worktree_path $selected
   cd $worktree_path
 }
+
 # Remove worktrees whose branch no longer exists on the remote
 def "gw prune" [] {
   assert-git
