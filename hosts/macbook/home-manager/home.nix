@@ -66,7 +66,6 @@
   programs.gh.enable = true;
   programs.gpg.enable = true;
   programs.mise.enable = true;
-  programs.starship.enable = true;
   programs.yazi.enable = true;
 
   ###

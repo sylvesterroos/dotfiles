@@ -56,7 +56,6 @@
   programs.command-not-found.enable = false;
   programs.gh.enable = true;
   programs.nix-index.enable = true;
-  programs.starship.enable = true;
   programs.yazi.enable = true;
   programs.yt-dlp.enable = true;
 
