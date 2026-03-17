@@ -11,7 +11,6 @@
     outputs.nixosModules.my
 
     inputs.determinate.nixosModules.default
-    inputs.fin_man.nixosModules.default
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
     inputs.sops-nix.nixosModules.sops
 
@@ -19,7 +18,6 @@
     ./ddns-updater.nix
     ./dns.nix
     ./fail2ban.nix
-    ./fin_man.nix
     ./hardware-configuration.nix
     ./hermes-agent-deps.nix
     ./immich.nix
@@ -35,8 +33,6 @@
     overlays = [
       outputs.overlays.additions
       outputs.overlays.modifications
-
-      inputs.fin_man.overlays.default
     ];
 
     config = {

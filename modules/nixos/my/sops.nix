@@ -34,8 +34,6 @@ in
       age.keyFile = "/home/sylvester/.config/sops/age/keys.txt";
 
       secrets = {
-        "fin_man/secret_key_base" = { };
-
         ddns-updater-config = { };
 
         "vaultwarden/vaultwarden.env" = { };

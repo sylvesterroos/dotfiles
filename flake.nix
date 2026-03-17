@@ -49,13 +49,6 @@
     nix-alien.url = "github:thiagokokada/nix-alien";
     nix-flatpak.url = "https://flakehub.com/f/gmodena/nix-flatpak/0.*";
 
-    fin_man = {
-      url = "git+ssh://git@github.com/sylvesterroos/fin_man";
-      # url = "/home/sylvester/Code/fin_man";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
-      inputs.nixpkgs-unstable.follows = "nixpkgs";
-    };
-
   };
 
   outputs =
