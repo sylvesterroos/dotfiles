@@ -28,6 +28,9 @@
         {
           "paths": ["/home/sylvester/.dotfiles/./"],
         },
+        {
+          "paths": ["/home/sylvester/.hermes/hermes-agent/./"],
+        },
       ],
     },
   ],
@@ -52,7 +55,7 @@
     },
     "enabled_in_text_threads": false,
   },
-  "show_edit_predictions": false,
+  "show_edit_predictions": true,
   "agent": {
     "favorite_models": [
       {
@@ -121,13 +124,13 @@
       "preferred_line_length": 80,
     },
     "Elixir": {
-      "language_servers": ["!expert", "elixir-ls", "!lexical", "!next-ls"],
+      "language_servers": ["expert", "!elixir-ls", "!lexical", "!next-ls"],
       "wrap_guides": [98],
     },
     "HEEX": {
       "language_servers": [
-        "!expert",
-        "elixir-ls",
+        "expert",
+        "!elixir-ls",
         "!lexical",
         "!next-ls",
         "tailwindcss-intellisense",
