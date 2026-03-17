@@ -66,22 +66,45 @@ def --env "gw add" [
   cd $worktree_path
 }
 
-# Remove worktrees whose branch no longer exists on the remote
+# Remove worktrees whose branch was deleted from remote
 def "gw prune" [] {
   assert-git
   git fetch --prune origin
-  let remote_branches = git branch -r
+  let branch_statuses = git branch -vv
     | lines
-    | str trim
-    | where { not ($in | str contains "->") }
-    | each { str replace 'origin/' '' }
-  let stale = parse-worktrees | where { $in.branch not-in $remote_branches }
+    | each {|line|
+      # Rows can start with '*' (current) or '+' (checked out in another worktree).
+      let normalized = $line
+        | str trim
+        | str replace -r '^[*+]\s+' ''
+      let branch = ($normalized | split row -r '\s+' | get 0)
+      let has_gone_marker = $line | str contains ": gone]"
+      let has_tracking_info = $line | str contains "["
+      let status = match [$has_gone_marker $has_tracking_info] {
+        [true _] => { "deleted from remote" }
+        [false true] => { "pushed" }
+        _ => { "never pushed" }
+      }
+      {
+        branch: $branch
+        status: $status
+      }
+    }
+  let stale_statuses = $branch_statuses | where status == "deleted from remote"
+  let stale_branches = $stale_statuses | get branch
+  let worktrees = parse-worktrees
+  let stale = $worktrees
+    | where { $in.branch in $stale_branches }
+    | each {|wt|
+      let status = $stale_statuses | where branch == $wt.branch | first | get status
+      $wt | insert status $status
+    }
   if ($stale | is-empty) {
     print "No stale worktrees found."
     return
   }
   print $"Found ($stale | length) stale worktree\(s\):"
-  print ($stale | select worktree branch)
+  print ($stale | select worktree branch status)
   let confirm = try {
     input "Delete these worktrees? [y/N] " | str trim | str downcase
   } catch {|err|
