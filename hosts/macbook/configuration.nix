@@ -37,6 +37,15 @@
     home = "/Users/sylvester";
   };
 
+  services.openssh = {
+    enable = true;
+    extraConfig = ''
+      PermitRootLogin no
+      PasswordAuthentication no
+      AllowUsers sylvester
+    '';
+  };
+
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
