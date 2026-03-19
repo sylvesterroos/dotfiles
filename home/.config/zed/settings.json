@@ -60,8 +60,8 @@
     "favorite_models": [
       {
         "provider": "copilot_chat",
-        "model": "claude-sonnet-4.6",
-        "enable_thinking": false,
+        "model": "gpt-5-mini",
+        "enable_thinking": true,
       },
     ],
     "tool_permissions": {
@@ -99,11 +99,11 @@
     "default_profile": "ask",
     "inline_assistant_model": {
       "provider": "copilot_chat",
-      "model": "claude-sonnet-4.6",
+      "model": "gpt-5-mini",
     },
     "default_model": {
       "provider": "copilot_chat",
-      "model": "claude-sonnet-4.6",
+      "model": "gpt-5-mini",
     },
     "commit_message_model": {
       "provider": "copilot_chat",
