@@ -15,6 +15,18 @@ in
   };
 
   config = mkIf cfg.enable {
-    programs.opencode.enable = true;
+    programs.opencode = {
+      enable = true;
+      settings = {
+        plugin = [ "opencode-handoff" ];
+        mcp = {
+          tidewave = {
+            type = "remote";
+            url = "http://localhost:4000/tidewave/mcp";
+            enabled = true;
+          };
+        };
+      };
+    };
   };
 }
