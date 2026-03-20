@@ -21,6 +21,7 @@
     ./hardware-configuration.nix
     ./hermes-agent-deps.nix
     ./immich.nix
+    ./immich-backup.nix
     ./jellyfin.nix
     ./postgresql.nix
     ./srv.nix

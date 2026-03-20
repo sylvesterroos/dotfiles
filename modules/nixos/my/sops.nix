@@ -45,6 +45,9 @@ in
           group = "systemd-network";
           mode = "0440";
         };
+
+        "proton/email" = { };
+        "proton/rclone_obscured_password" = { };
       };
     };
   };
