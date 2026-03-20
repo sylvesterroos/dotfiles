@@ -70,6 +70,7 @@
 
   users.users = {
     sylvester = {
+      uid = 1000;
       initialPassword = "password";
       isNormalUser = true;
       description = "Sylvester Roos";
