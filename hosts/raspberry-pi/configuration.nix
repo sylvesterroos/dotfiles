@@ -107,9 +107,12 @@
   i18n.supportedLocales = [ "all" ];
 
   environment.systemPackages = with pkgs; [
+    ghostty.terminfo
     git
+    gitu
     neovim
     nil
+    opencode
     yazi
   ];
 
