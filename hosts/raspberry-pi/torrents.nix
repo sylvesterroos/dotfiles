@@ -98,6 +98,9 @@ in
   systemd.services.qbittorrent = {
     after = [ "wg-quick-wg0.service" ];
     requires = [ "wg-quick-wg0.service" ];
+    # UMask 0002 gives files 664 and dirs 775, allowing the media group
+    # write access so sonarr/radarr can hardlink downloaded files.
+    serviceConfig.UMask = "0002";
   };
 
   users.groups.media = {
@@ -111,10 +114,10 @@ in
 
   systemd.tmpfiles.rules =
     let
-      sylvester = config.users.users.sylvester.name;
+      qbittorrent = config.users.users.qbittorrent.name;
       media = config.users.groups.media.name;
     in
     [
-      "d /srv/downloads 2775 ${sylvester} ${media} -"
+      "d /srv/downloads 2775 ${qbittorrent} ${media} -"
     ];
 }
