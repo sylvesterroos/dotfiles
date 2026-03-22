@@ -43,11 +43,14 @@ in
         "wireguard/protonvpn_nl/private_key" = {
           owner = "systemd-network";
           group = "systemd-network";
-          mode = "0440";
         };
 
         "proton/email" = { };
         "proton/rclone_obscured_password" = { };
+
+        "hermes/env" = {
+          owner = config.services.hermes-agent.user;
+        };
       };
     };
   };

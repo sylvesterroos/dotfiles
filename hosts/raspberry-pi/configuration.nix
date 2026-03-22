@@ -19,9 +19,9 @@
     ./dns.nix
     ./fail2ban.nix
     ./hardware-configuration.nix
-    ./hermes-agent-deps.nix
-    ./immich.nix
+    ./hermes-agent
     ./immich-backup.nix
+    ./immich.nix
     ./jellyfin.nix
     ./postgresql.nix
     ./srv.nix

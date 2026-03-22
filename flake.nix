@@ -45,10 +45,11 @@
     };
 
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    # TODO: remove sid/nix-flake branch once merged https://github.com/NousResearch/hermes-agent/pull/20
+    hermes-agent.url = "github:NousResearch/hermes-agent/sid/nix-flake";
     nix-alien.url = "github:thiagokokada/nix-alien";
     nix-flatpak.url = "https://flakehub.com/f/gmodena/nix-flatpak/0.*";
-
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
   outputs =
