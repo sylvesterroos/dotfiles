@@ -3,6 +3,7 @@
   services.jellyfin = {
     enable = true;
     user = "sylvester";
+    openFirewall = true;
   };
 
   services.caddy.virtualHosts."jf.sylvesterroos.com".extraConfig = ''
