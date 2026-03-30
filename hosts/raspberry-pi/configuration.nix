@@ -16,7 +16,6 @@
 
     ./caddy.nix
     ./ddns-updater.nix
-    ./dns.nix
     ./fail2ban.nix
     ./hardware-configuration.nix
     ./hermes-agent
