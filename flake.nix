@@ -12,6 +12,7 @@
   inputs = {
     nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
     nixpkgs-stable.url = "https://flakehub.com/f/NixOS/nixpkgs/*";
+    nixpkgs-unstable.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
 
     home-manager = {
       url = "https://flakehub.com/f/nix-community/home-manager/0.1";
@@ -45,8 +46,7 @@
     };
 
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
-    # TODO: remove sid/nix-flake branch once merged https://github.com/NousResearch/hermes-agent/pull/20
-    hermes-agent.url = "github:NousResearch/hermes-agent/sid/nix-flake";
+    hermes-agent.url = "github:NousResearch/hermes-agent";
     nix-alien.url = "github:thiagokokada/nix-alien";
     nix-flatpak.url = "https://flakehub.com/f/gmodena/nix-flatpak/0.*";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
