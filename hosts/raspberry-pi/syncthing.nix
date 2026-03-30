@@ -1,4 +1,3 @@
-{ ... }:
 {
   services.syncthing = {
     enable = true;
@@ -28,10 +27,10 @@
         #   id = "BBBBBBB-...";
         #   addresses = [ "dynamic" ];
         # };
-        # "windows-desktop" = {
-        #   id = "BBBBBBB-...";
-        #   addresses = [ "dynamic" ];
-        # };
+        "windows-desktop" = {
+          id = "ICJG2JE-NOR37L7-NETFILO-A6DSKEU-JZ2RW2J-FQVWNJV-ELRGLCV-GG7SQQR";
+          addresses = [ "dynamic" ];
+        };
         "macbook" = {
           id = "MUZ2AKA-7YSWPBY-IJIV6DE-2JHBXXY-XNAFOZW-UUFZEQW-YHNMXJR-Y5UCUQJ";
           addresses = [ "dynamic" ];
@@ -47,8 +46,8 @@
           path = "/home/sylvester/PARA";
           devices = [
             "delta"
-            # "windows-desktop"
-            # "macbook"
+            "windows-desktop"
+            "macbook"
             # "android"
           ];
         };
