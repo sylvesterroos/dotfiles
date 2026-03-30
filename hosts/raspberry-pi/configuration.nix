@@ -145,6 +145,8 @@
   # Services
   ###
 
+  services.fstrim.enable = true;
+
   ###
   # Programs
   ###

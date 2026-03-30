@@ -26,7 +26,6 @@
     fsType = "ext4";
     options = [
       "relatime"
-      "discard"
     ];
   };
 

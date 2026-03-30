@@ -7,7 +7,6 @@
     options = [
       "nofail"
       "nodiratime"
-      "discard"
     ];
   };
 }

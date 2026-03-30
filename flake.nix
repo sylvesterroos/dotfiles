@@ -113,7 +113,7 @@
             inherit inputs outputs;
             # TODO: remove once PR is merged
             # https://github.com/NixOS/nixpkgs/pull/481056
-            patchedNixpkgsStable = outputs.overlays.patched-nixpkgs-stable system;
+            patchedNixpkgsStable = outputs.overlays.patched-nixpkgs-stable system inputs.nixpkgs-stable;
           };
           modules = [
             ./hosts/raspberry-pi/configuration.nix
