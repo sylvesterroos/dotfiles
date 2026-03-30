@@ -33,6 +33,7 @@
     overlays = [
       outputs.overlays.additions
       outputs.overlays.modifications
+      outputs.overlays.unstable-packages
     ];
 
     config = {
@@ -111,7 +112,8 @@
     gitu
     neovim
     nil
-    opencode
+    unstable.opencode
+    unstable.amp-cli
     yazi
   ];
 
