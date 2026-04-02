@@ -28,7 +28,7 @@ in
         ];
 
         protonvpn = lib.optionals pkgs.stdenv.isLinux [
-          protonvpn-gui
+          proton-vpn
           proton-vpn-cli
         ];
 
