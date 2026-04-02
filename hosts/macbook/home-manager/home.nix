@@ -42,7 +42,6 @@
     bat
     ripgrep
     prettier # for javascript projects
-    mcp_proxy_rust
   ];
 
   home.sessionVariables = {
