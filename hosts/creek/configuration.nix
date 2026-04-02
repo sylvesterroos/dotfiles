@@ -90,14 +90,6 @@
     LC_TIME = "en_IE.UTF-8";
   };
 
-  fonts.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono
-    nerd-fonts.zed-mono
-    noto-fonts
-
-    libre-baskerville # times new roman alternative
-  ];
-
   # Set variables for the global environment
   environment.variables = {
     EDITOR = lib.getExe pkgs.neovim;

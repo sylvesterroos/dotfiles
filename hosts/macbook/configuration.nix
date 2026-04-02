@@ -62,10 +62,6 @@
     NH_FLAKE = "$HOME/.dotfiles";
   };
 
-  fonts.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono
-  ];
-
   system.primaryUser = "sylvester";
   system.defaults.NSGlobalDomain.NSScrollAnimationEnabled = false;
 

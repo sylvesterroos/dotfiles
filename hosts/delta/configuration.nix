@@ -119,10 +119,6 @@
   # Or disable the firewall altogether.
   networking.firewall.enable = false;
 
-  fonts.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono
-  ];
-
   ###
   # My
   ###
