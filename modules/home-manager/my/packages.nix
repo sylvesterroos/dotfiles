@@ -36,7 +36,6 @@ in
       ]
       ++ lib.optionals pkgs.stdenv.isLinux [
         bitwarden-desktop
-        stable.calibre
         commit
         dbeaver-bin
         discord
@@ -49,8 +48,10 @@ in
         podman-tui
         pods
         qbittorrent
+        sgdboop
         signal-desktop
         spotify
+        stable.calibre
         wl-clipboard
         zotero
       ];
