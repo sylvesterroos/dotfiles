@@ -35,10 +35,10 @@
           id = "MUZ2AKA-7YSWPBY-IJIV6DE-2JHBXXY-XNAFOZW-UUFZEQW-YHNMXJR-Y5UCUQJ";
           addresses = [ "dynamic" ];
         };
-        # "android" = {
-        #   id = "DDDDDDD-...";
-        #   addresses = [ "dynamic" ];
-        # };
+        "android" = {
+          id = "SVXC6BU-JPAQG52-FRSYVFQ-6KOZOEK-P6ROCLJ-KR6LACX-HGKGGGZ-SKLYLQJ";
+          addresses = [ "dynamic" ];
+        };
       };
 
       folders = {
@@ -48,7 +48,16 @@
             "delta"
             "windows-desktop"
             "macbook"
-            # "android"
+            "android"
+          ];
+        };
+        "agent-vault" = {
+          path = "/var/lib/hermes/agent-vault";
+          devices = [
+            "delta"
+            "windows-desktop"
+            "macbook"
+            "android"
           ];
         };
       };

@@ -41,6 +41,10 @@ in
             path = "~/PARA";
             devices = [ "server" ];
           };
+          "agent-vault" = {
+            path = "~/.local/share/agent-vault";
+            devices = [ "server" ];
+          };
         };
       };
     };
