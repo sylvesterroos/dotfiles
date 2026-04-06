@@ -14,18 +14,9 @@
     inputs.disko.nixosModules.default
     inputs.sops-nix.nixosModules.sops
 
-    {
-      config.facter.reportPath =
-        if builtins.pathExists ./facter.json then
-          ./facter.json
-        else
-          throw "Have you forgotten to run nixos-anywhere with `--generate-hardware-config nixos-facter ./facter.json`?";
-    }
-    inputs.nixos-facter-modules.nixosModules.facter
-
     ./disk-config.nix
     ./fail2ban.nix
-    # ./hardware-configuration.nix
+    ./hardware-configuration.nix
 
     # ./caddy.nix
     # ./ddns-updater.nix
