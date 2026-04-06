@@ -17,6 +17,7 @@
     ./disk-config.nix
     ./fail2ban.nix
     ./hardware-configuration.nix
+    ./users.nix
 
     # ./caddy.nix
     # ./ddns-updater.nix
@@ -68,24 +69,6 @@
   ];
 
   networking.hostName = "bachus";
-
-  users.users = {
-    root.initialPassword = "password";
-    sylvester = {
-      uid = 1000;
-      initialPassword = "password";
-      isNormalUser = true;
-      description = "Sylvester Roos";
-      shell = pkgs.bash;
-      extraGroups = [
-        "wheel"
-        "networkmanager"
-        "plugdev"
-      ];
-      createHome = true;
-    };
-  };
-  programs.fish.enable = true;
 
   networking.networkmanager.enable = true;
 
