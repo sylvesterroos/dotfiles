@@ -24,6 +24,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
+
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -117,6 +124,19 @@
           };
           modules = [
             ./hosts/raspberry-pi/configuration.nix
+          ];
+        };
+
+        bachus = inputs.nixpkgs-stable.lib.nixosSystem rec {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs outputs;
+            # TODO: remove once PR is merged
+            # https://github.com/NixOS/nixpkgs/pull/481056
+            patchedNixpkgsStable = outputs.overlays.patched-nixpkgs-stable system inputs.nixpkgs-stable;
+          };
+          modules = [
+            ./hosts/bachus/configuration.nix
           ];
         };
       };
