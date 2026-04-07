@@ -102,8 +102,9 @@
       "model": "gpt-5-mini",
     },
     "default_model": {
+      "effort": "high",
       "provider": "copilot_chat",
-      "model": "gpt-5-mini",
+      "model": "gpt-5.3-codex",
     },
     "commit_message_model": {
       "provider": "copilot_chat",
@@ -127,7 +128,7 @@
       "language_servers": ["expert", "!elixir-ls", "!lexical", "!next-ls"],
       "wrap_guides": [98],
     },
-    "HEEX": {
+    "HEEx": {
       "language_servers": [
         "expert",
         "!elixir-ls",
