@@ -61,13 +61,6 @@
   };
   boot.loader.efi.canTouchEfiVariables = true;
 
-  swapDevices = [
-    {
-      device = "/var/lib/swapfile";
-      size = 4096;
-    }
-  ];
-
   networking.hostName = "bachus";
 
   networking.networkmanager.enable = true;
