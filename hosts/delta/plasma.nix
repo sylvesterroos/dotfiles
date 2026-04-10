@@ -13,6 +13,8 @@
 
   environment.systemPackages = with pkgs.kdePackages; [
     filelight
+    isoimagewriter
     kclock
+    partitionmanager
   ];
 }
