@@ -2,7 +2,6 @@
   inputs,
   outputs,
   lib,
-  config,
   pkgs,
   ...
 }:
@@ -15,10 +14,11 @@
     inputs.sops-nix.nixosModules.sops
 
     ./caddy.nix
+    ./camofox.nix
     ./ddns-updater.nix
     ./fail2ban.nix
     ./hardware-configuration.nix
-    ./hermes-agent
+    ./hermes-agent.nix
     ./immich-backup.nix
     ./immich.nix
     ./jellyfin.nix

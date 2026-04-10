@@ -51,7 +51,6 @@
     };
 
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
-    hermes-agent.url = "github:NousResearch/hermes-agent";
     nix-alien.url = "github:thiagokokada/nix-alien";
     nix-flatpak.url = "https://flakehub.com/f/gmodena/nix-flatpak/0.*";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";

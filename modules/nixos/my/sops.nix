@@ -47,10 +47,6 @@ in
 
         "proton/email" = { };
         "proton/rclone_obscured_password" = { };
-
-        "hermes/env" = {
-          owner = config.services.hermes-agent.user;
-        };
       };
     };
   };
