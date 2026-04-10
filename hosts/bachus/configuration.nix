@@ -110,6 +110,7 @@
     brave-browser.enable = false;
     keyboard.enable = false;
     logiops.enable = false;
+    nh.flake = "/etc/nixos";
     nixos-flatpak.enable = false;
     podman.enable = true;
     printing.enable = false;

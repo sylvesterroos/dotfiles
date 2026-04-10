@@ -12,6 +12,11 @@ in
     enable = mkEnableOption "nh" // {
       default = true;
     };
+    flake = mkOption {
+      type = types.str;
+      default = "/home/sylvester/.dotfiles";
+      description = "Path to the flake used by nh.";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -22,8 +27,7 @@ in
         dates = "weekly";
         extraArgs = "--nogcroots --keep-since 14d";
       };
-      # There is probably a better way to define this path, but I figure this will sit untouched for a while
-      flake = "/home/sylvester/.dotfiles";
+      flake = cfg.flake;
     };
   };
 }
