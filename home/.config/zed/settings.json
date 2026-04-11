@@ -27,6 +27,11 @@
       "projects": [
         {
           "paths": [
+            "/home/sylvester"
+          ]
+        },
+        {
+          "paths": [
             "/home/sylvester/.dotfiles/./"
           ]
         },
