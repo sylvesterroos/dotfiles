@@ -26,13 +26,29 @@
       "args": [],
       "projects": [
         {
-          "paths": ["/home/sylvester/.dotfiles/./"],
+          "paths": [
+            "/home/sylvester/.dotfiles/./"
+          ]
         },
         {
-          "paths": ["/home/sylvester/.hermes/hermes-agent/./"],
-        },
-      ],
+          "paths": [
+            "/home/sylvester/.hermes/hermes-agent/./"
+          ]
+        }
+      ]
     },
+    {
+      "host": "bachus",
+      "username": "sylvester",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/etc/nixos/./"
+          ]
+        }
+      ]
+    }
   ],
   // Tell Zed to use direnv and direnv can use a flake.nix environment
   "load_direnv": "shell_hook",
