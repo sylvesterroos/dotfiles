@@ -23,16 +23,17 @@ in
         beam.packages.erlang_28.elixir_1_19
         cachix
         devenv
+        fastfetch
         fd
         figlet # making large letters out of ordinary text
         gitleaks
         mpatch
-        fastfetch
         nil
         onefetch
         ranger
         stow
         topiary
+        upscayl
       ]
       ++ lib.optionals pkgs.stdenv.isLinux [
         bitwarden-desktop
