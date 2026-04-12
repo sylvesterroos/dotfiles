@@ -13,21 +13,23 @@
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
     inputs.sops-nix.nixosModules.sops
 
-    ./caddy.nix
+    # ./caddy.nix
     ./camofox.nix
-    ./ddns-updater.nix
+    # ./ddns-updater.nix
     ./fail2ban.nix
     ./hardware-configuration.nix
     ./hermes-agent.nix
-    ./immich-backup.nix
-    ./immich.nix
-    ./jellyfin.nix
+    # ./immich-backup.nix
+    # ./immich.nix
+    # ./jellyfin.nix
     ./postgresql.nix
     ./srv.nix
-    ./syncthing.nix
-    ./torrents.nix
-    ./vaultwarden.nix
+    # ./syncthing.nix
+    # ./torrents.nix
+    # ./vaultwarden.nix
   ];
+
+  services.postgresql.enable = true;
 
   nixpkgs = {
     overlays = [

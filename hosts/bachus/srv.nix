@@ -1,6 +1,12 @@
 { config, ... }:
 {
-  users.groups.media.members = with config.users.users; [ sylvester.name ];
+  users.groups.media.members = with config.users.users; [
+    sylvester.name
+    jellyfin.name
+    qbittorrent.name
+    radarr.name
+    sonarr.name
+  ];
 
   # string with six fields separated by whitespace:
   #   <type> <path> <mode> <owner> <group> <age>

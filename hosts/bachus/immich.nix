@@ -2,8 +2,9 @@
   config,
   patchedNixpkgsStable,
   ...
-}: {
-  disabledModules = ["services/web-apps/immich.nix"];
+}:
+{
+  disabledModules = [ "services/web-apps/immich.nix" ];
   imports = [
     "${patchedNixpkgsStable}/nixos/modules/services/web-apps/immich.nix"
   ];

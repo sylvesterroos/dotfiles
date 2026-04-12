@@ -103,15 +103,6 @@ in
     serviceConfig.UMask = "0002";
   };
 
-  users.groups.media = {
-    members = with config.users.users; [
-      sylvester.name
-      qbittorrent.name
-      radarr.name
-      sonarr.name
-    ];
-  };
-
   systemd.tmpfiles.rules =
     let
       qbittorrent = config.users.users.qbittorrent.name;
