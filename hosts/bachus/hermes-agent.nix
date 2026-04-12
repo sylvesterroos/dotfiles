@@ -60,6 +60,7 @@ in
       # podman start forks and exits; forking tells systemd to expect that.
       Type = "forking";
       ExecStart = startScript;
+      ExecStop = "podman stop hermes";
       Restart = "on-failure";
       RestartSec = "5";
     };
