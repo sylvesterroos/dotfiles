@@ -9,7 +9,7 @@ let
   user = config.users.users.${userName};
 
   volumes = [
-    "${user.home}/.dotfiles:/dotfiles:rw"
+    "/etc/nixos:/dotfiles:rw"
     "${user.home}/Code:/Code:rw"
     "${user.home}/PARA:/PARA:rw"
     "${user.home}/.hermes:/opt/data:rw"

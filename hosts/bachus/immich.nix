@@ -11,6 +11,7 @@
 
   services.immich = {
     enable = true;
+    mediaLocation = "/srv/media/immich";
     host = "0.0.0.0";
     openFirewall = true;
     environment = {

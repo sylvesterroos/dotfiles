@@ -52,7 +52,7 @@
           ];
         };
         "agent-vault" = {
-          path = "/var/lib/hermes/agent-vault";
+          path = "~/.local/share/agent-vault";
           devices = [
             "delta"
             "windows-desktop"

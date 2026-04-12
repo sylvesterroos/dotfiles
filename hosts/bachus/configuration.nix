@@ -13,25 +13,22 @@
     inputs.disko.nixosModules.default
     inputs.sops-nix.nixosModules.sops
 
-    # ./caddy.nix
+    ./caddy.nix
     ./camofox.nix
-    # ./ddns-updater.nix
+    ./ddns-updater.nix
     ./disk-config.nix
     ./fail2ban.nix
     ./hardware-configuration.nix
     ./hermes-agent.nix
     # ./immich-backup.nix
-    # ./immich.nix
-    # ./jellyfin.nix
+    ./immich.nix
+    ./jellyfin.nix
     ./postgresql.nix
     ./srv.nix
-    # ./syncthing.nix
-    # ./torrents.nix
+    ./syncthing.nix
+    ./torrents.nix
     ./users.nix
-    # ./vaultwarden.nix
   ];
-
-  services.postgresql.enable = true;
 
   nixpkgs = {
     overlays = [

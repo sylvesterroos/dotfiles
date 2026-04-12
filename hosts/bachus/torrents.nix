@@ -1,11 +1,25 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }:
 let
   vpnTable = 1000;
-  qbUser = config.users.users.qbittorrent.name;
+  vpnUsers = map (u: config.users.users.${u}.name) [
+    "qbittorrent"
+    "prowlarr"
+    "radarr"
+    "sonarr"
+  ];
+  ruleForUser = user: ''
+    ip rule add uidrange $(id -u ${user})-$(id -u ${user}) table ${toString vpnTable} priority 30001
+    ip rule add uidrange $(id -u ${user})-$(id -u ${user}) table main suppress_prefixlength 0 priority 30000
+  '';
+  delRuleForUser = user: ''
+    ip rule del uidrange $(id -u ${user})-$(id -u ${user}) table ${toString vpnTable} priority 30001 || true
+    ip rule del uidrange $(id -u ${user})-$(id -u ${user}) table main suppress_prefixlength 0 priority 30000 || true
+  '';
 in
 {
   assertions = [
@@ -36,15 +50,13 @@ in
 
     postUp = ''
       ip route add default dev wg0 table ${toString vpnTable}
-      ip rule add uidrange $(id -u ${qbUser})-$(id -u ${qbUser}) table ${toString vpnTable} priority 30001
-      ip rule add uidrange $(id -u ${qbUser})-$(id -u ${qbUser}) table main suppress_prefixlength 0 priority 30000
+      ${builtins.concatStringsSep "" (map ruleForUser vpnUsers)}
       ip -6 route add unreachable default table ${toString vpnTable}
     '';
 
     preDown = ''
       ip -6 route del unreachable default table ${toString vpnTable} || true
-      ip rule del uidrange $(id -u ${qbUser})-$(id -u ${qbUser}) table ${toString vpnTable} priority 30001 || true
-      ip rule del uidrange $(id -u ${qbUser})-$(id -u ${qbUser}) table main suppress_prefixlength 0 priority 30000 || true
+      ${builtins.concatStringsSep "" (map delRuleForUser vpnUsers)}
       ip route del default dev wg0 table ${toString vpnTable} || true
     '';
   };
@@ -101,6 +113,33 @@ in
     # UMask 0002 gives files 664 and dirs 775, allowing the media group
     # write access so sonarr/radarr can hardlink downloaded files.
     serviceConfig.UMask = "0002";
+  };
+
+  users.users.prowlarr = {
+    isSystemUser = true;
+    group = "prowlarr";
+    home = "/var/lib/prowlarr";
+  };
+  users.groups.prowlarr = { };
+
+  systemd.services.prowlarr = {
+    after = [ "wg-quick-wg0.service" ];
+    requires = [ "wg-quick-wg0.service" ];
+    serviceConfig = {
+      DynamicUser = lib.mkForce false;
+      User = "prowlarr";
+      Group = "prowlarr";
+    };
+  };
+
+  systemd.services.radarr = {
+    after = [ "wg-quick-wg0.service" ];
+    requires = [ "wg-quick-wg0.service" ];
+  };
+
+  systemd.services.sonarr = {
+    after = [ "wg-quick-wg0.service" ];
+    requires = [ "wg-quick-wg0.service" ];
   };
 
   systemd.tmpfiles.rules =

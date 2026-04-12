@@ -34,5 +34,13 @@
 
       "d /srv/media/music/public 2775 ${sylvester} ${media} -"
       "d /srv/media/music/private 2775 ${sylvester} ${media} -"
+
+      "d /srv/media/immich 0750 immich immich -"
     ];
+
+  systemd.services.immich-server.unitConfig.RequiresMountsFor = "/srv /srv/media/immich";
+  systemd.services.jellyfin.unitConfig.RequiresMountsFor = "/srv";
+  systemd.services.qbittorrent.unitConfig.RequiresMountsFor = "/srv";
+  systemd.services.radarr.unitConfig.RequiresMountsFor = "/srv";
+  systemd.services.sonarr.unitConfig.RequiresMountsFor = "/srv";
 }
