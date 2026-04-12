@@ -17,6 +17,8 @@ in
   config = mkIf cfg.enable {
     programs.neovim = {
       enable = true;
+      withPython3 = false;
+      withRuby = false;
     };
   };
 }
