@@ -1,20 +1,25 @@
 # generate a new key from a ssh private key
+# $ mkdir -p ~/.config/sops/age/
 # $ ssh-to-age -private-key -i ~/.ssh/id_ed25519 > ~/.config/sops/age/keys.txt
 
 # get the public key of ~/.config/sops/age/keys.txt
 # $ age-keygen -y ~/.config/sops/age/keys.txt
 
+# add the public key to the list below
+
 # update the encrypted secrets
 # $ sops updatekeys secrets/secrets.yaml
 
 keys:
-    - &raspberry-pi age1594u834tqz8vcm0ullmejse523mw73hqsrmz4r3x2e4evew9vvpqq88j8l
-    - &delta age1vvad2hraqyhuf0287syn9s97gcszkrwvz2tskr2esm9zurdtpv7shq9a58
-    - &creek age1mwu4qzhs5dx9fgnfu3g8j6cwn5ccpcvms5722t5k4wha4uk8c5gsgtlfr6
+  - &raspberry-pi age1594u834tqz8vcm0ullmejse523mw73hqsrmz4r3x2e4evew9vvpqq88j8l
+  - &delta age1vvad2hraqyhuf0287syn9s97gcszkrwvz2tskr2esm9zurdtpv7shq9a58
+  - &creek age1mwu4qzhs5dx9fgnfu3g8j6cwn5ccpcvms5722t5k4wha4uk8c5gsgtlfr6
+  - &bachus age1cggegmd6g59k9gwfxkp5twlp9jfy5xgwd7q5djnc0prfu6ca8edsnlqda3
 creation_rules:
-    - path_regex: secrets/secrets.yaml$
-      key_groups:
-          - age:
-                - *raspberry-pi
-                - *delta
-                - *creek
+  - path_regex: secrets/secrets.yaml$
+    key_groups:
+      - age:
+          - *raspberry-pi
+          - *delta
+          - *creek
+          - *bachus
