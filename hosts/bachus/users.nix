@@ -9,12 +9,12 @@
       isNormalUser = true;
       description = "Sylvester Roos";
       shell = pkgs.bash;
+      createHome = true;
       extraGroups = [
         "wheel"
         "networkmanager"
         "plugdev"
       ];
-      createHome = true;
     };
 
     rikr = {
@@ -23,8 +23,11 @@
       isNormalUser = true;
       shell = pkgs.bash;
       createHome = true;
+      extraGroups = [
+        "wheel"
+        "networkmanager"
+        "plugdev"
+      ];
     };
   };
-
-  programs.fish.enable = true;
 }
