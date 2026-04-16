@@ -46,13 +46,21 @@ def --env "gw add" [
     | lines
     | str trim
     | where { $in !~ 'HEAD' }
-    | each { str replace 'origin/' '' }
+    | each { str replace -r '^origin/' '' }
   let local_branches = git branch
     | lines
     | str trim
-    | where { not ($in | str starts-with '*') }
-  let existing = $worktrees | get branch | uniq
-  let branches = $remote_branches | append $local_branches | uniq | where { $in not-in $existing }
+    | where { $in != "" }
+    | each { str replace -r '^[*+]\s+' '' }
+  let existing_worktrees = $worktrees
+    | where { $in.branch? != null and $in.branch? != "" }
+    | select branch worktree
+  let branches = $remote_branches
+    | append $local_branches
+    | append ($existing_worktrees | get branch)
+    | where { $in != "" }
+    | uniq
+    | sort
   let selected = try {
     $branches | input list --fuzzy "Select branch:"
   } catch {|err|
@@ -60,6 +68,13 @@ def --env "gw add" [
       "nu::shell::io::interrupted" => { return }
       _ => { error make {msg: $err.msg} }
     }
+  }
+  if ($selected | is-empty) { return }
+  let existing = $existing_worktrees | where branch == $selected
+  if not ($existing | is-empty) {
+    let worktree_path = $existing | first | get worktree
+    cd $worktree_path
+    return
   }
   let worktree_path = $base.worktree | path dirname | path join $selected
   git worktree add $worktree_path $selected
