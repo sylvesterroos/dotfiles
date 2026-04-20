@@ -74,7 +74,6 @@
       # Supported systems for your flake packages, shell, etc.
       systems = [
         "x86_64-linux"
-        "aarch64-linux"
         "aarch64-darwin"
       ];
       # This is a function that generates an attribute by calling a function you
@@ -113,19 +112,6 @@
           specialArgs = { inherit inputs outputs; };
           modules = [
             ./hosts/delta/configuration.nix
-          ];
-        };
-
-        raspberry-pi = inputs.nixpkgs-stable.lib.nixosSystem rec {
-          system = "aarch64-linux";
-          specialArgs = {
-            inherit inputs outputs;
-            # TODO: remove once PR is merged
-            # https://github.com/NixOS/nixpkgs/pull/481056
-            patchedNixpkgsStable = outputs.overlays.patched-nixpkgs-stable system inputs.nixpkgs-stable;
-          };
-          modules = [
-            ./hosts/raspberry-pi/configuration.nix
           ];
         };
 

@@ -31,8 +31,8 @@ in
 
         devices = {
           "server" = {
-            id = "AUD4ZEW-3FPD6WU-U6DAAHL-V7WAH7P-XPJD6RN-GFIDXTI-GLVU5E2-WMTQ5A4";
-            addresses = [ "tcp://raspberry-pi:22000" ];
+            id = "YKOUMV6-X53SWZN-CB6SXTD-VVP6LH7-YKLGURY-OQLNYLD-HV4NP26-GLUOCAE";
+            addresses = [ "tcp://bachus:22000" ];
           };
         };
 
