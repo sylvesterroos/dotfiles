@@ -50,6 +50,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    sylvesterroos-com = {
+      url = "github:sylvesterroos/sylvesterroos.com";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
     nix-alien.url = "github:thiagokokada/nix-alien";
     nix-flatpak.url = "https://flakehub.com/f/gmodena/nix-flatpak/0.*";
