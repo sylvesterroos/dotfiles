@@ -34,7 +34,7 @@
     overlays = [
       outputs.overlays.additions
       outputs.overlays.modifications
-      outputs.overlays.unstable-packages
+      outputs.overlays.unstable-packages-baseline
     ];
 
     config = {
@@ -80,13 +80,14 @@
   i18n.supportedLocales = [ "all" ];
 
   environment.systemPackages = with pkgs; [
+    unstable.devenv
     ghostty.terminfo
     git
     gitu
     neovim
     nil
-    unstable.opencode
     unstable.amp-cli
+    unstable.opencode
     yazi
   ];
 
