@@ -47,6 +47,8 @@ in
 
         "proton/email" = { };
         "proton/rclone_obscured_password" = { };
+
+        "nix-access-tokens/github.com" = { };
       };
     };
   };

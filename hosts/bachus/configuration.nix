@@ -46,9 +46,6 @@
     channel.enable = false;
     settings = {
       cores = 6;
-      trusted-public-keys = [
-        "delta:MfokDZYzRFSHuj8dIQuPVw5GoeFKUvOqJAVjJnxJ2RE="
-      ];
     };
   };
 
