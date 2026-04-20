@@ -21,28 +21,6 @@
   },
   "ssh_connections": [
     {
-      "host": "raspberry-pi",
-      "username": "sylvester",
-      "args": [],
-      "projects": [
-        {
-          "paths": [
-            "/home/sylvester"
-          ]
-        },
-        {
-          "paths": [
-            "/home/sylvester/.dotfiles/./"
-          ]
-        },
-        {
-          "paths": [
-            "/home/sylvester/.hermes/hermes-agent/./"
-          ]
-        }
-      ]
-    },
-    {
       "host": "bachus",
       "username": "sylvester",
       "args": [],
