@@ -41,6 +41,7 @@ in
         dbeaver-bin
         discord
         gradia
+        krusader
         nextcloud-client
         nix-alien
         obsidian
