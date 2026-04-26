@@ -59,6 +59,7 @@
     nix-alien.url = "github:thiagokokada/nix-alien";
     nix-flatpak.url = "https://flakehub.com/f/gmodena/nix-flatpak/0.*";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    linux-wallpaper-engine.url = "github:jagrat7/linux-wallpaper-engine";
   };
 
   outputs =
