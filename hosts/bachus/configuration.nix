@@ -77,13 +77,14 @@
   };
 
   environment.systemPackages = with pkgs; [
-    unstable.devenv
     ghostty.terminfo
     git
     gitu
     neovim
     nil
+    stow
     unstable.amp-cli
+    unstable.devenv
     unstable.opencode
     yazi
   ];

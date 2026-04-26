@@ -7,5 +7,5 @@ My dotfiles
 To symlink config files to your home directory:
 
 ```sh
-stow home
+stow --dir /etc/nixos/home/sylvester/ --target /home/sylvester/ .
 ```
