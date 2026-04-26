@@ -1,5 +1,6 @@
 {
   config,
+  pkgs,
   lib,
   ...
 }:
@@ -18,8 +19,18 @@ in
     users.users.sylvester = {
       linger = true;
 
-      subUidRanges = [{ startUid = 100000; count = 65536; }];
-      subGidRanges = [{ startGid = 100000; count = 65536; }];
+      subUidRanges = [
+        {
+          startUid = 100000;
+          count = 65536;
+        }
+      ];
+      subGidRanges = [
+        {
+          startGid = 100000;
+          count = 65536;
+        }
+      ];
 
       extraGroups = [
         "podman"
@@ -43,5 +54,8 @@ in
         defaultNetwork.settings.dns_enabled = true;
       };
     };
+
+    environment.sessionVariables.PODMAN_COMPOSE_WARNING_LOGS = "false";
+    environment.systemPackages = with pkgs; [ podman-compose ];
   };
 }

@@ -19,7 +19,6 @@
     ./disk-config.nix
     ./fail2ban.nix
     ./hardware-configuration.nix
-    ./hermes-agent.nix
     # ./immich-backup.nix
     ./immich.nix
     ./jellyfin.nix

@@ -1,0 +1,68 @@
+name: hermes-agent
+
+# Rootless Podman: disable pod creation so userns_mode: keep-id works
+# (--userns and --pod conflict in podman-compose)
+x-podman:
+    in_pod: false
+
+networks:
+    hermes-net:
+        driver: bridge
+
+services:
+    hermes-agent:
+        image: docker.io/nousresearch/hermes-agent:latest
+        container_name: hermes-agent
+        pull_policy: never
+        restart: unless-stopped
+        command: gateway run
+        # Rootless Podman: map host UID/GID to container UID/GID 10000 so the
+        # image's default runtime user (hermes, uid 10000) can write bind mounts.
+        userns_mode: "keep-id:uid=10000,gid=10000"
+        environment:
+            # Use host nix-daemon via mounted /nix socket.
+            NIX_REMOTE: daemon
+        volumes:
+            - /etc/nixos:/dotfiles:rw
+            - /home/sylvester/Code:/Code:rw
+            - /home/sylvester/PARA:/PARA:rw
+            - /home/sylvester/.local/state/hermes/hermes:/opt/data:rw
+            # Share host's Nix
+            - /nix:/nix:ro
+            - /etc/nix:/etc/nix:ro
+            - /run/current-system/sw/bin/nix:/usr/local/bin/nix:ro
+        ports:
+            - "8642:8642"
+        deploy:
+            resources:
+                limits:
+                    cpus: "2"
+                    memory: 4G
+        networks:
+            hermes-net:
+                aliases:
+                    - hermes-agent
+
+    hermes-dashboard:
+        image: docker.io/nousresearch/hermes-agent:latest
+        container_name: hermes-dashboard
+        pull_policy: never
+        restart: unless-stopped
+        command: dashboard --host 0.0.0.0 --insecure
+        # Rootless Podman: same as hermes-agent above
+        userns_mode: "keep-id:uid=10000,gid=10000"
+        environment:
+            GATEWAY_HEALTH_URL: "http://hermes-agent:8642"
+        volumes:
+            - /home/sylvester/.local/state/hermes/hermes:/opt/data:rw
+        ports:
+            - "9119:9119"
+        depends_on:
+            - hermes-agent
+        deploy:
+            resources:
+                limits:
+                    cpus: "0.5"
+                    memory: 512M
+        networks:
+            - hermes-net
