@@ -72,6 +72,7 @@
 
   my = {
     bash.enable = false;
+    linux-wallpaperengine.enable = false;
     llm.enable = false;
     radicle.alias = "sylvesterroos-mac";
     syncthing-client.enable = true;
