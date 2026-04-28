@@ -7,6 +7,13 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "outline_panel": {
+    "dock": "left"
+  },
+  "collaboration_panel": {
+    "dock": "left"
+  },
+  "diff_view_style": "split",
   "agent_servers": {
     "opencode": {
       "type": "registry",
@@ -17,6 +24,7 @@
   },
   "colorize_brackets": true,
   "git_panel": {
+    "dock": "left",
     "tree_view": true,
   },
   "ssh_connections": [
