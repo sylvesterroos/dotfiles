@@ -64,6 +64,7 @@
 
   system.primaryUser = "sylvester";
   system.defaults.NSGlobalDomain.NSScrollAnimationEnabled = false;
+  system.defaults.CustomUserPreferences.NSGlobalDomain.NSMenuEnableActionImages = false;
 
   security.pam.services.sudo_local.touchIdAuth = true;
 
