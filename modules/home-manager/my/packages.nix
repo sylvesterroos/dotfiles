@@ -39,7 +39,6 @@ in
         bitwarden-desktop
         commit
         dbeaver-bin
-        discord
         gradia
         krusader
         nextcloud-client

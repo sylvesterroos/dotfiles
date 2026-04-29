@@ -72,6 +72,7 @@
 
   my = {
     bash.enable = false;
+    discord.enable = false;
     linux-wallpaperengine.enable = false;
     llm.enable = false;
     radicle.alias = "sylvesterroos-mac";
