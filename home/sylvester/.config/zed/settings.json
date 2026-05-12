@@ -124,6 +124,7 @@
   "hide_mouse": "never",
   "vertical_scroll_margin": 10,
   "buffer_font_family": "JetBrainsMono Nerd Font",
+  "buffer_font_size": 13,
   "languages": {
     "Nix": {
       "language_servers": ["nil", "!nixd"],
