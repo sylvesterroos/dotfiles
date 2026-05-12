@@ -41,7 +41,6 @@ in
         dbeaver-bin
         gradia
         krusader
-        nextcloud-client
         nix-alien
         obsidian
         podman-compose
