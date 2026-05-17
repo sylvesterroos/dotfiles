@@ -7,15 +7,42 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
-  "outline_panel": {
-    "dock": "left"
-  },
-  "collaboration_panel": {
-    "dock": "left"
+  "cli_default_open_behavior": "new_window",
+  "language_models": {
+    "opencode": {
+      "show_zen_models": false,
+      "show_go_models": true,
+      "show_free_models": true,
+    },
+    "openai_compatible": {
+      "Hermes Agent": {
+        "api_url": "http://bachus:8642/v1",
+        "available_models": [
+          {
+            "name": "hermes-agent",
+            "max_tokens": 262144,
+            "max_output_tokens": 65536,
+            "max_completion_tokens": 262144,
+            "capabilities": {
+              "tools": true,
+              "images": true,
+              "parallel_tool_calls": true,
+              "prompt_cache_key": false,
+              "chat_completions": true,
+            },
+          },
+        ],
+      },
+    },
   },
   "diff_view_style": "split",
   "agent_servers": {
     "opencode": {
+      "default_config_options": {
+        "effort": "high",
+        "model": "opencode-go/deepseek-v4-flash",
+        "mode": "plan"
+      },
       "type": "registry",
     },
   },
@@ -24,7 +51,6 @@
   },
   "colorize_brackets": true,
   "git_panel": {
-    "dock": "left",
     "tree_view": true,
   },
   "ssh_connections": [
@@ -34,12 +60,10 @@
       "args": [],
       "projects": [
         {
-          "paths": [
-            "/etc/nixos/./"
-          ]
-        }
-      ]
-    }
+          "paths": ["/etc/nixos/./"],
+        },
+      ],
+    },
   ],
   // Tell Zed to use direnv and direnv can use a flake.nix environment
   "load_direnv": "shell_hook",
@@ -69,6 +93,11 @@
         "provider": "copilot_chat",
         "model": "gpt-5-mini",
         "enable_thinking": true,
+      },
+      {
+        "provider": "Hermes Agent",
+        "model": "hermes-agent",
+        "enable_thinking": false,
       },
     ],
     "tool_permissions": {
@@ -101,8 +130,7 @@
         },
       },
     },
-    "play_sound_when_agent_done": true,
-    "dock": "right",
+    "play_sound_when_agent_done": "always",
     "default_profile": "ask",
     "inline_assistant_model": {
       "provider": "copilot_chat",
@@ -110,8 +138,9 @@
     },
     "default_model": {
       "effort": "high",
+      "enable_thinking": true,
       "provider": "copilot_chat",
-      "model": "gpt-5.3-codex",
+      "model": "gemini-3.1-pro-preview",
     },
     "commit_message_model": {
       "provider": "copilot_chat",
@@ -170,9 +199,6 @@
         },
       ],
     },
-  },
-  "project_panel": {
-    "dock": "right",
   },
   "soft_wrap": "none",
   "cursor_blink": false,
