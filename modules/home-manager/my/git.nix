@@ -57,6 +57,9 @@ in
 
         push.autoSetupRemote = true;
 
+        rerere.enabled = true;
+        merge.conflictStyle = "zdiff3";
+
         # Sign all commits using ssh key
         commit.gpgSign = true;
         tag.gpgSign = true;
