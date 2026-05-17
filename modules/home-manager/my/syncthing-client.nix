@@ -45,6 +45,30 @@ in
             path = "~/.local/share/agent-vault";
             devices = [ "server" ];
           };
+          "Documents" = {
+            path = "~/Documents";
+            devices = [ "server" ];
+          };
+          "Miscellaneous" = {
+            path = "~/Miscellaneous";
+            devices = [ "server" ];
+          };
+          "Music" = {
+            path = "~/Music";
+            devices = [ "server" ];
+          };
+          "Pictures" = {
+            path = "~/Pictures";
+            devices = [ "server" ];
+          };
+          "Projects" = {
+            path = "~/Projects";
+            devices = [ "server" ];
+          };
+          "Videos" = {
+            path = "~/Videos";
+            devices = [ "server" ];
+          };
         };
       };
     };

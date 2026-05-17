@@ -67,6 +67,54 @@
             "android"
           ];
         };
+        "Documents" = {
+          path = "/home/sylvester/Documents";
+          devices = [
+            "delta"
+            "windows-desktop"
+            "macbook"
+          ];
+        };
+        "Miscellaneous" = {
+          path = "/home/sylvester/Miscellaneous";
+          devices = [
+            "delta"
+            "windows-desktop"
+            "macbook"
+          ];
+        };
+        "Music" = {
+          path = "/home/sylvester/Music";
+          devices = [
+            "delta"
+            "windows-desktop"
+            "macbook"
+          ];
+        };
+        "Pictures" = {
+          path = "/home/sylvester/Pictures";
+          devices = [
+            "delta"
+            "windows-desktop"
+            "macbook"
+          ];
+        };
+        "Projects" = {
+          path = "/home/sylvester/Projects";
+          devices = [
+            "delta"
+            "windows-desktop"
+            "macbook"
+          ];
+        };
+        "Videos" = {
+          path = "/home/sylvester/Videos";
+          devices = [
+            "delta"
+            "windows-desktop"
+            "macbook"
+          ];
+        };
       };
     };
   };
