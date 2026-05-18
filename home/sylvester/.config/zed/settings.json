@@ -37,6 +37,9 @@
   },
   "diff_view_style": "split",
   "agent_servers": {
+    "amp-acp": {
+      "type": "registry"
+    },
     "opencode": {
       "default_config_options": {
         "effort": "high",
@@ -137,10 +140,10 @@
       "model": "gpt-5-mini",
     },
     "default_model": {
-      "effort": "high",
+      "effort": "medium",
       "enable_thinking": true,
-      "provider": "copilot_chat",
-      "model": "gemini-3.1-pro-preview",
+      "provider": "opencode",
+      "model": "go/deepseek-v4-pro",
     },
     "commit_message_model": {
       "provider": "copilot_chat",
