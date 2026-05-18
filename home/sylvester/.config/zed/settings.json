@@ -38,13 +38,13 @@
   "diff_view_style": "split",
   "agent_servers": {
     "amp-acp": {
-      "type": "registry"
+      "type": "registry",
     },
     "opencode": {
       "default_config_options": {
         "effort": "high",
         "model": "opencode-go/deepseek-v4-flash",
-        "mode": "plan"
+        "mode": "plan",
       },
       "type": "registry",
     },
@@ -136,8 +136,8 @@
     "play_sound_when_agent_done": "always",
     "default_profile": "ask",
     "inline_assistant_model": {
-      "provider": "copilot_chat",
-      "model": "gpt-5-mini",
+      "provider": "opencode",
+      "model": "free/big-pickle",
     },
     "default_model": {
       "effort": "medium",
@@ -146,8 +146,8 @@
       "model": "go/deepseek-v4-pro",
     },
     "commit_message_model": {
-      "provider": "copilot_chat",
-      "model": "gpt-5-mini",
+      "provider": "opencode",
+      "model": "free/big-pickle",
     },
     "model_parameters": [],
   },
