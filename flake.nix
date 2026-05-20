@@ -55,6 +55,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    open-design.url = "github:nexu-io/open-design";
+
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
     nix-alien.url = "github:thiagokokada/nix-alien";
     nix-flatpak.url = "https://flakehub.com/f/gmodena/nix-flatpak/0.*";
