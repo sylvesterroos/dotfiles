@@ -37,9 +37,6 @@
   },
   "diff_view_style": "split",
   "agent_servers": {
-    "amp-acp": {
-      "type": "registry",
-    },
     "opencode": {
       "default_config_options": {
         "effort": "high",
