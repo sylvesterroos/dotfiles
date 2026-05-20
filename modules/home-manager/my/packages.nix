@@ -19,7 +19,6 @@ in
     home.packages =
       with pkgs;
       [
-        amp-cli
         beam.packages.erlang_28.elixir_1_19
         cachix
         devenv
