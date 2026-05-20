@@ -42,7 +42,6 @@ in
         krusader
         nix-alien
         obsidian
-        podman-compose
         podman-desktop
         podman-tui
         pods
