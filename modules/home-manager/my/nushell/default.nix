@@ -7,6 +7,12 @@
 with lib;
 let
   cfg = config.my.nushell;
+
+  # Bake the `devenv hook nu` output into the store so we don't regenerate it
+  # on every shell startup. See https://devenv.sh/auto-activation/
+  devenvHookNu = pkgs.runCommand "devenv-hook.nu" { nativeBuildInputs = [ pkgs.devenv ]; } ''
+    devenv hook nu > $out
+  '';
 in
 {
   options.my.nushell = {
@@ -21,7 +27,11 @@ in
 
       configFile.source = ./config.nu;
 
-      extraConfig = builtins.readFile ./functions/gw.nu;
+      extraConfig = ''
+        ${builtins.readFile ./functions/gw.nu}
+
+        source ${devenvHookNu}
+      '';
 
       shellAliases = {
         vi = "hx";
