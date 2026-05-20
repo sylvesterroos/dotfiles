@@ -10,6 +10,16 @@ let
         ./patches/immich-postgres-unix-socket-port.patch
       ];
     };
+
+  # Use the baseline (non-AVX2) bun binary for older CPUs
+  bun-baseline-overlay = final: prev: {
+    bun = prev.bun.overrideAttrs (oldAttrs: {
+      src = prev.fetchurl {
+        url = "https://github.com/oven-sh/bun/releases/download/bun-v${oldAttrs.version}/bun-linux-x64-baseline.zip";
+        hash = "sha256-nYokKSpwaAkCBdqsCloiP19pc29Sh+N7+I07QDHtx1A=";
+      };
+    });
+  };
 in
 {
   # TODO: remove once PR is merged
@@ -33,40 +43,19 @@ in
     # });
   };
 
-  # Use the baseline (non-AVX2) bun binary for older CPUs
-  bun-baseline = final: prev: {
-    bun = prev.bun.overrideAttrs (oldAttrs: {
-      src = prev.fetchurl {
-        url = "https://github.com/oven-sh/bun/releases/download/bun-v${oldAttrs.version}/bun-linux-x64-baseline.zip";
-        hash = "sha256-q+NG9jQUVHzfazW3pkmkkMcouT0AYiYVaSORioTA5Zs=";
-      };
-    });
-  };
-
   unstable-packages = final: _prev: {
     unstable = import inputs.nixpkgs-unstable {
       system = final.stdenv.hostPlatform.system;
       config.allowUnfree = true;
     };
   };
-  unstable-packages-baseline =
-    let
-      bun-baseline-overlay = final: prev: {
-        bun = prev.bun.overrideAttrs (oldAttrs: {
-          src = prev.fetchurl {
-            url = "https://github.com/oven-sh/bun/releases/download/bun-v${oldAttrs.version}/bun-linux-x64-baseline.zip";
-            hash = "sha256-q+NG9jQUVHzfazW3pkmkkMcouT0AYiYVaSORioTA5Zs=";
-          };
-        });
-      };
-    in
-    final: _prev: {
-      unstable = import inputs.nixpkgs-unstable {
-        system = final.stdenv.hostPlatform.system;
-        config.allowUnfree = true;
-        overlays = [ bun-baseline-overlay ];
-      };
+  unstable-packages-baseline = final: _prev: {
+    unstable = import inputs.nixpkgs-unstable {
+      system = final.stdenv.hostPlatform.system;
+      config.allowUnfree = true;
+      overlays = [ bun-baseline-overlay ];
     };
+  };
   stable-packages = final: _prev: {
     stable = import inputs.nixpkgs-stable {
       system = final.stdenv.hostPlatform.system;
