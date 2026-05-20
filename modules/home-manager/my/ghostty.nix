@@ -1,7 +1,6 @@
 {
   pkgs,
   lib,
-  inputs,
   config,
   ...
 }:
@@ -25,6 +24,7 @@ in
         theme = "light:GitHub Light Colorblind,dark:GitHub Dark Colorblind";
         # On Plasma we also want the nice GTK menu bar
         window-decoration = if pkgs.stdenv.isLinux then "client" else "auto";
+        font-feature = [ "-calt" ];
         keybind = [
           "shift+ctrl+r=reload_config"
 
