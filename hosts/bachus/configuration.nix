@@ -14,7 +14,7 @@
     inputs.sops-nix.nixosModules.sops
 
     ./caddy.nix
-    ./camofox.nix
+    ./open-webui.nix
     ./ddns-updater.nix
     ./disk-config.nix
     ./fail2ban.nix
