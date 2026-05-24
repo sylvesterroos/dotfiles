@@ -78,6 +78,10 @@
     EDITOR = lib.getExe pkgs.neovim;
   };
 
+  environment.shellAliases = {
+    hermes = "docker exec -it --user=hermes hermes-agent /opt/hermes/.venv/bin/hermes";
+  };
+
   ###
   # My
   ###
