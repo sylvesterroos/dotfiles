@@ -42,13 +42,6 @@
       };
 
       folders = {
-        "hermes" = {
-          path = "/home/sylvester/.hermes";
-          devices = [
-            "delta"
-            "macbook"
-          ];
-        };
         "PARA" = {
           path = "/home/sylvester/PARA";
           devices = [

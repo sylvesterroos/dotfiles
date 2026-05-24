@@ -37,10 +37,6 @@ in
         };
 
         folders = {
-          "hermes" = {
-            path = "~/.hermes";
-            devices = [ "server" ];
-          };
           "PARA" = {
             path = "~/PARA";
             devices = [ "server" ];
