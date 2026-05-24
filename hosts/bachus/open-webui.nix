@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 {
   services.open-webui = {
     enable = true;
@@ -6,4 +6,8 @@
     host = "127.0.0.1";
     openFirewall = false;
   };
+
+  services.caddy.virtualHosts."chat.sylvesterroos.com".extraConfig = ''
+    reverse_proxy 127.0.0.1:${toString config.services.open-webui.port}
+  '';
 }
