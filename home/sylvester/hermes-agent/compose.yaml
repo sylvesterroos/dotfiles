@@ -20,6 +20,8 @@ services:
         # image's default runtime user (hermes, uid 10000) can write bind mounts.
         userns_mode: "keep-id:uid=10000,gid=10000"
         environment:
+            HERMES_DASHBOARD: "1"
+            HERMES_DASHBOARD_TUI: "1"
             # Use host nix-daemon via mounted /nix socket.
             NIX_REMOTE: daemon
         volumes:
@@ -33,6 +35,7 @@ services:
             - /run/current-system/sw/bin/nix:/usr/local/bin/nix:ro
         ports:
             - "8642:8642"
+            - "9119:9119"
         deploy:
             resources:
                 limits:
@@ -43,26 +46,30 @@ services:
                 aliases:
                     - hermes-agent
 
-    hermes-dashboard:
+    hermes-agent-mom:
         image: docker.io/nousresearch/hermes-agent:latest
-        container_name: hermes-dashboard
+        container_name: hermes-agent-mom
         pull_policy: never
         restart: unless-stopped
-        command: dashboard --host 0.0.0.0 --insecure
-        # Rootless Podman: same as hermes-agent above
+        command: gateway run
         userns_mode: "keep-id:uid=10000,gid=10000"
         environment:
-            GATEWAY_HEALTH_URL: "http://hermes-agent:8642"
+            # Use host nix-daemon via mounted /nix socket.
+            NIX_REMOTE: daemon
         volumes:
-            - /home/sylvester/.local/state/hermes/hermes:/opt/data:rw
+            - /home/sylvester/.local/state/hermes/hermes-mom:/opt/data:rw
+            # Share host's Nix
+            - /nix:/nix:ro
+            - /etc/nix:/etc/nix:ro
+            - /run/current-system/sw/bin/nix:/usr/local/bin/nix:ro
         ports:
-            - "9119:9119"
-        depends_on:
-            - hermes-agent
+            - "8643:8642"
         deploy:
             resources:
                 limits:
-                    cpus: "0.5"
-                    memory: 512M
+                    cpus: "2"
+                    memory: 4G
         networks:
-            - hermes-net
+            hermes-net:
+                aliases:
+                    - hermes-agent-mom
