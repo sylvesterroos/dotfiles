@@ -37,13 +37,8 @@
   },
   "diff_view_style": "split",
   "agent_servers": {
-    "opencode": {
-      "default_config_options": {
-        "effort": "high",
-        "model": "opencode-go/deepseek-v4-flash",
-        "mode": "plan",
-      },
-      "type": "registry",
+    "codex-acp": {
+      "type": "registry"
     },
   },
   "tab_bar": {
@@ -90,15 +85,10 @@
   "agent": {
     "favorite_models": [
       {
-        "provider": "copilot_chat",
-        "model": "gpt-5-mini",
-        "enable_thinking": true,
-      },
-      {
         "provider": "Hermes Agent",
         "model": "hermes-agent",
-        "enable_thinking": false,
-      },
+        "enable_thinking": false
+      }
     ],
     "tool_permissions": {
       "tools": {
@@ -131,16 +121,16 @@
       },
     },
     "play_sound_when_agent_done": "always",
-    "default_profile": "ask",
+    "default_profile": "write",
     "inline_assistant_model": {
-      "provider": "opencode",
-      "model": "free/big-pickle",
+      "provider": "copilot_chat",
+      "model": "gpt-5.4-mini",
     },
     "default_model": {
       "effort": "medium",
       "enable_thinking": true,
-      "provider": "opencode",
-      "model": "go/deepseek-v4-pro",
+      "provider": "openai-subscribed",
+      "model": "gpt-5.3-codex",
     },
     "commit_message_model": {
       "provider": "opencode",
