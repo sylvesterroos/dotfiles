@@ -34,7 +34,7 @@ let
 
   skillLinks = listToAttrs (
     map (name: {
-      name = ".config/agents/skills/${name}";
+      name = ".config/amp/skills/${name}";
       value = {
         source = "${fixedSkillsDir}/${name}";
         recursive = true;

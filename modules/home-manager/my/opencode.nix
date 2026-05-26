@@ -35,22 +35,6 @@ in
 
       settings = {
         plugin = [ "opencode-handoff" ];
-
-        mcp = {
-          mcp-nixos = {
-            type = "local";
-            command = [
-              "uvx"
-              "mcp-nixos"
-            ];
-            enabled = true;
-          };
-          tidewave = {
-            type = "remote";
-            url = "http://localhost:4000/tidewave/mcp";
-            enabled = true;
-          };
-        };
       };
 
       skills = lib.genAttrs elixirPhoenixSkillNames (name: "${elixirPhoenixSkillsDir}/${name}");
