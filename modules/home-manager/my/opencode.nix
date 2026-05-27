@@ -28,8 +28,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ uv ];
-
     programs.opencode = {
       enable = true;
 
