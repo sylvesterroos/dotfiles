@@ -38,7 +38,7 @@
   "diff_view_style": "split",
   "agent_servers": {
     "codex-acp": {
-      "type": "registry"
+      "type": "registry",
     },
   },
   "tab_bar": {
@@ -79,7 +79,6 @@
       "proxy": null,
       "proxy_no_verify": null,
     },
-    "enabled_in_text_threads": false,
   },
   "show_edit_predictions": true,
   "agent": {
@@ -87,11 +86,18 @@
       {
         "provider": "Hermes Agent",
         "model": "hermes-agent",
-        "enable_thinking": false
-      }
+        "enable_thinking": false,
+      },
     ],
     "tool_permissions": {
       "tools": {
+        "fetch": {
+          "always_allow": [
+            {
+              "pattern": "^https?://hermes-agent\\.nousresearch\\.com",
+            },
+          ],
+        },
         "terminal": {
           "always_allow": [
             {
@@ -130,7 +136,7 @@
       "effort": "medium",
       "enable_thinking": true,
       "provider": "openai-subscribed",
-      "model": "gpt-5.3-codex",
+      "model": "gpt-5.5",
     },
     "commit_message_model": {
       "provider": "opencode",
@@ -147,6 +153,7 @@
   "languages": {
     "Nix": {
       "language_servers": ["nil", "!nixd"],
+      "format_on_save": "on",
     },
     "Markdown": {
       "preferred_line_length": 80,
