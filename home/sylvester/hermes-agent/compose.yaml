@@ -11,7 +11,7 @@ networks:
 
 services:
     hermes-agent:
-        image: docker.io/nousresearch/hermes-agent:latest
+        image: docker.io/nousresearch/hermes-agent:main
         container_name: hermes-agent
         pull_policy: never
         restart: unless-stopped
@@ -19,9 +19,13 @@ services:
         # Rootless Podman: map host UID/GID to container UID/GID 10000 so the
         # image's default runtime user (hermes, uid 10000) can write bind mounts.
         userns_mode: "keep-id:uid=10000,gid=10000"
+        shm_size: "1gb"
         environment:
             HERMES_DASHBOARD: "1"
             HERMES_DASHBOARD_TUI: "1"
+            # Dashboard binds to 0.0.0.0 in containers so the published 9119 port works.
+            # No OAuth DashboardAuthProvider is configured here, so opt out explicitly.
+            HERMES_DASHBOARD_INSECURE: "1"
             # Use host nix-daemon via mounted /nix socket.
             NIX_REMOTE: daemon
         volumes:
@@ -47,12 +51,13 @@ services:
                     - hermes-agent
 
     hermes-agent-mom:
-        image: docker.io/nousresearch/hermes-agent:latest
+        image: docker.io/nousresearch/hermes-agent:main
         container_name: hermes-agent-mom
         pull_policy: never
         restart: unless-stopped
         command: gateway run
         userns_mode: "keep-id:uid=10000,gid=10000"
+        shm_size: "1gb"
         environment:
             # Use host nix-daemon via mounted /nix socket.
             NIX_REMOTE: daemon
