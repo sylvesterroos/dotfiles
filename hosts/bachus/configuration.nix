@@ -80,6 +80,7 @@
 
   environment.shellAliases = {
     hermes = "docker exec -it --user=hermes hermes-agent /opt/hermes/.venv/bin/hermes";
+    hermes-mom = "docker exec -it --user=hermes hermes-agent-mom /opt/hermes/.venv/bin/hermes";
   };
 
   ###
