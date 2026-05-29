@@ -69,6 +69,7 @@
     nil
     stow
     unstable.amp-cli
+    unstable.codex
     unstable.devenv
     unstable.opencode
     yazi
