@@ -11,10 +11,10 @@
 
     inputs.determinate.nixosModules.default
     inputs.disko.nixosModules.default
+    inputs.open-design.nixosModules.default
     inputs.sops-nix.nixosModules.sops
 
     ./caddy.nix
-    ./open-webui.nix
     ./ddns-updater.nix
     ./disk-config.nix
     ./fail2ban.nix
@@ -22,6 +22,8 @@
     # ./immich-backup.nix
     ./immich.nix
     ./jellyfin.nix
+    ./open-design.nix
+    ./open-webui.nix
     ./postgresql.nix
     ./srv.nix
     ./syncthing.nix
