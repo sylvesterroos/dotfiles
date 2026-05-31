@@ -11,20 +11,19 @@ let
 
   # Upstream's fixed-output pnpm dependency derivation has a stale hash.
   # Override it locally until the open-design flake updates its package hash.
-  pnpmDepsHash = "sha256-TI7gjjF47YIkLblWjG9flG3E1mg310AI5S4uZ+9B2kI=";
+  daemonPnpmDepsHash = "sha256-tqxFDNPQjoKUWp4sLtPVCUu7ltIL/ufeyr6UKOWYw6A=";
+  webPnpmDepsHash = "sha256-74loUCL+WcaZO4AAMnSpNeBhDz1Y9TMgFRPbyaOfPAk=";
   fixPnpmDepsHash =
-    package:
+    hash: package:
     package.overrideAttrs (oldAttrs: {
-      pnpmDeps = pkgs.fetchPnpmDeps {
-        inherit (oldAttrs) pname version src;
-        hash = pnpmDepsHash;
-        fetcherVersion = 3;
-      };
+      pnpmDeps = oldAttrs.pnpmDeps.overrideAttrs (_: {
+        outputHash = hash;
+      });
     });
 in
 {
-  services.open-design.package = fixPnpmDepsHash openDesignPackages.daemon;
-  services.open-design.webFrontend.package = fixPnpmDepsHash openDesignPackages.web;
+  services.open-design.package = fixPnpmDepsHash daemonPnpmDepsHash openDesignPackages.daemon;
+  services.open-design.webFrontend.package = fixPnpmDepsHash webPnpmDepsHash openDesignPackages.web;
 
   sops.templates."open-design.env" = {
     content = ''
