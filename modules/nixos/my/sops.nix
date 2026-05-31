@@ -49,6 +49,10 @@ in
         "proton/rclone_obscured_password" = { };
 
         "nix-access-tokens/github.com" = { };
+
+        "open-design/username" = { };
+        "open-design/password" = { };
+        "open-design/OD_API_KEY" = { };
       };
     };
   };
