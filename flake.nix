@@ -57,6 +57,16 @@
     nix-flatpak.url = "https://flakehub.com/f/gmodena/nix-flatpak/0.*";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     linux-wallpaper-engine.url = "github:jagrat7/linux-wallpaper-engine";
+
+    helium = {
+      url = "github:amaanq/helium-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    ublock = {
+      url = "github:imputnet/uBlock";
+      flake = false;
+    };
   };
 
   outputs =

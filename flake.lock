@@ -851,6 +851,26 @@
         "type": "github"
       }
     },
+    "helium": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1780002343,
+        "narHash": "sha256-hg/lmgC4Y4iCCJoVUXspXtoM27oVnmFVD68/yq/tXvs=",
+        "owner": "amaanq",
+        "repo": "helium-flake",
+        "rev": "aa06960b748d91219c61b59d6f49b62b4c679e77",
+        "type": "github"
+      },
+      "original": {
+        "owner": "amaanq",
+        "repo": "helium-flake",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -1579,6 +1599,7 @@
       "inputs": {
         "determinate": "determinate",
         "disko": "disko",
+        "helium": "helium",
         "home-manager": "home-manager",
         "linux-wallpaper-engine": "linux-wallpaper-engine",
         "nix-alien": "nix-alien",
@@ -1592,6 +1613,7 @@
         "plasma-manager": "plasma-manager",
         "sops-nix": "sops-nix",
         "sylvesterroos-com": "sylvesterroos-com",
+        "ublock": "ublock",
         "watt": "watt"
       }
     },
@@ -1769,6 +1791,22 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "ublock": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1780046171,
+        "narHash": "sha256-oYeV2aqUffSWbhuMv5oM+ppSYAwdq8JNpY2T5ZA1KD0=",
+        "owner": "imputnet",
+        "repo": "uBlock",
+        "rev": "88147795301abbb92397f52629cf63106439c0c5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "imputnet",
+        "repo": "uBlock",
         "type": "github"
       }
     },
