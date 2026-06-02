@@ -21,6 +21,8 @@ in
       nerd-fonts.jetbrains-mono
       nerd-fonts.zed-mono
       noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
       libre-baskerville # Times New Roman alternative
     ];
   };
