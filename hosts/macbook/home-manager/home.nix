@@ -14,8 +14,6 @@
 
     # Or modules exported from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModules.default
-    inputs.open-design.homeManagerModules.default
-
     # You can also split up your configuration and import pieces of it here:
     ./git.nix
     ./zsh.nix
@@ -79,35 +77,6 @@
     radicle.alias = "sylvesterroos-mac";
     syncthing-client.enable = true;
     zed-editor.enable = false;
-  };
-
-  services.open-design = {
-    enable = true;
-    autoStart = true;
-    webFrontend.enable = true;
-    # Caddy infers HTTPS for non-standard ports unless the site address
-    # carries an explicit scheme; upstream's Caddyfile template is
-    # `${host}:${port}`, so we smuggle the scheme through `host`. That
-    # bypasses the module's loopback check, so also declare the origin
-    # explicitly to satisfy the assertion + CSRF gate.
-    # https://github.com/nexu-io/open-design/blob/main/nix/home-manager.nix
-    webFrontend.host = "http://127.0.0.1";
-    webFrontend.allowedOrigins = [ "http://127.0.0.1:5174" ];
-    # TODO: drop overrides once upstream supports aarch64-darwin:
-    #   - pnpmDepsHash differs on darwin (same lockfile, both packages)
-    #   - better-sqlite3 native build needs cctools (libtool) on darwin
-    # https://github.com/nexu-io/open-design/blob/main/nix/package-daemon.nix
-    package = inputs.open-design.packages.${pkgs.system}.default.overrideAttrs (old: {
-      nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.cctools ];
-      pnpmDeps = old.pnpmDeps.overrideAttrs (_: {
-        outputHash = "sha256-TI7gjjF47YIkLblWjG9flG3E1mg310AI5S4uZ+9B2kI=";
-      });
-    });
-    webFrontend.package = inputs.open-design.packages.${pkgs.system}.web.overrideAttrs (old: {
-      pnpmDeps = old.pnpmDeps.overrideAttrs (_: {
-        outputHash = "sha256-TI7gjjF47YIkLblWjG9flG3E1mg310AI5S4uZ+9B2kI=";
-      });
-    });
   };
 
   home.stateVersion = "25.11";
