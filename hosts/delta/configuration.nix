@@ -112,6 +112,12 @@
     podman.enable = true;
   };
 
+  zramSwap = {
+    enable = true;
+    memoryPercent = 25;
+    algorithm = "zstd";
+  };
+
   services.fstrim.enable = true;
 
   # This value determines the NixOS release from which the default

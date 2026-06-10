@@ -89,6 +89,12 @@
 
   services.fwupd.enable = true;
 
+  zramSwap = {
+    enable = true;
+    memoryPercent = 25;
+    algorithm = "zstd";
+  };
+
   services.fstrim.enable = true;
 
   # Open ports in the firewall.
