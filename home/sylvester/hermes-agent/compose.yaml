@@ -13,7 +13,6 @@ services:
     hermes-agent:
         image: docker.io/nousresearch/hermes-agent:main
         container_name: hermes-agent
-        pull_policy: never
         restart: unless-stopped
         command: gateway run
         # Rootless Podman: map host UID/GID to container UID/GID 10000 so the
@@ -33,6 +32,7 @@ services:
             - /home/sylvester/Code:/Code:rw
             - /home/sylvester/PARA:/PARA:rw
             - /home/sylvester/.local/state/hermes/hermes:/opt/data:rw
+            - /srv:/srv:rw
             # Share host's Nix
             - /nix:/nix:ro
             - /etc/nix:/etc/nix:ro
@@ -53,7 +53,6 @@ services:
     hermes-agent-mom:
         image: docker.io/nousresearch/hermes-agent:main
         container_name: hermes-agent-mom
-        pull_policy: never
         restart: unless-stopped
         command: gateway run
         userns_mode: "keep-id:uid=10000,gid=10000"
