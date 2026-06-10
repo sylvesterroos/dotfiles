@@ -58,6 +58,9 @@ services:
         userns_mode: "keep-id:uid=10000,gid=10000"
         shm_size: "1gb"
         environment:
+            HERMES_DASHBOARD: "1"
+            HERMES_DASHBOARD_TUI: "1"
+            HERMES_DASHBOARD_INSECURE: "1"
             # Use host nix-daemon via mounted /nix socket.
             NIX_REMOTE: daemon
         volumes:
@@ -68,6 +71,7 @@ services:
             - /run/current-system/sw/bin/nix:/usr/local/bin/nix:ro
         ports:
             - "8643:8642"
+            - "9120:9119"
         deploy:
             resources:
                 limits:
