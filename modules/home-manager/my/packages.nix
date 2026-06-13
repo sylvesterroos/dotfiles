@@ -18,8 +18,14 @@ in
   config = mkIf cfg.enable {
     home.packages =
       with pkgs;
+      let
+        beamPkgs = pkgs.beam.packages.erlang_29;
+        erlang = beamPkgs.erlang;
+        elixir = beamPkgs.elixir_1_20;
+      in
       [
-        beam.packages.erlang_28.elixir_1_19
+        elixir
+        erlang
         cachix
         devenv
         fastfetch
