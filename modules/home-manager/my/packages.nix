@@ -41,7 +41,6 @@ in
         upscayl
       ]
       ++ lib.optionals pkgs.stdenv.isLinux [
-        bitwarden-desktop
         commit
         dbeaver-bin
         gradia
