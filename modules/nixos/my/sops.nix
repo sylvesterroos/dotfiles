@@ -50,6 +50,8 @@ in
 
         "nix-access-tokens/github.com" = { };
 
+        hermes-api-key = { };
+
         "open-design/username" = { };
         "open-design/password" = { };
         "open-design/OD_API_KEY" = { };
