@@ -14,26 +14,6 @@
       "show_go_models": false,
       "show_free_models": true,
     },
-    "openai_compatible": {
-      "Hermes Agent": {
-        "api_url": "http://bachus:8642/v1",
-        "available_models": [
-          {
-            "name": "hermes-agent",
-            "max_tokens": 262144,
-            "max_output_tokens": 65536,
-            "max_completion_tokens": 262144,
-            "capabilities": {
-              "tools": true,
-              "images": true,
-              "parallel_tool_calls": true,
-              "prompt_cache_key": false,
-              "chat_completions": true,
-            },
-          },
-        ],
-      },
-    },
   },
   "diff_view_style": "split",
   "agent_servers": {
@@ -85,13 +65,6 @@
   },
   "show_edit_predictions": true,
   "agent": {
-    "favorite_models": [
-      {
-        "provider": "Hermes Agent",
-        "model": "hermes-agent",
-        "enable_thinking": false,
-      },
-    ],
     "tool_permissions": {
       "tools": {
         "fetch": {
