@@ -80,8 +80,17 @@
         "terminal": {
           "always_allow": [
             {
-              "pattern": "^ls\\s",
+              "pattern": "^ls\\s"
             },
+            {
+              "pattern": "^nix\\s+log(\\s|$)"
+            },
+            {
+              "pattern": "^grep\\b"
+            },
+            {
+              "pattern": "^head\\b"
+            }
           ],
         },
       },
