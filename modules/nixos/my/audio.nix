@@ -23,5 +23,7 @@ in
       alsa.support32Bit = true;
       pulse.enable = true;
     };
+
+    programs.noisetorch.enable = true;
   };
 }
