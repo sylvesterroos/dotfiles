@@ -17,6 +17,9 @@
   },
   "diff_view_style": "split",
   "agent_servers": {
+    "opencode": {
+      "type": "registry"
+    },
     "codex-acp": {
       "default_config_options": {
         "reasoning_effort": "low",
