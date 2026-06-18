@@ -70,6 +70,7 @@
   ###
 
   my = {
+    amp.enable = false;
     bash.enable = false;
     discord.enable = false;
     linux-wallpaperengine.enable = false;
