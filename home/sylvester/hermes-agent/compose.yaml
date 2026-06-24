@@ -22,9 +22,6 @@ services:
         environment:
             HERMES_DASHBOARD: "1"
             HERMES_DASHBOARD_TUI: "1"
-            # Dashboard binds to 0.0.0.0 in containers so the published 9119 port works.
-            # No OAuth DashboardAuthProvider is configured here, so opt out explicitly.
-            HERMES_DASHBOARD_INSECURE: "1"
             # Use host nix-daemon via mounted /nix socket.
             NIX_REMOTE: daemon
         volumes:
