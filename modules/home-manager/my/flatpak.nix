@@ -24,11 +24,12 @@ in
     services.flatpak = mkIf pkgs.stdenv.isLinux {
       enable = true;
       packages = [
+        "com.github.iwalton3.jellyfin-media-player"
+        "com.spotify.Client"
+        "com.usebottles.bottles"
         "eu.betterbird.Betterbird"
         "io.github.kelvinnovais.Kasasa"
-        "com.github.iwalton3.jellyfin-media-player"
         "org.pgadmin.pgadmin4"
-        "com.usebottles.bottles"
       ];
 
       update.auto = {

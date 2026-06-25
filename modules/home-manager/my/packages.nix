@@ -53,7 +53,6 @@ in
         qbittorrent
         sgdboop
         signal-desktop
-        spotify
         stable.calibre
         wl-clipboard
         zotero
