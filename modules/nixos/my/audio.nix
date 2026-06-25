@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 with lib;
@@ -24,6 +25,8 @@ in
       pulse.enable = true;
     };
 
-    programs.noisetorch.enable = true;
+    environment.systemPackages = [ pkgs.easyeffects ];
+
+    users.users.sylvester.extraGroups = [ "audio" ];
   };
 }
