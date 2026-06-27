@@ -10,44 +10,43 @@
   };
 
   inputs = {
-    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
     nixpkgs-stable.url = "https://flakehub.com/f/NixOS/nixpkgs/*";
     nixpkgs-unstable.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
 
     home-manager = {
       url = "https://flakehub.com/f/nix-community/home-manager/0.1";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     nix-darwin = {
       url = "https://flakehub.com/f/nix-darwin/nix-darwin/0.1";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
       inputs.home-manager.follows = "home-manager";
     };
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     watt = {
       url = "github:NotAShelf/watt";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     sylvesterroos-com = {
       url = "github:sylvesterroos/sylvesterroos.com";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     open-design.url = "github:nexu-io/open-design";
@@ -60,7 +59,7 @@
 
     helium = {
       url = "github:amaanq/helium-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     ublock = {
@@ -72,7 +71,8 @@
   outputs =
     {
       self,
-      nixpkgs,
+      nixpkgs-stable,
+      nixpkgs-unstable,
       home-manager,
       nix-darwin,
       ...
@@ -86,18 +86,18 @@
       ];
       # This is a function that generates an attribute by calling a function you
       # pass to it, with each system as an argument
-      forAllSystems = nixpkgs.lib.genAttrs systems;
+      forAllSystems = nixpkgs-unstable.lib.genAttrs systems;
     in
     {
       # Your custom packages
       # Accessible through 'nix build', 'nix shell', etc
-      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+      packages = forAllSystems (system: import ./pkgs nixpkgs-unstable.legacyPackages.${system});
       # Formatter for your nix files, available through 'nix fmt'
       # To format all Nix files:
       # git ls-files -z '*.nix' | xargs -0 -r nix fmt
       # To check formatting:
       # git ls-files -z '*.nix' | xargs -0 -r nix develop --command nixfmt --check
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt);
+      formatter = forAllSystems (system: nixpkgs-unstable.legacyPackages.${system}.nixfmt);
 
       # Your custom packages and modifications, exported as overlays
       overlays = import ./overlays { inherit inputs; };
@@ -109,27 +109,29 @@
       homeManagerModules = import ./modules/home-manager;
 
       nixosConfigurations = {
-        creek = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
+        creek = nixpkgs-unstable.lib.nixosSystem rec {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs outputs system; };
           modules = [
             ./hosts/creek/configuration.nix
           ];
         };
 
-        delta = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
+        delta = nixpkgs-unstable.lib.nixosSystem rec {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs outputs system; };
           modules = [
             ./hosts/delta/configuration.nix
           ];
         };
 
-        bachus = inputs.nixpkgs-stable.lib.nixosSystem rec {
+        bachus = nixpkgs-stable.lib.nixosSystem rec {
           system = "x86_64-linux";
           specialArgs = {
-            inherit inputs outputs;
+            inherit inputs outputs system;
             # TODO: remove once PR is merged
             # https://github.com/NixOS/nixpkgs/pull/481056
-            patchedNixpkgsStable = outputs.overlays.patched-nixpkgs-stable system inputs.nixpkgs-stable;
+            patchedNixpkgsStable = outputs.overlays.patched-nixpkgs-stable system nixpkgs-stable;
           };
           modules = [
             ./hosts/bachus/configuration.nix
@@ -138,33 +140,46 @@
       };
 
       homeConfigurations = {
-        "sylvester@creek" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [
-            ./hosts/creek/home-manager/home.nix
-          ];
-        };
+        "sylvester@creek" =
+          let
+            system = "x86_64-linux";
+          in
+          home-manager.lib.homeManagerConfiguration {
+            pkgs = nixpkgs-unstable.legacyPackages.${system};
+            extraSpecialArgs = { inherit inputs outputs system; };
+            modules = [
+              ./hosts/creek/home-manager/home.nix
+            ];
+          };
 
-        "sylvester@delta" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [
-            ./hosts/delta/home-manager/home.nix
-          ];
-        };
+        "sylvester@delta" =
+          let
+            system = "x86_64-linux";
+          in
+          home-manager.lib.homeManagerConfiguration {
+            pkgs = nixpkgs-unstable.legacyPackages.${system};
+            extraSpecialArgs = { inherit inputs outputs system; };
+            modules = [
+              ./hosts/delta/home-manager/home.nix
+            ];
+          };
 
-        "sylvester@Sylvesters-MacBook-Pro" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.aarch64-darwin;
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [
-            ./hosts/macbook/home-manager/home.nix
-          ];
-        };
+        "sylvester@Sylvesters-MacBook-Pro" =
+          let
+            system = "aarch64-darwin";
+          in
+          home-manager.lib.homeManagerConfiguration {
+            pkgs = nixpkgs-unstable.legacyPackages.${system};
+            extraSpecialArgs = { inherit inputs outputs system; };
+            modules = [
+              ./hosts/macbook/home-manager/home.nix
+            ];
+          };
       };
 
-      darwinConfigurations."Sylvesters-MacBook-Pro" = nix-darwin.lib.darwinSystem {
-        specialArgs = { inherit self inputs outputs; };
+      darwinConfigurations."Sylvesters-MacBook-Pro" = nix-darwin.lib.darwinSystem rec {
+        system = "aarch64-darwin";
+        specialArgs = { inherit self inputs outputs system; };
         modules = [
           ./hosts/macbook/configuration.nix
         ];
