@@ -14,12 +14,13 @@
     inputs.open-design.nixosModules.default
     inputs.sops-nix.nixosModules.sops
 
+    # ./immich-backup.nix
     ./caddy.nix
     ./ddns-updater.nix
     ./disk-config.nix
     ./fail2ban.nix
     ./hardware-configuration.nix
-    # ./immich-backup.nix
+    ./home-assistant.nix
     ./immich.nix
     ./jellyfin.nix
     ./open-design.nix
