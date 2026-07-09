@@ -20,7 +20,5 @@ in
       enable = true;
       useRoutingFeatures = "client";
     };
-
-    environment.systemPackages = with pkgs; [ trayscale ];
   };
 }
