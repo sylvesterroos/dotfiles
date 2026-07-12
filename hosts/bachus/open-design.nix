@@ -11,8 +11,8 @@ let
 
   # Upstream's fixed-output pnpm dependency derivation has a stale hash.
   # Override it locally until the open-design flake updates its package hash.
-  daemonPnpmDepsHash = "sha256-QR49Ld0IP/3r89UIR+uzrTVYcvycQAYPXcBwzYWTfNE=";
-  webPnpmDepsHash = "sha256-Y9hspnCl3NGO7yTIIfqu2yBN0hYvfLEjiWRKxjasGmg=";
+  daemonPnpmDepsHash = "sha256-k2mLkO5BXrVXpqYNuJbSxwQ4TzR+Hd35UG5tLxLvwww=";
+  webPnpmDepsHash = "sha256-mKqQx7UcW1hBli9iSJiSv+JJte++nKJC81+NchP29k4=";
   fixPnpmDepsHash =
     hash: package:
     package.overrideAttrs (oldAttrs: {
