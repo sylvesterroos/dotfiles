@@ -52,6 +52,8 @@ in
 
         hermes-api-key = { };
 
+        plausible-secret-key = { };
+
         "open-design/username" = { };
         "open-design/password" = { };
         "open-design/OD_API_KEY" = { };

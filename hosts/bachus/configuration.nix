@@ -25,6 +25,7 @@
     ./jellyfin.nix
     ./open-design.nix
     ./open-webui.nix
+    ./plausible.nix
     ./postgresql.nix
     ./srv.nix
     ./syncthing.nix
