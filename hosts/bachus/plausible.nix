@@ -63,6 +63,10 @@ in
   services.clickhouse.serverConfig = {
     http_port = 18123;
     tcp_port = 19000;
+    # ClickHouse must be UTC: Plausible sends naive datetime strings in queries,
+    # and ClickHouse parses them in its local timezone. With Europe/Amsterdam
+    # (UTC+2), all query time ranges shift 2h into the past, breaking graphs.
+    timezone = "UTC";
   };
 
   services.caddy.virtualHosts."plausible.sylvesterroos.com".extraConfig = ''
