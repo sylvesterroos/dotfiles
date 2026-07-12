@@ -12,6 +12,7 @@
   };
 
   environment.systemPackages = with pkgs.kdePackages; [
+    discover
     filelight
     isoimagewriter
     kclock
