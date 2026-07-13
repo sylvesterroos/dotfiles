@@ -123,8 +123,8 @@
     "play_sound_when_agent_done": "always",
     "default_profile": "write",
     "inline_assistant_model": {
-      "provider": "copilot_chat",
-      "model": "gpt-5.4-mini",
+      "provider": "opencode",
+      "model": "go/deepseek-v4-flash",
     },
     "default_model": {
       "effort": "medium",
@@ -134,7 +134,7 @@
     },
     "commit_message_model": {
       "provider": "opencode",
-      "model": "free/big-pickle",
+      "model": "go/deepseek-v4-flash",
     },
     "model_parameters": [],
   },
