@@ -7,6 +7,8 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "buffer_font_size": 13.0,
+  "ui_font_size": 15.0,
   "cli_default_open_behavior": "new_window",
   "language_models": {
     "opencode": {
@@ -141,7 +143,6 @@
   "hide_mouse": "never",
   "vertical_scroll_margin": 10,
   "buffer_font_family": "JetBrainsMono Nerd Font",
-  "buffer_font_size": 14.0,
   "languages": {
     "Nix": {
       "language_servers": ["nil", "!nixd"],
@@ -203,6 +204,7 @@
     "dark": "Colored Zed Icons Theme Dark",
   },
   "terminal": {
+    "font_size": 13.0,
     "dock": "bottom",
     "blinking": "on",
     "line_height": "standard",
