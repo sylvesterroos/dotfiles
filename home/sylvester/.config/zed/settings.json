@@ -11,7 +11,7 @@
   "language_models": {
     "opencode": {
       "show_zen_models": false,
-      "show_go_models": false,
+      "show_go_models": true,
       "show_free_models": true,
     },
   },
