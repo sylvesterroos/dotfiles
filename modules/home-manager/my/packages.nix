@@ -26,7 +26,6 @@ in
       [
         elixir
         erlang
-        cachix
         devenv
         fastfetch
         fd

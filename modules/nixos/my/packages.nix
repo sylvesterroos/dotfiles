@@ -20,6 +20,7 @@ in
       alejandra
       bat
       btop
+      cachix
       eza
       fzf
       inetutils
