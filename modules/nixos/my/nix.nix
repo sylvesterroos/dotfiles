@@ -18,6 +18,9 @@ let
     "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
   ];
 
+  hermesAgentSubstituter = "https://hermes-agent.cachix.org";
+  hermesAgentKeys = "hermes-agent.cachix.org-1:jN3pjR50Mxi4SESKC/FIMNM6/LCosvPk2VUwzVvebzU=";
+
   localSigningKeys = [
     "delta:MfokDZYzRFSHuj8dIQuPVw5GoeFKUvOqJAVjJnxJ2RE="
   ];
@@ -30,16 +33,22 @@ in
     nix-community-cache.enable = mkEnableOption "nix-community cache" // {
       default = true;
     };
+    hermes-agent-cache.enable = mkEnableOption "hermes agent cache" // {
+      default = true;
+    };
   };
 
   config = {
     nix.settings = {
       substituters =
-        (optionals cfg.nix-community-cache.enable [ nixCommunitySubstituter ])
-        ++ (optionals cfg.devenv-cache.enable [ devenvSubstituter ]);
-      trusted-public-keys = localSigningKeys
+        (optionals cfg.devenv-cache.enable [ devenvSubstituter ])
+        ++ (optionals cfg.nix-community-cache.enable [ nixCommunitySubstituter ])
+        ++ (optionals cfg.hermes-agent-cache.enable [ hermesAgentSubstituter ]);
+      trusted-public-keys =
+        localSigningKeys
+        ++ (optionals cfg.devenv-cache.enable devenvKeys)
         ++ (optionals cfg.nix-community-cache.enable nixCommunityKeys)
-        ++ (optionals cfg.devenv-cache.enable devenvKeys);
+        ++ (optionals cfg.hermes-agent-cache.enable hermesAgentKeys);
     };
 
     sops.templates."nix-access-tokens.conf" = {
