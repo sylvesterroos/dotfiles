@@ -76,6 +76,9 @@
   "agent": {
     "tool_permissions": {
       "tools": {
+        "mcp:nixos:nix": {
+          "default": "allow"
+        },
         "fetch": {
           "always_allow": [
             {
