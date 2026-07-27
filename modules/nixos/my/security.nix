@@ -22,11 +22,18 @@ in
   };
 
   config = mkIf cfg.enable {
-    security.run0 = {
+    # bachus is on patched nixpkgs-stable (26.05), which predates the
+    # rewrite of the `security.run0` module and lacks
+    # `system.tools.nixos-rebuild.enableRun0Elevation`. Those landed in
+    # nixpkgs 26.11+ (unstable). Gate the new options on nixpkgs >= 26.11
+    # so this module keeps building on bachus until nixpkgs-stable reaches 26.11.
+    security.run0 = lib.optionalAttrs (lib.versionAtLeast lib.version "26.11") {
       enable = true;
       sudo-shim.enable = true;
     };
-    system.tools.nixos-rebuild.enableRun0Elevation = true;
+    system.tools.nixos-rebuild = lib.optionalAttrs (lib.versionAtLeast lib.version "26.11") {
+      enableRun0Elevation = true;
+    };
 
     security.sudo.enable = false;
     security.sudo-rs.enable = false;
