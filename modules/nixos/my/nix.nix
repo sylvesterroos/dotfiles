@@ -14,12 +14,10 @@ let
   ];
 
   nixCommunitySubstituter = "https://nix-community.cachix.org";
-  nixCommunityKeys = [
-    "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-  ];
+  nixCommunityKeys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
 
   hermesAgentSubstituter = "https://hermes-agent.cachix.org";
-  hermesAgentKeys = "hermes-agent.cachix.org-1:jN3pjR50Mxi4SESKC/FIMNM6/LCosvPk2VUwzVvebzU=";
+  hermesAgentKeys = [ "hermes-agent.cachix.org-1:jN3pjR50Mxi4SESKC/FIMNM6/LCosvPk2VUwzVvebzU=" ];
 
   localSigningKeys = [
     "delta:MfokDZYzRFSHuj8dIQuPVw5GoeFKUvOqJAVjJnxJ2RE="

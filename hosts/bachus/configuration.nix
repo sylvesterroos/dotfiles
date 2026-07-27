@@ -83,11 +83,6 @@
     EDITOR = lib.getExe pkgs.neovim;
   };
 
-  environment.shellAliases = {
-    hermes = "podman exec -it --user=hermes hermes-agent /opt/hermes/.venv/bin/hermes";
-    hermes-mom = "podman exec -it --user=hermes hermes-agent-mom /opt/hermes/.venv/bin/hermes";
-  };
-
   ###
   # My
   ###
