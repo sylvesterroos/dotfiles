@@ -38,6 +38,9 @@
       "d /srv/media/music/public 2775 ${sylvester} ${media} -"
       "d /srv/media/music/private 2775 ${sylvester} ${media} -"
 
+      "d /srv/media/books/public 2775 ${sylvester} ${media} -"
+      "d /srv/media/books/private 2775 ${sylvester} ${media} -"
+
       "d /srv/media/immich 0750 immich immich -"
     ];
 
