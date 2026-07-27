@@ -11,7 +11,6 @@
 
     inputs.determinate.nixosModules.default
     inputs.disko.nixosModules.default
-    inputs.open-design.nixosModules.default
     inputs.sops-nix.nixosModules.sops
 
     # ./immich-backup.nix
@@ -23,7 +22,6 @@
     ./home-assistant.nix
     ./immich.nix
     ./jellyfin.nix
-    ./open-design.nix
     ./open-webui.nix
     ./plausible.nix
     ./postgresql.nix
