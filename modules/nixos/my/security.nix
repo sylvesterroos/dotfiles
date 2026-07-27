@@ -22,11 +22,14 @@ in
   };
 
   config = mkIf cfg.enable {
-    security.sudo-rs = {
+    security.run0 = {
       enable = true;
-      execWheelOnly = true;
-      wheelNeedsPassword = true;
+      sudo-shim.enable = true;
     };
+    system.tools.nixos-rebuild.enableRun0Elevation = true;
+
+    security.sudo.enable = false;
+    security.sudo-rs.enable = false;
 
     # Loupe doesn't work with 'graphene-hardened*'
     # environment.memoryAllocator.provider = "graphene-hardened-light";
