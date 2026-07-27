@@ -130,10 +130,10 @@
       "model": "go/deepseek-v4-flash",
     },
     "default_model": {
-      "effort": "medium",
+      "effort": "xhigh",
       "enable_thinking": true,
-      "provider": "openai-subscribed",
-      "model": "gpt-5.5",
+      "provider": "opencode",
+      "model": "go/deepseek-v4-flash",
     },
     "commit_message_model": {
       "provider": "opencode",
