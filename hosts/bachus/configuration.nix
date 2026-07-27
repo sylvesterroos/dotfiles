@@ -9,12 +9,14 @@
   imports = [
     outputs.nixosModules.my
 
+    inputs.copyparty.nixosModules.default
     inputs.determinate.nixosModules.default
     inputs.disko.nixosModules.default
     inputs.sops-nix.nixosModules.sops
 
     # ./immich-backup.nix
     ./caddy.nix
+    ./copyparty.nix
     ./ddns-updater.nix
     ./disk-config.nix
     ./fail2ban.nix

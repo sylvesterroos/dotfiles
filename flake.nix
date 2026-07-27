@@ -50,6 +50,12 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    copyparty = {
+      url = "github:9001/copyparty";
+      # upstream's input is broken
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
+
     ublock = {
       url = "github:imputnet/uBlock";
       flake = false;
