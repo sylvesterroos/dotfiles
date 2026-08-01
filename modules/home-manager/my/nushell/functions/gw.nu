@@ -121,7 +121,7 @@ def "gw prune" [] {
   print $"Found ($stale | length) stale worktree\(s\):"
   print ($stale | select worktree branch status)
   let confirm = try {
-    input "Delete these worktrees? [y/N] " | str trim | str downcase
+    input "Delete these worktrees? [y/N] " | str trim | str lowercase
   } catch {|err|
     match ($err.json | from json | get code?) {
       "nu::shell::io::interrupted" => { return }
