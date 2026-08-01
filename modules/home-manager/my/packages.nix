@@ -44,6 +44,7 @@ in
         dbeaver-bin
         gradia
         krusader
+        libreoffice-qt
         nix-alien
         obsidian
         podman-desktop
