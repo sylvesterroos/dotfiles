@@ -876,8 +876,7 @@
         "plasma-manager": "plasma-manager",
         "sops-nix": "sops-nix",
         "sylvesterroos-com": "sylvesterroos-com",
-        "ublock": "ublock",
-        "watt": "watt"
+        "ublock": "ublock"
       }
     },
     "rust-overlay": {
@@ -1032,26 +1031,6 @@
       "original": {
         "owner": "imputnet",
         "repo": "uBlock",
-        "type": "github"
-      }
-    },
-    "watt": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs-unstable"
-        ]
-      },
-      "locked": {
-        "lastModified": 1785131374,
-        "narHash": "sha256-Q0ZYPY5CH223ws+0CtQP1B0B/QkdM9JYIE6mR9lFUUk=",
-        "owner": "NotAShelf",
-        "repo": "watt",
-        "rev": "a1b28eb2305e15266bcf69e8c39da0e91d7708f3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NotAShelf",
-        "repo": "watt",
         "type": "github"
       }
     }

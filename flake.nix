@@ -34,11 +34,6 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    watt = {
-      url = "github:NotAShelf/watt";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
     sylvesterroos-com = {
       url = "github:sylvesterroos/sylvesterroos.com";
       inputs.nixpkgs.follows = "nixpkgs-unstable";

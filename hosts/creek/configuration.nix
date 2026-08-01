@@ -18,7 +18,6 @@
     # inputs.hardware.nixosModules.common-cpu-amd
     # inputs.hardware.nixosModules.common-ssd
     inputs.determinate.nixosModules.default
-    inputs.watt.nixosModules.default
 
     # You can also split up your configuration and import pieces of it here:
     ./bootloader.nix
