@@ -114,10 +114,19 @@
   };
 
   zramSwap = {
-    enable = true;
-    memoryPercent = 25;
-    algorithm = "zstd";
+    enable = false;
   };
+
+  boot.zswap = {
+    enable = true;
+  };
+
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 8 * 1024; # 8 GiB
+    }
+  ];
 
   services.fstrim.enable = true;
 
