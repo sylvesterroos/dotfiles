@@ -130,10 +130,10 @@
       "model": "go/deepseek-v4-flash",
     },
     "default_model": {
-      "effort": "xhigh",
+      "effort": "medium",
       "enable_thinking": true,
       "provider": "opencode",
-      "model": "go/deepseek-v4-flash",
+      "model": "go/deepseek-v4-pro",
     },
     "commit_message_model": {
       "provider": "opencode",

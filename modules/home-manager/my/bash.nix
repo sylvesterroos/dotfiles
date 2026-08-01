@@ -30,13 +30,15 @@ in
     programs.bash = {
       enable = true;
 
-      initExtra = mkIf (cfg.alternativeShell != null) (lib.mkAfter ''
-        if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "${cfg.alternativeShell}" && -z ''${BASH_EXECUTION_STRING} ]]
-        then
-          shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
-          exec ${shellCommands.${cfg.alternativeShell}} $LOGIN_OPTION
-        fi
-      '');
+      initExtra = mkIf (cfg.alternativeShell != null) (
+        lib.mkAfter ''
+          if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "${cfg.alternativeShell}" && -z ''${BASH_EXECUTION_STRING} ]]
+          then
+            shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
+            exec ${shellCommands.${cfg.alternativeShell}} $LOGIN_OPTION
+          fi
+        ''
+      );
     };
   };
 }

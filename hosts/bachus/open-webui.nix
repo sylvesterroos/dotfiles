@@ -6,6 +6,10 @@
     port = 3000;
     host = "127.0.0.1";
     openFirewall = false;
+    environment = {
+      # Skip chunking + embedding on upload; file text goes straight to the agent as context.
+      BYPASS_EMBEDDING_AND_RETRIEVAL = "True";
+    };
   };
 
   services.caddy.virtualHosts."chat.sylvesterroos.com".extraConfig = ''
