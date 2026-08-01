@@ -18,11 +18,6 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    nix-darwin = {
-      url = "https://flakehub.com/f/nix-darwin/nix-darwin/0.1";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -72,7 +67,6 @@
       nixpkgs-stable,
       nixpkgs-unstable,
       home-manager,
-      nix-darwin,
       ...
     }@inputs:
     let
@@ -162,32 +156,6 @@
             ];
           };
 
-        "sylvester@Sylvesters-MacBook-Pro" =
-          let
-            system = "aarch64-darwin";
-          in
-          home-manager.lib.homeManagerConfiguration {
-            pkgs = nixpkgs-unstable.legacyPackages.${system};
-            extraSpecialArgs = { inherit inputs outputs system; };
-            modules = [
-              ./hosts/macbook/home-manager/home.nix
-            ];
-          };
-      };
-
-      darwinConfigurations."Sylvesters-MacBook-Pro" = nix-darwin.lib.darwinSystem rec {
-        system = "aarch64-darwin";
-        specialArgs = {
-          inherit
-            self
-            inputs
-            outputs
-            system
-            ;
-        };
-        modules = [
-          ./hosts/macbook/configuration.nix
-        ];
       };
     };
 }

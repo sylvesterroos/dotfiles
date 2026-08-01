@@ -31,10 +31,6 @@
           id = "ICJG2JE-NOR37L7-NETFILO-A6DSKEU-JZ2RW2J-FQVWNJV-ELRGLCV-GG7SQQR";
           addresses = [ "dynamic" ];
         };
-        "macbook" = {
-          id = "MUZ2AKA-7YSWPBY-IJIV6DE-2JHBXXY-XNAFOZW-UUFZEQW-YHNMXJR-Y5UCUQJ";
-          addresses = [ "dynamic" ];
-        };
         "android" = {
           id = "SVXC6BU-JPAQG52-FRSYVFQ-6KOZOEK-P6ROCLJ-KR6LACX-HGKGGGZ-SKLYLQJ";
           addresses = [ "dynamic" ];
@@ -47,7 +43,6 @@
           devices = [
             "delta"
             "windows-desktop"
-            "macbook"
             "android"
           ];
         };
@@ -56,7 +51,6 @@
           devices = [
             "delta"
             "windows-desktop"
-            "macbook"
             "android"
           ];
         };
@@ -65,7 +59,6 @@
           devices = [
             "delta"
             "windows-desktop"
-            "macbook"
           ];
         };
         "Miscellaneous" = {
@@ -73,7 +66,6 @@
           devices = [
             "delta"
             "windows-desktop"
-            "macbook"
           ];
         };
         "Music" = {
@@ -81,7 +73,6 @@
           devices = [
             "delta"
             "windows-desktop"
-            "macbook"
           ];
         };
         "Pictures" = {
@@ -89,7 +80,6 @@
           devices = [
             "delta"
             "windows-desktop"
-            "macbook"
           ];
         };
         "Projects" = {
@@ -97,7 +87,6 @@
           devices = [
             "delta"
             "windows-desktop"
-            "macbook"
           ];
         };
         "Videos" = {
@@ -105,7 +94,6 @@
           devices = [
             "delta"
             "windows-desktop"
-            "macbook"
           ];
         };
       };

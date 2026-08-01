@@ -8,8 +8,8 @@
 - Evaluate a module: `nix eval .#nixosConfigurations.<host>.config.<option>`
 
 ## Architecture
-- `flake.nix` — entry point; defines inputs, NixOS/home-manager/darwin configurations, overlays, and custom packages
-- `hosts/` — per-host configs (creek, delta, bachus; macbook = darwin). Each has `configuration.nix` and `home-manager/home.nix`
+- `flake.nix` — entry point; defines inputs, NixOS/home-manager configurations, overlays, and custom packages
+- `hosts/` — per-host configs (creek, delta, bachus). Each has `configuration.nix` and `home-manager/home.nix`
 - `modules/nixos/my/` — reusable NixOS modules, auto-imported via `default.nix`; each exposes `my.<name>` options
 - `modules/home-manager/my/` — reusable home-manager modules with `my.<name>` options
 - `pkgs/` — custom packages;

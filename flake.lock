@@ -511,25 +511,6 @@
         "type": "github"
       }
     },
-    "nix-darwin": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs-unstable"
-        ]
-      },
-      "locked": {
-        "lastModified": 1784500460,
-        "narHash": "sha256-UvORnAxTRHax7RG74W8Z2t4GvIkX6AjJ5kk0QlwZomo=",
-        "rev": "57a3171f94705599a2499248ca5758d5eb47c0e0",
-        "revCount": 2398,
-        "type": "tarball",
-        "url": "https://api.flakehub.com/f/pinned/nix-darwin/nix-darwin/0.1.2398%2Brev-57a3171f94705599a2499248ca5758d5eb47c0e0/019f7cab-fe1d-74f1-b00b-adcaaa7104ea/source.tar.gz"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://flakehub.com/f/nix-darwin/nix-darwin/0.1"
-      }
-    },
     "nix-flatpak": {
       "locked": {
         "lastModified": 1767983141,
@@ -888,7 +869,6 @@
         "home-manager": "home-manager",
         "linux-wallpaper-engine": "linux-wallpaper-engine",
         "nix-alien": "nix-alien",
-        "nix-darwin": "nix-darwin",
         "nix-flatpak": "nix-flatpak",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs-stable": "nixpkgs-stable",
