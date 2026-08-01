@@ -16,7 +16,6 @@
     # inputs.nix-colors.homeManagerModules.default
 
     # You can also split up your configuration and import pieces of it here:
-    ./dconf.nix
     ./packages.nix
   ];
 
@@ -90,6 +89,7 @@
 
   my = {
     bash.alternativeShell = "nu";
+    plasma.enable = true;
     radicle.alias = "sylvesterroos-creek";
     syncthing-client.enable = true;
   };

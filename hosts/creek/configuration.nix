@@ -23,7 +23,7 @@
 
     # You can also split up your configuration and import pieces of it here:
     ./bootloader.nix
-    ./gnome.nix
+    ./plasma.nix
     ./power.nix
     ./tuxedo.nix
     ./users.nix
