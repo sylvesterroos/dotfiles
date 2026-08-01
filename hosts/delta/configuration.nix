@@ -6,7 +6,6 @@
   outputs,
   config,
   pkgs,
-  lib,
   ...
 }:
 {
@@ -24,7 +23,6 @@
     ./heroic.nix
     ./immich-ml.nix
     ./lact.nix
-    ./plasma.nix
     ./steam.nix
   ];
 
@@ -77,9 +75,11 @@
   };
   programs.fish.enable = true;
 
+  hardware.bluetooth.enable = true;
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = [
     #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     #  wget
   ];
@@ -108,6 +108,7 @@
   ###
 
   my = {
+    plasma.enable = true;
     livebook.enable = true;
     podman.enable = true;
   };
