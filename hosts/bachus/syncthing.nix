@@ -23,10 +23,10 @@
           id = "RIPWL5Z-TW2KRNY-D37ODDG-6GVWNSM-BB5BQ5N-L4GF5N3-KETQZGC-XONJ5AY";
           addresses = [ "dynamic" ];
         };
-        # "creek" = {
-        #   id = "BBBBBBB-...";
-        #   addresses = [ "dynamic" ];
-        # };
+        "creek" = {
+          id = "6YSBUTW-CFFQOGH-FKDBVZF-MW7BJDS-BAUB6FE-VMOTHGD-EXICHET-ZEKQNQ2";
+          addresses = [ "dynamic" ];
+        };
         "windows-desktop" = {
           id = "ICJG2JE-NOR37L7-NETFILO-A6DSKEU-JZ2RW2J-FQVWNJV-ELRGLCV-GG7SQQR";
           addresses = [ "dynamic" ];
@@ -42,6 +42,7 @@
           path = "/home/sylvester/PARA";
           devices = [
             "delta"
+            "creek"
             "windows-desktop"
             "android"
           ];
@@ -50,6 +51,7 @@
           path = "~/.local/share/agent-vault";
           devices = [
             "delta"
+            "creek"
             "windows-desktop"
             "android"
           ];
@@ -58,6 +60,7 @@
           path = "/home/sylvester/Documents";
           devices = [
             "delta"
+            "creek"
             "windows-desktop"
           ];
         };
@@ -65,6 +68,7 @@
           path = "/home/sylvester/Miscellaneous";
           devices = [
             "delta"
+            "creek"
             "windows-desktop"
           ];
         };
@@ -72,6 +76,7 @@
           path = "/home/sylvester/Music";
           devices = [
             "delta"
+            "creek"
             "windows-desktop"
           ];
         };
@@ -79,6 +84,7 @@
           path = "/home/sylvester/Pictures";
           devices = [
             "delta"
+            "creek"
             "windows-desktop"
           ];
         };
@@ -86,6 +92,7 @@
           path = "/home/sylvester/Projects";
           devices = [
             "delta"
+            "creek"
             "windows-desktop"
           ];
         };
@@ -93,6 +100,7 @@
           path = "/home/sylvester/Videos";
           devices = [
             "delta"
+            "creek"
             "windows-desktop"
           ];
         };
