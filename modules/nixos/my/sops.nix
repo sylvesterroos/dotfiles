@@ -53,6 +53,11 @@ in
         hermes-api-key = { };
 
         plausible-secret-key = { };
+
+        "copyparty/sylvester-password" = {
+          owner = "copyparty";
+          group = "copyparty";
+        };
       };
     };
   };
