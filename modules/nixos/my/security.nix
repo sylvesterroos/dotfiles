@@ -38,10 +38,10 @@ in
     # Use AUTH_SELF for all systemd1 root actions so run0 skips the
     # user-selection prompt on multi-user systems. Wheel users authenticate
     # as themselves instead of picking from a list of admins.
-    security.polkit.extraConfig = lib.mkIf cfg.enable ''
+    security.polkit.extraConfig = ''
       polkit.addRule(function(action, subject) {
         if (action.id.indexOf("org.freedesktop.systemd1.") == 0 && subject.isInGroup("wheel")) {
-          return polkit.Result.AUTH_SELF;
+          return polkit.Result.AUTH_SELF_KEEP;
         }
       });
     '';
