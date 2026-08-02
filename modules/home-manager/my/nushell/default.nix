@@ -51,12 +51,12 @@ in
 
     xdg.configFile."topiary/languages.ncl".source = pkgs.fetchurl {
       url = "https://raw.githubusercontent.com/blindFS/topiary-nushell/main/languages.ncl";
-      sha256 = "sha256-9mBsAwNapIT+HHj8vRyLBTuR3Skmm0aN4wCaDwG2gzg=";
+      sha256 = "sha256-VX4peVa8RV/jgQWro5Supp7DRi5HBsnmU6ZaYAPf59s=";
     };
 
     xdg.configFile."topiary/queries/nu.scm".source = pkgs.fetchurl {
       url = "https://raw.githubusercontent.com/blindFS/topiary-nushell/main/queries/nu.scm";
-      sha256 = "sha256-2o7oIFkxuy8u8HNkiEzNnoKekmwaxClCWQnQg3rgVeU=";
+      sha256 = "sha256-78UggUotcfH9IoZ5COISYYEPSL69SPdkQuNXi95CMJU=";
     };
   };
 }
