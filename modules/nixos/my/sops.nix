@@ -53,7 +53,8 @@ in
         hermes-api-key = { };
 
         plausible-secret-key = { };
-
+      }
+      // optionalAttrs (config.services.copyparty.enable or false) {
         "copyparty/sylvester-password" = {
           owner = "copyparty";
           group = "copyparty";
