@@ -89,7 +89,7 @@
       # To format all Nix files:
       # git ls-files -z '*.nix' | xargs -0 -r nix fmt
       # To check formatting:
-      # git ls-files -z '*.nix' | xargs -0 -r nix develop --command nixfmt --check
+      # git ls-files -z '*.nix' | xargs -0 -r nix run .#formatter.x86_64-linux -- --check
       formatter = forAllSystems (system: nixpkgs-unstable.legacyPackages.${system}.nixfmt);
 
       # Your custom packages and modifications, exported as overlays

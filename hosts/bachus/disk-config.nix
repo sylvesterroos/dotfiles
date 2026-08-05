@@ -48,7 +48,10 @@
                 type = "filesystem";
                 format = "bcachefs";
                 mountpoint = "/srv";
-                mountOptions = [ "relatime" "nofail" ];
+                mountOptions = [
+                  "relatime"
+                  "nofail"
+                ];
                 extraArgs = [
                   "--compression=lz4"
                   "--background_compression=zstd:5"
@@ -71,7 +74,10 @@
                 type = "filesystem";
                 format = "bcachefs";
                 mountpoint = "/srv/media/immich";
-                mountOptions = [ "relatime" "nofail" ];
+                mountOptions = [
+                  "relatime"
+                  "nofail"
+                ];
                 extraArgs = [
                   "--compression=lz4"
                   "--background_compression=zstd:5"

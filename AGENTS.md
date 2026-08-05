@@ -1,8 +1,8 @@
 # NixOS Dotfiles
 
 ## Build Commands
-- Format Nix files: `nix fmt` (uses nixfmt)
-- Check formatting: `git ls-files -z '*.nix' | xargs -0 -r nix develop --command nixfmt --check`
+- Format Nix files: `git ls-files -z '*.nix' | xargs -0 -r nix fmt`
+- Check formatting: `git ls-files -z '*.nix' | xargs -0 -r nix run .#formatter.x86_64-linux -- --check`
 - Build NixOS config: `nh os build` (hosts: creek, delta, bachus)
 - Build home-manager config: `nh home build`
 - Evaluate a module: `nix eval .#nixosConfigurations.<host>.config.<option>`
