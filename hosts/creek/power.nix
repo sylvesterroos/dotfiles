@@ -1,44 +1,58 @@
 { ... }:
 {
-  services.watt =
-    let
-      min_freq_mhz = 800;
-      tuxedo_pulse_15_gen_2_max_freq_mhz = 4300;
-    in
-    {
-      enable = true;
-      settings = {
-        charger = {
-          governor = "performance";
-          battery_charge_thresholds = [
-            40
-            80
-          ];
-          min_freq_mhz = min_freq_mhz;
-          max_freq_mhz = tuxedo_pulse_15_gen_2_max_freq_mhz;
-        };
-
-        battery = {
-          governor = "powersave";
-          min_freq_mhz = min_freq_mhz;
-          max_freq_mhz = builtins.floor (tuxedo_pulse_15_gen_2_max_freq_mhz * 0.75);
-        };
-
-        daemon = {
-          poll_interval_sec = 5;
-          adaptive_interval = true;
-          min_poll_interval_sec = 1;
-          max_poll_interval_sec = 30;
-          throttle_on_battery = true;
-          log_level = "Info";
-          stats_file_path = "/var/run/watt-stats";
-        };
-
-        power_supply_ignore_list = {
-          mouse_battery = "hidpp_battery_0";
-        };
-      };
+  services.watt = {
+    enable = true;
+    settings = {
+      rule = [
+        {
+          name = "charger";
+          priority = 10;
+          "if" = {
+            not = "?discharging";
+          };
+          cpu = {
+            governor = {
+              "if" = {
+                is-governor-available = "performance";
+              };
+              "then" = "performance";
+            };
+            turbo = {
+              "if" = "?turbo-available";
+              "then" = true;
+            };
+          };
+        }
+        {
+          name = "battery";
+          priority = 20;
+          "if" = "?discharging";
+          cpu = {
+            governor = {
+              "if" = {
+                is-governor-available = "powersave";
+              };
+              "then" = "powersave";
+            };
+            turbo = {
+              "if" = "?turbo-available";
+              "then" = true;
+            };
+            energy-performance-preference = {
+              "if" = {
+                is-energy-performance-preference-available = "balance_power";
+              };
+              "then" = "balance_power";
+            };
+          };
+        }
+      ];
     };
+  };
+
+  # The nixpkgs module writes /etc/watt.toml but never points the daemon at it;
+  # without WATT_CONFIG the daemon falls back to the built-in default config.
+  systemd.services.watt.environment.WATT_CONFIG = "/etc/watt.toml";
 
   services.power-profiles-daemon.enable = false;
 
