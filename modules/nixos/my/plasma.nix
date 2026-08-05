@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  outputs,
   ...
 }:
 with lib;
@@ -16,6 +17,10 @@ in
   };
 
   config = mkIf cfg.enable {
+    nixpkgs.overlays = [
+      outputs.overlays.kde-xdg-data-dirs
+    ];
+
     services.displayManager.sddm.enable = true;
     services.displayManager.sddm.wayland.enable = true;
     services.displayManager.sddm.wayland.compositor = "kwin";
