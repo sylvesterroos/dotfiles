@@ -2,6 +2,23 @@
   config,
   ...
 }:
+let
+  # copyparty runs as its own user, so new files would be copyparty:copyparty
+  # and unmanageable from the command line. These volume flags chown uploads to
+  # a group the user belongs to and make them group-writable (the gid flag only
+  # works for groups copyparty is a member of; see extraGroups below).
+  homeFlags = {
+    grid = true;
+    chmod_f = toString 664;
+    chmod_d = toString 775;
+    gid = toString config.users.groups.users.gid;
+  };
+  # /srv/media uploads get the media group so jellyfin and the *arr stack can
+  # keep reading them.
+  mediaFlags = homeFlags // {
+    gid = toString config.users.groups.media.gid;
+  };
+in
 {
   services.copyparty = {
     enable = true;
@@ -33,52 +50,48 @@
     volumes = {
       "/" = {
         path = "/srv/media";
-        access = {
-          rwmd = [ "sylvester" ];
-        };
-        flags = {
-          grid = true;
-        };
+        access.rwmd = [ "sylvester" ];
+        flags = mediaFlags;
       };
       "/PARA" = {
         path = "/home/sylvester/PARA";
         access.rwmd = [ "sylvester" ];
-        flags.grid = true;
+        flags = homeFlags;
       };
       "/agent-vault" = {
         path = "/home/sylvester/.local/share/agent-vault";
         access.rwmd = [ "sylvester" ];
-        flags.grid = true;
+        flags = homeFlags;
       };
       "/Documents" = {
         path = "/home/sylvester/Documents";
         access.rwmd = [ "sylvester" ];
-        flags.grid = true;
+        flags = homeFlags;
       };
       "/Miscellaneous" = {
         path = "/home/sylvester/Miscellaneous";
         access.rwmd = [ "sylvester" ];
-        flags.grid = true;
+        flags = homeFlags;
       };
       "/Music" = {
         path = "/home/sylvester/Music";
         access.rwmd = [ "sylvester" ];
-        flags.grid = true;
+        flags = homeFlags;
       };
       "/Pictures" = {
         path = "/home/sylvester/Pictures";
         access.rwmd = [ "sylvester" ];
-        flags.grid = true;
+        flags = homeFlags;
       };
       "/Projects" = {
         path = "/home/sylvester/Projects";
         access.rwmd = [ "sylvester" ];
-        flags.grid = true;
+        flags = homeFlags;
       };
       "/Videos" = {
         path = "/home/sylvester/Videos";
         access.rwmd = [ "sylvester" ];
-        flags.grid = true;
+        flags = homeFlags;
       };
     };
   };
@@ -90,11 +103,16 @@
     '';
   };
 
-  # Allow copyparty to read /srv/media (via media group).
-  users.users.copyparty.extraGroups = [ "media" ];
+  # copyparty must be a member of the groups it chowns uploads to (gid flag);
+  # media also gives it read access to /srv/media.
+  users.users.copyparty.extraGroups = [
+    "media"
+    "users"
+  ];
 
-  # Grant the copyparty user read access to syncthing directories via ACLs
-  # Uses systemd-tmpfiles 'a+' type to set recursive ACLs.
+  # Grant the copyparty user rwx access to the home-directory volumes via ACLs
+  # so it can serve and manage existing content. Uses systemd-tmpfiles 'a+'
+  # type to set recursive ACLs.
   systemd.tmpfiles.rules = [
     "a+ /home/sylvester/PARA - - - - u:copyparty:rwx,d:u:copyparty:rwx"
     "a+ /home/sylvester/.local/share/agent-vault - - - - u:copyparty:rwx,d:u:copyparty:rwx"
