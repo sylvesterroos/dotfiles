@@ -1,5 +1,7 @@
 { pkgs, ... }:
 {
+  users.groups.nixadmins = { };
+
   users.users = {
     root.initialPassword = "password";
 
@@ -14,6 +16,7 @@
         "wheel"
         "networkmanager"
         "plugdev"
+        "nixadmins"
       ];
     };
 
@@ -27,6 +30,7 @@
         "wheel"
         "networkmanager"
         "plugdev"
+        "nixadmins"
       ];
     };
   };
