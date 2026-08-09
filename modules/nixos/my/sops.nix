@@ -21,6 +21,14 @@ in
   };
 
   config = mkIf cfg.enable {
+    # sops-nix auto-detects boot-time secret installation from systemd-sysusers
+    # or userborn (sops.useSystemdActivation). Without it, secrets are installed
+    # by an activation script, which only runs on switch/boot while the machine
+    # stays up, so /run/secrets (ramfs) vanishes on reboot and the nix daemon
+    # loses its signing key. We pick Userborn (not sysusers) because normal users
+    # can't be created by systemd-sysusers.
+    services.userborn.enable = true;
+
     environment.systemPackages = with pkgs; [
       sops
       age
