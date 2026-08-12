@@ -94,12 +94,13 @@
 
   boot.zswap = {
     enable = true;
+    maxPoolPercent = 50; # 50% of 32GB
   };
 
   swapDevices = [
     {
       device = "/var/lib/swapfile";
-      size = 8 * 1024; # 8 GiB
+      size = 16 * 1024; # 16 GiB, backs the zswap pool
     }
   ];
 
