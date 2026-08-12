@@ -72,13 +72,23 @@ in
           "Switch to Desktop 5" = "Meta+5";
           "Switch to Desktop 6" = "Meta+6";
           "Switch to Desktop 7" = "Meta+7";
-          "Window to Desktop 1" = "Meta+Shift+1";
-          "Window to Desktop 2" = "Meta+Shift+2";
-          "Window to Desktop 3" = "Meta+Shift+3";
-          "Window to Desktop 4" = "Meta+Shift+4";
-          "Window to Desktop 5" = "Meta+Shift+5";
-          "Window to Desktop 6" = "Meta+Shift+6";
-          "Window to Desktop 7" = "Meta+Shift+7";
+          "Window to Desktop 1" = "Meta+!";
+          "Window to Desktop 2" = "Meta+@";
+          "Window to Desktop 3" = "Meta+#";
+          "Window to Desktop 4" = "Meta+$";
+          "Window to Desktop 5" = "Meta+%";
+          "Window to Desktop 6" = "Meta+^";
+          "Window to Desktop 7" = "Meta+&";
+
+          "Window One Screen Up" = "Meta+Shift+Up";
+          "Window One Screen Down" = "Meta+Shift+Down";
+          "Window One Screen to the Left" = "Meta+Shift+Left";
+          "Window One Screen to the Right" = "Meta+Shift+Right";
+          "Window to Next Screen" = "none";
+          "Window to Previous Screen" = "none";
+
+          # Present windows of the current application.
+          "ExposeClass" = "Meta+F7";
         };
 
         plasmashell = {
