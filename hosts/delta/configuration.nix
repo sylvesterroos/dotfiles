@@ -23,7 +23,6 @@
     ./heroic.nix
     ./immich-ml.nix
     ./lact.nix
-    ./steam.nix
   ];
 
   nixpkgs = {
@@ -111,6 +110,7 @@
     plasma.enable = true;
     livebook.enable = true;
     podman.enable = true;
+    steam.enable = true;
   };
 
   zramSwap = {
