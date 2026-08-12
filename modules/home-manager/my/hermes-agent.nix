@@ -22,24 +22,5 @@ in
     home.packages = hermesEnv.packages;
 
     home.sessionVariables = hermesEnv.sessionVariables;
-
-    # Launcher entry for the hermes-desktop Electron app, installed via
-    # `nix profile install github:NousResearch/hermes-agent#desktop`. The
-    # icon lives inside that same profile, so the path tracks package
-    # updates automatically. StartupWMClass matches the window class KWin
-    # observes for the app (resourceClass: hermes).
-    xdg.desktopEntries.hermes = {
-      name = "Hermes";
-      comment = "Native desktop shell for Hermes Agent";
-      exec = "hermes-desktop";
-      icon = "${config.home.homeDirectory}/.nix-profile/share/hermes-desktop/dist/nous-girl.jpg";
-      terminal = false;
-      categories = [
-        "Development"
-        "Utility"
-      ];
-      startupNotify = true;
-      settings.StartupWMClass = "hermes";
-    };
   };
 }
