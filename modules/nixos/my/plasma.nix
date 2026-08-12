@@ -41,11 +41,13 @@ in
         kclock
         partitionmanager
       ]
-      ++ [
+      ++ (with pkgs; [
         # partitionmanager only shows filesystems whose mkfs tool is on PATH
-        pkgs.exfatprogs
-        pkgs.ntfs3g
-        pkgs.btrfs-progs
-      ];
+        exfatprogs
+        ntfs3g
+        btrfs-progs
+
+        haruna
+      ]);
   };
 }
