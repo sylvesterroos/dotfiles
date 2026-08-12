@@ -7,6 +7,9 @@
 with lib;
 let
   cfg = config.my.hermes-agent;
+  hermesEnv = import ../../shared/hermes-agent.nix {
+    inherit lib pkgs;
+  };
 in
 {
   options.my.hermes-agent = {
@@ -16,20 +19,9 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = [
-      # Local headless browser backend for the browser tool. agent-browser
-      # drives chromium via CDP — zero cloud-browser cost.
-      pkgs.agent-browser
-      pkgs.chromium
-    ];
+    home.packages = hermesEnv.packages;
 
-    home.sessionVariables = {
-      # Launch the Ink TUI by default instead of the classic REPL.
-      HERMES_TUI = "1";
-      # Point agent-browser at the nixpkgs chromium instead of downloading
-      # its own Playwright build.
-      AGENT_BROWSER_EXECUTABLE_PATH = lib.getExe pkgs.chromium;
-    };
+    home.sessionVariables = hermesEnv.sessionVariables;
 
     # Launcher entry for the hermes-desktop Electron app, installed via
     # `nix profile install github:NousResearch/hermes-agent#desktop`. The
