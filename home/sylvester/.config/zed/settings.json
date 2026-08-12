@@ -7,8 +7,6 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
-  "buffer_font_size": 13.0,
-  "ui_font_size": 15.0,
   "cli_default_open_behavior": "new_window",
   "language_models": {
     "opencode": {
@@ -19,6 +17,14 @@
   },
   "diff_view_style": "split",
   "agent_servers": {
+    "Hermes (forge)": {
+      "default_mode": "accept_edits",
+      "type": "custom",
+      "command": "forge",
+      "args": [
+        "acp"
+      ]
+    },
     "opencode": {
       "default_config_options": {
         "effort": "high",
@@ -47,7 +53,7 @@
       "args": [],
       "projects": [
         {
-          "paths": ["/etc/nixos/./"],
+          "paths": ["/srv/nixos/./"],
         },
       ],
     },
@@ -130,10 +136,10 @@
       "model": "go/deepseek-v4-flash",
     },
     "default_model": {
-      "effort": "medium",
+      "effort": "max",
       "enable_thinking": true,
       "provider": "opencode",
-      "model": "go/deepseek-v4-pro",
+      "model": "go/deepseek-v4-flash",
     },
     "commit_message_model": {
       "provider": "opencode",
@@ -207,7 +213,6 @@
     "dark": "Colored Zed Icons Theme Dark",
   },
   "terminal": {
-    "font_size": 13.0,
     "dock": "bottom",
     "blinking": "on",
     "line_height": "standard",
