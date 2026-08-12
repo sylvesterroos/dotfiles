@@ -24,6 +24,7 @@ in
         elixir = beamPkgs.elixir_1_20;
       in
       [
+        attic-client
         elixir
         erlang
         devenv

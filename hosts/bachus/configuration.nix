@@ -15,6 +15,7 @@
     inputs.sops-nix.nixosModules.sops
 
     # ./immich-backup.nix
+    ./attic.nix
     ./caddy.nix
     ./copyparty.nix
     ./ddns-updater.nix
