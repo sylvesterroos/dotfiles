@@ -19,7 +19,7 @@ in
     programs.chromium.enable = true;
 
     environment.systemPackages = with pkgs; [
-      brave
+      brave-origin
     ];
   };
 }
