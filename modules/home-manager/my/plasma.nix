@@ -2,6 +2,8 @@
   config,
   lib,
   inputs,
+  outputs,
+  pkgs,
   ...
 }:
 with lib;
@@ -72,6 +74,7 @@ in
           "Switch to Desktop 5" = "Meta+5";
           "Switch to Desktop 6" = "Meta+6";
           "Switch to Desktop 7" = "Meta+7";
+          "Switch to Previously Used Desktop" = "Meta+Z";
           "Window to Desktop 1" = "Meta+!";
           "Window to Desktop 2" = "Meta+@";
           "Window to Desktop 3" = "Meta+#";
@@ -102,6 +105,8 @@ in
         };
       };
 
+      configFile."kwinrc"."Plugins"."switch-to-previous-desktopEnabled" = true;
+
       #
       # Some low-level settings:
       #
@@ -115,5 +120,9 @@ in
       #   };
       # };
     };
+
+    home.packages = [
+      outputs.packages.${pkgs.system}.switch-to-previous-desktop
+    ];
   };
 }
