@@ -96,6 +96,7 @@
     logiops.enable = false;
     nh.flake = "/srv/nixos";
     nixos-flatpak.enable = false;
+    non-nix-apps.enable = false;
     path.enable = true;
     podman.enable = true;
     printing.enable = false;
