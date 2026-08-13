@@ -35,7 +35,7 @@
     };
 
     sylvesterroos-com = {
-      url = "github:sylvesterroos/sylvesterroos.com";
+      url = "git+https://github.com/sylvesterroos/sylvesterroos.com";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 

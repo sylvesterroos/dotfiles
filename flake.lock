@@ -963,17 +963,18 @@
         ]
       },
       "locked": {
-        "lastModified": 1786630666,
-        "narHash": "sha256-ILpsqyFncoGicgcC05KTZ/NSmQxO6ugp+jh4JAX/F/c=",
-        "owner": "sylvesterroos",
-        "repo": "sylvesterroos.com",
-        "rev": "0cc46753a2493cff546bb7571df7cff0a7b650bd",
-        "type": "github"
+        "lastModified": 1786648714,
+        "lfs": true,
+        "narHash": "sha256-kuQMNibnR1vLoI+DXWZgCxp0IXvR+e1uHuAXyPAlVRg=",
+        "ref": "refs/heads/master",
+        "rev": "4ba968dc437744b7e946c7c44a72e22023ea5a7a",
+        "revCount": 54,
+        "type": "git",
+        "url": "https://github.com/sylvesterroos/sylvesterroos.com"
       },
       "original": {
-        "owner": "sylvesterroos",
-        "repo": "sylvesterroos.com",
-        "type": "github"
+        "type": "git",
+        "url": "https://github.com/sylvesterroos/sylvesterroos.com"
       }
     },
     "systems": {
