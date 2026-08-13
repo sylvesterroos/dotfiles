@@ -48,6 +48,8 @@ in
 
         "nix-signing-keys/delta" = { };
 
+        "nix-signing-keys/creek" = { };
+
         "wireguard/protonvpn_nl/private_key" = {
           owner = "systemd-network";
           group = "systemd-network";

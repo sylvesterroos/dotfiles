@@ -4,6 +4,7 @@
 {
   inputs,
   outputs,
+  config,
   lib,
   pkgs,
   ...
@@ -58,6 +59,9 @@
   nix = {
     # Opinionated: disable channels
     channel.enable = false;
+
+    # Sign store paths so other hosts trust them
+    settings.secret-key-files = [ config.sops.secrets."nix-signing-keys/creek".path ];
   };
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];

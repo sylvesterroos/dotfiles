@@ -21,6 +21,7 @@ let
 
   localSigningKeys = [
     "delta:MfokDZYzRFSHuj8dIQuPVw5GoeFKUvOqJAVjJnxJ2RE="
+    "creek:UcoGc9NgCBfUQMcw+qJimw+sve+YNLn+tNnte1DupMU="
   ];
 in
 {
