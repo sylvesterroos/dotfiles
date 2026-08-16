@@ -46,6 +46,7 @@
             "windows-desktop"
             "android"
           ];
+          ignorePatterns = [ "(?d).git" ];
         };
         "agent-vault" = {
           path = "~/.local/share/agent-vault";
@@ -55,6 +56,7 @@
             "windows-desktop"
             "android"
           ];
+          ignorePatterns = [ "(?d).git" ];
         };
         "Documents" = {
           path = "/home/sylvester/Documents";
@@ -63,6 +65,7 @@
             "creek"
             "windows-desktop"
           ];
+          ignorePatterns = [ "(?d).git" ];
         };
         "Miscellaneous" = {
           path = "/home/sylvester/Miscellaneous";
@@ -71,6 +74,7 @@
             "creek"
             "windows-desktop"
           ];
+          ignorePatterns = [ "(?d).git" ];
         };
         "Music" = {
           path = "/home/sylvester/Music";
@@ -79,6 +83,7 @@
             "creek"
             "windows-desktop"
           ];
+          ignorePatterns = [ "(?d).git" ];
         };
         "Pictures" = {
           path = "/home/sylvester/Pictures";
@@ -87,6 +92,7 @@
             "creek"
             "windows-desktop"
           ];
+          ignorePatterns = [ "(?d).git" ];
         };
         "Projects" = {
           path = "/home/sylvester/Projects";
@@ -95,6 +101,7 @@
             "creek"
             "windows-desktop"
           ];
+          ignorePatterns = [ "(?d).git" ];
         };
         "Videos" = {
           path = "/home/sylvester/Videos";
@@ -103,6 +110,7 @@
             "creek"
             "windows-desktop"
           ];
+          ignorePatterns = [ "(?d).git" ];
         };
       };
     };

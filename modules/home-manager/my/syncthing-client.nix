@@ -40,34 +40,42 @@ in
           "PARA" = {
             path = "~/PARA";
             devices = [ "server" ];
+            ignorePatterns = [ "(?d).git" ];
           };
           "agent-vault" = {
             path = "~/.local/share/agent-vault";
             devices = [ "server" ];
+            ignorePatterns = [ "(?d).git" ];
           };
           "Documents" = {
             path = "~/Documents";
             devices = [ "server" ];
+            ignorePatterns = [ "(?d).git" ];
           };
           "Miscellaneous" = {
             path = "~/Miscellaneous";
             devices = [ "server" ];
+            ignorePatterns = [ "(?d).git" ];
           };
           "Music" = {
             path = "~/Music";
             devices = [ "server" ];
+            ignorePatterns = [ "(?d).git" ];
           };
           "Pictures" = {
             path = "~/Pictures";
             devices = [ "server" ];
+            ignorePatterns = [ "(?d).git" ];
           };
           "Projects" = {
             path = "~/Projects";
             devices = [ "server" ];
+            ignorePatterns = [ "(?d).git" ];
           };
           "Videos" = {
             path = "~/Videos";
             devices = [ "server" ];
+            ignorePatterns = [ "(?d).git" ];
           };
         };
       };
