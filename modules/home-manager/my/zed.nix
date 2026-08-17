@@ -1,7 +1,6 @@
 {
   pkgs,
   lib,
-  inputs,
   config,
   ...
 }:
@@ -25,6 +24,7 @@ in
     };
 
     home.packages = [
+      pkgs.bubblewrap
       (pkgs.writeShellScriptBin "zed" ''
         exec ${lib.getExe pkgs.zed-editor} "$@"
       '')
