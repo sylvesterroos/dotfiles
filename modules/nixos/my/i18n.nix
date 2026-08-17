@@ -20,6 +20,7 @@ in
     # en_IE is used as a proxy for en-NL (which doesn't exist as a locale).
     # Provides: DD/MM/YYYY dates, metric measurement, € currency, 24h time.
     i18n.extraLocaleSettings = {
+      LC_MESSAGES = "en_IE.UTF-8";
       LC_ADDRESS = "en_IE.UTF-8";
       LC_IDENTIFICATION = "en_IE.UTF-8";
       LC_MEASUREMENT = "en_IE.UTF-8";
