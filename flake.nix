@@ -10,33 +10,33 @@
   };
 
   inputs = {
-    nixpkgs-stable.url = "https://flakehub.com/f/NixOS/nixpkgs/*";
-    nixpkgs-unstable.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
+    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/*";
+    multiverse.url = "github:fzakaria/nixpkgs-multiverse";
 
     home-manager = {
       url = "https://flakehub.com/f/nix-community/home-manager/0.1";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     sylvesterroos-com = {
       url = "git+https://github.com/sylvesterroos/sylvesterroos.com";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
@@ -47,13 +47,13 @@
 
     helium = {
       url = "github:amaanq/helium-flake";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     copyparty = {
       url = "github:9001/copyparty";
       # upstream's input is broken
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     ublock = {
@@ -65,13 +65,22 @@
   outputs =
     {
       self,
-      nixpkgs-stable,
-      nixpkgs-unstable,
+      nixpkgs,
+      multiverse,
       home-manager,
       ...
     }@inputs:
     let
       inherit (self) outputs;
+      # Our own multiverse instance so revisions evaluate with the same
+      # allowUnfree the old stable/unstable overlay imports used.
+      mv = multiverse.lib.mkMultiverse {
+        system = "x86_64-linux";
+        config.allowUnfree = true;
+      };
+      # Newest stable release the multiverse index knows; advances on its own
+      # when a release branches.
+      latestStable = nixpkgs.lib.last mv.releases;
       # Supported systems for your flake packages, shell, etc.
       systems = [
         "x86_64-linux"
@@ -79,18 +88,18 @@
       ];
       # This is a function that generates an attribute by calling a function you
       # pass to it, with each system as an argument
-      forAllSystems = nixpkgs-unstable.lib.genAttrs systems;
+      forAllSystems = nixpkgs.lib.genAttrs systems;
     in
     {
       # Your custom packages
       # Accessible through 'nix build', 'nix shell', etc
-      packages = forAllSystems (system: import ./pkgs nixpkgs-unstable.legacyPackages.${system});
+      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
       # Formatter for your nix files, available through 'nix fmt'
       # To format all Nix files:
       # git ls-files -z '*.nix' | xargs -0 -r nix fmt
       # To check formatting:
       # git ls-files -z '*.nix' | xargs -0 -r nix run .#formatter.x86_64-linux -- --check
-      formatter = forAllSystems (system: nixpkgs-unstable.legacyPackages.${system}.nixfmt);
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt);
 
       # Your custom packages and modifications, exported as overlays
       overlays = import ./overlays { inherit inputs; };
@@ -102,29 +111,48 @@
       homeManagerModules = import ./modules/home-manager;
 
       nixosConfigurations = {
-        creek = nixpkgs-unstable.lib.nixosSystem rec {
+        creek = (mv.flakeAt "tip").lib.nixosSystem rec {
           system = "x86_64-linux";
-          specialArgs = { inherit inputs outputs system; };
+          specialArgs = {
+            inherit
+              inputs
+              outputs
+              system
+              mv
+              ;
+          };
           modules = [
             ./hosts/creek/configuration.nix
           ];
         };
 
-        delta = nixpkgs-unstable.lib.nixosSystem rec {
+        delta = (mv.flakeAt "tip").lib.nixosSystem rec {
           system = "x86_64-linux";
-          specialArgs = { inherit inputs outputs system; };
+          specialArgs = {
+            inherit
+              inputs
+              outputs
+              system
+              mv
+              ;
+          };
           modules = [
             ./hosts/delta/configuration.nix
           ];
         };
 
-        bachus = nixpkgs-stable.lib.nixosSystem rec {
+        bachus = (mv.flakeAt latestStable).lib.nixosSystem rec {
           system = "x86_64-linux";
           specialArgs = {
-            inherit inputs outputs system;
+            inherit
+              inputs
+              outputs
+              system
+              mv
+              ;
             # TODO: remove once PR is merged
             # https://github.com/NixOS/nixpkgs/pull/481056
-            patchedNixpkgsStable = outputs.overlays.patched-nixpkgs-stable system nixpkgs-stable;
+            patchedNixpkgsStable = outputs.overlays.patched-nixpkgs-stable system (mv.flakeAt latestStable);
           };
           modules = [
             ./hosts/bachus/configuration.nix
@@ -138,8 +166,14 @@
             system = "x86_64-linux";
           in
           home-manager.lib.homeManagerConfiguration {
-            pkgs = nixpkgs-unstable.legacyPackages.${system};
-            extraSpecialArgs = { inherit inputs outputs system; };
+            pkgs = mv.tip;
+            extraSpecialArgs = {
+              inherit inputs outputs system;
+              mv = multiverse.lib.mkMultiverse {
+                system = "x86_64-linux";
+                config.allowUnfree = true;
+              };
+            };
             modules = [
               ./hosts/creek/home-manager/home.nix
             ];
@@ -150,8 +184,14 @@
             system = "x86_64-linux";
           in
           home-manager.lib.homeManagerConfiguration {
-            pkgs = nixpkgs-unstable.legacyPackages.${system};
-            extraSpecialArgs = { inherit inputs outputs system; };
+            pkgs = mv.tip;
+            extraSpecialArgs = {
+              inherit inputs outputs system;
+              mv = multiverse.lib.mkMultiverse {
+                system = "x86_64-linux";
+                config.allowUnfree = true;
+              };
+            };
             modules = [
               ./hosts/delta/home-manager/home.nix
             ];

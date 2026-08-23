@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  mv,
   pkgs,
   ...
 }:
@@ -8,7 +9,7 @@ with lib;
 let
   cfg = config.my.hermes-agent;
   hermesEnv = import ../../shared/hermes-agent.nix {
-    inherit lib pkgs;
+    inherit lib mv pkgs;
   };
 in
 {

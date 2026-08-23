@@ -2,6 +2,7 @@
   inputs,
   outputs,
   lib,
+  mv,
   pkgs,
   ...
 }:
@@ -38,7 +39,6 @@
     overlays = [
       outputs.overlays.additions
       outputs.overlays.modifications
-      outputs.overlays.unstable-packages-baseline
     ];
 
     config = {
@@ -73,10 +73,10 @@
     neovim
     nil
     stow
-    unstable.codex
-    unstable.devenv
-    unstable.opencode
     yazi
+    mv.tip.codex
+    mv.tip.devenv
+    mv.tip.opencode
   ];
 
   environment.variables = {

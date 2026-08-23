@@ -5,6 +5,7 @@
 # everywhere.
 {
   lib,
+  mv,
   pkgs,
 }:
 let
@@ -20,11 +21,8 @@ let
   '';
 in
 {
-  # agent-browser only exists in unstable. On a stable host (bachus) reach it
-  # through the unstable overlay; on an unstable host (creek, delta) it's a
-  # first-class package.
   packages = [
-    (pkgs.agent-browser or pkgs.unstable.agent-browser)
+    mv.tip.agent-browser
     hermesAgentUpdate
   ];
 

@@ -2,6 +2,8 @@
   pkgs,
   lib,
   config,
+  inputs,
+  mv,
   ...
 }:
 with lib;
@@ -22,6 +24,7 @@ in
         beamPkgs = pkgs.beam.packages.erlang_29;
         erlang = beamPkgs.erlang;
         elixir = beamPkgs.elixir_1_20;
+        stablePkgs = mv.at (lib.last mv.releases);
       in
       [
         attic-client
@@ -54,7 +57,7 @@ in
         qbittorrent
         sgdboop
         signal-desktop
-        stable.calibre
+        stablePkgs.calibre
         wl-clipboard
         zotero
       ];
