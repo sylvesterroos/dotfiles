@@ -7,6 +7,8 @@ with lib;
 let
   cfg = config.my.nix;
 
+  atticShared = import ../../shared/attic.nix { };
+
   devenvSubstituter = "https://devenv.cachix.org";
   devenvKeys = [
     "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
@@ -18,6 +20,9 @@ let
 
   hermesAgentSubstituter = "https://hermes-agent.cachix.org";
   hermesAgentKeys = [ "hermes-agent.cachix.org-1:jN3pjR50Mxi4SESKC/FIMNM6/LCosvPk2VUwzVvebzU=" ];
+
+  bachusCacheSubstituter = atticShared.cacheUrl;
+  bachusCacheKeys = [ "bachus:S4UzuyjTb539BS1RcIeaGlrsZSRl2Ae+m5VtJ9lTKA8=" ];
 
   localSigningKeys = [
     "delta:MfokDZYzRFSHuj8dIQuPVw5GoeFKUvOqJAVjJnxJ2RE="
@@ -35,16 +40,21 @@ in
     hermes-agent-cache.enable = mkEnableOption "hermes agent cache" // {
       default = true;
     };
+    bachus-cache.enable = mkEnableOption "bachus cache" // {
+      default = true;
+    };
   };
 
   config = {
     nix.settings = {
       substituters =
-        (optionals cfg.devenv-cache.enable [ devenvSubstituter ])
+        (optionals cfg.bachus-cache.enable [ bachusCacheSubstituter ])
+        ++ (optionals cfg.devenv-cache.enable [ devenvSubstituter ])
         ++ (optionals cfg.nix-community-cache.enable [ nixCommunitySubstituter ])
         ++ (optionals cfg.hermes-agent-cache.enable [ hermesAgentSubstituter ]);
       trusted-public-keys =
         localSigningKeys
+        ++ (optionals cfg.bachus-cache.enable bachusCacheKeys)
         ++ (optionals cfg.devenv-cache.enable devenvKeys)
         ++ (optionals cfg.nix-community-cache.enable nixCommunityKeys)
         ++ (optionals cfg.hermes-agent-cache.enable hermesAgentKeys);

@@ -8,6 +8,9 @@
 with lib;
 let
   cfg = config.my.sops-nix;
+  sopsShared = import ../../shared/sops.nix {
+    inherit lib pkgs inputs;
+  };
 in
 {
   imports = [
@@ -29,18 +32,9 @@ in
     # can't be created by systemd-sysusers.
     services.userborn.enable = true;
 
-    environment.systemPackages = with pkgs; [
-      sops
-      age
-      ssh-to-age
-    ];
+    environment.systemPackages = sopsShared.tools;
 
-    sops = {
-      defaultSopsFile = "${inputs.self}/secrets/secrets.yaml";
-      defaultSopsFormat = "yaml";
-
-      age.keyFile = "/home/sylvester/.config/sops/age/keys.txt";
-
+    sops = sopsShared.settings // {
       secrets = {
         ddns-updater-config = { };
 

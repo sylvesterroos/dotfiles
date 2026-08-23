@@ -1,11 +1,9 @@
 { config, lib, ... }:
 with lib;
 let
-  # bachus's tailscale IP (do not bind 0.0.0.0)
-  tailscaleIp = "100.95.166.12";
+  atticShared = import ../../modules/shared/attic.nix { };
 in
 {
-  # JWT signing secret for attic tokens, decrypted from sops (never in the nix store)
   sops.secrets."atticd/rs256_secret" = { };
 
   sops.templates."atticd.env" = {
@@ -18,7 +16,7 @@ in
     enable = true;
     environmentFile = config.sops.templates."atticd.env".path;
     settings = {
-      listen = "${tailscaleIp}:8080";
+      listen = atticShared.listen;
       jwt = { };
       garbage-collection = {
         interval = "12h";
@@ -27,6 +25,19 @@ in
     };
   };
 
-  # atticd binds only the tailscale IP; allow port 8080 on tailscale0 exclusively
-  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [ 8080 ];
+  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [ atticShared.port ];
+
+  assertions = [
+    {
+      assertion = !elem atticShared.port config.networking.firewall.allowedTCPPorts;
+      message = "atticd: ${toString atticShared.port} must stay out of networking.firewall.allowedTCPPorts — it is tailnet-only via tailscale0";
+    }
+    {
+      assertion =
+        !(any (iface: elem atticShared.port iface.allowedTCPPorts) (
+          attrValues (removeAttrs config.networking.firewall.interfaces [ "tailscale0" ])
+        ));
+      message = "atticd: ${toString atticShared.port} must stay closed on every interface except tailscale0";
+    }
+  ];
 }

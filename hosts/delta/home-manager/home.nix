@@ -67,10 +67,11 @@
     plasma.enable = true;
     radicle.alias = "sylvesterroos-delta";
     syncthing-client.enable = true;
+    attic-client = {
+      enable = true;
+      token = "attic/tokens/delta";
+    };
   };
-
-  # Nicely reload system units when changing configs
-  systemd.user.startServices = "sd-switch";
 
   home.stateVersion = "25.05";
 }

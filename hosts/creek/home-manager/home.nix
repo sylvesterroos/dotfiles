@@ -93,10 +93,11 @@
     plasma.enable = true;
     radicle.alias = "sylvesterroos-creek";
     syncthing-client.enable = true;
+    attic-client = {
+      enable = true;
+      token = "attic/tokens/creek";
+    };
   };
-
-  # Nicely reload system units when changing configs
-  systemd.user.startServices = "sd-switch";
 
   home.stateVersion = "23.05";
 }
