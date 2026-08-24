@@ -1,4 +1,4 @@
-{ ... }:
+{ config, lib, ... }:
 {
   services.watt = {
     enable = true;
@@ -52,7 +52,9 @@
 
   # The nixpkgs module writes /etc/watt.toml but never points the daemon at it;
   # without WATT_CONFIG the daemon falls back to the built-in default config.
-  systemd.services.watt.environment.WATT_CONFIG = "/etc/watt.toml";
+  systemd.services.watt = lib.mkIf config.services.watt.enable {
+    environment.WATT_CONFIG = "/etc/watt.toml";
+  };
 
   services.power-profiles-daemon.enable = false;
 
