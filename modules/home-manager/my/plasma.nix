@@ -122,7 +122,7 @@ in
     };
 
     home.packages = [
-      outputs.packages.${pkgs.system}.switch-to-previous-desktop
+      outputs.packages.${pkgs.stdenv.hostPlatform.system}.switch-to-previous-desktop
     ];
   };
 }

@@ -154,14 +154,14 @@ in
 {
   options.my.web-browser = {
     enable = mkEnableOption "web browser" // {
-      default = pkgs.stdenv.isLinux;
+      default = pkgs.stdenv.hostPlatform.isLinux;
     };
   };
 
   config = mkIf cfg.enable {
     assertions = [
       {
-        assertion = pkgs.stdenv.isLinux;
+        assertion = pkgs.stdenv.hostPlatform.isLinux;
         message = "my.web-browser currently only supports Linux Home Manager hosts.";
       }
     ];

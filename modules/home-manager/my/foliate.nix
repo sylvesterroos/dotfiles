@@ -12,7 +12,7 @@ in
 {
   options.my.foliate = {
     enable = mkEnableOption "foliate" // {
-      default = pkgs.stdenv.isLinux;
+      default = pkgs.stdenv.hostPlatform.isLinux;
     };
   };
 

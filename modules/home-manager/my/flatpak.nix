@@ -21,7 +21,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    services.flatpak = mkIf pkgs.stdenv.isLinux {
+    services.flatpak = mkIf pkgs.stdenv.hostPlatform.isLinux {
       enable = true;
       packages = [
         "com.github.iwalton3.jellyfin-media-player"

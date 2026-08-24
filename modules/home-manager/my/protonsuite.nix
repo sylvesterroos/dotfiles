@@ -23,11 +23,11 @@ in
           protonmail-desktop
           protonmail-bridge
         ]
-        ++ lib.optionals pkgs.stdenv.isLinux [
+        ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
           protonmail-bridge-gui
         ];
 
-        protonvpn = lib.optionals pkgs.stdenv.isLinux [
+        protonvpn = lib.optionals pkgs.stdenv.hostPlatform.isLinux [
           proton-vpn
           proton-vpn-cli
         ];
@@ -35,7 +35,7 @@ in
         protonpass = [
           proton-pass-cli
         ]
-        ++ lib.optionals pkgs.stdenv.isLinux [
+        ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
           proton-pass
           proton-authenticator
         ];
