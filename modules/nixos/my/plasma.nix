@@ -39,6 +39,7 @@ in
         filelight
         isoimagewriter
         kclock
+        kcalc
         partitionmanager
       ]
       ++ (with pkgs; [
