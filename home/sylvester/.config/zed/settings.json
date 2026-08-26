@@ -80,6 +80,9 @@
   },
   "show_edit_predictions": true,
   "agent": {
+    "sandbox_permissions": {
+      "allow_all_hosts": true
+    },
     "tool_permissions": {
       "tools": {
         "mcp:nixos:nix": {
