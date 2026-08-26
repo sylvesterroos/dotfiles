@@ -50,6 +50,11 @@ in
 
     postUp = ''
       ip route add default dev wg0 table ${toString vpnTable}
+      # Last-resort kill switch: if wg0 disappears without preDown running,
+      # the uid rules still steer traffic into this table, and the
+      # unreachable default makes it die instead of falling through to the
+      # clearnet route in main.
+      ip route add unreachable default table ${toString vpnTable} metric 2048
       ${builtins.concatStringsSep "" (map ruleForUser vpnUsers)}
       ip -6 route add unreachable default table ${toString vpnTable}
     '';
@@ -57,6 +62,7 @@ in
     preDown = ''
       ip -6 route del unreachable default table ${toString vpnTable} || true
       ${builtins.concatStringsSep "" (map delRuleForUser vpnUsers)}
+      ip route del unreachable default table ${toString vpnTable} metric 2048 || true
       ip route del default dev wg0 table ${toString vpnTable} || true
     '';
   };
