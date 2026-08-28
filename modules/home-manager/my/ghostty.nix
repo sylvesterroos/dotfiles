@@ -24,6 +24,9 @@ in
         theme = "light:GitHub Light Colorblind,dark:GitHub Dark Colorblind";
         # On Plasma we also want the nice GTK menu bar
         window-decoration = if pkgs.stdenv.hostPlatform.isLinux then "client" else "auto";
+        maximize = true;
+        notify-on-command-finish = "unfocused";
+        notify-on-command-finish-action = "no-bell,notify";
         font-feature = [ "-calt" ];
         keybind = [
           "shift+ctrl+r=reload_config"
