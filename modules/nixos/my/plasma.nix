@@ -40,6 +40,7 @@ in
         isoimagewriter
         kclock
         kcalc
+        kcolorchooser
         partitionmanager
       ]
       ++ (with pkgs; [
