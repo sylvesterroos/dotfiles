@@ -58,8 +58,7 @@
       ],
     },
   ],
-  // Tell Zed to use direnv and direnv can use a flake.nix environment
-  "load_direnv": "shell_hook",
+  "load_direnv": "direct",
   "title_bar": {
     "show_user_picture": false,
   },
