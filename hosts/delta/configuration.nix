@@ -56,6 +56,15 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+  networking.networkmanager.ensureProfiles.profiles."Wired internet" = {
+    connection = {
+      id = "Wired internet";
+      type = "802-3-ethernet";
+      interface-name = "eno1";
+      uuid = "567f035d-b139-4ba8-ab0e-0c08f5d6af10";
+    };
+    ethtool.eee-enabled = "off";
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
