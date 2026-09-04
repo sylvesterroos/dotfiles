@@ -35,6 +35,7 @@ in
         fd
         figlet # making large letters out of ordinary text
         gitleaks
+        godot
         mpatch
         nil
         onefetch
