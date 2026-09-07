@@ -34,7 +34,6 @@ in
   networking.wg-quick.interfaces.wg0 = {
     privateKeyFile = config.sops.secrets."wireguard/protonvpn_nl/private_key".path;
     address = [ "10.2.0.2/32" ];
-    dns = [ "10.2.0.1" ];
     table = "off";
 
     peers = [
