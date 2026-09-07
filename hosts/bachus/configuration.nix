@@ -32,6 +32,7 @@
     ./srv.nix
     ./syncthing.nix
     ./torrents.nix
+    ./qui.nix
     ./users.nix
   ];
 
