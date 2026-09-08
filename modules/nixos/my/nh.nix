@@ -24,7 +24,7 @@ in
       enable = true;
       clean = {
         enable = true;
-        dates = "weekly";
+        dates = "daily";
         extraArgs = "--nogcroots --keep-since 14d";
       };
       flake = cfg.flake;

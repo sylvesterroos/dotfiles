@@ -47,6 +47,7 @@ in
 
   config = {
     nix.settings = {
+      auto-optimise-store = true;
       substituters =
         (optionals cfg.bachus-cache.enable [ bachusCacheSubstituter ])
         ++ (optionals cfg.devenv-cache.enable [ devenvSubstituter ])
