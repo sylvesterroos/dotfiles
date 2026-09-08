@@ -55,7 +55,10 @@ in
           "Miscellaneous" = {
             path = "~/Miscellaneous";
             devices = [ "server" ];
-            ignorePatterns = [ "(?d).git" ];
+            ignorePatterns = [
+              "(?d).git"
+              "win-iso"
+            ];
           };
           "Music" = {
             path = "~/Music";
