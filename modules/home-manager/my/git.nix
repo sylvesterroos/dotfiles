@@ -41,6 +41,12 @@ in
       enable = true;
 
       settings = {
+        alias = {
+          # Perfect for the daily standup
+          yesterday = "log --since='yesterday.midnight' --until='midnight' --all --no-merges --oneline --author=sylvester@sylvesterroos.com";
+          b = "blame -w -C -C -C";
+        };
+
         user = {
           email = "sylvester@sylvesterroos.com";
           name = "Sylvester Roos";
@@ -66,11 +72,6 @@ in
         # should contain "* $(cat ~/.ssh/id_ed25519.pub)"
         gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
         user.signingkey = "~/.ssh/id_ed25519.pub";
-
-        aliases = {
-          # Perfect for the daily standup
-          yesterday = "log --since='yesterday.midnight' --until='midnight' --all --no-merges --oneline --author=sylvester@sylvesterroos.com";
-        };
       };
 
       lfs.enable = true;
