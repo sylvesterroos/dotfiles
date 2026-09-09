@@ -20,6 +20,7 @@ in
       alejandra
       bat
       btop
+      bubblewrap
       cachix
       eza
       fzf
