@@ -34,59 +34,60 @@ in
     # });
   };
 
+  # TODO: possibly overridden by https://github.com/NixOS/nixpkgs/issues/363068#issuecomment-5209282821
   # KDE apps get a single merged XDG_DATA_DIRS instead of dozens of duplicated
   # per-package share dirs injected by the qt wrapper hook.
   # https://github.com/NixOS/nixpkgs/issues/126590#issuecomment-3194531220
   # https://github.com/NixOS/nixpkgs/issues/126590#issuecomment-3694376547
   # https://github.com/NixOS/nixpkgs/issues/126590#issuecomment-3741634437
-  kde-xdg-data-dirs = final: prev: {
-    kdePackages = prev.kdePackages.overrideScope (
-      kdeFinal: kdePrev: {
-        plasma-workspace =
-          let
-            # the package we want to override
-            basePkg = kdePrev.plasma-workspace;
+  # kde-xdg-data-dirs = final: prev: {
+  #   kdePackages = prev.kdePackages.overrideScope (
+  #     kdeFinal: kdePrev: {
+  #       plasma-workspace =
+  #         let
+  #           # the package we want to override
+  #           basePkg = kdePrev.plasma-workspace;
 
-            # a helper package that merges all the XDG_DATA_DIRS into a single
-            # directory; symlinks instead of copies to save space and build I/O
-            xdgdataPkg = final.stdenv.mkDerivation {
-              name = "${basePkg.name}-xdgdata";
-              buildInputs = [ basePkg ];
-              dontUnpack = true;
-              dontFixup = true;
-              dontWrapQtApps = true;
-              installPhase = ''
-                mkdir -p $out/share
-                ( IFS=:
-                  for DIR in $XDG_DATA_DIRS; do
-                    if [[ -d "$DIR" ]]; then
-                      ${prev.lib.getExe prev.lndir} -silent "$DIR" $out/share
-                    fi
-                  done
-                )
-              '';
-            };
+  #           # a helper package that merges all the XDG_DATA_DIRS into a single
+  #           # directory; symlinks instead of copies to save space and build I/O
+  #           xdgdataPkg = final.stdenv.mkDerivation {
+  #             name = "${basePkg.name}-xdgdata";
+  #             buildInputs = [ basePkg ];
+  #             dontUnpack = true;
+  #             dontFixup = true;
+  #             dontWrapQtApps = true;
+  #             installPhase = ''
+  #               mkdir -p $out/share
+  #               ( IFS=:
+  #                 for DIR in $XDG_DATA_DIRS; do
+  #                   if [[ -d "$DIR" ]]; then
+  #                     ${prev.lib.getExe prev.lndir} -silent "$DIR" $out/share
+  #                   fi
+  #                 done
+  #               )
+  #             '';
+  #           };
 
-            # undo the XDG_DATA_DIRS injection that is usually done in the qt
-            # wrapper script and instead inject the path of the above helper
-            derivedPkg = basePkg.overrideAttrs {
-              preFixup = ''
-                for index in "''${!qtWrapperArgs[@]}"; do
-                  if [[ ''${qtWrapperArgs[$((index+0))]} == "--prefix" ]] && [[ ''${qtWrapperArgs[$((index+1))]} == "XDG_DATA_DIRS" ]]; then
-                    unset -v "qtWrapperArgs[$((index+0))]"
-                    unset -v "qtWrapperArgs[$((index+1))]"
-                    unset -v "qtWrapperArgs[$((index+2))]"
-                    unset -v "qtWrapperArgs[$((index+3))]"
-                  fi
-                done
-                qtWrapperArgs=("''${qtWrapperArgs[@]}")
-                qtWrapperArgs+=(--prefix XDG_DATA_DIRS : "${xdgdataPkg}/share")
-                qtWrapperArgs+=(--prefix XDG_DATA_DIRS : "$out/share")
-              '';
-            };
-          in
-          derivedPkg;
-      }
-    );
-  };
+  #           # undo the XDG_DATA_DIRS injection that is usually done in the qt
+  #           # wrapper script and instead inject the path of the above helper
+  #           derivedPkg = basePkg.overrideAttrs {
+  #             preFixup = ''
+  #               for index in "''${!qtWrapperArgs[@]}"; do
+  #                 if [[ ''${qtWrapperArgs[$((index+0))]} == "--prefix" ]] && [[ ''${qtWrapperArgs[$((index+1))]} == "XDG_DATA_DIRS" ]]; then
+  #                   unset -v "qtWrapperArgs[$((index+0))]"
+  #                   unset -v "qtWrapperArgs[$((index+1))]"
+  #                   unset -v "qtWrapperArgs[$((index+2))]"
+  #                   unset -v "qtWrapperArgs[$((index+3))]"
+  #                 fi
+  #               done
+  #               qtWrapperArgs=("''${qtWrapperArgs[@]}")
+  #               qtWrapperArgs+=(--prefix XDG_DATA_DIRS : "${xdgdataPkg}/share")
+  #               qtWrapperArgs+=(--prefix XDG_DATA_DIRS : "$out/share")
+  #             '';
+  #           };
+  #         in
+  #         derivedPkg;
+  #     }
+  #   );
+  # };
 }

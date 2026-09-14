@@ -2,7 +2,7 @@
   lib,
   config,
   pkgs,
-  outputs,
+  # outputs,
   ...
 }:
 with lib;
@@ -18,7 +18,7 @@ in
 
   config = mkIf cfg.enable {
     nixpkgs.overlays = [
-      outputs.overlays.kde-xdg-data-dirs
+      # outputs.overlays.kde-xdg-data-dirs
     ];
 
     services.displayManager.sddm.enable = true;
