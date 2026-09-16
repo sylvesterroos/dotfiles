@@ -1,16 +1,11 @@
 [
   {
-    "context": "Workspace",
-    "bindings": {
-      "ctrl-`": "workspace::ToggleBottomDock",
-    },
-  },
-  {
     "context": "vim_mode == normal",
     "bindings": {
-      // leader (t)oggle (l)eft / (r)ight
+      // leader (t)oggle (l)eft / (r)ight / (b)ottom
       "space t l": "workspace::ToggleLeftDock",
       "space t r": "workspace::ToggleRightDock",
+      "space t b": "workspace::ToggleBottomDock",
     },
   },
   {
