@@ -15,7 +15,6 @@
     secretFile = config.sops.secrets."qui/session_secret".path;
   };
 
-
   systemd.services.qui = {
     after = [ "qbittorrent.service" ];
     wants = [ "qbittorrent.service" ];

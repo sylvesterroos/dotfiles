@@ -1,15 +1,11 @@
 # generate a new key from a ssh private key
 # $ mkdir -p ~/.config/sops/age/
 # $ ssh-to-age -private-key -i ~/.ssh/id_ed25519 > ~/.config/sops/age/keys.txt
-
 # get the public key of ~/.config/sops/age/keys.txt
 # $ age-keygen -y ~/.config/sops/age/keys.txt
-
 # add the public key to the list below
-
 # update the encrypted secrets
 # $ sops updatekeys secrets/secrets.yaml
-
 keys:
   - &delta age1vvad2hraqyhuf0287syn9s97gcszkrwvz2tskr2esm9zurdtpv7shq9a58
   - &creek age1mwu4qzhs5dx9fgnfu3g8j6cwn5ccpcvms5722t5k4wha4uk8c5gsgtlfr6

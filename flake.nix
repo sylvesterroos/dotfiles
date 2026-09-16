@@ -45,6 +45,11 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     linux-wallpaper-engine.url = "github:jagrat7/linux-wallpaper-engine";
 
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     helium = {
       url = "github:amaanq/helium-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -68,6 +73,7 @@
       nixpkgs,
       multiverse,
       home-manager,
+      treefmt-nix,
       ...
     }@inputs:
     let
@@ -89,17 +95,24 @@
       # This is a function that generates an attribute by calling a function you
       # pass to it, with each system as an argument
       forAllSystems = nixpkgs.lib.genAttrs systems;
+      # treefmt config from ./treefmt.nix, evaluated per system
+      treefmtEval = forAllSystems (
+        system: treefmt-nix.lib.evalModule nixpkgs.legacyPackages.${system} ./treefmt.nix
+      );
     in
     {
       # Your custom packages
       # Accessible through 'nix build', 'nix shell', etc
       packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
-      # Formatter for your nix files, available through 'nix fmt'
-      # To format all Nix files:
-      # git ls-files -z '*.nix' | xargs -0 -r nix fmt
-      # To check formatting:
-      # git ls-files -z '*.nix' | xargs -0 -r nix run .#formatter.x86_64-linux -- --check
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt);
+      # Multi-language formatter (treefmt), available through 'nix fmt'
+      # Formats nix, json, yaml, toml and nu files; config in ./treefmt.nix
+      # Formatting check runs on 'nix flake check' (checks.<system>.formatting)
+      formatter = forAllSystems (system: treefmtEval.${system}.config.build.wrapper);
+
+      # Verify the whole tree is formatted, runs on 'nix flake check'
+      checks = forAllSystems (system: {
+        formatting = treefmtEval.${system}.config.build.check self;
+      });
 
       # Your custom packages and modifications, exported as overlays
       overlays = import ./overlays { inherit inputs; };
