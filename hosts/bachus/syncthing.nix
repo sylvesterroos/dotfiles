@@ -101,7 +101,9 @@
             "creek"
             "windows-desktop"
           ];
-          ignorePatterns = [ "(?d).git" ];
+          # No fs watcher: poll every 15 min to keep dev churn cheap.
+          rescanIntervalS = 900;
+          fsWatcherEnabled = false;
         };
         "Videos" = {
           path = "/home/sylvester/Videos";
