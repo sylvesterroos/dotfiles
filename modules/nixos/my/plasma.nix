@@ -21,9 +21,14 @@ in
       # outputs.overlays.kde-xdg-data-dirs
     ];
 
-    services.displayManager.sddm.enable = true;
-    services.displayManager.sddm.wayland.enable = true;
-    services.displayManager.sddm.wayland.compositor = "kwin";
+    services.displayManager.sddm = {
+      enable = true;
+      # SDDM 0.21.0 Wayland VT bug (upstream #2129, fix = PR #2204, unmerged) —
+      # patched package, see pkgs/sddm-vt-fix. Drop when sddm ships the fix.
+      package = mkForce pkgs.sddm-vt-fix;
+      wayland.enable = true;
+      wayland.compositor = "kwin";
+    };
     services.desktopManager.plasma6.enable = true;
 
     programs.kdeconnect = {

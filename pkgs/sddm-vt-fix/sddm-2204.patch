@@ -1,0 +1,5 @@
+--- a/src/helper/UserSession.cpp
++++ b/src/helper/UserSession.cpp
+@@ -231,1 +231,1 @@
+-            VirtualTerminal::jumpToVt(vtNumber, x11UserSession);
++            VirtualTerminal::jumpToVt(vtNumber, x11UserSession || waylandUserSession);
