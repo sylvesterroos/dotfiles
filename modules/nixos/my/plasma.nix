@@ -43,6 +43,7 @@ in
         discover
         filelight
         isoimagewriter
+        keepsecret
         kclock
         kcalc
         kcolorchooser
