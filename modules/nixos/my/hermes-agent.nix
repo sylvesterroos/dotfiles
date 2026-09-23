@@ -14,8 +14,6 @@ let
 in
 {
   options.my.hermes-agent = {
-    # Default false: creek and delta already get this from the home-manager
-    # module. This NixOS-level variant exists for hosts without home-manager.
     enable = mkEnableOption "hermes agent (NixOS-level)";
     user = mkOption {
       type = types.str;

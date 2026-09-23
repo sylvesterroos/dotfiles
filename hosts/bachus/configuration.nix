@@ -92,6 +92,7 @@
   ###
 
   my = {
+    agents.enable = true;
     appimage.enable = false;
     audio.enable = false;
     avahi.enable = false;
