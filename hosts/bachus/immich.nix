@@ -1,5 +1,6 @@
 {
   config,
+  mv,
   patchedNixpkgsStable,
   ...
 }:
@@ -11,6 +12,7 @@
 
   services.immich = {
     enable = true;
+    package = mv.tip.immich;
     mediaLocation = "/srv/media/immich";
     host = "0.0.0.0";
     openFirewall = true;
