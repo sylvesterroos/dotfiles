@@ -181,11 +181,12 @@
           home-manager.lib.homeManagerConfiguration {
             pkgs = mv.tip;
             extraSpecialArgs = {
-              inherit inputs outputs system;
-              mv = multiverse.lib.mkMultiverse {
-                system = "x86_64-linux";
-                config.allowUnfree = true;
-              };
+              inherit
+                inputs
+                outputs
+                system
+                mv
+                ;
             };
             modules = [
               ./hosts/creek/home-manager/home.nix
@@ -199,11 +200,12 @@
           home-manager.lib.homeManagerConfiguration {
             pkgs = mv.tip;
             extraSpecialArgs = {
-              inherit inputs outputs system;
-              mv = multiverse.lib.mkMultiverse {
-                system = "x86_64-linux";
-                config.allowUnfree = true;
-              };
+              inherit
+                inputs
+                outputs
+                system
+                mv
+                ;
             };
             modules = [
               ./hosts/delta/home-manager/home.nix
