@@ -70,13 +70,6 @@ in
             devices = [ "server" ];
             ignorePatterns = [ "(?d).git" ];
           };
-          "Projects" = {
-            path = "~/Projects";
-            devices = [ "server" ];
-            # No fs watcher: poll every 15 min to keep dev churn cheap.
-            rescanIntervalS = 900;
-            fsWatcherEnabled = false;
-          };
           "Videos" = {
             path = "~/Videos";
             devices = [ "server" ];

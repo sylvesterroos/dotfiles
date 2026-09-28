@@ -94,17 +94,6 @@
           ];
           ignorePatterns = [ "(?d).git" ];
         };
-        "Projects" = {
-          path = "/home/sylvester/Projects";
-          devices = [
-            "delta"
-            "creek"
-            "windows-desktop"
-          ];
-          # No fs watcher: poll every 15 min to keep dev churn cheap.
-          rescanIntervalS = 900;
-          fsWatcherEnabled = false;
-        };
         "Videos" = {
           path = "/home/sylvester/Videos";
           devices = [
