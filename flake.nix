@@ -65,6 +65,8 @@
       url = "github:imputnet/uBlock";
       flake = false;
     };
+
+    cua.url = "github:trycua/cua";
   };
 
   outputs =

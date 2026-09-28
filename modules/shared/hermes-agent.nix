@@ -7,6 +7,7 @@
   lib,
   mv,
   pkgs,
+  cuaDriver,
 }:
 let
   # Removes first: nix profile add refuses to replace a same-named element (file conflict),
@@ -23,6 +24,13 @@ in
 {
   packages = [
     mv.tip.agent-browser
+  ]
+  ++ lib.optionals (cuaDriver != null) [
+    cuaDriver
+    pkgs.imagemagick
+    pkgs.at-spi2-core
+  ]
+  ++ [
     hermesAgentUpdate
   ];
 

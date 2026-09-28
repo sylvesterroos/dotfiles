@@ -3,6 +3,7 @@
   lib,
   mv,
   pkgs,
+  inputs,
   ...
 }:
 with lib;
@@ -10,6 +11,7 @@ let
   cfg = config.my.hermes-agent;
   hermesEnv = import ../../shared/hermes-agent.nix {
     inherit lib mv pkgs;
+    cuaDriver = inputs.cua.packages.${pkgs.system}.cua-driver;
   };
 in
 {
@@ -22,6 +24,9 @@ in
   };
 
   config = mkIf cfg.enable {
+    # CUA's Linux accessibility backend uses AT-SPI, which communicates over D-Bus.
+    services.dbus.enable = true;
+
     # Install into the user's NixOS profile (/etc/profiles/per-user/$USER),
     # which puts the packages on that user's PATH only.
     users.users.${cfg.user}.packages = hermesEnv.packages;
