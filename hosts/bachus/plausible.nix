@@ -52,7 +52,8 @@ in
     };
 
     server = {
-      baseUrl = "https://plausible.sylvesterroos.com";
+      # Tailnet-only via tailnet-services.nix; the name is fixed by MagicDNS.
+      baseUrl = "https://plausible.allosaurus-snapper.ts.net";
       disableRegistration = true;
       listenAddress = "127.0.0.1";
       port = 18080;
@@ -69,9 +70,7 @@ in
     timezone = "UTC";
   };
 
-  services.caddy.virtualHosts."plausible.sylvesterroos.com".extraConfig = ''
-    reverse_proxy 127.0.0.1:${toString config.services.plausible.server.port}
-  '';
+  # Tailnet-only via tailnet-services.nix (plausible.<tailnet>.ts.net).
 
   systemd.services.plausible = {
     after = [

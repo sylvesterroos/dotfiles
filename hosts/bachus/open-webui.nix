@@ -16,7 +16,5 @@
     };
   };
 
-  services.caddy.virtualHosts."chat.sylvesterroos.com".extraConfig = ''
-    reverse_proxy 127.0.0.1:${toString config.services.open-webui.port}
-  '';
+  # Tailnet-only via tailnet-services.nix (open-webui.<tailnet>.ts.net).
 }

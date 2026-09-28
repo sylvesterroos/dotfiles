@@ -5,7 +5,5 @@
     openFirewall = true;
   };
 
-  services.caddy.virtualHosts."jf.sylvesterroos.com".extraConfig = ''
-    reverse_proxy 127.0.0.1:8096
-  '';
+  # Tailnet-only: reached via https://jellyfin.<tailnet>.ts.net (see tailnet-services.nix).
 }

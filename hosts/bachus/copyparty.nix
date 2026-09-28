@@ -96,12 +96,7 @@ in
     };
   };
 
-  # Reverse proxy via Caddy
-  services.caddy.virtualHosts."files.sylvesterroos.com" = {
-    extraConfig = ''
-      reverse_proxy 127.0.0.1:3923
-    '';
-  };
+  # Tailnet-only via tailnet-services.nix (files.<tailnet>.ts.net).
 
   # copyparty must be a member of the groups it chowns uploads to (gid flag);
   # media also gives it read access to /srv/media.

@@ -15,15 +15,11 @@
     package = mv.tip.immich;
     mediaLocation = "/srv/media/immich";
     host = "0.0.0.0";
-    openFirewall = true;
     environment = {
       IMMICH_LOG_LEVEL = "verbose";
     };
     database.port = 5431;
     machine-learning.enable = false;
   };
-
-  services.caddy.virtualHosts."immich.sylvesterroos.com".extraConfig = ''
-    reverse_proxy 127.0.0.1:${toString config.services.immich.port}
-  '';
+  # Tailnet-only via tailnet-services.nix; the port stays firewalled.
 }

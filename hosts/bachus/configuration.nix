@@ -31,6 +31,7 @@
     ./postgresql.nix
     ./srv.nix
     ./syncthing.nix
+    ./tailnet-services.nix
     ./torrents.nix
     ./qui.nix
     ./users.nix

@@ -69,28 +69,26 @@ in
   services = {
     prowlarr = {
       enable = true;
-      openFirewall = true;
     };
 
     flaresolverr = {
       enable = true;
-      openFirewall = true;
     };
 
     radarr = {
       enable = true;
-      openFirewall = true;
     };
 
     sonarr = {
       enable = true;
-      openFirewall = true;
     };
 
     qbittorrent = {
       enable = true;
       webuiPort = 8085;
-      openFirewall = true;
+      # Tailnet-only via tailnet-services.nix: no openFirewall, web UI and
+      # tracker traffic stay separated (UI via tailscale serve, torrent
+      # traffic via wg0).
       serverConfig = {
         BitTorrent = {
           Session = {
