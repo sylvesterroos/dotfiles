@@ -16,6 +16,8 @@ in
   };
 
   config = mkIf cfg.enable {
+    services.xserver.xkb.variant = "altgr-intl";
+
     # Required to configure ZSA keyboards using Oryx
     hardware.keyboard.zsa.enable = true;
 

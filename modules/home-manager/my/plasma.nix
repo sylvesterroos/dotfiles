@@ -25,6 +25,13 @@ in
     programs.plasma = {
       enable = true;
 
+      input.keyboard.layouts = [
+        {
+          layout = "us";
+          variant = "altgr-intl";
+        }
+      ];
+
       #
       # Some high-level settings:
       #
