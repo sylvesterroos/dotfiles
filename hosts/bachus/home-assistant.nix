@@ -3,13 +3,15 @@
 }:
 
 {
+  # HA binds 0.0.0.0 (host network), so the firewall allows LAN clients to reach it directly;
+  networking.firewall.allowedTCPPorts = [ 8123 ];
+
   virtualisation.oci-containers = {
     backend = "podman";
     containers.homeassistant = {
       volumes = [ "home-assistant:/config" ];
       environment.TZ = "Europe/Amsterdam";
-      # Note: The image will not be updated on rebuilds, unless the version label changes
-      # TODO: look at hermes-agent identity file
+      pull = "newer";
       image = "ghcr.io/home-assistant/home-assistant:stable";
       extraOptions =
         let
