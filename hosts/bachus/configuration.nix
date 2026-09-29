@@ -23,6 +23,7 @@
     ./disk-config.nix
     ./fail2ban.nix
     ./hardware-configuration.nix
+    ./headscale.nix
     ./home-assistant.nix
     ./immich.nix
     ./jellyfin.nix
