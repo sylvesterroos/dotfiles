@@ -49,6 +49,11 @@ for name in ($live | columns) {
     }
 }
 for s in $services {
+    # A live serve config for a declared service can conflict with the declared
+    # form (e.g. created out-of-band with a different scheme); clearing the
+    # service first removes any existing config so the apply below can't fail
+    # on a mismatch. Harmless when nothing is configured.
+    do { tailscale serve clear $"svc:($s.name)" } | complete | ignore
     # --https gives the TLS listener on the service VIP (browsers need it);
     # the target stays plain http because that is what the local upstreams
     # speak. The config-file format cannot express this combination, hence
