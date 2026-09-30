@@ -1,21 +1,21 @@
 # Applies this node's declarative Tailscale Services config.
 # Inputs arrive from the wrapper environment: PATH carries the tailscale CLI
 # from the package the daemon runs from, SERVICES_JSON holds the service list.
-def set-config-until-up [config_path: string] {
+def serve-until-up [args: list<string>] {
     # tailscaled is up per systemd ordering but not always ready to serve yet;
     # bounded retry instead of systemd Restart (Type=oneshot forbids it).
     mut attempts = 12
     loop {
-        let result = (do { tailscale serve set-config --all $config_path } | complete)
+        let result = (do { tailscale serve ...$args } | complete)
         if $result.exit_code == 0 {
             print ($result.stdout | str trim)
             return
         }
-        print -e "tailscale serve set-config attempt failed:"
+        print -e $"tailscale serve ($args | str join ' ') attempt failed:"
         print -e ($result.stderr | str trim)
         $attempts -= 1
         if $attempts == 0 {
-            print -e "tailscale serve set-config kept failing."
+            print -e "tailscale serve kept failing."
             exit 1
         }
         sleep 10sec
@@ -32,25 +32,31 @@ def advertise-or-die [service: string] {
     }
 }
 let services = (open --raw $env.SERVICES_JSON | from json)
-# The admin-console service definition carries the MagicDNS name and the
-# https:443 endpoint; this config binds each service name to its local target.
-let services_config = ($services | each {|s|
-    {
-      $"svc:($s.name)": {
-        endpoints: {
-          "tcp:443": $"http://($s.target)"
-        }
-      }
+let declared = ($services | each {|s| $"svc:($s.name)" })
+# The Nix list is the source of truth: serve configs accumulate in tailscaled
+# state, so anything currently configured but absent from the list is stale
+# and gets cleared before the declared services are (re)applied.
+let stale = (do { tailscale serve status --json } | complete)
+if $stale.exit_code != 0 {
+    print -e $"tailscale serve status --json failed: ($stale.stderr | str trim)"
+    exit $stale.exit_code
+}
+let live = ($stale.stdout | from json | get Services? | default {})
+for name in ($live | columns) {
+    if $name not-in $declared {
+        print $"Clearing stale config for ($name)"
+        tailscale serve clear $name
     }
-  } | reduce --fold {} {|entry, acc| $acc | merge $entry })
-let config_path = ([
-    $nu.temp-dir
-    "tailnet-services-serve.json"
-] | path join)
-{version: "0.0.1", services: $services_config} | to json | save --force $config_path
-set-config-until-up $config_path
-for s in $services { advertise-or-die $"svc:($s.name)" }
-let status_result = (do { tailscale serve status } | complete)
+}
+for s in $services {
+    # --https gives the TLS listener on the service VIP (browsers need it);
+    # the target stays plain http because that is what the local upstreams
+    # speak. The config-file format cannot express this combination, hence
+    # per-service CLI config instead of set-config.
+    serve-until-up ["--service" $"svc:($s.name)" "--https=443" $"http://($s.target)"]
+    advertise-or-die $"svc:($s.name)"
+}
+let status_result = (do { tailscale serve status --json } | complete)
 if $status_result.exit_code != 0 {
     exit $status_result.exit_code
 }
