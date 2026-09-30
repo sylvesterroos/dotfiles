@@ -38,7 +38,7 @@ let services_config = ($services | each {|s|
     {
       $"svc:($s.name)": {
         endpoints: {
-          "https:443": $"http://($s.target)"
+          "tcp:443": $"http://($s.target)"
         }
       }
     }
