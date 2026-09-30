@@ -24,6 +24,7 @@
     ./fail2ban.nix
     ./hardware-configuration.nix
     ./headscale.nix
+    ./headplane.nix
     ./home-assistant.nix
     ./immich.nix
     ./jellyfin.nix
