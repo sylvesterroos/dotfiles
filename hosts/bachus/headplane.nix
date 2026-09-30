@@ -1,5 +1,8 @@
 { config, ... }: {
-  sops.secrets."headplane/cookie_secret" = { };
+  sops.secrets."headplane/cookie_secret" = {
+    owner = "headscale";
+    group = "headscale";
+  };
 
   services.headplane = {
     enable = true;
