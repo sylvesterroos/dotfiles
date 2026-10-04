@@ -122,6 +122,13 @@
     plasma.enable = true;
     steam.enable = true;
     podman.enable = true;
+    headscaled = {
+      enable = true;
+      httpProxy = {
+        listen = "localhost:1055";
+        domain = "tailnet.sylvesterroos.com";
+      };
+    };
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
