@@ -26,6 +26,7 @@
     ./hardware-configuration.nix
     ./headscale.nix
     ./headplane.nix
+    ./headscaled.nix
     ./pocket-id.nix
     ./home-assistant.nix
     ./immich.nix

@@ -18,6 +18,9 @@
         magic_dns = true;
         base_domain = "tailnet.sylvesterroos.com";
         override_local_dns = false;
+        # Seeded at boot and rewritten by headscaled-publish once bachus has
+        # an address on the headscale tailnet.
+        extra_records_path = "/var/lib/headscale/extra-records.json";
       };
       oidc = {
         issuer = config.services.pocket-id.settings.APP_URL;
