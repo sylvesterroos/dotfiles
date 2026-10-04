@@ -41,7 +41,9 @@ if $stale.exit_code != 0 {
     print -e $"tailscale serve status --json failed: ($stale.stderr | str trim)"
     exit $stale.exit_code
 }
-let live = ($stale.stdout | from json | get Services? | default {})
+let live = (
+    $stale.stdout | from json | get Services? | default {}
+)
 for name in ($live | columns) {
     if $name not-in $declared {
         print $"Clearing stale config for ($name)"
@@ -58,7 +60,12 @@ for s in $services {
     # the target stays plain http because that is what the local upstreams
     # speak. The config-file format cannot express this combination, hence
     # per-service CLI config instead of set-config.
-    serve-until-up ["--service" $"svc:($s.name)" "--https=443" $"http://($s.target)"]
+    serve-until-up [
+        "--service"
+        $"svc:($s.name)"
+        "--https=443"
+        $"http://($s.target)"
+    ]
     advertise-or-die $"svc:($s.name)"
 }
 let status_result = (do { tailscale serve status --json } | complete)
