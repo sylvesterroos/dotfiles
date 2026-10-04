@@ -18,6 +18,7 @@
     # ./immich-backup.nix
     ./attic.nix
     ./caddy.nix
+    ./caddy-plugins.nix
     ./copyparty.nix
     ./ddns-updater.nix
     ./disk-config.nix

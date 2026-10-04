@@ -38,6 +38,12 @@ in
       secrets = {
         ddns-updater-config = { };
 
+        # Porkbun API credentials, used by Caddy's DNS-01 challenge to issue
+        # certificates for the headscale tailnet.
+        porkbun_api_key = { };
+
+        porkbun_secret_api_key = { };
+
         "vaultwarden/vaultwarden.env" = { };
 
         "nix-signing-keys/delta" = { };
