@@ -25,6 +25,7 @@
     ./hardware-configuration.nix
     ./headscale.nix
     ./headplane.nix
+    ./pocket-id.nix
     ./home-assistant.nix
     ./immich.nix
     ./jellyfin.nix
