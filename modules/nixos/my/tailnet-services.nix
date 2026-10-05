@@ -43,6 +43,11 @@ in
               type = types.str;
               description = "Local address the traffic is proxied to, e.g. 127.0.0.1:8096.";
             };
+            headscale = mkOption {
+              type = types.bool;
+              default = false;
+              description = "Also publish the service on the headscale tailnet.";
+            };
           };
         }
       );

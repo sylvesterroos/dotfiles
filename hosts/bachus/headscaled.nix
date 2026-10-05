@@ -24,10 +24,12 @@ let
   # Port of bachus's headscale address that serves the sites.
   publishedPort = 443;
 
-  # Hostname prefix → local upstream.
-  services = {
-    jellyfin = "127.0.0.1:8096";
-  };
+  # Hostname prefix → local upstream, for the services flagged `headscale`.
+  services = lib.listToAttrs (
+    map (s: lib.nameValuePair s.name s.target) (
+      lib.filter (s: s.headscale) config.my.tailnet-services.services
+    )
+  );
 
   recordsFile = config.services.headscale.settings.dns.extra_records_path;
   serverTag = "tag:server";

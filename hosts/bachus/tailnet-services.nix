@@ -15,6 +15,7 @@ in
     {
       name = "jellyfin";
       target = "127.0.0.1:8096";
+      headscale = true;
     }
     {
       name = "immich";
