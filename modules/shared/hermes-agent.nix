@@ -24,6 +24,7 @@ in
 {
   packages = [
     mv.tip.agent-browser
+    mv.tip.claude-code # Anthropic authentication
   ]
   ++ lib.optionals (cuaDriver != null) [
     cuaDriver
