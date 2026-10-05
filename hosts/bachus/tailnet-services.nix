@@ -62,8 +62,8 @@ in
       target = "127.0.0.1:8384";
     }
     {
-      name = "plausible";
-      target = "127.0.0.1:${toString config.services.plausible.server.port}";
+      name = "headplane";
+      target = "127.0.0.1:${toString config.services.headplane.settings.server.port}";
     }
   ];
 }

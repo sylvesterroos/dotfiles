@@ -19,7 +19,7 @@
       server = {
         host = "127.0.0.1";
         port = 9090;
-        base_url = "https://headplane.sylvesterroos.com";
+        base_url = "https://headplane.allosaurus-snapper.ts.net";
         cookie_secret_path = config.sops.secrets."headplane/cookie_secret".path;
       };
       # Same OIDC client as headscale: pocket-id derives `sub` from the user, so
@@ -34,11 +34,5 @@
         use_pkce = true;
       };
     };
-  };
-
-  services.caddy.virtualHosts."headplane.sylvesterroos.com" = {
-    extraConfig = ''
-      reverse_proxy 127.0.0.1:${toString config.services.headplane.settings.server.port}
-    '';
   };
 }
