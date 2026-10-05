@@ -8,13 +8,17 @@ with lib;
 let
   cfg = config.my.tailnet-services;
 
-  servicesJson = pkgs.writeText "tailnet-services.json" (
-    builtins.toJSON (
-      map (s: {
+  configJson = pkgs.writeText "tailnet-services.json" (
+    builtins.toJSON {
+      services = map (s: {
         name = s.name;
         target = s.target;
-      }) cfg.services
-    )
+      }) cfg.services;
+      listeners = map (l: {
+        port = l.port;
+        target = l.target;
+      }) cfg.listeners;
+    }
   );
 
   applyScript = pkgs.writers.writeNu "tailnet-services-apply" {
@@ -24,8 +28,8 @@ let
       ":"
       "${lib.makeBinPath [ config.services.tailscale.package ]}"
       "--set"
-      "SERVICES_JSON"
-      "${servicesJson}"
+      "CONFIG_JSON"
+      "${configJson}"
     ];
   } ./scripts/tailnet-services-apply.nu;
 in
@@ -59,9 +63,33 @@ in
         config on every boot and rebuild.
       '';
     };
+
+    listeners = mkOption {
+      type = types.listOf (
+        types.submodule {
+          options = {
+            port = mkOption {
+              type = types.port;
+              description = "HTTPS port on this node's own MagicDNS name.";
+            };
+            target = mkOption {
+              type = types.str;
+              description = "Local address the traffic is proxied to, e.g. 127.0.0.1:9119.";
+            };
+          };
+        }
+      );
+      default = [ ];
+      description = ''
+        HTTPS listeners on this node's own name (https://<host>.<tailnet>.ts.net:<port>),
+        terminated by tailscaled with the tailnet certificate. Use these for
+        apps that expect to live on the machine's hostname; use `services`
+        for apps that get a name of their own.
+      '';
+    };
   };
 
-  config = mkIf (cfg.services != [ ]) {
+  config = mkIf (cfg.services != [ ] || cfg.listeners != [ ]) {
     systemd.services.tailnet-services-apply = {
       description = "Apply declarative Tailscale Services serve config";
       wantedBy = [ "multi-user.target" ];

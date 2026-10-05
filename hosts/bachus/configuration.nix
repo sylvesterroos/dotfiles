@@ -113,10 +113,6 @@
     podman.enable = true;
     printing.enable = false;
     virtual-machines.enable = false;
-
-    security.openTCPPorts = [
-      9119 # Hermes Agent web dashboard
-    ];
   };
 
   my.postgresql.dbaUsers = [

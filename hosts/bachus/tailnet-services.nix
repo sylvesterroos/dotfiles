@@ -66,4 +66,22 @@ in
       target = "127.0.0.1:${toString config.services.headplane.settings.server.port}";
     }
   ];
+
+  # Hermes on https://bachus.allosaurus-snapper.ts.net. The ports follow the
+  # hermes-relay plugin's convention, so `hermes pair` detects the TLS
+  # listeners itself and advertises https/wss to the app.
+  my.tailnet-services.listeners = [
+    {
+      port = 10443;
+      target = "127.0.0.1:9119"; # dashboard + relay transport
+    }
+    {
+      port = 8642;
+      target = "127.0.0.1:8642"; # API server
+    }
+    {
+      port = 9119;
+      target = "127.0.0.1:9119"; # dashboard + relay transport
+    }
+  ];
 }
