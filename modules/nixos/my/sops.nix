@@ -9,7 +9,7 @@ with lib;
 let
   cfg = config.my.sops-nix;
   sopsShared = import ../../shared/sops.nix {
-    inherit lib pkgs inputs;
+    inherit lib pkgs;
   };
 in
 {
