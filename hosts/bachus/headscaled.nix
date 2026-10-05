@@ -59,6 +59,12 @@ in
           src = [ "autogroup:member" ];
           dst = [ "${serverTag}:${toString publishedPort}" ];
         }
+        # Skyrim Together
+        {
+          action = "accept";
+          src = [ "fred@" ];
+          dst = [ "sylvester@:10578" ];
+        }
       ];
     };
   };
