@@ -1,5 +1,5 @@
 # This file defines overlays
-{ inputs, ... }:
+{ inputs, mv, ... }:
 let
   patchedNixpkgsStableFor =
     system: nixpkgs:
@@ -24,6 +24,13 @@ in
     }
     # This one brings our custom packages from the 'pkgs' directory
     // (import ../pkgs final.pkgs);
+
+  # Serves the package groups in ../pins.nix from their pinned revisions.
+  pins =
+    final: prev:
+    prev.lib.concatMapAttrs (
+      _: group: prev.lib.genAttrs group.packages (name: (mv.at group.rev).${name})
+    ) (import ../pins.nix).nixpkgs;
 
   # This one contains whatever you want to overlay
   # You can change versions, add patches, set compilation flags, anything really.

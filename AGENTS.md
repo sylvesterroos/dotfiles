@@ -4,6 +4,10 @@
 - Build NixOS config: `nh os build` (hosts: creek, delta, bachus)
 - Build home-manager config: `nh home build`
 - Evaluate a module: `nix eval .#nixosConfigurations.<host>.config.<option>`
+- Update inputs: `nu update.nu` — updates `flake.lock` and reports which `pins.nix` entries can be dropped
+
+## Pins
+`pins.nix` holds every package held back because it fails to build upstream, with the reason and upstream link. Modules use plain package names; the `pins` overlay swaps in the pinned build.
 
 ## Architecture
 - `flake.nix` — entry point; defines inputs, NixOS/home-manager configurations, overlays, and custom packages

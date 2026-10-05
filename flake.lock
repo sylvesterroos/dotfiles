@@ -543,16 +543,17 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1791013443,
-        "narHash": "sha256-7dO+dUme3ArHMWzVOp0ExPwCNSxI9r8dCg3yQWe4COQ=",
+        "lastModified": 1790121051,
+        "narHash": "sha256-O5a0yhmI8PsoLvcijtCQog94eCJTRnQTXkI3BT8dryI=",
         "owner": "jagrat7",
         "repo": "linux-wallpaper-engine",
-        "rev": "1166a1a29aa2fae79561abf329793c03529534f5",
+        "rev": "27cb7f959a1ca1221526b3b436deeffa6c3a683b",
         "type": "github"
       },
       "original": {
         "owner": "jagrat7",
         "repo": "linux-wallpaper-engine",
+        "rev": "27cb7f959a1ca1221526b3b436deeffa6c3a683b",
         "type": "github"
       }
     },

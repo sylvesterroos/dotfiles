@@ -43,7 +43,8 @@
     nix-alien.url = "github:thiagokokada/nix-alien";
     nix-flatpak.url = "https://flakehub.com/f/gmodena/nix-flatpak/0.*";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    linux-wallpaper-engine.url = "github:jagrat7/linux-wallpaper-engine";
+    # Pinned; see pins.nix.
+    linux-wallpaper-engine.url = "github:jagrat7/linux-wallpaper-engine/27cb7f959a1ca1221526b3b436deeffa6c3a683b";
 
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
@@ -117,7 +118,7 @@
       });
 
       # Your custom packages and modifications, exported as overlays
-      overlays = import ./overlays { inherit inputs; };
+      overlays = import ./overlays { inherit inputs mv; };
       # Reusable nixos modules you might want to export
       # These are usually stuff you would upstream into nixpkgs
       nixosModules = import ./modules/nixos;

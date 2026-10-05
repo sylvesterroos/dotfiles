@@ -19,6 +19,7 @@
     overlays = [
       outputs.overlays.additions
       outputs.overlays.modifications
+      outputs.overlays.pins
     ];
     config = {
       allowUnfree = true;
