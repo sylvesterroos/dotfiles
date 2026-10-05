@@ -1,7 +1,7 @@
 { config, lib, ... }:
 with lib;
 let
-  atticShared = import ../../modules/shared/attic.nix { };
+  atticShared = import ../../legacy/shared/attic.nix { };
 in
 {
   sops.secrets."atticd/rs256_secret" = { };

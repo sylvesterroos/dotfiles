@@ -1,22 +1,6 @@
 # This file defines overlays
 { inputs, mv, ... }:
-let
-  patchedNixpkgsStableFor =
-    system: nixpkgs:
-    (import nixpkgs { inherit system; }).applyPatches {
-      name = "nixpkgs-patched";
-      src = nixpkgs;
-      patches = [
-        ./patches/immich-postgres-unix-socket-port.patch
-      ];
-    };
-
-in
 {
-  # TODO: remove once PR is merged
-  # https://github.com/NixOS/nixpkgs/pull/481056
-  patched-nixpkgs-stable = patchedNixpkgsStableFor;
-
   additions =
     final: prev:
     {

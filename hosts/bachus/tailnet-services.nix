@@ -3,7 +3,7 @@
   ...
 }:
 let
-  atticShared = import ../../modules/shared/attic.nix { };
+  atticShared = import ../../legacy/shared/attic.nix { };
 in
 {
   # One-time prerequisites outside Nix (Tailscale admin console):
