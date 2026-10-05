@@ -7,4 +7,5 @@ pkgs: {
   omawrite = pkgs.callPackage ./omawrite { };
   # SDDM with PR #2204 backport (Wayland VT fix, upstream bug #2129)
   sddm-vt-fix = pkgs.callPackage ./sddm-vt-fix { };
+  playkeeper = pkgs.callPackage ./playkeeper { };
 }
