@@ -20,8 +20,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    nixpkgs.config.permittedInsecurePackages = [ "radicle-node-1.10.3" ];
-
     warnings = [
       "Radicle private repositories are insecure: node traffic is neither encrypted nor authenticated. Use public repositories only."
     ];

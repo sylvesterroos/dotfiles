@@ -15,17 +15,6 @@
     ./prism-launcher.nix
   ];
 
-  nixpkgs = {
-    overlays = [
-      outputs.overlays.additions
-      outputs.overlays.modifications
-      outputs.overlays.pins
-    ];
-    config = {
-      allowUnfree = true;
-    };
-  };
-
   programs.home-manager.enable = true;
 
   home = {

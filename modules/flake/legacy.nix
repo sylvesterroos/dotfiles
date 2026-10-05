@@ -1,8 +1,13 @@
 # Temporary bridge: builds the hosts from the pre-dendritic files under
 # legacy/ and hosts/. Shrinks as features move into modules/; deleted at the end.
-{ inputs, mv, ... }:
+{
+  config,
+  inputs,
+  mv,
+  ...
+}:
 let
-  inherit (inputs) self home-manager;
+  inherit (inputs) self;
   system = "x86_64-linux";
   latestStable = inputs.nixpkgs.lib.last mv.releases;
   specialArgs = {
@@ -25,32 +30,27 @@ let
     };
 
   nixos =
-    selector: extra: host:
+    selector: extra: host: roles:
     (mv.flakeAt selector).lib.nixosSystem {
       inherit system;
       specialArgs = specialArgs // extra;
-      modules = [ ../../hosts/${host}/configuration.nix ];
+      modules = [ ../../hosts/${host}/configuration.nix ] ++ roles;
     };
 
-  home =
-    host:
-    home-manager.lib.homeManagerConfiguration {
-      pkgs = mv.tip;
-      extraSpecialArgs = specialArgs;
-      modules = [ ../../hosts/${host}/home-manager/home.nix ];
-    };
+  desktop = host: [
+    config.flake.modules.nixos.desktop
+    {
+      home-manager.extraSpecialArgs = specialArgs;
+      home-manager.users.sylvester.imports = [ ../../hosts/${host}/home-manager/home.nix ];
+    }
+  ];
 in
 {
   flake = {
     nixosConfigurations = {
-      creek = nixos "tip" { } "creek";
-      delta = nixos "tip" { } "delta";
-      bachus = nixos latestStable { inherit patchedNixpkgsStable; } "bachus";
-    };
-
-    homeConfigurations = {
-      "sylvester@creek" = home "creek";
-      "sylvester@delta" = home "delta";
+      creek = nixos "tip" { } "creek" (desktop "creek");
+      delta = nixos "tip" { } "delta" (desktop "delta");
+      bachus = nixos latestStable { inherit patchedNixpkgsStable; } "bachus" [ ];
     };
   };
 }
