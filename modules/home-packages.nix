@@ -42,6 +42,7 @@
           pods
           qbittorrent
           sgdboop
+          spotifast
           signal-desktop
           stablePkgs.calibre
           wl-clipboard
