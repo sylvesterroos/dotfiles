@@ -12,9 +12,7 @@ let
   latestStable = inputs.nixpkgs.lib.last mv.releases;
   specialArgs = {
     inherit inputs mv system;
-    outputs = self // {
-      homeManagerModules.my = import ../../legacy/home-manager/my;
-    };
+    outputs = self;
   };
 
   # TODO: remove once https://github.com/NixOS/nixpkgs/pull/481056 is merged

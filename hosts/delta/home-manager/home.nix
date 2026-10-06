@@ -8,7 +8,6 @@
 }:
 {
   imports = [
-    outputs.homeManagerModules.my
 
     # ./plasma-settings.nix
     ./packages.nix
@@ -50,12 +49,6 @@
   ###
   # My
   ###
-
-  my = {
-    bash.alternativeShell = "nu";
-    radicle.alias = "sylvesterroos-delta";
-    syncthing-client.enable = true;
-  };
 
   home.stateVersion = "25.05";
 }

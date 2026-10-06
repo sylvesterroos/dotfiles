@@ -1,20 +1,5 @@
 {
-  lib,
-  config,
-  ...
-}:
-with lib;
-let
-  cfg = config.my.syncthing-client;
-in
-{
-  options.my.syncthing-client = {
-    enable = mkEnableOption "syncthing-client" // {
-      default = false;
-    };
-  };
-
-  config = mkIf cfg.enable {
+  flake.modules.homeManager.desktop = {
     services.syncthing = {
       enable = true;
       extraOptions = [ ];
