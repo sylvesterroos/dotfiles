@@ -1,6 +1,6 @@
 {
   flake.modules.homeManager.base =
-    { pkgs, config, ... }:
+    { pkgs, ... }:
     let
 
       # Bake the `devenv hook nu` output into the store so we don't regenerate it

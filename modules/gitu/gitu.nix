@@ -1,6 +1,6 @@
 {
   flake.modules.homeManager.base =
-    { config, pkgs, ... }:
+    { pkgs, ... }:
     {
       home.packages = with pkgs; [
         gitu
