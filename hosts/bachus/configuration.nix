@@ -100,10 +100,10 @@
   my = {
     agents.enable = true;
     hermes-agent.enable = true;
-    nh.flake = "/srv/nixos";
     path.enable = true;
-    podman.enable = true;
   };
+
+  programs.nh.flake = "/srv/nixos";
 
   my.postgresql.dbaUsers = [
     { userName = "sylvester"; }

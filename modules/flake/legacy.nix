@@ -34,7 +34,11 @@ let
     (mv.flakeAt selector).lib.nixosSystem {
       inherit system;
       specialArgs = specialArgs // extra;
-      modules = [ ../../hosts/${host}/configuration.nix ] ++ roles;
+      modules = [
+        ../../hosts/${host}/configuration.nix
+        config.flake.modules.nixos.base
+      ]
+      ++ roles;
     };
 
   desktop = host: [
@@ -49,7 +53,7 @@ in
   flake = {
     nixosConfigurations = {
       creek = nixos "tip" { } "creek" (desktop "creek");
-      delta = nixos "tip" { } "delta" (desktop "delta");
+      delta = nixos "tip" { } "delta" (desktop "delta" ++ [ config.flake.modules.nixos.livebook ]);
       bachus = nixos latestStable { inherit patchedNixpkgsStable; } "bachus" [ ];
     };
   };

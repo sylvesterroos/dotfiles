@@ -120,7 +120,6 @@
   ###
 
   my = {
-    podman.enable = true;
     headscaled = {
       enable = true;
       httpProxy = {

@@ -115,8 +115,6 @@
   ###
 
   my = {
-    livebook.enable = true;
-    podman.enable = true;
   };
 
   zramSwap = {

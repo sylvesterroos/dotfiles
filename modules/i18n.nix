@@ -1,20 +1,5 @@
 {
-  config,
-  lib,
-  ...
-}:
-with lib;
-let
-  cfg = config.my.i18n;
-in
-{
-  options.my.i18n = {
-    enable = mkEnableOption "internationalisation settings" // {
-      default = true;
-    };
-  };
-
-  config = mkIf cfg.enable {
+  flake.modules.nixos.base = {
     i18n.defaultLocale = "en_US.UTF-8";
 
     # en_IE is used as a proxy for en-NL (which doesn't exist as a locale).
