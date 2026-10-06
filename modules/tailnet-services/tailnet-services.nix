@@ -33,7 +33,7 @@
           "CONFIG_JSON"
           "${configJson}"
         ];
-      } ./_scripts/tailnet-services-apply.nu;
+      } ./tailnet-services-apply.nu;
     in
     {
       options.my.tailnet-services = {

@@ -24,6 +24,7 @@ Home-manager runs as a NixOS module on the desktop hosts; home modules read the 
 
 ## Code Style
 - All Nix files formatted with `nixfmt` (the formatter declared in the flake)
+- A module that reads its own files (configs, scripts, patches) lives in a folder named after it, together with those files
 - Putting a feature in a role is its switch; enable options are for features a host picks individually
 - Options (`my.<name>`) exist only where a host sets a value
 - Each feature declares the sops secrets it reads; never commit plaintext secrets

@@ -5,7 +5,7 @@ let
   patched = (import nixpkgs { system = "x86_64-linux"; }).applyPatches {
     name = "nixpkgs-patched";
     src = nixpkgs;
-    patches = [ ../../../overlays/patches/immich-postgres-unix-socket-port.patch ];
+    patches = [ ./postgres-unix-socket-port.patch ];
   };
 in
 {
