@@ -55,10 +55,6 @@
     bash.alternativeShell = "nu";
     radicle.alias = "sylvesterroos-delta";
     syncthing-client.enable = true;
-    attic-client = {
-      enable = true;
-      token = "attic/tokens/delta";
-    };
   };
 
   home.stateVersion = "25.05";

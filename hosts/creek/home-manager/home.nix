@@ -66,10 +66,6 @@
     bash.alternativeShell = "nu";
     radicle.alias = "sylvesterroos-creek";
     syncthing-client.enable = true;
-    attic-client = {
-      enable = true;
-      token = "attic/tokens/creek";
-    };
   };
 
   home.stateVersion = "23.05";

@@ -2,9 +2,6 @@
   config,
   ...
 }:
-let
-  atticShared = import ../../legacy/shared/attic.nix { };
-in
 {
   # One-time prerequisites outside Nix (Tailscale admin console):
   #   1. Tag bachus (e.g. tag:server) — service hosts must be tagged nodes.
@@ -52,10 +49,6 @@ in
     {
       name = "files";
       target = "127.0.0.1:3923";
-    }
-    {
-      name = "attic";
-      target = "127.0.0.1:${toString atticShared.port}";
     }
     {
       name = "syncthing";

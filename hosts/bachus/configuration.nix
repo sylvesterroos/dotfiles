@@ -16,7 +16,6 @@
     inputs.sops-nix.nixosModules.sops
 
     # ./immich-backup.nix
-    ./attic.nix
     ./caddy.nix
     ./caddy-plugins.nix
     ./copyparty.nix
@@ -98,9 +97,6 @@
   ###
 
   my = {
-    agents.enable = true;
-    hermes-agent.enable = true;
-    path.enable = true;
   };
 
   programs.nh.flake = "/srv/nixos";

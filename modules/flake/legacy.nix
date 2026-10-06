@@ -54,7 +54,10 @@ in
     nixosConfigurations = {
       creek = nixos "tip" { } "creek" (desktop "creek");
       delta = nixos "tip" { } "delta" (desktop "delta" ++ [ config.flake.modules.nixos.livebook ]);
-      bachus = nixos latestStable { inherit patchedNixpkgsStable; } "bachus" [ ];
+      bachus = nixos latestStable { inherit patchedNixpkgsStable; } "bachus" [
+        config.flake.modules.nixos.without-home-manager
+        config.flake.modules.nixos.attic-server
+      ];
     };
   };
 }
