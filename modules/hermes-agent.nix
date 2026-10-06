@@ -3,23 +3,25 @@
 let
   env =
     { lib, pkgs }:
+    let
+      system = pkgs.stdenv.hostPlatform.system;
+      # The plugin must be built for the interpreter Hermes runs, which comes
+      # from Hermes' own nixpkgs; extraPythonPackages drops anything else.
+      hermesPkgs = inputs.hermes-agent.inputs.nixpkgs.legacyPackages.${system};
+      hermes = inputs.hermes-agent.packages.${system}.default.override {
+        extraPythonPackages = [ (hermesPkgs.callPackage ../pkgs/hermes-plugin-hindsight { }) ];
+      };
+    in
     {
       packages = [
+        hermes
+        # Built from the same package, so the desktop app runs this hermes.
+        hermes.hermesDesktop
         mv.tip.agent-browser
         mv.tip.claude-code # Anthropic authentication
-        inputs.cua.packages.${pkgs.stdenv.hostPlatform.system}.cua-driver
+        inputs.cua.packages.${system}.cua-driver
         pkgs.imagemagick
         pkgs.at-spi2-core
-        # nix profile add refuses to replace a same-named element, so remove
-        # first; re-running would otherwise pile up `-1`-suffixed duplicates.
-        (pkgs.writers.writeNuBin "hermes-agent-update" ''
-          let tag = (http get https://api.github.com/repos/NousResearch/hermes-agent/releases/latest | get tag_name)
-          print $"Updating hermes-agent to ($tag)"
-          try { nix profile remove hermes-agent }
-          try { nix profile remove desktop }
-          nix profile add $"github:NousResearch/hermes-agent/($tag)#packages.x86_64-linux.default"
-          nix profile add $"github:NousResearch/hermes-agent/($tag)#packages.x86_64-linux.desktop"
-        '')
       ];
 
       sessionVariables = {
