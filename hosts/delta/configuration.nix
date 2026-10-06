@@ -10,7 +10,6 @@
 }:
 {
   imports = [
-    outputs.nixosModules.my
 
     inputs.determinate.nixosModules.default
     inputs.nixos-hardware.nixosModules.gigabyte-b550

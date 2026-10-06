@@ -13,7 +13,6 @@ let
   specialArgs = {
     inherit inputs mv system;
     outputs = self // {
-      nixosModules.my = import ../../legacy/nixos/my;
       homeManagerModules.my = import ../../legacy/home-manager/my;
     };
   };

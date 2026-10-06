@@ -8,7 +8,6 @@
 }:
 {
   imports = [
-    outputs.nixosModules.my
 
     inputs.copyparty.nixosModules.default
     inputs.determinate.nixosModules.default
