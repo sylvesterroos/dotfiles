@@ -1,16 +1,7 @@
-# Publishes selected bachus services on the headscale tailnet. bachus is the
-# only node there offering anything: headscaled forwards port 443 of its
-# headscale address to a Caddy listener on loopback, and Caddy routes each
-# published hostname to its service. That listener hosts nothing else, so the
-# public sites and every other port stay out of reach of the headscale tailnet.
-#
-# The ACL policy grants every headscale user port 443 on nodes carrying the
-# server tag, and pocket-id decides who becomes a headscale user. Only an admin
-# can apply the tag; headscaled-publish applies it to bachus's headscaled node.
-#
-# Each hostname resolves to bachus's headscale address through a MagicDNS
-# record. headscale assigns the address on first login, so headscaled-publish
-# writes the records once headscaled is up. Until then they point at loopback.
+# Publishes selected Bachus services through a loopback Caddy listener and
+# MagicDNS records. The policy grants members HTTPS access to those services,
+# and grants Sylvester's devices and Bachus SSH access to the tagged Deck.
+# Bachus can also reach the Deck's HTTP service on port 8787 through its proxy.
 {
   flake.modules.nixos.bachus =
     {
@@ -48,24 +39,65 @@
       json = name: value: pkgs.writeText name (builtins.toJSON value);
     in
     {
-      my.headscaled.enable = true;
+      my.headscaled = {
+        enable = true;
+        httpProxy = {
+          listen = "localhost:1055";
+          inherit domain;
+        };
+      };
 
-      # Only an admin applies the server tag, so no user can claim it.
+      # An admin assigns the server and Deck identities.
       services.headscale.settings.policy = {
         mode = "file";
         path = json "policy.hujson" {
-          tagOwners.${serverTag} = [ ];
+          tagOwners = {
+            ${serverTag} = [ ];
+            "tag:deck" = [ ];
+          };
           acls = [
             {
               action = "accept";
-              src = [ "autogroup:member" ];
+              src = [
+                "autogroup:member"
+                "tag:deck"
+              ];
               dst = [ "${serverTag}:${toString publishedPort}" ];
+            }
+            {
+              action = "accept";
+              proto = "tcp";
+              src = [
+                "sylvester@"
+                serverTag
+              ];
+              dst = [ "tag:deck:22" ];
+            }
+            {
+              action = "accept";
+              proto = "tcp";
+              src = [ serverTag ];
+              dst = [ "tag:deck:8787" ];
             }
             # Skyrim Together
             {
               action = "accept";
               src = [ "fred@" ];
-              dst = [ "sylvester@:10578" ];
+              dst = [
+                "sylvester@:10578"
+                "tag:deck:10578"
+              ];
+            }
+          ];
+          ssh = [
+            {
+              action = "accept";
+              src = [
+                "sylvester@"
+                serverTag
+              ];
+              dst = [ "tag:deck" ];
+              users = [ "deck" ];
             }
           ];
         };
