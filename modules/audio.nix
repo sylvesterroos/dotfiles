@@ -1,0 +1,18 @@
+{
+  flake.modules.nixos.desktop =
+    { pkgs, ... }:
+    {
+      services.pulseaudio.enable = false;
+      security.rtkit.enable = true;
+      services.pipewire = {
+        enable = true;
+        alsa.enable = true;
+        alsa.support32Bit = true;
+        pulse.enable = true;
+      };
+
+      environment.systemPackages = [ pkgs.easyeffects ];
+
+      users.users.sylvester.extraGroups = [ "audio" ];
+    };
+}

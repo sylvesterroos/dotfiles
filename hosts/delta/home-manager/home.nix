@@ -53,7 +53,6 @@
 
   my = {
     bash.alternativeShell = "nu";
-    plasma.enable = true;
     radicle.alias = "sylvesterroos-delta";
     syncthing-client.enable = true;
     attic-client = {

@@ -120,8 +120,6 @@
   ###
 
   my = {
-    plasma.enable = true;
-    steam.enable = true;
     podman.enable = true;
     headscaled = {
       enable = true;

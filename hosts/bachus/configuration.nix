@@ -99,20 +99,10 @@
 
   my = {
     agents.enable = true;
-    appimage.enable = false;
-    audio.enable = false;
-    avahi.enable = false;
-    brave-browser.enable = false;
     hermes-agent.enable = true;
-    keyboard.enable = false;
-    logiops.enable = false;
     nh.flake = "/srv/nixos";
-    nixos-flatpak.enable = false;
-    non-nix-apps.enable = false;
     path.enable = true;
     podman.enable = true;
-    printing.enable = false;
-    virtual-machines.enable = false;
   };
 
   my.postgresql.dbaUsers = [

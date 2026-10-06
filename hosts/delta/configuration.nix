@@ -115,10 +115,8 @@
   ###
 
   my = {
-    plasma.enable = true;
     livebook.enable = true;
     podman.enable = true;
-    steam.enable = true;
   };
 
   zramSwap = {

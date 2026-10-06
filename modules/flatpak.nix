@@ -1,27 +1,15 @@
+{ inputs, ... }:
 {
-  pkgs,
-  lib,
-  inputs,
-  config,
-  ...
-}:
-with lib;
-let
-  cfg = config.my.nix-flatpak;
-in
-{
-  imports = [
-    inputs.nix-flatpak.homeManagerModules.nix-flatpak
-  ];
-
-  options.my.nix-flatpak = {
-    enable = mkEnableOption "nix-flatpak" // {
-      default = true;
-    };
+  flake.modules.nixos.desktop = {
+    services.flatpak.enable = true;
   };
 
-  config = mkIf cfg.enable {
-    services.flatpak = mkIf pkgs.stdenv.hostPlatform.isLinux {
+  flake.modules.homeManager.desktop = {
+    imports = [
+      inputs.nix-flatpak.homeManagerModules.nix-flatpak
+    ];
+
+    services.flatpak = {
       enable = true;
       packages = [
         "com.github.iwalton3.jellyfin-media-player"
