@@ -10,6 +10,8 @@
       postgresPort = toString config.services.postgresql.settings.port;
     in
     {
+      sops.secrets.plausible-secret-key = { };
+
       services.plausible = {
         enable = true;
         # Plausible's runtime config ignores the URL port when DATABASE_URL uses a

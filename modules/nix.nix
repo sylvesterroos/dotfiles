@@ -19,6 +19,8 @@
         ];
       };
 
+      sops.secrets."nix-access-tokens/github.com" = { };
+
       sops.templates."nix-access-tokens.conf".content = ''
         access-tokens = github.com=${config.sops.placeholder."nix-access-tokens/github.com"}
       '';

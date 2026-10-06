@@ -2,6 +2,8 @@
   flake.modules.nixos.bachus =
     { config, ... }:
     {
+      sops.secrets.ddns-updater-config = { };
+
       services.ddns-updater = {
         enable = true;
         environment = {

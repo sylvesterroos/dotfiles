@@ -16,6 +16,9 @@
       # The Porkbun credentials used by the DNS-01 challenge.
       services.caddy.environmentFile = config.sops.templates."porkbun.env".path;
 
+      sops.secrets.porkbun_api_key = { };
+      sops.secrets.porkbun_secret_api_key = { };
+
       sops.templates."porkbun.env" = {
         content = ''
           PORKBUN_API_TOKEN=${config.sops.placeholder.porkbun_api_key}

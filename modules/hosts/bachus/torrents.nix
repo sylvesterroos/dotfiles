@@ -33,6 +33,11 @@
 
       networking.firewall.checkReversePath = "loose";
 
+      sops.secrets."wireguard/protonvpn_nl/private_key" = {
+        owner = "systemd-network";
+        group = "systemd-network";
+      };
+
       networking.wg-quick.interfaces.wg0 = {
         privateKeyFile = config.sops.secrets."wireguard/protonvpn_nl/private_key".path;
         address = [ "10.2.0.2/32" ];

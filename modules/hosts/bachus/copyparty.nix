@@ -19,6 +19,11 @@
       };
     in
     {
+      sops.secrets."copyparty/sylvester-password" = {
+        owner = "copyparty";
+        group = "copyparty";
+      };
+
       services.copyparty = {
         enable = true;
 

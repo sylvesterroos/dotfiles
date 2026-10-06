@@ -12,8 +12,6 @@
         fzf
         inetutils
         jq
-        logiops
-        morewaita-icon-theme
         neovim
         ripgrep
         termscp

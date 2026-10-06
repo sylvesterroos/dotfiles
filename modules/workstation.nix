@@ -13,6 +13,7 @@
 
       networking.firewall.enable = false;
 
+      sops.secrets."nix-signing-keys/${config.networking.hostName}" = { };
       nix.settings.secret-key-files = [
         config.sops.secrets."nix-signing-keys/${config.networking.hostName}".path
       ];
