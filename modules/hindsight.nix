@@ -74,7 +74,7 @@
           HINDSIGHT_API_HOST = "127.0.0.1";
           HINDSIGHT_CP_HOSTNAME = "127.0.0.1";
           HINDSIGHT_API_LLM_PROVIDER = "claude-code";
-          HINDSIGHT_API_LLM_MODEL = "claude-haiku-4-5";
+          HINDSIGHT_API_LLM_MODEL = "claude-haiku-5-5";
           # Gather facts between scheduled consolidation runs.
           HINDSIGHT_API_ENABLE_AUTO_CONSOLIDATION = "false";
           HINDSIGHT_API_CONSOLIDATION_LLM_BATCH_SIZE = "16";
