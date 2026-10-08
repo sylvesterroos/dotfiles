@@ -3,9 +3,9 @@
 {
   callPackage,
   fetchFromGitHub,
-  python312Packages,
+  pythonPackages,
 }:
-python312Packages.buildPythonPackage {
+pythonPackages.buildPythonPackage {
   pname = "hermes-plugin-hindsight";
   version = "1.2.1-unstable-2026-10-07";
   pyproject = true;
@@ -44,8 +44,8 @@ python312Packages.buildPythonPackage {
     EOF
   '';
 
-  build-system = [ python312Packages.setuptools ];
-  dependencies = [ (callPackage ../hindsight-client { }) ];
+  build-system = [ pythonPackages.setuptools ];
+  dependencies = [ (callPackage ../hindsight-client { inherit pythonPackages; }) ];
 
   # Imports Hermes modules, which only the Hermes venv provides.
   dontCheckRuntimeDeps = true;

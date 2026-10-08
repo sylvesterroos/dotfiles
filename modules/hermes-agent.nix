@@ -8,8 +8,13 @@ let
       # The plugin must be built for the interpreter Hermes runs, which comes
       # from Hermes' own nixpkgs; extraPythonPackages drops anything else.
       hermesPkgs = inputs.hermes-agent.inputs.nixpkgs.legacyPackages.${system};
-      hermes = inputs.hermes-agent.packages.${system}.default.override {
-        extraPythonPackages = [ (hermesPkgs.callPackage ../pkgs/hermes-plugin-hindsight { }) ];
+      hermesBase = inputs.hermes-agent.packages.${system}.default;
+      hermes = hermesBase.override {
+        extraPythonPackages = [
+          (hermesPkgs.callPackage ../pkgs/hermes-plugin-hindsight {
+            pythonPackages = hermesBase.python.pkgs;
+          })
+        ];
       };
     in
     {
