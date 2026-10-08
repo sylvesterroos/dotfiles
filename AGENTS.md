@@ -22,6 +22,21 @@ Dendritic layout on flake-parts: every `.nix` file under `modules/` is a flake-p
 
 Home-manager runs as a NixOS module on the desktop hosts; home modules read the system through `osConfig`. Bachus runs without home-manager and gets its user tools from `flake.modules.nixos.without-home-manager`.
 
+## Service Sources
+`serviceFrom`, supplied as a flake-parts module argument, selects a service's NixOS module and package from one package set. Its source is resolved from the flake root. Import its result into the host module:
+
+```nix
+imports = [
+  (serviceFrom {
+    pkgs = mv.tip;
+    name = "immich";
+    module = "services/web-apps/immich.nix";
+  })
+];
+```
+
+Keep service settings in the host module. Test the unstable Immich module and package against the stable NixOS base with `nix eval --extra-experimental-features pipe-operators --impure --json --file tests/default.nix`.
+
 ## Code Style
 - All Nix files formatted with `nixfmt` (the formatter declared in the flake)
 - A module that reads its own files (configs, scripts, patches) lives in a folder named after it, together with those files

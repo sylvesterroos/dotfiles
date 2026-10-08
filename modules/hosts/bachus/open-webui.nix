@@ -1,11 +1,22 @@
-{ mv, ... }:
+{
+  mv,
+  serviceFrom,
+  ...
+}:
 {
   flake.modules.nixos.bachus =
     { ... }:
     {
+      imports = [
+        (serviceFrom {
+          pkgs = mv.tip;
+          name = "open-webui";
+          module = "services/misc/open-webui.nix";
+        })
+      ];
+
       services.open-webui = {
         enable = true;
-        package = mv.tip.open-webui;
         port = 3000;
         host = "127.0.0.1";
         openFirewall = false;

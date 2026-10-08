@@ -11,6 +11,8 @@
     "aarch64-darwin"
   ];
 
+  _module.args.serviceFrom = import "${inputs.self}/lib/service-from.nix";
+
   # The one multiverse instance every host and user resolves packages from, so
   # a selector means the same package set everywhere.
   _module.args.mv = inputs.multiverse.lib.mkMultiverse {
