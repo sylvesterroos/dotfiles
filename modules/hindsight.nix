@@ -132,6 +132,7 @@
       };
 
       systemd.timers.hindsight-consolidate = {
+        enable = false;
         wantedBy = [ "timers.target" ];
         timerConfig = {
           OnCalendar = "*:0/30";
