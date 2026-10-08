@@ -8,8 +8,8 @@
       containers.homeassistant = {
         volumes = [ "home-assistant:/config" ];
         environment.TZ = "Europe/Amsterdam";
-        pull = "newer";
         image = "ghcr.io/home-assistant/home-assistant:stable";
+        labels."io.containers.autoupdate" = "registry";
         extraOptions =
           let
             zigbeeDongleDevice = "/dev/serial/by-id/usb-Itead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_V2_62e4d8598c12f011b2b8fd13773d9da9-if00-port0";

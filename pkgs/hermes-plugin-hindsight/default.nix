@@ -7,14 +7,15 @@
 }:
 python312Packages.buildPythonPackage {
   pname = "hermes-plugin-hindsight";
-  version = "1.2.1";
+  version = "1.2.1-unstable-2026-10-07";
   pyproject = true;
 
+  # Includes ordinary memory-write mirroring and recall relevance filtering.
   src = fetchFromGitHub {
     owner = "vectorize-io";
     repo = "hindsight";
-    tag = "integrations/hermes/v1.2.1";
-    hash = "sha256-L5HjVF64foSslizP6FPvEcnzorK4LY78YnuuP8rfEcA=";
+    rev = "ea5ab3034ceb1fed601950ec8996c69363c0b0b6";
+    hash = "sha256-STVPvTfuVbkvMssaVeSLg1h6XBbGNXts5jlXb4V8RVI=";
   };
   sourceRoot = "source/hindsight-integrations/hermes";
 

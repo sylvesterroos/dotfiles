@@ -42,6 +42,7 @@
       };
 
       environment.sessionVariables.PODMAN_COMPOSE_WARNING_LOGS = "false";
+      systemd.timers.podman-auto-update.wantedBy = [ "timers.target" ];
       environment.systemPackages = with pkgs; [ podman-compose ];
     };
 }
