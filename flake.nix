@@ -76,6 +76,13 @@
 
     cua.url = "github:trycua/cua";
 
+    # Fork carrying NateSavage/pznix#1 (Mod IDs from mod.info); return to
+    # github:NateSavage/pznix once it merges.
+    pznix = {
+      url = "github:sylvesterroos/pznix/mod-info-ids";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # A release tag; update by moving the tag. Follows its own nixpkgs so
     # hermes-agent.cachix.org serves the build.
     hermes-agent.url = "github:NousResearch/hermes-agent/v0.21.6";

@@ -1155,6 +1155,27 @@
         "type": "github"
       }
     },
+    "pznix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791535116,
+        "narHash": "sha256-1oMVWjUQTY8tZ6+EnG/Y1P3ruiDlZS/lqWkCeXUP1GA=",
+        "owner": "sylvesterroos",
+        "repo": "pznix",
+        "rev": "dd2ab2ca57ea095457aad8a1f23e2c059ee20b9c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sylvesterroos",
+        "ref": "mod-info-ids",
+        "repo": "pznix",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "copyparty": "copyparty",
@@ -1173,6 +1194,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_8",
         "plasma-manager": "plasma-manager",
+        "pznix": "pznix",
         "sops-nix": "sops-nix",
         "sylvesterroos-com": "sylvesterroos-com",
         "treefmt-nix": "treefmt-nix_3",

@@ -88,6 +88,17 @@
                 "tag:deck:10578"
               ];
             }
+            # Project Zomboid
+            {
+              action = "accept";
+              proto = "udp";
+              src = [ "autogroup:member" ];
+              dst =
+                let
+                  ports = config.services.pznix.servers.zomboid.ports;
+                in
+                map (port: "${serverTag}:${toString port}") ([ ports.game ] ++ map (p: p.port) ports.extra);
+            }
           ];
           ssh = [
             {
