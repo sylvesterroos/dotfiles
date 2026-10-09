@@ -30,11 +30,17 @@
           "2313387159" # Better Sorting
           "3426448380" # Immersive Suicide
           "2956146279" # Rain Cleans Blood
+          "3814073243" # Zombie Visibility Fix + Stair-O-Vision
+          "2875848298" # Common Sense
         ];
 
         extraIniSettings = {
           PVP = "false";
           Public = "false";
+          # Accept any headscale member on first join; each creates an account.
+          Open = "true";
+          # Linux clients get false kicks from this check (PZwiki warns of a Linux bug).
+          DoLuaChecksum = "false";
           # Sleeping fast-forwards time once every player online is asleep,
           # at FastForwardMultiplier (default 40x).
           SleepAllowed = "true";
