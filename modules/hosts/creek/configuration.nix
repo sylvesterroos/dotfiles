@@ -1,5 +1,5 @@
 # Creek: Tuxedo Pulse 15 laptop.
-{ config, ... }:
+{ config, headscaleNetwork, ... }:
 {
   configurations.nixos.creek = {
     nixpkgs = "tip";
@@ -51,10 +51,7 @@
 
       my.headscaled = {
         enable = true;
-        httpProxy = {
-          listen = "localhost:1055";
-          domain = "tailnet.sylvesterroos.com";
-        };
+        network = headscaleNetwork;
       };
 
       # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion

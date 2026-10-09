@@ -1,3 +1,4 @@
+{ headscaleNetwork, ... }:
 {
   flake.modules.nixos.bachus =
     { config, ... }:
@@ -13,9 +14,14 @@
         port = 8090;
         settings = {
           server_url = "https://headscale.sylvesterroos.com";
+          # Dedicated allocation for the second network on desktop hosts.
+          prefixes = {
+            v4 = headscaleNetwork.ipv4Prefix;
+            v6 = headscaleNetwork.ipv6Prefix;
+          };
           dns = {
             magic_dns = true;
-            base_domain = "tailnet.sylvesterroos.com";
+            base_domain = headscaleNetwork.domain;
             override_local_dns = false;
             # Seeded at boot and rewritten by headscaled-publish once bachus has
             # an address on the headscale tailnet.

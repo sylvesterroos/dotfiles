@@ -1,9 +1,7 @@
 # A second tailscaled that joins this machine to the headscale tailnet, beside
-# the machine's own tailscaled. It runs in userspace mode, so it owns no network
-# interface, route, firewall rule or resolver: the personal tailnet keeps all of
-# those. Connections from the headscale tailnet reach only what this daemon is
-# told to serve, and local programs reach the headscale tailnet through its
-# HTTP proxy.
+# the machine's own tailscaled. Hosts with `network` configured use a routed
+# TUN in an isolated namespace. Bachus uses the userspace stack to publish its
+# host-loopback services, and an HTTP proxy for outgoing connections.
 #
 # `headscaled` is the tailscale CLI bound to this daemon. A machine joins once
 # with `sudo headscaled login --login-server <headscale url>`.
@@ -72,7 +70,7 @@
             ExecStart = lib.concatStringsSep " " (
               [
                 (lib.getExe' cfg.package "tailscaled")
-                "--tun=userspace-networking"
+                "--tun=${if cfg.network == null then "userspace-networking" else "tailscale1"}"
                 "--port=0"
                 "--statedir=/var/lib/headscaled"
                 "--socket=${cfg.socket}"

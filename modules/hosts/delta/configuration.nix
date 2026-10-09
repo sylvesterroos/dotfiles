@@ -1,5 +1,10 @@
 # Delta: desktop on a Gigabyte B550 board with an AMD GPU.
-{ config, inputs, ... }:
+{
+  config,
+  inputs,
+  headscaleNetwork,
+  ...
+}:
 {
   configurations.nixos.delta = {
     nixpkgs = "tip";
@@ -21,6 +26,11 @@
       networking.hostName = "delta";
 
       boot.kernelPackages = pkgs.linuxPackages_xanmod;
+
+      my.headscaled = {
+        enable = true;
+        network = headscaleNetwork;
+      };
 
       networking.networkmanager.ensureProfiles.profiles."Wired internet" = {
         connection = {
