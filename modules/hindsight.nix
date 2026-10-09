@@ -132,11 +132,13 @@
       };
 
       systemd.timers.hindsight-consolidate = {
-        enable = false;
+        enable = true;
         wantedBy = [ "timers.target" ];
         timerConfig = {
-          OnCalendar = "*:0/30";
-          Persistent = true;
+          # Use the remaining Claude quota before its Monday 09:00 reset.
+          OnCalendar = "Mon *-*-* 04:00:00";
+          # Skip runs missed while powered off, preserving the new week's quota.
+          Persistent = false;
         };
       };
 
