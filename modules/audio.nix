@@ -35,9 +35,10 @@
         plugins_order = [
           "filter#0"
           "expander#0"
-          "deesser#0"
           "equalizer#0"
           "compressor#0"
+          # After the compressor, which raises sibilance as it evens out levels.
+          "deesser#0"
           "limiter#0"
         ];
 
@@ -117,7 +118,8 @@
           threshold = -18.0;
           ratio = 3.0;
           knee = -6.0;
-          attack = 10.0;
+          # Slow enough to let consonant transients through.
+          attack = 20.0;
           release = 100.0;
           makeup = 3.0;
           hpf-mode = "Off";
