@@ -3,6 +3,9 @@
     # HA binds 0.0.0.0 (host network), so the firewall allows LAN clients to reach it directly;
     networking.firewall.allowedTCPPorts = [ 8123 ];
 
+    # Hermes' Home Assistant gateway platform and ha_* tools.
+    my.hermes-agent.plugins = [ ../../../pkgs/hermes-plugin-homeassistant ];
+
     virtualisation.oci-containers = {
       backend = "podman";
       containers.homeassistant = {

@@ -2,19 +2,21 @@
 { inputs, mv, ... }:
 let
   env =
-    { lib, pkgs }:
+    {
+      lib,
+      pkgs,
+      plugins,
+    }:
     let
       system = pkgs.stdenv.hostPlatform.system;
-      # The plugin must be built for the interpreter Hermes runs, which comes
+      # Plugins must be built for the interpreter Hermes runs, which comes
       # from Hermes' own nixpkgs; extraPythonPackages drops anything else.
       hermesPkgs = inputs.hermes-agent.inputs.nixpkgs.legacyPackages.${system};
       hermesBase = inputs.hermes-agent.packages.${system}.default;
       hermes = hermesBase.override {
-        extraPythonPackages = [
-          (hermesPkgs.callPackage ../pkgs/hermes-plugin-hindsight {
-            pythonPackages = hermesBase.python.pkgs;
-          })
-        ];
+        extraPythonPackages = map (
+          path: hermesPkgs.callPackage path { pythonPackages = hermesBase.python.pkgs; }
+        ) ([ ../pkgs/hermes-plugin-hindsight ] ++ plugins);
       };
     in
     {
@@ -36,10 +38,28 @@ let
     };
 in
 {
+  flake.modules.nixos.base =
+    { lib, ... }:
+    {
+      options.my.hermes-agent.plugins = lib.mkOption {
+        type = lib.types.listOf lib.types.path;
+        default = [ ];
+        description = "Hermes plugin package directories this host adds, built against Hermes' Python.";
+      };
+    };
+
   flake.modules.homeManager.base =
-    { lib, pkgs, ... }:
+    {
+      lib,
+      osConfig,
+      pkgs,
+      ...
+    }:
     let
-      hermes = env { inherit lib pkgs; };
+      hermes = env {
+        inherit lib pkgs;
+        inherit (osConfig.my.hermes-agent) plugins;
+      };
     in
     {
       home.packages = hermes.packages;
@@ -47,9 +67,17 @@ in
     };
 
   flake.modules.nixos.without-home-manager =
-    { lib, pkgs, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     let
-      hermes = env { inherit lib pkgs; };
+      hermes = env {
+        inherit lib pkgs;
+        inherit (config.my.hermes-agent) plugins;
+      };
     in
     {
       # CUA's Linux accessibility backend uses AT-SPI, which talks over D-Bus.
