@@ -10,15 +10,6 @@
       reason = "zotero 10.0.2+ fails to build against current Firefox";
       upstream = "https://github.com/NixOS/nixpkgs/pull/569006";
     };
-    protonmail-bridge = {
-      rev = "b1b875982b17";
-      packages = [
-        "protonmail-bridge"
-        "protonmail-bridge-gui"
-      ];
-      reason = "breakpad (via sentry-native) fails to link; bridge and GUI stay on one version";
-      upstream = "https://github.com/NixOS/nixpkgs/pull/569323";
-    };
   };
 
   # Flake inputs locked to a commit in flake.nix. `broken` is the upstream
