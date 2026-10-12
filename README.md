@@ -4,8 +4,8 @@ My dotfiles
 
 ## Stow
 
-To symlink config files to your home directory:
+From the root of the dotfiles clone, symlink config files to the home directory:
 
 ```sh
-stow --dir /etc/nixos/home/sylvester/ --target /home/sylvester/ .
+stow --dir ./home/sylvester --target "$HOME" .
 ```
