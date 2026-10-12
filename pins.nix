@@ -1,4 +1,4 @@
-# Packages held back because they fail to build upstream.
+# Packages held back or patched ahead of upstream.
 # `nu update.nu` updates the lock and reports which pins can be dropped.
 {
   # Package groups served from an older nixpkgs revision by the `pins`
@@ -9,6 +9,21 @@
       packages = [ "zotero" ];
       reason = "zotero 10.0.2+ fails to build against current Firefox";
       upstream = "https://github.com/NixOS/nixpkgs/pull/569006";
+    };
+  };
+
+  # Upstream fixes the `pins` overlay adds to a package, named by its
+  # attribute path. A patch can be dropped once the package's source on tip
+  # already contains it.
+  patches = {
+    sddm-vt = {
+      package = [
+        "qt6Packages"
+        "sddm-unwrapped"
+      ];
+      patch = ./patches/sddm-2204.patch;
+      reason = "Wayland login waits out the 30 s VT timeout, then SDDM respawns the greeter";
+      upstream = "https://github.com/sddm/sddm/pull/2204";
     };
   };
 

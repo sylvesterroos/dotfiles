@@ -5,7 +5,5 @@ pkgs: {
   mpatch = pkgs.callPackage ./mpatch { };
   switch-to-previous-desktop = pkgs.callPackage ./switch-to-previous-desktop { };
   omawrite = pkgs.callPackage ./omawrite { };
-  # SDDM with PR #2204 backport (Wayland VT fix, upstream bug #2129)
-  sddm-vt-fix = pkgs.callPackage ./sddm-vt-fix { };
   playkeeper = pkgs.callPackage ./playkeeper { };
 }

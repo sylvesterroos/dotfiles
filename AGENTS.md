@@ -7,7 +7,7 @@
 - Update inputs: `nu update.nu` — updates `flake.lock` and reports which `pins.nix` entries can be dropped
 
 ## Pins
-`pins.nix` holds every package held back because it fails to build upstream, with the reason and upstream link. Modules use plain package names; the `pins` overlay swaps in the pinned build.
+`pins.nix` holds every package held back or patched ahead of upstream, with the reason and upstream link: nixpkgs packages served from an older revision, upstream fixes added to a package, and flake inputs locked to a commit. Modules use plain package names; the `pins` overlay swaps in the pinned build and applies the patches, which live in `patches/`.
 
 ## Architecture
 Dendritic layout on flake-parts: every `.nix` file under `modules/` is a flake-parts module, loaded by import-tree. Files are ordered by feature, and a feature file configures every layer it touches (NixOS and home-manager) in one place.

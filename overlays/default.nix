@@ -9,12 +9,42 @@
     # This one brings our custom packages from the 'pkgs' directory
     // (import ../pkgs final.pkgs);
 
-  # Serves the package groups in ../pins.nix from their pinned revisions.
+  # Serves the package groups in ../pins.nix from their pinned revisions and
+  # adds its patches to their packages.
   pins =
     final: prev:
-    prev.lib.concatMapAttrs (
-      _: group: prev.lib.genAttrs group.packages (name: (mv.at group.rev).${name})
-    ) (import ../pins.nix).nixpkgs;
+    let
+      inherit (prev) lib;
+      pins = import ../pins.nix;
+      groups =
+        _: _:
+        lib.concatMapAttrs (
+          _: group: lib.genAttrs group.packages (name: (mv.at group.rev).${name})
+        ) pins.nixpkgs;
+      # Walks the attribute path, entering package sets through overrideScope.
+      patchAt =
+        set: path: patch:
+        let
+          name = lib.head path;
+          rest = lib.tail path;
+        in
+        {
+          ${name} =
+            if rest == [ ] then
+              set.${name}.overrideAttrs (old: {
+                patches = (old.patches or [ ]) ++ [ patch ];
+              })
+            else
+              set.${name}.overrideScope (_: scope: patchAt scope rest patch);
+        };
+      # Each patch overlays the result of the ones before it, so patches in
+      # the same package set compose.
+      patches = lib.mapAttrsToList (
+        _: pin: _: prev:
+        patchAt prev pin.package pin.patch
+      ) pins.patches;
+    in
+    lib.composeManyExtensions ([ groups ] ++ patches) final prev;
 
   # This one contains whatever you want to overlay
   # You can change versions, add patches, set compilation flags, anything really.
