@@ -5,6 +5,10 @@
 #
 # `headscaled` is the tailscale CLI bound to this daemon. A machine joins once
 # with `sudo headscaled login --login-server <headscale url>`.
+{ config, ... }:
+let
+  inherit (config.headscaleNetwork) domain;
+in
 {
   flake.modules.nixos.headscaled =
     {
@@ -27,31 +31,13 @@
           description = "Control socket of this daemon.";
         };
 
-        httpProxy = lib.mkOption {
-          type = lib.types.nullOr (
-            lib.types.submodule {
-              options = {
-                listen = lib.mkOption {
-                  type = lib.types.str;
-                  example = "localhost:1055";
-                  description = "Listen address of the proxy.";
-                };
-                domain = lib.mkOption {
-                  type = lib.types.str;
-                  example = "tailnet.example.com";
-                  description = ''
-                    MagicDNS base domain of the headscale tailnet. Chromium-based
-                    browsers send names under it through the proxy and everything
-                    else direct.
-                  '';
-                };
-              };
-            }
-          );
-          default = null;
+        proxy = lib.mkOption {
+          type = lib.types.str;
+          default = "localhost:1055";
+          readOnly = true;
           description = ''
-            An HTTP proxy that dials through the headscale tailnet and resolves its
-            MagicDNS names.
+            Listen address of the HTTP proxy that the userspace stack runs. It dials
+            through the headscale tailnet and resolves its MagicDNS names.
           '';
         };
       };
@@ -73,7 +59,7 @@
                 "--statedir=/var/lib/headscaled"
                 "--socket=${cfg.socket}"
               ]
-              ++ lib.optional (cfg.httpProxy != null) "--outbound-http-proxy-listen=${cfg.httpProxy.listen}"
+              ++ lib.optional (cfg.network == null) "--outbound-http-proxy-listen=${cfg.proxy}"
             );
             Restart = "always";
             RestartSec = 5;
@@ -89,12 +75,12 @@
 
         # A managed policy covers every browser profile. The PAC script travels
         # inline as a data: URL.
-        programs.chromium.extraOpts = lib.mkIf (cfg.httpProxy != null) {
+        programs.chromium.extraOpts = lib.mkIf (cfg.network == null) {
           ProxySettings = {
             ProxyMode = "pac_script";
             ProxyPacUrl =
               "data:application/x-ns-proxy-autoconfig,"
-              + lib.escapeURL ''function FindProxyForURL(url, host) { return dnsDomainIs(host, ".${cfg.httpProxy.domain}") ? "PROXY ${cfg.httpProxy.listen}" : "DIRECT"; }'';
+              + lib.escapeURL ''function FindProxyForURL(url, host) { return dnsDomainIs(host, ".${domain}") ? "PROXY ${cfg.proxy}" : "DIRECT"; }'';
           };
         };
       };

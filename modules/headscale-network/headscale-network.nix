@@ -67,13 +67,6 @@ in
       };
 
       config = lib.mkIf (network != null) {
-        assertions = [
-          {
-            assertion = cfg.httpProxy == null;
-            message = "A routed Headscale network supplies host routing and split DNS; set my.headscaled.httpProxy to null.";
-          }
-        ];
-
         services.resolved = {
           enable = true;
           dnsDelegates.headscale.Delegate = {

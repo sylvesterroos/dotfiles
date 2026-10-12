@@ -39,10 +39,6 @@
       json = name: value: pkgs.writeText name (builtins.toJSON value);
     in
     {
-      my.headscaled.httpProxy = {
-        listen = "localhost:1055";
-        inherit domain;
-      };
 
       # An admin assigns the server and Deck identities.
       services.headscale.settings.policy = {
@@ -84,6 +80,17 @@
                 "sylvester@:10578"
                 "tag:deck:10578"
               ];
+            }
+            # BitTorrent between fred and sylvester, on each one's listen port
+            {
+              action = "accept";
+              src = [ "fred@" ];
+              dst = [ "sylvester@:43658" ];
+            }
+            {
+              action = "accept";
+              src = [ "sylvester@" ];
+              dst = [ "fred@:10696" ];
             }
             # Project Zomboid
             {
