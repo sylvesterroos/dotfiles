@@ -1,8 +1,8 @@
-{
-  mv,
-  serviceFrom,
-  ...
-}:
+{ config, ... }:
+let
+  mv = config.multiverse;
+  inherit (config) serviceFrom;
+in
 {
   flake.modules.nixos.bachus =
     { ... }:

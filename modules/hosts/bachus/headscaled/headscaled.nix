@@ -39,12 +39,9 @@
       json = name: value: pkgs.writeText name (builtins.toJSON value);
     in
     {
-      my.headscaled = {
-        enable = true;
-        httpProxy = {
-          listen = "localhost:1055";
-          inherit domain;
-        };
+      my.headscaled.httpProxy = {
+        listen = "localhost:1055";
+        inherit domain;
       };
 
       # An admin assigns the server and Deck identities.

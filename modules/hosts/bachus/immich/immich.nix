@@ -1,5 +1,6 @@
-{ lib, mv, ... }:
+{ config, lib, ... }:
 let
+  mv = config.multiverse;
   # TODO: remove once https://github.com/NixOS/nixpkgs/pull/481056 is merged
   nixpkgs = mv.flakeAt (lib.last mv.releases);
   patched = (import nixpkgs { system = "x86_64-linux"; }).applyPatches {

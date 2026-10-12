@@ -1,4 +1,7 @@
-{ mv, ... }:
+{ config, ... }:
+let
+  mv = config.multiverse;
+in
 {
   flake.modules.homeManager.desktop =
     { pkgs, lib, ... }:

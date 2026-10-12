@@ -1,13 +1,37 @@
 # A routed Headscale namespace gives host applications a second VPN and DNS
 # domain while keeping each tailscaled's network administration isolated.
+{ lib, ... }:
+let
+  networkType = lib.types.submodule {
+    options = {
+      domain = lib.mkOption {
+        type = lib.types.str;
+        description = "Headscale's MagicDNS base domain.";
+      };
+      ipv4Prefix = lib.mkOption {
+        type = lib.types.str;
+        description = "Headscale's IPv4 allocation prefix, distinct from personal Tailscale peers.";
+      };
+      ipv6Prefix = lib.mkOption {
+        type = lib.types.str;
+        description = "Headscale's IPv6 allocation prefix, distinct from personal Tailscale peers.";
+      };
+    };
+  };
+in
 {
-  _module.args.headscaleNetwork = {
+  options.headscaleNetwork = lib.mkOption {
+    type = networkType;
+    description = "Shared address allocation and DNS domain of the Headscale network.";
+  };
+
+  config.headscaleNetwork = {
     domain = "tailnet.sylvesterroos.com";
     ipv4Prefix = "100.64.0.0/24";
     ipv6Prefix = "fd7a:115c:a1e0::/120";
   };
 
-  flake.modules.nixos.base =
+  config.flake.modules.nixos.headscaled =
     {
       config,
       lib,
@@ -39,27 +63,10 @@
       options.my.headscaled.network = lib.mkOption {
         default = null;
         description = "Address allocation and DNS domain of the routed Headscale network.";
-        type = lib.types.nullOr (
-          lib.types.submodule {
-            options = {
-              domain = lib.mkOption {
-                type = lib.types.str;
-                description = "Headscale's MagicDNS base domain.";
-              };
-              ipv4Prefix = lib.mkOption {
-                type = lib.types.str;
-                description = "Headscale's IPv4 allocation prefix, distinct from personal Tailscale peers.";
-              };
-              ipv6Prefix = lib.mkOption {
-                type = lib.types.str;
-                description = "Headscale's IPv6 allocation prefix, distinct from personal Tailscale peers.";
-              };
-            };
-          }
-        );
+        type = lib.types.nullOr networkType;
       };
 
-      config = lib.mkIf (cfg.enable && network != null) {
+      config = lib.mkIf (network != null) {
         assertions = [
           {
             assertion = cfg.httpProxy == null;

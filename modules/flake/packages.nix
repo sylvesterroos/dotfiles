@@ -1,10 +1,13 @@
-{ inputs, mv, ... }:
+{ config, inputs, ... }:
 {
-  flake.overlays = import ../../overlays { inherit inputs mv; };
+  flake.overlays = import "${inputs.self}/overlays" {
+    inherit inputs;
+    mv = config.multiverse;
+  };
 
   perSystem =
     { pkgs, ... }:
     {
-      packages = import ../../pkgs pkgs;
+      packages = import "${inputs.self}/pkgs" pkgs;
     };
 }

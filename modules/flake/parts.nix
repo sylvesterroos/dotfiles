@@ -1,21 +1,34 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 {
   imports = [
     inputs.flake-parts.flakeModules.modules
     inputs.treefmt-nix.flakeModule
   ];
 
+  options = {
+    multiverse = lib.mkOption {
+      type = lib.types.raw;
+      readOnly = true;
+      description = "The shared Multiverse instance used to select package sets.";
+    };
+    serviceFrom = lib.mkOption {
+      type = lib.types.functionTo lib.types.deferredModule;
+      readOnly = true;
+      description = "Select a service's NixOS module and package from one package set.";
+    };
+  };
+
   # aarch64-darwin: pkgs/mpatch carries darwin build logic.
-  systems = [
+  config.systems = [
     "x86_64-linux"
     "aarch64-darwin"
   ];
 
-  _module.args.serviceFrom = import "${inputs.self}/lib/service-from.nix";
+  config.serviceFrom = import "${inputs.self}/lib/service-from.nix";
 
   # The one multiverse instance every host and user resolves packages from, so
   # a selector means the same package set everywhere.
-  _module.args.mv = inputs.multiverse.lib.mkMultiverse {
+  config.multiverse = inputs.multiverse.lib.mkMultiverse {
     system = "x86_64-linux";
     config.allowUnfree = true;
   };

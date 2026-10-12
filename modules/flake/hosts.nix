@@ -3,9 +3,11 @@
 {
   config,
   lib,
-  mv,
   ...
 }:
+let
+  mv = config.multiverse;
+in
 {
   options.configurations.nixos = lib.mkOption {
     description = "The NixOS hosts this flake builds.";
@@ -31,7 +33,6 @@
       modules = [
         config.flake.modules.nixos.base
         host.module
-        { _module.args.mv = mv; }
       ];
     }
   ) config.configurations.nixos;

@@ -2,7 +2,6 @@
 {
   config,
   inputs,
-  headscaleNetwork,
   ...
 }:
 {
@@ -11,6 +10,7 @@
     module = {
       imports = with config.flake.modules.nixos; [
         desktop
+        headscaled
         livebook
         delta
       ];
@@ -27,10 +27,7 @@
 
       boot.kernelPackages = pkgs.linuxPackages_xanmod;
 
-      my.headscaled = {
-        enable = true;
-        network = headscaleNetwork;
-      };
+      my.headscaled.network = config.headscaleNetwork;
 
       networking.networkmanager.ensureProfiles.profiles."Wired internet" = {
         connection = {

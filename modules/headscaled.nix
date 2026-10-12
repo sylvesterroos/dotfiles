@@ -6,7 +6,7 @@
 # `headscaled` is the tailscale CLI bound to this daemon. A machine joins once
 # with `sudo headscaled login --login-server <headscale url>`.
 {
-  flake.modules.nixos.base =
+  flake.modules.nixos.headscaled =
     {
       config,
       lib,
@@ -18,8 +18,6 @@
     in
     {
       options.my.headscaled = {
-        enable = lib.mkEnableOption "a second tailscaled joined to the headscale tailnet";
-
         package = lib.mkPackageOption pkgs "tailscale" { };
 
         socket = lib.mkOption {
@@ -58,7 +56,7 @@
         };
       };
 
-      config = lib.mkIf cfg.enable {
+      config = {
         systemd.services.headscaled = {
           description = "tailscaled joined to the headscale tailnet";
           wantedBy = [ "multi-user.target" ];

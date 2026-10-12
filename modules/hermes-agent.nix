@@ -1,6 +1,7 @@
 # What a user needs to run Hermes Agent.
-{ inputs, mv, ... }:
+{ config, inputs, ... }:
 let
+  mv = config.multiverse;
   env =
     {
       lib,
@@ -16,7 +17,7 @@ let
       hermes = hermesBase.override {
         extraPythonPackages = map (
           path: hermesPkgs.callPackage path { pythonPackages = hermesBase.python.pkgs; }
-        ) ([ ../pkgs/hermes-plugin-hindsight ] ++ plugins);
+        ) ([ "${inputs.self}/pkgs/hermes-plugin-hindsight" ] ++ plugins);
       };
     in
     {

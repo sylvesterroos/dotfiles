@@ -1,11 +1,12 @@
 # Creek: Tuxedo Pulse 15 laptop.
-{ config, headscaleNetwork, ... }:
+{ config, ... }:
 {
   configurations.nixos.creek = {
     nixpkgs = "tip";
     module = {
       imports = with config.flake.modules.nixos; [
         desktop
+        headscaled
         hindsight
         creek
       ];
@@ -49,10 +50,7 @@
         }
       ];
 
-      my.headscaled = {
-        enable = true;
-        network = headscaleNetwork;
-      };
+      my.headscaled.network = config.headscaleNetwork;
 
       # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
       system.stateVersion = "23.05";

@@ -4,15 +4,18 @@
   config,
   inputs,
   lib,
-  mv,
   ...
 }:
+let
+  mv = config.multiverse;
+in
 {
   configurations.nixos.bachus = {
     nixpkgs = lib.last mv.releases;
     module.imports = with config.flake.modules.nixos; [
       without-home-manager
       attic-server
+      headscaled
       bachus
     ];
   };
