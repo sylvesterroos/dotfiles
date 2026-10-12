@@ -14,6 +14,7 @@ let
       # from Hermes' own nixpkgs; extraPythonPackages drops anything else.
       hermesPkgs = inputs.hermes-agent.inputs.nixpkgs.legacyPackages.${system};
       hermesBase = inputs.hermes-agent.packages.${system}.default;
+      cuaDriver = inputs.cua.packages.${system}.cua-driver;
       hermes = hermesBase.override {
         extraPythonPackages = map (
           path: hermesPkgs.callPackage path { pythonPackages = hermesBase.python.pkgs; }
@@ -27,7 +28,7 @@ let
         hermes.hermesDesktop
         mv.tip.agent-browser
         mv.tip.claude-code # Anthropic authentication
-        inputs.cua.packages.${system}.cua-driver
+        cuaDriver
         pkgs.imagemagick
         pkgs.at-spi2-core
       ];
@@ -35,6 +36,7 @@ let
       sessionVariables = {
         HERMES_TUI = "1";
         AGENT_BROWSER_EXECUTABLE_PATH = lib.getExe pkgs.chromium;
+        HERMES_CUA_DRIVER_CMD = lib.getExe cuaDriver;
       };
     };
 in
@@ -91,6 +93,7 @@ in
         if [ "$USER" = 'sylvester' ]; then
           export HERMES_TUI="${hermes.sessionVariables.HERMES_TUI}"
           export AGENT_BROWSER_EXECUTABLE_PATH='${hermes.sessionVariables.AGENT_BROWSER_EXECUTABLE_PATH}'
+          export HERMES_CUA_DRIVER_CMD='${hermes.sessionVariables.HERMES_CUA_DRIVER_CMD}'
         fi
       '';
     };
