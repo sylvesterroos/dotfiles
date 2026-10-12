@@ -1,8 +1,10 @@
+{ self, ... }:
 {
   flake.modules.nixos.base =
     { config, ... }:
     {
       nix.settings = {
+        experimental-features = (import "${self.outPath}/flake.nix").nixConfig.experimental-features;
         auto-optimise-store = true;
         substituters = [
           "https://devenv.cachix.org"
