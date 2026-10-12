@@ -123,11 +123,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1791790095,
-        "narHash": "sha256-RKUHMuGdLnVhvOrkUVUbOyNsM0KFEyUq/36b3OXlBnY=",
+        "lastModified": 1791793634,
+        "narHash": "sha256-c4qVDPCXUmsPtD1QM0BQHkrOGs7jPPjkznp3dOwOh+w=",
         "owner": "trycua",
         "repo": "cua",
-        "rev": "c263f3029690b2ed1056e84a29cda1f60c100149",
+        "rev": "541abc55c64bdce0832e43d1002d6571407c098f",
         "type": "github"
       },
       "original": {
