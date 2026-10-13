@@ -4,12 +4,12 @@
 let
   host = "bachus";
   port = 18732;
-  endpoint = "http://${host}:${toString port}/";
+  endpoint = "http://${host}.allosaurus-snapper.ts.net:${toString port}/";
 in
 {
   flake.modules.nixos.base = {
-    # Ahead of every other cache.
-    nix.settings.substituters = lib.mkBefore [ "${endpoint}bachus" ];
+    # Prefer public caches; use Bachus for locally built store paths.
+    nix.settings.substituters = lib.mkAfter [ "${endpoint}bachus?priority=100" ];
     nix.settings.trusted-public-keys = [ "bachus:S4UzuyjTb539BS1RcIeaGlrsZSRl2Ae+m5VtJ9lTKA8=" ];
   };
 
