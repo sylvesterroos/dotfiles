@@ -204,7 +204,7 @@
         "nix": "nix_2",
         "nixd": "nixd",
         "nixpkgs": "nixpkgs_9",
-        "rust-overlay": "rust-overlay"
+        "rust-overlay": "rust-overlay_2"
       },
       "locked": {
         "lastModified": 1783538213,
@@ -540,6 +540,27 @@
       "original": {
         "owner": "amaanq",
         "repo": "helium-flake",
+        "type": "github"
+      }
+    },
+    "herdr-gpui": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": "rust-overlay"
+      },
+      "locked": {
+        "lastModified": 1791867841,
+        "narHash": "sha256-TnDwjZdLu6CMz4tH//wWY9ho+kilBE/YAmjGA+Qmi/o=",
+        "owner": "penso",
+        "repo": "herdr-gpui",
+        "rev": "79ca2ce97b45089e792e7bc5e14a0554c74077b9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "penso",
+        "repo": "herdr-gpui",
         "type": "github"
       }
     },
@@ -1184,6 +1205,7 @@
         "disko": "disko",
         "flake-parts": "flake-parts_2",
         "helium": "helium",
+        "herdr-gpui": "herdr-gpui",
         "hermes-agent": "hermes-agent",
         "home-manager": "home-manager_2",
         "import-tree": "import-tree",
@@ -1202,6 +1224,27 @@
       }
     },
     "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "herdr-gpui",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1790062494,
+        "narHash": "sha256-Mds1vuoczq1fRm1rf+Iar8IKDBHNjOMo2JqqPWJUlng=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "b88764907c1b2de6c0e206d8d9d9634d91c81334",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "rust-overlay_2": {
       "inputs": {
         "nixpkgs": [
           "sylvesterroos-com",
