@@ -6,4 +6,5 @@ pkgs: {
   switch-to-previous-desktop = pkgs.callPackage ./switch-to-previous-desktop { };
   omawrite = pkgs.callPackage ./omawrite { };
   playkeeper = pkgs.callPackage ./playkeeper { };
+  anima-engine = pkgs.callPackage ./anima-engine { };
 }
