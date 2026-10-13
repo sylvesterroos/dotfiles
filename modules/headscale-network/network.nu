@@ -28,15 +28,19 @@ def ns-sysctl [setting: string] {
 }
 def nft [rules: string] {
     let result = ($rules | ^$env.NFT -f - | complete)
-    if $result.exit_code != 0 { error make {
-        msg: ($result.stderr | str trim)
-    } }
+    if $result.exit_code != 0 {
+        error make {
+            msg: ($result.stderr | str trim)
+        }
+    }
 }
 def ns-nft [rules: string] {
     let result = ($rules | ^$env.IP netns exec headscale $env.NFT -f - | complete)
-    if $result.exit_code != 0 { error make {
-        msg: ($result.stderr | str trim)
-    } }
+    if $result.exit_code != 0 {
+        error make {
+            msg: ($result.stderr | str trim)
+        }
+    }
 }
 def main [action: string] {
     let config = (open $env.CONFIG)
