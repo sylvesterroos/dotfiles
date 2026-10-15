@@ -49,9 +49,9 @@ in
         nil
         stow
         yazi
-        mv.tip.codex
         mv.tip.devenv
-        mv.tip.opencode
+        inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.codex
+        inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode
       ];
 
       environment.variables.EDITOR = lib.getExe pkgs.neovim;

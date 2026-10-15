@@ -91,6 +91,10 @@
     # A release tag; update by moving the tag. Follows its own nixpkgs so
     # hermes-agent.cachix.org serves the build.
     hermes-agent.url = "github:NousResearch/hermes-agent/v0.21.6";
+
+    # Agent CLIs and apps, updated daily. Follows its own nixpkgs so
+    # cache.numtide.com serves the builds.
+    llm-agents.url = "github:numtide/llm-agents.nix";
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);

@@ -1,7 +1,6 @@
 # What a user needs to run Hermes Agent.
-{ config, inputs, ... }:
+{ inputs, ... }:
 let
-  mv = config.multiverse;
   env =
     {
       lib,
@@ -15,6 +14,7 @@ let
       hermesPkgs = inputs.hermes-agent.inputs.nixpkgs.legacyPackages.${system};
       hermesBase = inputs.hermes-agent.packages.${system}.default;
       cuaDriver = inputs.cua.packages.${system}.cua-driver;
+      llmAgents = inputs.llm-agents.packages.${system};
       hermes = hermesBase.override {
         extraPythonPackages = map (
           path: hermesPkgs.callPackage path { pythonPackages = hermesBase.python.pkgs; }
@@ -26,8 +26,8 @@ let
         hermes
         # Built from the same package, so the desktop app runs this hermes.
         hermes.hermesDesktop
-        mv.tip.agent-browser
-        mv.tip.claude-code # Anthropic authentication
+        llmAgents.agent-browser
+        llmAgents.claude-code # Anthropic authentication
         cuaDriver
         pkgs.imagemagick
         pkgs.at-spi2-core

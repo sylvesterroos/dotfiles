@@ -2,12 +2,14 @@
 let
   mv = config.multiverse;
   hosts = config.configurations.nixos;
-  herdrTui = mv.tip.herdr;
+  herdrTui = pkgs: inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.herdr;
 in
 {
-  flake.modules.nixos.bachus = {
-    users.users.sylvester.packages = [ herdrTui ];
-  };
+  flake.modules.nixos.bachus =
+    { pkgs, ... }:
+    {
+      users.users.sylvester.packages = [ (herdrTui pkgs) ];
+    };
 
   flake.modules.homeManager.desktop =
     { osConfig, pkgs, ... }:
@@ -25,7 +27,7 @@ in
     in
     {
       home.packages = [
-        herdrTui
+        (herdrTui pkgs)
         herdrGui.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
     };

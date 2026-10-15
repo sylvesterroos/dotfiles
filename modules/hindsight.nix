@@ -3,6 +3,30 @@
 # data in the host PostgreSQL. Extraction runs on Claude Haiku through the
 # Claude subscription: the image's Claude CLI reads a `claude setup-token`
 # token from CLAUDE_CODE_OAUTH_TOKEN.
+#
+# llm-agents also packages the server (`hindsight`, binary `hindsight-api`)
+# and its web UI (`hindsight-control-plane`). Moving from the container to
+# those is a swap of the process, not of the data:
+#
+# - Replace the oci-container with a systemd service that runs
+#   `inputs.llm-agents.packages.${system}.hindsight` with the same
+#   environment and `EnvironmentFile`, ordered after `hindsight-db`, and point
+#   `hindsight-consolidate` at the new unit. Add `claude-code` to the
+#   service's `path`, since the claude-code LLM provider drives the Claude CLI
+#   that the image bundles.
+# - The package leaves out the local embeddings and reranker models to keep
+#   torch out of the closure. The stored vectors come from those local models,
+#   so build it with them:
+#   `hindsight.overridePythonAttrs (old: { dependencies = old.dependencies ++ old.optional-dependencies.local-ml; })`.
+#   Switching to a remote embeddings provider instead changes the vectors, and
+#   every memory then has to be re-embedded.
+# - Everything lives in the host's `hindsight` database, so no data moves.
+#   Take a `pg_dump hindsight` first anyway: the server runs its schema
+#   migrations on startup, and they only go forward, so the package must be
+#   at least as new as the image that last ran. Check the image's version
+#   before switching.
+# - The models download again into the new service's cache directory (set
+#   `HF_HOME` under its `StateDirectory`); the image's copy is not reused.
 {
   flake.modules.nixos.hindsight =
     { config, pkgs, ... }:
