@@ -14,6 +14,10 @@
           headscale = true;
         }
         {
+          name = "audiobookshelf";
+          target = "127.0.0.1:${toString config.services.audiobookshelf.port}";
+        }
+        {
           name = "immich";
           target = "127.0.0.1:${toString config.services.immich.port}";
         }
