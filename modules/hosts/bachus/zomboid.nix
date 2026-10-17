@@ -31,7 +31,12 @@
           "3426448380" # Immersive Suicide
           "2956146279" # Rain Cleans Blood
           "3814073243" # Zombie Visibility Fix + Stair-O-Vision
-          "2875848298" # Common Sense
+          # The original Common Sense (2875848298) stops B42 from loading the
+          # world ("Fluid not found: Alcohol"). This is its maintained B42 fork;
+          # never enable both.
+          "3717968421" # Common Sense B42.20 - Community Compatibility Fix
+          # Puts the "Alcohol" fluid back for any mod recipe still asking for it.
+          "3683880154" # Alcohol Fluid Fix [B42]
         ];
 
         extraIniSettings = {
