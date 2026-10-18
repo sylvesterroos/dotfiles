@@ -58,6 +58,11 @@
           target = "http://127.0.0.1:8384";
         }
         {
+          # Hermes memory API for every device on the tailnet.
+          name = "hindsight";
+          target = "http://127.0.0.1:8888";
+        }
+        {
           name = "headplane";
           target = "http://127.0.0.1:${toString config.services.headplane.settings.server.port}";
         }

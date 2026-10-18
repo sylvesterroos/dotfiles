@@ -1,54 +1,47 @@
 # Hindsight: the long-term memory server Hermes recalls from and retains to.
-# One container on the host network, listening on loopback only, keeping its
-# data in the host PostgreSQL. Extraction runs on Claude Haiku through the
-# Claude subscription: the image's Claude CLI reads a `claude setup-token`
-# token from CLAUDE_CODE_OAUTH_TOKEN.
+# One `hindsight-api` process from llm-agents, listening on loopback only and
+# keeping its data in the host PostgreSQL. The API process also runs the
+# worker that extracts and consolidates memories. Extraction runs on Claude
+# Haiku through OpenRouter, paid with the work OpenRouter key, since the server
+# holds both personal and work banks.
 #
-# llm-agents also packages the server (`hindsight`, binary `hindsight-api`)
-# and its web UI (`hindsight-control-plane`). Moving from the container to
-# those is a swap of the process, not of the data:
-#
-# - Replace the oci-container with a systemd service that runs
-#   `inputs.llm-agents.packages.${system}.hindsight` with the same
-#   environment and `EnvironmentFile`, ordered after `hindsight-db`, and point
-#   `hindsight-consolidate` at the new unit. Add `claude-code` to the
-#   service's `path`, since the claude-code LLM provider drives the Claude CLI
-#   that the image bundles.
-# - The package leaves out the local embeddings and reranker models to keep
-#   torch out of the closure. The stored vectors come from those local models,
-#   so build it with them:
-#   `hindsight.overridePythonAttrs (old: { dependencies = old.dependencies ++ old.optional-dependencies.local-ml; })`.
-#   Switching to a remote embeddings provider instead changes the vectors, and
-#   every memory then has to be re-embedded.
-# - Everything lives in the host's `hindsight` database, so no data moves.
-#   Take a `pg_dump hindsight` first anyway: the server runs its schema
-#   migrations on startup, and they only go forward, so the package must be
-#   at least as new as the image that last ran. Check the image's version
-#   before switching.
-# - The models download again into the new service's cache directory (set
-#   `HF_HOME` under its `StateDirectory`); the image's copy is not reused.
+# The stored vectors come from the local embeddings and reranker models, so
+# the package carries its local-ml extra. A remote embeddings provider would
+# change the vectors and require re-embedding every memory. The server runs
+# its schema migrations on startup and they only go forward: take a
+# `pg_dump hindsight` before moving to a new version.
+{ inputs, ... }:
 {
   flake.modules.nixos.hindsight =
-    { config, pkgs, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     let
       postgres = config.services.postgresql;
       secrets = config.sops.secrets;
+      llmAgents = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
+      hindsight = llmAgents.hindsight.overridePythonAttrs (old: {
+        dependencies = old.dependencies ++ old.optional-dependencies.local-ml;
+      });
     in
     {
       sops.secrets = {
         # Only the role's SCRAM hash lives in PostgreSQL; the setup unit reads
         # the plaintext to set it.
         "hindsight/db-password".owner = "postgres";
-        "hindsight/claude-token" = { };
+        "hindsight/openrouter-api-key" = { };
       };
 
       sops.templates."hindsight.env" = {
-        restartUnits = [ "podman-hindsight.service" ];
+        restartUnits = [ "hindsight.service" ];
         content = ''
           HINDSIGHT_API_DATABASE_URL=postgresql://hindsight:${
             config.sops.placeholder."hindsight/db-password"
           }@127.0.0.1:${toString postgres.settings.port}/hindsight
-          CLAUDE_CODE_OAUTH_TOKEN=${config.sops.placeholder."hindsight/claude-token"}
+          HINDSIGHT_API_LLM_API_KEY=${config.sops.placeholder."hindsight/openrouter-api-key"}
         '';
       };
 
@@ -89,27 +82,41 @@
         '';
       };
 
-      virtualisation.oci-containers.containers.hindsight = {
-        image = "ghcr.io/vectorize-io/hindsight:latest";
-        labels."io.containers.autoupdate" = "registry";
-        extraOptions = [ "--network=host" ];
-        environmentFiles = [ config.sops.templates."hindsight.env".path ];
+      systemd.services.hindsight = {
+        description = "Hindsight memory server";
+        wantedBy = [ "multi-user.target" ];
+        requires = [ "hindsight-db.service" ];
+        wants = [ "network-online.target" ];
+        after = [
+          "hindsight-db.service"
+          # The local models download on first start.
+          "network-online.target"
+        ];
         environment = {
           HINDSIGHT_API_HOST = "127.0.0.1";
-          HINDSIGHT_CP_HOSTNAME = "127.0.0.1";
-          HINDSIGHT_API_LLM_PROVIDER = "claude-code";
-          HINDSIGHT_API_LLM_MODEL = "claude-haiku-5-5";
-          # Gather facts between scheduled consolidation runs.
+          HINDSIGHT_API_LLM_PROVIDER = "openrouter";
+          HINDSIGHT_API_LLM_MODEL = "anthropic/claude-haiku-5.5";
+          # Gather facts between the daily consolidation runs.
           HINDSIGHT_API_ENABLE_AUTO_CONSOLIDATION = "false";
           HINDSIGHT_API_CONSOLIDATION_LLM_BATCH_SIZE = "16";
           HINDSIGHT_API_WORKER_ID = config.networking.hostName;
+          HOME = "/var/lib/hindsight";
+          HF_HOME = "/var/lib/hindsight/huggingface";
+        };
+        serviceConfig = {
+          ExecStart = lib.getExe hindsight;
+          EnvironmentFile = config.sops.templates."hindsight.env".path;
+          DynamicUser = true;
+          StateDirectory = "hindsight";
+          PrivateTmp = true;
+          Restart = "on-failure";
         };
       };
 
       systemd.services.hindsight-consolidate = {
-        description = "Consolidate accumulated Hermes memories";
-        requires = [ "podman-hindsight.service" ];
-        after = [ "podman-hindsight.service" ];
+        description = "Consolidate accumulated Hermes memories in every bank";
+        requires = [ "hindsight.service" ];
+        after = [ "hindsight.service" ];
         path = [
           pkgs.curl
           pkgs.jq
@@ -119,39 +126,19 @@
           DynamicUser = true;
         };
         script = ''
-          bank=http://127.0.0.1:8888/v1/default/banks/hermes
-          # Snapshot every page before retries change the failed-operation list.
-          offset=0
-          retry_ids=""
-          while :; do
-            page=$(curl --fail --silent --show-error --max-time 30 \
-              "$bank/operations?status=failed&type=retain&exclude_parents=true&limit=100&offset=$offset")
-            cooldown_ids=$(printf '%s' "$page" | jq -r '
-              .operations[]
-              | select((.error_message // "") | contains("Claude Code reported an error: You\u0027ve hit your session limit"))
-              | .operation_id
-            ')
-            retry_ids="$retry_ids $cooldown_ids"
-            offset=$((offset + 100))
-            if [ "$offset" -ge "$(printf '%s' "$page" | jq -r '.total')" ]; then
-              break
+          api=http://127.0.0.1:8888/v1/default/banks
+          for bank in $(curl --fail --silent --show-error --max-time 30 "$api?limit=1000" | jq -r '.banks[].bank_id'); do
+            stats=$(curl --fail --silent --show-error --max-time 30 "$api/$bank/stats")
+            if [ "$(printf '%s' "$stats" | jq -r '.failed_consolidation')" -gt 0 ]; then
+              curl --fail --silent --show-error --max-time 30 \
+                --request POST "$api/$bank/consolidation/recover"
+            fi
+            if printf '%s' "$stats" | jq -e '.pending_consolidation + .failed_consolidation > 0' > /dev/null; then
+              curl --fail --silent --show-error --max-time 30 \
+                --request POST --header 'Content-Type: application/json' \
+                --data '{}' "$api/$bank/consolidate"
             fi
           done
-          for operation_id in $retry_ids; do
-            curl --fail --silent --show-error --max-time 30 \
-              --request POST "$bank/operations/$operation_id/retry"
-          done
-
-          stats=$(curl --fail --silent --show-error --max-time 30 "$bank/stats")
-          if [ "$(printf '%s' "$stats" | jq -r '.failed_consolidation')" -gt 0 ]; then
-            curl --fail --silent --show-error --max-time 30 \
-              --request POST "$bank/consolidation/recover"
-          fi
-          if printf '%s' "$stats" | jq -e '.pending_consolidation + .failed_consolidation > 0' > /dev/null; then
-            curl --fail --silent --show-error --max-time 30 \
-              --request POST --header 'Content-Type: application/json' \
-              --data '{}' "$bank/consolidate"
-          fi
         '';
       };
 
@@ -159,16 +146,10 @@
         enable = true;
         wantedBy = [ "timers.target" ];
         timerConfig = {
-          # Use the remaining Claude quota before its Monday 09:00 reset.
-          OnCalendar = "Mon *-*-* 04:00:00";
-          # Skip runs missed while powered off, preserving the new week's quota.
-          Persistent = false;
+          OnCalendar = "*-*-* 04:00:00 Europe/Amsterdam";
+          # Run a missed consolidation once bachus is back up.
+          Persistent = true;
         };
-      };
-
-      systemd.services.podman-hindsight = {
-        requires = [ "hindsight-db.service" ];
-        after = [ "hindsight-db.service" ];
       };
     };
 }

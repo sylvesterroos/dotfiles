@@ -7,7 +7,6 @@
       imports = with config.flake.modules.nixos; [
         desktop
         headscaled
-        hindsight
         creek
       ];
       home-manager.users.sylvester.imports = [ config.flake.modules.homeManager.creek ];
@@ -26,12 +25,6 @@
 
         # https://consoledonottrack.com/
         DO_NOT_TRACK = 1;
-      };
-
-      services.postgresql = {
-        package = pkgs.postgresql_18;
-        # non-default port so we don't get in the way of development postgres instances
-        settings.port = 5431;
       };
 
       programs.gnupg.agent.enable = true;
