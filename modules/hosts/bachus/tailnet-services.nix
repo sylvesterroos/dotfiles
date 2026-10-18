@@ -66,6 +66,11 @@
           name = "headplane";
           target = "http://127.0.0.1:${toString config.services.headplane.settings.server.port}";
         }
+        {
+          name = "playkeeper";
+          # The panel speaks only TLS, with its own self-signed certificate.
+          target = "https+insecure://127.0.0.1:8444";
+        }
       ];
 
       # Hermes on https://bachus.allosaurus-snapper.ts.net. The ports follow the

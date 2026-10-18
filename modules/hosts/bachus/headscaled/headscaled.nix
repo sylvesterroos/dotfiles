@@ -103,6 +103,14 @@
                 in
                 map (port: "${serverTag}:${toString port}") ([ ports.game ] ++ map (p: p.port) ports.extra);
             }
+            # Minecraft servers run by Playkeeper: the first on 25565, each
+            # further one on the next port.
+            {
+              action = "accept";
+              proto = "tcp";
+              src = [ "autogroup:member" ];
+              dst = [ "${serverTag}:25565-25574" ];
+            }
           ];
           ssh = [
             {

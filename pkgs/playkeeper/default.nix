@@ -8,7 +8,7 @@
 }:
 
 let
-  version = "0.4.8";
+  version = "0.4.17";
 
   # The release tag: version is the one knob an update turns (nix-update
   # bumps it; rev follows). The SRI hash pins the content, so a moved tag
@@ -29,7 +29,7 @@ let
     owner = "CIYAhq";
     repo = "playkeeper";
     inherit rev;
-    hash = "sha256-APsPGQ57ruiwVQg+yf8DySr/3n2ZBTMyfb/s5by5V7A=";
+    hash = "sha256-q3Ovstl19nGZP2iRb/eFMHKuusTAzJFlkmzmFdbkBDg=";
   };
 
   # The browser UI: npm ci && npm run build, embedded into the binary by
