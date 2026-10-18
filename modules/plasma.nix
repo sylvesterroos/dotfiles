@@ -7,11 +7,7 @@
         # outputs.overlays.kde-xdg-data-dirs
       ];
 
-      services.displayManager.sddm = {
-        enable = true;
-        wayland.enable = true;
-        wayland.compositor = "kwin";
-      };
+      services.displayManager.plasma-login-manager.enable = true;
       services.desktopManager.plasma6.enable = true;
 
       programs.kdeconnect = {

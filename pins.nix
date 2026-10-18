@@ -15,17 +15,7 @@
   # Upstream fixes the `pins` overlay adds to a package, named by its
   # attribute path. A patch can be dropped once the package's source on tip
   # already contains it.
-  patches = {
-    sddm-vt = {
-      package = [
-        "qt6Packages"
-        "sddm-unwrapped"
-      ];
-      patch = ./patches/sddm-2204.patch;
-      reason = "Wayland login waits out the 30 s VT timeout, then SDDM respawns the greeter";
-      upstream = "https://github.com/sddm/sddm/pull/2204";
-    };
-  };
+  patches = { };
 
   # Flake inputs locked to a commit in flake.nix. `broken` is the upstream
   # commit that fails; the pin can go once upstream moves past it and builds.
