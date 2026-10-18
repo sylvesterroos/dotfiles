@@ -1,4 +1,6 @@
-# What a user needs to run Hermes Agent.
+# Hermes Agent: what a user needs to run it, and the profiles every machine
+# shares. Each host installs Hermes; the desktops and bachus keep the same
+# agents through Syncthing, with long-term memory in Hindsight.
 { inputs, ... }:
 let
   env =
@@ -39,6 +41,50 @@ let
         HERMES_CUA_DRIVER_CMD = lib.getExe cuaDriver;
       };
     };
+
+  # What makes up a profile, relative to its root (`~/.hermes` for the
+  # default profile, `~/.hermes/profiles/<name>` for the others). The default
+  # profile and every named profile sync the same parts.
+  synced = [
+    "config.yaml"
+    ".env"
+    "SOUL.md"
+    "skills"
+    "memories"
+    "plugins"
+    "hindsight"
+  ];
+  # Churn inside synced paths: usage counters, locks, curator state, caches.
+  local = [
+    "skills/.usage.json"
+    "skills/.locks"
+    "skills/.curator_*"
+    "skills/.hub/{audit.log,index-cache,quarantine,scan-cache}"
+  ];
+  roots = [
+    "/"
+    "/profiles/*/"
+  ];
+  under = paths: builtins.concatMap (root: map (path: root + path) paths) roots;
+
+  # Everything outside `synced` (databases, sessions, logs, caches, cron jobs
+  # and per-device credentials) stays on its machine. The first matching
+  # pattern wins. Syncthing only descends into directories it includes, so
+  # `profiles` is included and each profile's unlisted entries are ignored.
+  profiles = {
+    path = "~/.hermes";
+    ignorePatterns = [
+      "(?d)**.lock"
+      "(?d)__pycache__"
+    ]
+    ++ map (path: "(?d)" + path) (under local)
+    ++ map (path: "!" + path) (under synced)
+    ++ [
+      "/profiles/*/*"
+      "!/profiles"
+      "*"
+    ];
+  };
 in
 {
   flake.modules.nixos.base =
@@ -97,4 +143,15 @@ in
         fi
       '';
     };
+
+  flake.modules.homeManager.desktop.services.syncthing.settings.folders.hermes = profiles // {
+    devices = [ "server" ];
+  };
+
+  flake.modules.nixos.bachus.services.syncthing.settings.folders.hermes = profiles // {
+    devices = [
+      "creek"
+      "delta"
+    ];
+  };
 }
