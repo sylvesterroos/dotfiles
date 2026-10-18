@@ -1,4 +1,5 @@
-# General tools that agents seem to enjoy.
+# What every coding agent shares: the general tools they reach for and the
+# agent vault, an Obsidian vault of clippings synced through bachus.
 let
   packages =
     pkgs: with pkgs; [
@@ -49,6 +50,11 @@ let
       # Scripting and measurement
       openssl
     ];
+
+  vault = {
+    path = "~/.local/share/agent-vault";
+    ignorePatterns = [ "(?d).git" ];
+  };
 in
 {
   flake.modules.homeManager.base =
@@ -62,4 +68,17 @@ in
     {
       users.users.sylvester.packages = packages pkgs;
     };
+
+  flake.modules.homeManager.desktop.services.syncthing.settings.folders.agent-vault = vault // {
+    devices = [ "server" ];
+  };
+
+  flake.modules.nixos.bachus.services.syncthing.settings.folders.agent-vault = vault // {
+    devices = [
+      "delta"
+      "creek"
+      "windows-desktop"
+      "android"
+    ];
+  };
 }

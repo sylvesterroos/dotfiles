@@ -49,16 +49,6 @@
             ];
             ignorePatterns = [ "(?d).git" ];
           };
-          "agent-vault" = {
-            path = "~/.local/share/agent-vault";
-            devices = [
-              "delta"
-              "creek"
-              "windows-desktop"
-              "android"
-            ];
-            ignorePatterns = [ "(?d).git" ];
-          };
           "Documents" = {
             path = "/home/sylvester/Documents";
             devices = [

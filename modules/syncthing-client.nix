@@ -27,11 +27,6 @@
             devices = [ "server" ];
             ignorePatterns = [ "(?d).git" ];
           };
-          "agent-vault" = {
-            path = "~/.local/share/agent-vault";
-            devices = [ "server" ];
-            ignorePatterns = [ "(?d).git" ];
-          };
           "Documents" = {
             path = "~/Documents";
             devices = [ "server" ];

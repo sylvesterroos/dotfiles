@@ -49,5 +49,6 @@ Keep service settings in the host module. Test the unstable Immich module and pa
 - A module that reads its own files (configs, scripts, patches) lives in a folder named after it, together with those files
 - Shared project files are resolved through `inputs.self`; feature-owned files use paths relative to their module
 - Putting a feature in a role enables it for that role; hosts select individual features by importing their named module
+- Each feature brings its own wiring: what it needs from another module (a Syncthing folder, a tailnet service, a firewall port) is declared in the feature's own file, so a host evaluates exactly the features it selects. For example, the agent vault's Syncthing folder lives in `llm-agents.nix`, and the Syncthing modules hold only general folders
 - Options (`my.<name>`) exist only where a host sets a value
 - Each feature declares the sops secrets it reads; never commit plaintext secrets
