@@ -10,56 +10,56 @@
       my.tailnet-services.services = [
         {
           name = "jellyfin";
-          target = "127.0.0.1:8096";
+          target = "http://127.0.0.1:8096";
           headscale = true;
         }
         {
           name = "audiobookshelf";
-          target = "127.0.0.1:${toString config.services.audiobookshelf.port}";
+          target = "http://127.0.0.1:${toString config.services.audiobookshelf.port}";
         }
         {
           name = "immich";
-          target = "127.0.0.1:${toString config.services.immich.port}";
+          target = "http://127.0.0.1:${toString config.services.immich.port}";
         }
         {
           name = "home-assistant";
-          target = "127.0.0.1:8123";
+          target = "http://127.0.0.1:8123";
         }
         {
           name = "open-webui";
-          target = "127.0.0.1:${toString config.services.open-webui.port}";
+          target = "http://127.0.0.1:${toString config.services.open-webui.port}";
         }
         {
           name = "radarr";
-          target = "127.0.0.1:7878";
+          target = "http://127.0.0.1:7878";
         }
         {
           name = "sonarr";
-          target = "127.0.0.1:8989";
+          target = "http://127.0.0.1:8989";
         }
         {
           name = "prowlarr";
-          target = "127.0.0.1:9696";
+          target = "http://127.0.0.1:9696";
         }
         {
           name = "qbittorrent";
-          target = "127.0.0.1:${toString config.services.qbittorrent.webuiPort}";
+          target = "http://127.0.0.1:${toString config.services.qbittorrent.webuiPort}";
         }
         {
           name = "qui";
-          target = "127.0.0.1:7476";
+          target = "http://127.0.0.1:7476";
         }
         {
           name = "files";
-          target = "127.0.0.1:3923";
+          target = "http://127.0.0.1:3923";
         }
         {
           name = "syncthing";
-          target = "127.0.0.1:8384";
+          target = "http://127.0.0.1:8384";
         }
         {
           name = "headplane";
-          target = "127.0.0.1:${toString config.services.headplane.settings.server.port}";
+          target = "http://127.0.0.1:${toString config.services.headplane.settings.server.port}";
         }
       ];
 
@@ -69,15 +69,15 @@
       my.tailnet-services.listeners = [
         {
           port = 10443;
-          target = "127.0.0.1:9119"; # dashboard + relay transport
+          target = "http://127.0.0.1:9119"; # dashboard + relay transport
         }
         {
           port = 8642;
-          target = "127.0.0.1:8642"; # API server
+          target = "http://127.0.0.1:8642"; # API server
         }
         {
           port = 9119;
-          target = "127.0.0.1:9119"; # dashboard + relay transport
+          target = "http://127.0.0.1:9119"; # dashboard + relay transport
         }
       ];
     };

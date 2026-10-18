@@ -47,7 +47,11 @@
                 };
                 target = mkOption {
                   type = types.str;
-                  description = "Local address the traffic is proxied to, e.g. 127.0.0.1:8096.";
+                  description = ''
+                    Local URL the traffic is proxied to, e.g. http://127.0.0.1:8096;
+                    https+insecure:// reaches a backend that serves its own
+                    self-signed certificate.
+                  '';
                 };
                 headscale = mkOption {
                   type = types.bool;
@@ -76,7 +80,7 @@
                 };
                 target = mkOption {
                   type = types.str;
-                  description = "Local address the traffic is proxied to, e.g. 127.0.0.1:9119.";
+                  description = "Local URL the traffic is proxied to, e.g. http://127.0.0.1:9119.";
                 };
               };
             }

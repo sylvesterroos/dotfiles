@@ -61,7 +61,7 @@ in
       my.tailnet-services.services = [
         {
           name = "attic";
-          target = "127.0.0.1:${toString port}";
+          target = "http://127.0.0.1:${toString port}";
         }
       ];
 

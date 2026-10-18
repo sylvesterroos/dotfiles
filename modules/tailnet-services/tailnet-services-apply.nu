@@ -69,7 +69,7 @@ for l in $listeners {
     serve-until-up [
         "--bg"
         $"--https=($l.port)"
-        $"http://($l.target)"
+        $l.target
     ]
 }
 for s in $services {
@@ -79,14 +79,14 @@ for s in $services {
     # on a mismatch. Harmless when nothing is configured.
     do { tailscale serve clear $"svc:($s.name)" } | complete | ignore
     # --https gives the TLS listener on the service VIP (browsers need it);
-    # the target stays plain http because that is what the local upstreams
-    # speak. The config-file format cannot express this combination, hence
-    # per-service CLI config instead of set-config.
+    # the target URL names the scheme its local upstream speaks. The
+    # config-file format cannot express this combination, hence per-service
+    # CLI config instead of set-config.
     serve-until-up [
         "--service"
         $"svc:($s.name)"
         "--https=443"
-        $"http://($s.target)"
+        $s.target
     ]
     advertise-or-die $"svc:($s.name)"
 }
