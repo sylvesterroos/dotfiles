@@ -13,14 +13,19 @@
         "prowlarr"
         "radarr"
         "sonarr"
+        "flaresolverr"
       ];
       ruleForUser = user: ''
         ip rule add uidrange $(id -u ${user})-$(id -u ${user}) table ${toString vpnTable} priority 30001
         ip rule add uidrange $(id -u ${user})-$(id -u ${user}) table main suppress_prefixlength 0 priority 30000
+        ip -6 rule add uidrange $(id -u ${user})-$(id -u ${user}) table ${toString vpnTable} priority 30001
+        ip -6 rule add uidrange $(id -u ${user})-$(id -u ${user}) table main suppress_prefixlength 0 priority 30000
       '';
       delRuleForUser = user: ''
         ip rule del uidrange $(id -u ${user})-$(id -u ${user}) table ${toString vpnTable} priority 30001 || true
         ip rule del uidrange $(id -u ${user})-$(id -u ${user}) table main suppress_prefixlength 0 priority 30000 || true
+        ip -6 rule del uidrange $(id -u ${user})-$(id -u ${user}) table ${toString vpnTable} priority 30001 || true
+        ip -6 rule del uidrange $(id -u ${user})-$(id -u ${user}) table main suppress_prefixlength 0 priority 30000 || true
       '';
     in
     {
@@ -40,36 +45,42 @@
 
       networking.wg-quick.interfaces.wg0 = {
         privateKeyFile = config.sops.secrets."wireguard/protonvpn_nl/private_key".path;
-        address = [ "10.2.0.2/32" ];
+        address = [
+          "10.2.0.2/32"
+          "2a07:b944::2:2/128"
+        ];
         table = "off";
 
         peers = [
           {
-            publicKey = "lK9RKsf9y5/jehblqhoSGV7FtlErG7QqLy13G3IV2Ao=";
+            publicKey = "pWeh73ei2uNWC7PhHbYu45a0tfoI1YAieeXfib9ne3g=";
             allowedIPs = [
               "0.0.0.0/0"
+              "::/0"
             ];
-            endpoint = "46.29.25.5:51820";
+            endpoint = "169.150.196.66:51820";
             persistentKeepalive = 25;
           }
         ];
 
         postUp = ''
           ip route add default dev wg0 table ${toString vpnTable}
+          ip -6 route add default dev wg0 table ${toString vpnTable}
           # Last-resort kill switch: if wg0 disappears without preDown running,
           # the uid rules still steer traffic into this table, and the
           # unreachable default makes it die instead of falling through to the
           # clearnet route in main.
           ip route add unreachable default table ${toString vpnTable} metric 2048
+          ip -6 route add unreachable default table ${toString vpnTable} metric 2048
           ${builtins.concatStringsSep "" (map ruleForUser vpnUsers)}
-          ip -6 route add unreachable default table ${toString vpnTable}
         '';
 
         preDown = ''
-          ip -6 route del unreachable default table ${toString vpnTable} || true
+          ip -6 route del unreachable default table ${toString vpnTable} metric 2048 || true
           ${builtins.concatStringsSep "" (map delRuleForUser vpnUsers)}
           ip route del unreachable default table ${toString vpnTable} metric 2048 || true
           ip route del default dev wg0 table ${toString vpnTable} || true
+          ip -6 route del default dev wg0 table ${toString vpnTable} || true
         '';
       };
 
@@ -114,6 +125,23 @@
               };
             };
           };
+        };
+      };
+
+      users.users.flaresolverr = {
+        isSystemUser = true;
+        group = "flaresolverr";
+      };
+      users.groups.flaresolverr = { };
+
+      systemd.services.flaresolverr = {
+        after = [ "wg-quick-wg0.service" ];
+        requires = [ "wg-quick-wg0.service" ];
+        environment.HOST = "127.0.0.1";
+        serviceConfig = {
+          DynamicUser = lib.mkForce false;
+          User = "flaresolverr";
+          Group = "flaresolverr";
         };
       };
 
