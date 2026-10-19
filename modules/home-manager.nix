@@ -18,8 +18,5 @@ in
         hm.desktop
       ];
     };
-
-    # radicle-node is marked insecure; the radicle home module needs it.
-    nixpkgs.config.permittedInsecurePackages = [ "radicle-node-1.10.3" ];
   };
 }
