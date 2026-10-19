@@ -21,6 +21,7 @@
             "ctrl+w>j=goto_split:down"
             "ctrl+w>k=goto_split:up"
             "ctrl+w>l=goto_split:right"
+            "ctrl+w>equal=equalize_splits"
 
             "shift+ctrl+h=new_split:left"
             "shift+ctrl+j=new_split:down"
