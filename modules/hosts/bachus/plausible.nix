@@ -2,48 +2,18 @@
   flake.modules.nixos.bachus =
     {
       config,
-      lib,
       pkgs,
       ...
     }:
     let
       postgresPort = toString config.services.postgresql.settings.port;
+      plausibleSocketDir = "/run/plausible-postgres";
     in
     {
       sops.secrets.plausible-secret-key = { };
 
       services.plausible = {
         enable = true;
-        # Plausible's runtime config ignores the URL port when DATABASE_URL uses a
-        # Unix socket. Patch it so Bachus can keep PostgreSQL on its non-default
-        # port while still using socket/peer authentication instead of TCP auth.
-        package = pkgs.plausible.overrideAttrs (old: {
-          postInstall = (old.postInstall or "") + ''
-            ${pkgs.buildPackages.python3}/bin/python3 - <<'PY'
-            import os
-            from pathlib import Path
-
-            old = """    socket_dir: socket_dir,
-                database: database"""
-            new = """    socket_dir: socket_dir,
-                database: database,
-                port:
-                  db_uri.port ||
-                    ((db_uri.query || "") |> URI.decode_query() |> Map.get("port", "5432") |> String.to_integer())"""
-
-            runtime_files = list(Path(os.environ["out"]).glob("releases/*/runtime.exs"))
-            if len(runtime_files) != 1:
-                raise SystemExit(f"expected one Plausible runtime.exs, found {runtime_files}")
-
-            runtime_file = runtime_files[0]
-            text = runtime_file.read_text()
-            if old not in text:
-                raise SystemExit("Plausible runtime socket database config changed")
-
-            runtime_file.write_text(text.replace(old, new, 1))
-            PY
-          '';
-        });
 
         database = {
           clickhouse.url = "http://127.0.0.1:18123/default";
@@ -52,7 +22,11 @@
           # development collisions. Disable it and provide a port-aware setup
           # unit below.
           postgres.setup = false;
-          postgres.socket = "/run/postgresql";
+          # Postgrex ignores the URL port for Unix sockets and always opens
+          # .s.PGSQL.5432, so point it at a directory where that name links to
+          # the real socket. This keeps peer authentication and the stock,
+          # binary-cached package.
+          postgres.socket = plausibleSocketDir;
         };
 
         server = {
@@ -87,11 +61,12 @@
           "postgresql.target"
           "plausible-postgres.service"
         ];
-
-        # The Plausible module builds DATABASE_URL without a port, but Bachus runs
-        # PostgreSQL on a non-default port to avoid local development collisions.
-        environment.DATABASE_URL = lib.mkForce "postgresql:///plausible?host=/run/postgresql&port=${postgresPort}";
       };
+
+      systemd.tmpfiles.rules = [
+        "d ${plausibleSocketDir} 0755 root root -"
+        "L+ ${plausibleSocketDir}/.s.PGSQL.5432 - - - - /run/postgresql/.s.PGSQL.${postgresPort}"
+      ];
 
       systemd.services.plausible-postgres = {
         after = [ "postgresql.target" ];
