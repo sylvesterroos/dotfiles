@@ -1,6 +1,4 @@
-# Python client for the Hindsight memory API, as the Hermes hindsight plugin
-# imports it. Its dependencies (aiohttp, pydantic, ...) come from the Hermes
-# venv that loads it.
+# Python client for the Hindsight memory API used by the Hermes plugin.
 { pythonPackages }:
 pythonPackages.buildPythonPackage rec {
   pname = "hindsight_client";
@@ -14,5 +12,14 @@ pythonPackages.buildPythonPackage rec {
     hash = "sha256-aEPmJdgTMzpCykv/OOjKs5tY7G7Voz1+tZb3HhbH72Q=";
   };
 
-  dontCheckRuntimeDeps = true;
+  dependencies = with pythonPackages; [
+    aiohttp-retry
+    aiohttp
+    pydantic
+    python-dateutil
+    typing-extensions
+    urllib3
+    yarl
+  ];
+  pythonImportsCheck = [ "hindsight_client" ];
 }
