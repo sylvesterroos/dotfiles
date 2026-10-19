@@ -6,20 +6,20 @@
   unzip,
 }:
 let
-  version = "1.3.5";
+  version = "1.7.0";
 
   sources = {
     "x86_64-linux" = {
       url = "https://github.com/Romelium/mpatch/releases/download/v${version}/mpatch-x86_64-unknown-linux-gnu-v${version}.tar.gz";
-      sha256 = "sha256-+jnV1/6JHWMJJDOWeO/4Gd+VCT7LJbdiqCyskWKmDSU=";
+      sha256 = "sha256-aFRHY9PDLZinnFfCSDPhfFAHQRTuGQAjVHeRdKH/7TA=";
     };
     "aarch64-linux" = {
       url = "https://github.com/Romelium/mpatch/releases/download/v${version}/mpatch-aarch64-unknown-linux-gnu-v${version}.tar.gz";
-      sha256 = "sha256-2DYVpYTjlEOR48iZfScwyHsXTDnLMCFof4u2zIFHNWo=";
+      sha256 = "sha256-A3ZQMbxRLKjwKQwkIUTxLygvo366SbOH6nK558Kips8=";
     };
     "aarch64-darwin" = {
       url = "https://github.com/Romelium/mpatch/releases/download/v${version}/mpatch-aarch64-apple-darwin-v${version}.zip";
-      sha256 = "sha256-T2ASLO1mECsH2i9sKZw+MxdZ5B7+4BSxafSETryjDfI=";
+      sha256 = "sha256-J4A+n6NtGKE4q2xFAVl8F0JGeB4XcY/invzFgG7TQsI=";
     };
   };
 

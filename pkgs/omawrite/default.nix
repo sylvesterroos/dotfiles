@@ -7,13 +7,13 @@
 
 stdenv.mkDerivation {
   pname = "omawrite";
-  version = "0.1.0-unstable-2026-09-16";
+  version = "0.7.2";
 
   src = fetchFromGitHub {
     owner = "omacom";
     repo = "omawrite";
-    rev = "8f98892b26768236b2c20f4e637cf4b102d898bf";
-    hash = "sha256-yS3GOL/kc03qx4naWzUdSZwAYxMuCjvrgmhexpwjsfA=";
+    tag = "v0.7.2";
+    hash = "sha256-kjbiI5Wo/vX9Fs3XnN1K3PWPOtOIX85ZLFOL1HBl6t0=";
   };
 
   nativeBuildInputs = [
