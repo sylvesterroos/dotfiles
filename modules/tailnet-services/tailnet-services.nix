@@ -14,7 +14,7 @@
         builtins.toJSON {
           services = map (s: {
             name = s.name;
-            target = s.target;
+            routes = mapAttrsToList (path: target: { inherit path target; }) s.routes;
           }) cfg.services;
           listeners = map (l: {
             port = l.port;
@@ -45,12 +45,17 @@
                   type = types.str;
                   description = "Service name; reachable as <name>.<tailnet>.ts.net inside the tailnet.";
                 };
-                target = mkOption {
-                  type = types.str;
+                routes = mkOption {
+                  type = types.attrsOf types.str;
+                  example = {
+                    "/" = "http://127.0.0.1:9999";
+                    "/memory" = "http://127.0.0.1:8888";
+                  };
                   description = ''
-                    Local URL the traffic is proxied to, e.g. http://127.0.0.1:8096;
-                    https+insecure:// reaches a backend that serves its own
-                    self-signed certificate.
+                    Mount path → local URL the traffic under it is proxied to. The
+                    mount path is stripped before proxying, so /memory/v1 reaches
+                    the target as /v1. https+insecure:// reaches a backend that
+                    serves its own self-signed certificate.
                   '';
                 };
                 headscale = mkOption {

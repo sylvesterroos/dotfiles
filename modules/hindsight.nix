@@ -1,15 +1,18 @@
-# Hindsight: the long-term memory server Hermes recalls from and retains to.
-# One `hindsight-api` process from llm-agents, listening on loopback only and
+# Hindsight: the long-term memory server Hermes recalls from and retains to,
+# and the control plane, its web UI. One `hindsight-api` process from
+# llm-agents, listening on loopback only and
 # keeping its data in the host PostgreSQL. The API process also runs the
-# worker that extracts and consolidates memories. Extraction runs on Claude
-# Haiku through OpenRouter, paid with the work OpenRouter key, since the server
-# holds both personal and work banks.
+# worker that extracts and consolidates memories. The model work runs through
+# OpenRouter, paid with the work OpenRouter key, since the server holds both
+# personal and work banks: GPT-6 Luna extracts and consolidates, Claude Haiku
+# reflects and writes mental models, and Cohere reranks search results, which
+# the low-powered host takes over half a minute per recall to do itself.
 #
-# The stored vectors come from the local embeddings and reranker models, so
-# the package carries its local-ml extra. A remote embeddings provider would
-# change the vectors and require re-embedding every memory. The server runs
-# its schema migrations on startup and they only go forward: take a
-# `pg_dump hindsight` before moving to a new version.
+# The stored vectors come from the local embeddings model, so the package
+# carries its local-ml extra. A remote embeddings provider would change the
+# vectors and require re-embedding every memory. The server runs its schema
+# migrations on startup and they only go forward: take a `pg_dump hindsight`
+# before moving to a new version.
 { inputs, ... }:
 {
   flake.modules.nixos.hindsight =
@@ -94,12 +97,26 @@
         ];
         environment = {
           HINDSIGHT_API_HOST = "127.0.0.1";
+          # Published under /memory on hindsight.<tailnet>.ts.net, next to
+          # the control plane at the root. The proxy strips the prefix, so
+          # local clients keep using http://127.0.0.1:8888/v1.
+          HINDSIGHT_API_BASE_PATH = "/memory";
           HINDSIGHT_API_LLM_PROVIDER = "openrouter";
-          HINDSIGHT_API_LLM_MODEL = "anthropic/claude-haiku-5.5";
+          HINDSIGHT_API_LLM_MODEL = "openai/gpt-6-luna";
+          # Reflection also drives mental model refreshes.
+          HINDSIGHT_API_REFLECT_LLM_MODEL = "anthropic/claude-haiku-5.5";
+          # Neither model's OpenRouter endpoints accept a temperature, and
+          # Hindsight asks OpenRouter to require every parameter it sends.
+          HINDSIGHT_API_LLM_TEMPERATURE = "none";
+          HINDSIGHT_API_RERANKER_PROVIDER = "openrouter";
           # Gather facts between the daily consolidation runs.
           HINDSIGHT_API_ENABLE_AUTO_CONSOLIDATION = "false";
           HINDSIGHT_API_CONSOLIDATION_LLM_BATCH_SIZE = "16";
           HINDSIGHT_API_WORKER_ID = config.networking.hostName;
+          # The host PostgreSQL serves other services too, within its 100
+          # connections. Hindsight's default pool of 100 takes them all during
+          # a large retain; 20 leaves room and queues the excess in the pool.
+          HINDSIGHT_API_DB_POOL_MAX_SIZE = "20";
           HOME = "/var/lib/hindsight";
           HF_HOME = "/var/lib/hindsight/huggingface";
         };
@@ -108,6 +125,24 @@
           EnvironmentFile = config.sops.templates."hindsight.env".path;
           DynamicUser = true;
           StateDirectory = "hindsight";
+          PrivateTmp = true;
+          Restart = "on-failure";
+        };
+      };
+
+      systemd.services.hindsight-control-plane = {
+        description = "Hindsight control plane";
+        wantedBy = [ "multi-user.target" ];
+        after = [ "hindsight.service" ];
+        environment = {
+          HOSTNAME = "127.0.0.1";
+          PORT = "9999";
+          HINDSIGHT_CP_DATAPLANE_API_URL = "http://127.0.0.1:8888";
+          NEXT_TELEMETRY_DISABLED = "1";
+        };
+        serviceConfig = {
+          ExecStart = lib.getExe llmAgents.hindsight-control-plane;
+          DynamicUser = true;
           PrivateTmp = true;
           Restart = "on-failure";
         };

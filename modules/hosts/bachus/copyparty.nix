@@ -100,7 +100,8 @@
         };
       };
 
-      # Tailnet-only via tailnet-services.nix (files.<tailnet>.ts.net).
+      # Served at files.<tailnet>.ts.net and files.<headscale domain>
+      # (tailnet-services.nix); every volume requires the sylvester login.
 
       # copyparty must be a member of the groups it chowns uploads to (gid flag);
       # media also gives it read access to /srv/media.

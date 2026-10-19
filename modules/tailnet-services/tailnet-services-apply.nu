@@ -81,13 +81,17 @@ for s in $services {
     # --https gives the TLS listener on the service VIP (browsers need it);
     # the target URL names the scheme its local upstream speaks. The
     # config-file format cannot express this combination, hence per-service
-    # CLI config instead of set-config.
-    serve-until-up [
-        "--service"
-        $"svc:($s.name)"
-        "--https=443"
-        $s.target
-    ]
+    # CLI config instead of set-config. Each route adds one mount point to
+    # the same listener.
+    for r in $s.routes {
+        serve-until-up [
+            "--service"
+            $"svc:($s.name)"
+            "--https=443"
+            $"--set-path=($r.path)"
+            $r.target
+        ]
+    }
     advertise-or-die $"svc:($s.name)"
 }
 let status_result = (do { tailscale serve status --json } | complete)

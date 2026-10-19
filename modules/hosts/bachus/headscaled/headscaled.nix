@@ -17,12 +17,21 @@
       # Port of bachus's headscale address that serves the sites.
       publishedPort = 443;
 
-      # Hostname prefix → local upstream, for the services flagged `headscale`.
+      # Hostname prefix → routes, for the services flagged `headscale`.
       services = lib.listToAttrs (
-        map (s: lib.nameValuePair s.name s.target) (
+        map (s: lib.nameValuePair s.name s.routes) (
           lib.filter (s: s.headscale) config.my.tailnet-services.services
         )
       );
+
+      # Same mount semantics as tailscale serve: the path prefix is stripped
+      # before proxying.
+      route =
+        path: upstream:
+        if path == "/" then
+          "handle {\n  reverse_proxy ${upstream}\n}"
+        else
+          "handle_path ${lib.removeSuffix "/" path}/* {\n  reverse_proxy ${upstream}\n}";
 
       recordsFile = config.services.headscale.settings.dns.extra_records_path;
       serverTag = "tag:server";
@@ -181,7 +190,7 @@
       # Certificates come through DNS-01 (Porkbun): the hostnames resolve to a
       # tailnet address, which HTTP-01 cannot reach.
       services.caddy.virtualHosts = lib.mapAttrs' (
-        name: upstream:
+        name: routes:
         lib.nameValuePair "${name}.${domain}:${toString listenPort}" {
           listenAddresses = [ listenAddress ];
           extraConfig = ''
@@ -192,7 +201,7 @@
               }
             }
 
-            reverse_proxy ${upstream}
+            ${lib.concatStringsSep "\n" (lib.mapAttrsToList route routes)}
           '';
         }
       ) services;

@@ -10,66 +10,71 @@
       my.tailnet-services.services = [
         {
           name = "jellyfin";
-          target = "http://127.0.0.1:8096";
+          routes."/" = "http://127.0.0.1:8096";
           headscale = true;
         }
         {
           name = "audiobookshelf";
-          target = "http://127.0.0.1:${toString config.services.audiobookshelf.port}";
+          routes."/" = "http://127.0.0.1:${toString config.services.audiobookshelf.port}";
         }
         {
           name = "immich";
-          target = "http://127.0.0.1:${toString config.services.immich.port}";
+          routes."/" = "http://127.0.0.1:${toString config.services.immich.port}";
         }
         {
           name = "home-assistant";
-          target = "http://127.0.0.1:8123";
+          routes."/" = "http://127.0.0.1:8123";
         }
         {
           name = "open-webui";
-          target = "http://127.0.0.1:${toString config.services.open-webui.port}";
+          routes."/" = "http://127.0.0.1:${toString config.services.open-webui.port}";
         }
         {
           name = "radarr";
-          target = "http://127.0.0.1:7878";
+          routes."/" = "http://127.0.0.1:7878";
         }
         {
           name = "sonarr";
-          target = "http://127.0.0.1:8989";
+          routes."/" = "http://127.0.0.1:8989";
         }
         {
           name = "prowlarr";
-          target = "http://127.0.0.1:9696";
+          routes."/" = "http://127.0.0.1:9696";
         }
         {
           name = "qbittorrent";
-          target = "http://127.0.0.1:${toString config.services.qbittorrent.webuiPort}";
+          routes."/" = "http://127.0.0.1:${toString config.services.qbittorrent.webuiPort}";
         }
         {
           name = "qui";
-          target = "http://127.0.0.1:7476";
+          routes."/" = "http://127.0.0.1:7476";
         }
         {
           name = "files";
-          target = "http://127.0.0.1:3923";
+          routes."/" = "http://127.0.0.1:3923";
+          headscale = true;
         }
         {
           name = "syncthing";
-          target = "http://127.0.0.1:8384";
+          routes."/" = "http://127.0.0.1:8384";
         }
         {
-          # Hermes memory API for every device on the tailnet.
+          # Hermes memory for every device on the tailnet: the control plane
+          # UI at the root, the API under /memory (HINDSIGHT_API_BASE_PATH).
           name = "hindsight";
-          target = "http://127.0.0.1:8888";
+          routes = {
+            "/" = "http://127.0.0.1:9999";
+            "/memory" = "http://127.0.0.1:8888";
+          };
         }
         {
           name = "headplane";
-          target = "http://127.0.0.1:${toString config.services.headplane.settings.server.port}";
+          routes."/" = "http://127.0.0.1:${toString config.services.headplane.settings.server.port}";
         }
         {
           name = "playkeeper";
           # The panel speaks only TLS, with its own self-signed certificate.
-          target = "https+insecure://127.0.0.1:8444";
+          routes."/" = "https+insecure://127.0.0.1:8444";
         }
       ];
 
