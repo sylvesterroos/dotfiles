@@ -6,6 +6,8 @@
 # applied, already contains it: the patch then undoes cleanly.
 # A flake-input pin can go once upstream has moved past the broken commit and
 # the new commit builds.
+# A kept pin whose `upstream` PR closed unmerged, or whose issue closed as not
+# planned, shows RELINK: point it at the PR or issue that now carries the fix.
 const root = path self .
 def tip-outputs [] {
     let expr = $"
@@ -91,11 +93,40 @@ def check-patches [] {
     }
   }
 }
+# The `upstream` link of each nixpkgs and patch pin, by section and name.
+def upstream-links [] {
+    nix eval --json --file $"($root)/pins.nix" --apply "p: builtins.mapAttrs (_: builtins.mapAttrs (_: pin: pin.upstream or null)) { inherit (p) nixpkgs patches; }" | from json
+}
+# Where a GitHub `upstream` link stands: open; fixed (PR merged, issue closed
+# as completed); ended (PR closed unmerged, issue closed as not planned), so
+# the fix it tracked will never land; or untracked for links outside GitHub.
+def upstream-state [url: string] {
+    let parsed = $url | parse --regex '^https://github\.com/(?<repo>[^/]+/[^/]+)/(?:pull|issues)/(?<number>\d+)'
+    if ($parsed | is-empty) { return "untracked" }
+    let issue = http get $"https://api.github.com/repos/($parsed.0.repo)/issues/($parsed.0.number)"
+    if $issue.state != "closed" { return "open" }
+    let fixed = if ($issue.pull_request? | is-not-empty) {
+        $issue.pull_request.merged_at? != null
+    } else {
+        $issue.state_reason? != "not_planned"
+    }
+    if $fixed { "fixed" } else { "ended" }
+}
+# A kept pin whose upstream link has ended needs a new link to wait on.
+def relink [links: record] { each { |row|
+        let url = $links | get --optional $row.pin
+        if $row.verdict == "keep" and $url != null and (upstream-state $url) == "ended" {
+            $row | merge { verdict: "RELINK", detail: $"($url) closed without the fix; find its successor · ($row.detail)" }
+        } else {
+            $row
+        }
+    } }
 def main [] {
     cd $root
     nix flake update
     print ""
+    let links = upstream-links
     print (
-        check-nixpkgs | append (check-patches) | append (check-inputs) | table --index false
+        check-nixpkgs | relink $links.nixpkgs | append (check-patches | relink $links.patches) | append (check-inputs) | table --index false
     )
 }

@@ -8,7 +8,7 @@
       rev = "b1b875982b17";
       packages = [ "zotero" ];
       reason = "zotero 10.0.2+ fails to build against current Firefox";
-      upstream = "https://github.com/NixOS/nixpkgs/pull/569006";
+      upstream = "https://github.com/NixOS/nixpkgs/pull/574462";
     };
   };
 
@@ -28,7 +28,7 @@
   # commit that fails; the pin can go once upstream moves past it and builds.
   inputs = {
     linux-wallpaper-engine = {
-      broken = "1166a1a29aa2fae79561abf329793c03529534f5";
+      broken = "f52102134ea4205a422eb93cc5550e8568a8d769";
       reason = "electron-forge vite plugin: `vite_1.default.build` undefined";
     };
   };
