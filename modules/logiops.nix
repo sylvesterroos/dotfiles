@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.desktop =
+  flake.modules.nixos.logiops =
     { pkgs, ... }:
     {
       environment.systemPackages = [ pkgs.logiops ];

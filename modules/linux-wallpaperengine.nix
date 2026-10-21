@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake.modules.homeManager.desktop =
+  flake.modules.homeManager.linux-wallpaperengine =
     { pkgs, ... }:
     {
       services.linux-wallpaperengine.enable = true;

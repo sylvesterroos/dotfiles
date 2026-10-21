@@ -7,9 +7,13 @@
       imports = with config.flake.modules.nixos; [
         desktop
         headscaled
+        logiops
         creek
       ];
-      home-manager.users.sylvester.imports = [ config.flake.modules.homeManager.creek ];
+      home-manager.users.sylvester.imports = with config.flake.modules.homeManager; [
+        linux-wallpaperengine
+        creek
+      ];
     };
   };
 

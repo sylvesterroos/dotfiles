@@ -12,9 +12,13 @@
         desktop
         headscaled
         livebook
+        logiops
         delta
       ];
-      home-manager.users.sylvester.imports = [ config.flake.modules.homeManager.delta ];
+      home-manager.users.sylvester.imports = with config.flake.modules.homeManager; [
+        linux-wallpaperengine
+        delta
+      ];
     };
   };
 
