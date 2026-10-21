@@ -26,10 +26,6 @@
           routes."/" = "http://127.0.0.1:8123";
         }
         {
-          name = "open-webui";
-          routes."/" = "http://127.0.0.1:${toString config.services.open-webui.port}";
-        }
-        {
           name = "radarr";
           routes."/" = "http://127.0.0.1:7878";
         }
