@@ -7,4 +7,5 @@ pkgs: {
   omawrite = pkgs.callPackage ./omawrite { };
   playkeeper = pkgs.callPackage ./playkeeper { };
   anima-engine = pkgs.callPackage ./anima-engine { };
+  proton-drive-cli = pkgs.callPackage ./proton-drive-cli { };
 }
