@@ -43,16 +43,6 @@
         ethtool.eee-enabled = "off";
       };
 
-      users.users.sylvester = {
-        isNormalUser = true;
-        description = "Sylvester Roos";
-        shell = pkgs.bash;
-        extraGroups = [
-          "networkmanager"
-          "wheel"
-        ];
-      };
-
       boot.zswap.enable = true;
 
       swapDevices = [

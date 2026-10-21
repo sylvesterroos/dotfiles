@@ -1,10 +1,20 @@
-# What every workstation shares: Bluetooth, aarch64 emulation for cross
-# builds, an open firewall on the trusted LAN, and a nix signing key per host
-# so the other machines trust its store paths.
+# What every workstation shares: your user account, Bluetooth, aarch64
+# emulation for cross builds, an open firewall on the trusted LAN, and a nix
+# signing key per host so the other machines trust its store paths.
 {
   flake.modules.nixos.desktop =
-    { config, ... }:
+    { config, pkgs, ... }:
     {
+      users.users.sylvester = {
+        isNormalUser = true;
+        description = "Sylvester Roos";
+        shell = pkgs.bash;
+        extraGroups = [
+          "networkmanager"
+          "wheel"
+        ];
+      };
+
       hardware.bluetooth.enable = true;
 
       programs.fish.enable = true;
