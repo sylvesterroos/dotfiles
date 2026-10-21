@@ -1,19 +1,28 @@
-# generate a new key from a ssh private key
-# $ mkdir -p ~/.config/sops/age/
-# $ ssh-to-age -private-key -i ~/.ssh/id_ed25519 > ~/.config/sops/age/keys.txt
-# get the public key of ~/.config/sops/age/keys.txt
-# $ age-keygen -y ~/.config/sops/age/keys.txt
-# add the public key to the list below
-# update the encrypted secrets
-# $ sops updatekeys secrets/secrets.yaml
+# Each host decrypts its own file with its SSH host key:
+#   ssh <host> 'nix run nixpkgs#ssh-to-age < /etc/ssh/ssh_host_ed25519_key.pub'
+# Editing takes either Token2 FIDO2 key (age-plugin-fido2-hmac), its PIN and a
+# touch; ~/.config/sops/age/keys.txt holds the plugin's identity line
+# (age-plugin-fido2-hmac -m).
+# After changing recipients: sops updatekeys secrets/<file>.yaml
 keys:
-  - &delta age1vvad2hraqyhuf0287syn9s97gcszkrwvz2tskr2esm9zurdtpv7shq9a58
-  - &creek age1mwu4qzhs5dx9fgnfu3g8j6cwn5ccpcvms5722t5k4wha4uk8c5gsgtlfr6
-  - &bachus age1cggegmd6g59k9gwfxkp5twlp9jfy5xgwd7q5djnc0prfu6ca8edsnlqda3
+  - &main age1fido2-hmac1qqpfazjzh65d00y8vjhqzzerund674mxjnnslaxg4u037w8ufrv6kvgpxp5fmm2x9m2h2tma07wx02vqad4zruxvukv2fz3aueqzyal6h9n3kmv500seql08qa00f2g3cg7rrpueks77627agw07v3dd0677pyu073wh3jucwkudrlgmk853zl6ueepz6hx2m9sznh72hap7n3rv5ywl9tuehzzcew4chs5zlxhwfn2lr5mr9h7y2s4ynldtpugrjq0vkc54rur
+  - &backup age1fido2-hmac1qqptk435ayx40v2zkwkrqs22cugyx7nd4n3htf2t8e55z2y5ka5tw4qpa7g0ufx6nq0jec8n6mcre6fz3k76zwuckpjt5dak2yk7tenrzzdklgqfq80085p6ffhfwj8kp6wg8lsm8k99l7aglcjuem4ew8lsrxvd3sc2h6xq05jl9fp59f3f7aalgvl33n3sh26xy0uq8fnjt3lvfzxhyq5rtck5xef4vwvjhzfuunw93qqpz5pckk6qse0g9m6uuqrhu350yaq
+  - &bachus age1v8qdcfkvgu7prgwd5fncqpkd0w8q8gtcjht6mwt8k3p20fnjughqhf2ldg
+  - &creek age1ghypfvf282c3a7ndmkrmaev7824wuvz47qqwxgd23vu7tupzyu5q76llxs
+  - &delta age1mv7wy8jtuweennlwgdvnl53pjsw4st3jeju5ua6a5m6yca943qnsn0mxre
 creation_rules:
-  - path_regex: secrets/secrets.yaml$
+  - path_regex: secrets/shared\.yaml$
     key_groups:
-      - age:
-          - *delta
-          - *creek
-          - *bachus
+      - age: [*main, *backup, *bachus, *creek, *delta]
+  - path_regex: secrets/bachus\.yaml$
+    key_groups:
+      - age: [*main, *backup, *bachus]
+  - path_regex: secrets/creek\.yaml$
+    key_groups:
+      - age: [*main, *backup, *creek]
+  - path_regex: secrets/delta\.yaml$
+    key_groups:
+      - age: [*main, *backup, *delta]
+  - path_regex: secrets/framework\.yaml$
+    key_groups:
+      - age: [*main, *backup]

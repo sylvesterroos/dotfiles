@@ -19,7 +19,7 @@
         # sops: the YAML MAC covers the whole tree.
         # Zed: JSONC, comments are part of the format.
         settings.excludes = [
-          "secrets/secrets.yaml"
+          "secrets/*.yaml"
           "**/zed/*.json"
           ".zed/settings.json"
         ];

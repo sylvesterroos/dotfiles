@@ -23,7 +23,7 @@
         ];
       };
 
-      sops.secrets."nix-access-tokens/github.com" = { };
+      sops.secrets."nix-access-tokens/github.com".sopsFile = "${inputs.self}/secrets/shared.yaml";
 
       sops.templates."nix-access-tokens.conf".content = ''
         access-tokens = github.com=${config.sops.placeholder."nix-access-tokens/github.com"}

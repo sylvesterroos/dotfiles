@@ -1,21 +1,11 @@
-# sops-nix on both layers, one key and one secrets file. Each feature declares
-# the secrets it reads.
+# sops-nix on NixOS. Each host decrypts secrets/<host>.yaml with its SSH host
+# key (sops-nix's default sops.age.sshKeyPaths); secrets several hosts read
+# live in secrets/shared.yaml and set sopsFile. Home-manager reads decrypted
+# paths through osConfig. Each feature declares the secrets it reads.
 { inputs, ... }:
-let
-  settings = {
-    defaultSopsFile = "${inputs.self}/secrets/secrets.yaml";
-    defaultSopsFormat = "yaml";
-    age.keyFile = "/home/sylvester/.config/sops/age/keys.txt";
-  };
-  tools = pkgs: [
-    pkgs.sops
-    pkgs.age
-    pkgs.ssh-to-age
-  ];
-in
 {
   flake.modules.nixos.base =
-    { pkgs, ... }:
+    { config, pkgs, ... }:
     {
       imports = [ inputs.sops-nix.nixosModules.sops ];
 
@@ -26,16 +16,22 @@ in
       # users.
       services.userborn.enable = true;
 
-      environment.systemPackages = tools pkgs;
+      environment.systemPackages = [
+        pkgs.sops
+        pkgs.age
+        pkgs.ssh-to-age
+      ];
 
-      sops = settings;
+      sops = {
+        defaultSopsFile = "${inputs.self}/secrets/${config.networking.hostName}.yaml";
+        defaultSopsFormat = "yaml";
+      };
     };
 
-  flake.modules.homeManager.base =
+  # Editing secrets takes a FIDO2 key; see .sops.yaml.
+  flake.modules.nixos.desktop =
     { pkgs, ... }:
     {
-      imports = [ inputs.sops-nix.homeManagerModules.sops ];
-      home.packages = tools pkgs;
-      sops = settings;
+      environment.systemPackages = [ pkgs.age-plugin-fido2-hmac ];
     };
 }

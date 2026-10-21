@@ -13,27 +13,26 @@ in
     nix.settings.trusted-public-keys = [ "bachus:S4UzuyjTb539BS1RcIeaGlrsZSRl2Ae+m5VtJ9lTKA8=" ];
   };
 
-  flake.modules.homeManager.desktop =
-    { config, osConfig, ... }:
-    let
-      token = "attic/tokens/${osConfig.networking.hostName}";
-    in
+  flake.modules.nixos.desktop =
+    { config, ... }:
     {
-      sops.secrets.${token} = { };
+      sops.secrets."attic/token".owner = config.users.users.sylvester.name;
+    };
 
+  flake.modules.homeManager.desktop =
+    { osConfig, ... }:
+    {
       programs.attic-client = {
         enable = true;
         settings = {
           default-server = host;
           servers.${host} = {
             inherit endpoint;
-            token-file = config.sops.secrets.${token}.path;
+            token-file = osConfig.sops.secrets."attic/token".path;
           };
         };
         watchStore = [ host ];
       };
-
-      systemd.user.services."attic-watch-store--${host}".Unit.After = [ "sops-nix.service" ];
     };
 
   flake.modules.nixos.attic-server =
