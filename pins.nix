@@ -10,6 +10,15 @@
       reason = "zotero 10.0.2+ fails to build against current Firefox";
       upstream = "https://github.com/NixOS/nixpkgs/pull/574462";
     };
+    kernel-modules = {
+      rev = "fe13242281a6";
+      packages = [
+        "linuxPackages_zen"
+        "aggregateModules"
+      ];
+      reason = "out-of-tree modules fail to build or merge since kernel.dev gained System.map and module signing";
+      upstream = "https://github.com/NixOS/nixpkgs/issues/576406";
+    };
   };
 
   # Upstream fixes the `pins` overlay adds to a package, named by its

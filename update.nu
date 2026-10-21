@@ -1,7 +1,9 @@
 # Updates flake.lock, then reports which entries in pins.nix can be dropped.
 #
 # A nixpkgs pin can go once cache.nixos.org has built every package in its
-# group at the new tip: Hydra publishes only what builds.
+# group at the new tip: Hydra publishes only what builds. A group holding a
+# package set or function, which Hydra cannot judge, shows TRY once its
+# `upstream` link is fixed: remove the pin and build by hand.
 # A patch can go once the package's source on tip, with nixpkgs' own patches
 # applied, already contains it: the patch then undoes cleanly.
 # A flake-input pin can go once upstream has moved past the broken commit and
@@ -14,10 +16,13 @@ def tip-outputs [] {
     let
       flake = builtins.getFlake \"($root)\";
       tip = \(flake.inputs.multiverse.lib.mkMultiverse { system = \"x86_64-linux\"; }\).tip;
-      out = name: let r = builtins.tryEval tip.${name}.outPath; in if r.success then r.value else null;
+      package = name: let
+        value = tip.${name};
+        derivation = tip.lib.isDerivation value;
+        r = builtins.tryEval value.outPath;
+      in { inherit name derivation; out = if derivation && r.success then r.value else null; };
     in
-    builtins.mapAttrs \(_: group: map \(name: { inherit name; out = out name; }\) group.packages\)
-      \(import ($root)/pins.nix\).nixpkgs
+    builtins.mapAttrs \(_: group: map package group.packages\) \(import ($root)/pins.nix\).nixpkgs
   "
     nix eval --impure --json --expr $expr | from json
 }
@@ -25,10 +30,18 @@ def cached [out: string] {
     let hash = $out | path basename | str substring 0..31
     (http get --full --allow-errors $"https://cache.nixos.org/($hash).narinfo" | get status) == 200
 }
-def check-nixpkgs [] {
+def check-nixpkgs [links: record] {
     tip-outputs | items { |group, packages|
+    let unjudged = $packages | where { |p| not $p.derivation } | get name
     let missing = $packages | where { |p| $p.out == null or not (cached $p.out) } | get name
-    if ($missing | is-empty) {
+    if ($unjudged | is-not-empty) {
+      let url = $links | get $group
+      if (upstream-state $url) == "fixed" {
+        { pin: $group, verdict: "TRY", detail: $"($url) is fixed; remove the pin and build" }
+      } else {
+        { pin: $group, verdict: "keep", detail: $"Hydra can't judge ($unjudged | str join ', '); waiting on ($url)" }
+      }
+    } else if ($missing | is-empty) {
       { pin: $group, verdict: "DROP", detail: "every package is built on tip" }
     } else {
       { pin: $group, verdict: "keep", detail: $"not built on tip: ($missing | str join ', ')" }
@@ -127,6 +140,6 @@ def main [] {
     print ""
     let links = upstream-links
     print (
-        check-nixpkgs | relink $links.nixpkgs | append (check-patches | relink $links.patches) | append (check-inputs) | table --index false
+        check-nixpkgs $links.nixpkgs | relink $links.nixpkgs | append (check-patches | relink $links.patches) | append (check-inputs) | table --index false
     )
 }
