@@ -66,6 +66,8 @@ def check-patches [] {
     tip.stdenvNoCC.mkDerivation {
       name = \"pin-check-($name)\";
       inherit \(pkg\) src;
+      sourceRoot = pkg.sourceRoot or null;
+      postUnpack = pkg.postUnpack or null;
       patches = pkg.patches or [ ];
       dontConfigure = true;
       dontBuild = true;
