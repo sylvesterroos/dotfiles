@@ -16,6 +16,7 @@ in
       without-home-manager
       attic-server
       headscaled
+      hermes-gateway
       hindsight
       bachus
     ];

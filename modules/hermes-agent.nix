@@ -178,6 +178,23 @@ in
       home.sessionVariables = hermes.sessionVariables;
     };
 
+  # `hermes gateway install` writes the gateway unit with an FHS PATH. The
+  # gateway launches MCP servers (`nix run …`) with that PATH, so this drop-in
+  # gives it the user's NixOS tools; the installer rewrites only the unit file.
+  flake.modules.nixos.hermes-gateway = {
+    systemd.user.services.hermes-gateway = {
+      overrideStrategy = "asDropin";
+      # Each entry contributes its bin directory.
+      path = [
+        "/run/wrappers"
+        "/etc/profiles/per-user/%u"
+        "/run/current-system/sw"
+        "%h/.hermes/node"
+        "%h/.local"
+      ];
+    };
+  };
+
   flake.modules.nixos.without-home-manager =
     {
       config,
