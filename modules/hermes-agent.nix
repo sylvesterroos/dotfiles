@@ -52,7 +52,13 @@ let
             map (dep: if dep.pname or null == "anthropic" then python.pkgs.anthropic else dep) old.dependencies
             ++ map (path: hermesPkgs.callPackage path { pythonPackages = python.pkgs; }) (
               [ "${inputs.self}/pkgs/hermes-plugin-hindsight" ] ++ plugins
-            );
+            )
+            # The hermes-relay plugin, installed in the synced profiles, imports
+            # these beyond Hermes' own dependencies.
+            ++ (with python.pkgs; [
+              segno
+              websocket-client
+            ]);
           # The CLI and its TUI/gateway subprocesses share these dependencies.
           originalPython = python.withPackages (_: old.dependencies);
           runtimePython = python.withPackages (_: dependencies);
