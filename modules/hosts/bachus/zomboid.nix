@@ -37,6 +37,15 @@
           "3717968421" # Common Sense B42.20 - Community Compatibility Fix
           # Puts the "Alcohol" fluid back for any mod recipe still asking for it.
           "3683880154" # Alcohol Fluid Fix [B42]
+          # The maintained B42 fork of Ladders!? (2737665235); never enable both.
+          "3629835761" # Ladders?! B42.20 SP/MP (Unofficial)
+        ];
+
+        # The Ladders fork ships one mod ID per game version; Ladders42204 is
+        # the current one, and these two are older builds kept for old saves.
+        excludeMods = [
+          "Ladders42131"
+          "Ladders4220"
         ];
 
         extraIniSettings = {
