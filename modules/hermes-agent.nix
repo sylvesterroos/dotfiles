@@ -13,22 +13,7 @@ let
       system = pkgs.stdenv.hostPlatform.system;
       llmAgents = inputs.llm-agents.packages.${system};
       hermesPkgs = inputs.llm-agents.inputs.nixpkgs.legacyPackages.${system};
-      # Hermes pins anthropic 0.87 (httpx); nixpkgs' 1.x runs on httpx2 and
-      # rejects the httpx.Timeout that Hermes builds.
-      python = hermesPkgs.python3.override {
-        packageOverrides = _: super: {
-          anthropic = super.anthropic.overridePythonAttrs (old: {
-            version = "0.87.0";
-            dependencies = old.dependencies ++ [ super.distro ];
-            src = hermesPkgs.fetchFromGitHub {
-              owner = "anthropics";
-              repo = "anthropic-sdk-python";
-              tag = "v0.87.0";
-              hash = "sha256-T9DMOwtCd63BNR3V21Y2s1BbUg5X4N5W/RjtmG8+aWs=";
-            };
-          });
-        };
-      };
+      python = hermesPkgs.python3;
       # PM runs in its own dependency graph when resolving managed MCP launchers.
       pmPython = python.withPackages (
         ps: with ps; [
@@ -49,7 +34,7 @@ let
         old:
         let
           dependencies =
-            map (dep: if dep.pname or null == "anthropic" then python.pkgs.anthropic else dep) old.dependencies
+            old.dependencies
             ++ map (path: hermesPkgs.callPackage path { pythonPackages = python.pkgs; }) (
               [ "${inputs.self}/pkgs/hermes-plugin-hindsight" ] ++ plugins
             )
