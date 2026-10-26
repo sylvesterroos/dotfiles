@@ -7,7 +7,7 @@
 
 stdenv.mkDerivation {
   pname = "switch-to-previous-desktop";
-  version = "unstable-2024-02-29";
+  version = "0-unstable-2024-02-29";
 
   src = fetchFromGitLab {
     domain = "invent.kde.org";
