@@ -9,7 +9,7 @@
 # a release to, so updates go through the package version.
 #
 # The dashboard answers at https://playkeeper.<tailnet>.ts.net
-# (tailnet-services.nix). Friends join over the headscale tailnet at
+# (tailnet-services.nix). Clients join over the headscale tailnet at
 # bachus.<headscale domain>; the headscale policy grants the game ports and
 # the userspace headscaled delivers them to loopback. First admin:
 # `sudo playkeeper setup-code`.

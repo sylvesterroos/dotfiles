@@ -1,7 +1,7 @@
 # Project Zomboid dedicated server, run by pznix: steamcmd installs and updates
 # the game and its Workshop mods on every start and at 04:00 daily.
 #
-# Friends join over the headscale tailnet at bachus.<headscale domain>:16261.
+# Clients join over the headscale tailnet at bachus.<headscale domain>:16261.
 # The userspace headscaled hands their UDP to 127.0.0.1, so the server needs
 # no open firewall port; the headscale policy grants the game ports.
 { inputs, ... }:
