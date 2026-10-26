@@ -8,14 +8,14 @@
 }:
 pythonPackages.buildPythonPackage {
   pname = "hermes-plugin-homeassistant";
-  version = "2.0.1-unstable-2026-10-19";
+  version = "0-unstable-2026-10-26";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "NousResearch";
     repo = "hermes-official-plugins";
-    rev = "c6f130d195298ace7d0e84bab8efdfa2bcdc57c8";
-    hash = "sha256-CPXAtt1gWYjekkKeYfAxbmLMb3pyKfgD8EAgdLiP4yQ=";
+    rev = "e4e40398c4d46f86dba3bbdcbfa5ef02d2675988";
+    hash = "sha256-3QOf+Py3bqM28hOW2B0bOXhDDHxdagMIZgUd8z+kwIg=";
   };
   sourceRoot = "source/homeassistant";
 
