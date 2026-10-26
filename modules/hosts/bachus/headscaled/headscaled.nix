@@ -1,7 +1,6 @@
 # Publishes selected Bachus services through a loopback Caddy listener and
-# MagicDNS records. The policy grants members HTTPS access to those services,
-# and grants Sylvester's devices and Bachus SSH access to the tagged Deck.
-# Bachus can also reach the Deck's HTTP service on port 8787 through its proxy.
+# MagicDNS records. The policy grants members HTTPS access to those services.
+# Bachus can reach the Deck's HTTP service on port 8787 through its proxy.
 {
   flake.modules.nixos.bachus =
     {
@@ -69,15 +68,6 @@
             {
               action = "accept";
               proto = "tcp";
-              src = [
-                "sylvester@"
-                serverTag
-              ];
-              dst = [ "tag:deck:22" ];
-            }
-            {
-              action = "accept";
-              proto = "tcp";
               src = [ serverTag ];
               dst = [ "tag:deck:8787" ];
             }
@@ -119,17 +109,6 @@
               proto = "tcp";
               src = [ "autogroup:member" ];
               dst = [ "${serverTag}:25565-25574" ];
-            }
-          ];
-          ssh = [
-            {
-              action = "accept";
-              src = [
-                "sylvester@"
-                serverTag
-              ];
-              dst = [ "tag:deck" ];
-              users = [ "deck" ];
             }
           ];
         };
