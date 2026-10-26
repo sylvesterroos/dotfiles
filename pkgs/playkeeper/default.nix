@@ -4,6 +4,7 @@
   buildNpmPackage,
   fetchFromGitHub,
   go_1_27,
+  nix-update-script,
   nodejs_24,
 }:
 
@@ -87,6 +88,16 @@ buildGoModule {
   # and keep the rest of the suite.
   doCheck = true;
   checkFlags = [ "-skip=^TestTheInstallTakesUsageStatsFromTheEnvironment$" ];
+
+  passthru = {
+    inherit web;
+    updateScript = nix-update-script {
+      extraArgs = [
+        "--flake"
+        "--subpackage=web"
+      ];
+    };
+  };
 
   meta = {
     description = "Self-hosted dashboard for running Minecraft Java servers on a Linux VPS";

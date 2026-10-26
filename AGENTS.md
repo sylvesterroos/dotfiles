@@ -4,7 +4,10 @@
 - Build a host: `nh os build` (hosts: creek, delta, bachus); home-manager builds along with it on creek and delta
 - Evaluate an option: `nix eval .#nixosConfigurations.<host>.config.<option>`
 - Format: `nix fmt`
-- Update inputs: `nu update.nu` — updates `flake.lock` and reports which `pins.nix` entries can be dropped
+
+## Updates
+- `flake.lock`: `nu update.nu` updates `flake.lock` and reports which `pins.nix` entries can be dropped
+- Packages in `pkgs/`: a weekly workflow, `.github/workflows/update-packages.yml`, runs `nix-update --use-update-script` on every package that declares `passthru.updateScript` and opens one pull request per package once every package builds. A package's update rule lives in its `updateScript`; most use `nix-update-script { extraArgs = [ "--flake" ... ]; }`
 
 ## Pins
 `pins.nix` holds every package held back or patched ahead of upstream, with the reason and upstream link: nixpkgs packages served from an older revision, upstream fixes added to a package, and flake inputs locked to a commit. Modules use plain package names; the `pins` overlay swaps in the pinned build and applies the patches, which live in `patches/`.

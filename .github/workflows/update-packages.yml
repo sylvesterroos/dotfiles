@@ -1,0 +1,67 @@
+# Updates every package in pkgs/ that declares passthru.updateScript, weekly,
+# with one pull request per package. Every updatable package must build after
+# the update before its pull request opens.
+name: Update packages
+on:
+  schedule:
+    - cron: "0 4 * * 1"
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  list:
+    runs-on: ubuntu-latest
+    outputs:
+      packages: ${{ steps.list.outputs.packages }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes pipe-operators
+      - id: list
+        run: |
+          packages=$(nix eval --json .#packages.x86_64-linux \
+            --apply 'packages: builtins.filter (name: packages.${name} ? updateScript) (builtins.attrNames packages)')
+          echo "packages=$packages" >> "$GITHUB_OUTPUT"
+  update:
+    needs: list
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJSON(needs.list.outputs.packages) }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=flake:nixpkgs
+          extra_nix_config: |
+            experimental-features = nix-command flakes pipe-operators
+      - name: Update ${{ matrix.package }}
+        run: |
+          nix shell --inputs-from . nixpkgs#nix-update -c \
+            nix-update --flake --use-update-script \
+              --write-commit-message "$RUNNER_TEMP/commit-message" \
+              ${{ matrix.package }}
+      # The updatable packages depend on each other (the Hindsight plugin
+      # bounds its client), so an update must leave all of them building.
+      - name: Build every updatable package
+        run: |
+          nix eval --json .#packages.x86_64-linux \
+            --apply 'packages: builtins.filter (name: packages.${name} ? updateScript) (builtins.attrNames packages)' \
+            | jq -r '.[] | ".#packages.x86_64-linux.\(.)"' \
+            | xargs nix build --no-link
+      - id: message
+        run: |
+          if [ -f "$RUNNER_TEMP/commit-message" ]; then
+            echo "title=$(head -n 1 "$RUNNER_TEMP/commit-message")" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: peter-evans/create-pull-request@v8
+        if: steps.message.outputs.title
+        with:
+          branch: update/${{ matrix.package }}
+          delete-branch: true
+          commit-message: ${{ steps.message.outputs.title }}
+          title: ${{ steps.message.outputs.title }}

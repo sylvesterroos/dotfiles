@@ -3,9 +3,10 @@
 {
   callPackage,
   fetchFromGitHub,
+  nix-update-script,
   pythonPackages,
 }:
-pythonPackages.buildPythonPackage {
+pythonPackages.buildPythonPackage rec {
   pname = "hermes-plugin-hindsight";
   version = "1.2.3";
   pyproject = true;
@@ -13,26 +14,22 @@ pythonPackages.buildPythonPackage {
   src = fetchFromGitHub {
     owner = "vectorize-io";
     repo = "hindsight";
-    rev = "d952b6e655fccab4581ee0722b51c5f103873d12";
+    tag = "integrations/hermes/v${version}";
     hash = "sha256-qEjN1JRGLH7iGDkCEEeIG5ciFRpggvMbjjmrQP+ThCo=";
   };
   sourceRoot = "source/hindsight-integrations/hermes";
 
-  # Upstream ships a directory plugin; move it into a package and declare the
-  # entry point. hindsight-embed only serves the embedded mode, so the client
-  # is the one dependency.
+  # Upstream ships a directory plugin whose pyproject.toml carries the project
+  # metadata and dependency bounds. Move the plugin into a package and extend
+  # that file with the build backend and the entry point.
   postPatch = ''
     mkdir hermes_hindsight
     mv *.py plugin.yaml hermes_hindsight/
-    cat > pyproject.toml <<'EOF'
+    cat >> pyproject.toml <<'EOF'
+
     [build-system]
     requires = ["setuptools"]
     build-backend = "setuptools.build_meta"
-
-    [project]
-    name = "hermes-plugin-hindsight"
-    version = "1.2.3"
-    dependencies = ["hindsight-client"]
 
     [project.entry-points."hermes_agent.memory_providers"]
     hindsight = "hermes_hindsight"
@@ -45,8 +42,16 @@ pythonPackages.buildPythonPackage {
 
   build-system = [ pythonPackages.setuptools ];
   dependencies = [ (callPackage ../hindsight-client { inherit pythonPackages; }) ];
+  # hindsight-embed serves only the embedded mode; this setup talks to a server.
+  pythonRemoveDeps = [ "hindsight-embed" ];
 
   # Imports Hermes modules, which only the Hermes venv provides.
-  dontCheckRuntimeDeps = true;
   dontUsePythonImportsCheck = true;
+
+  passthru.updateScript = nix-update-script {
+    extraArgs = [
+      "--flake"
+      "--version-regex=integrations/hermes/v(.*)"
+    ];
+  };
 }

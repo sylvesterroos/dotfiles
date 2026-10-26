@@ -1,16 +1,16 @@
 # Python client for the Hindsight memory API used by the Hermes plugin.
-{ pythonPackages }:
+{ nix-update-script, pythonPackages }:
 pythonPackages.buildPythonPackage rec {
   pname = "hindsight_client";
   version = "0.10.3";
-  format = "wheel";
+  pyproject = true;
 
   src = pythonPackages.fetchPypi {
-    inherit pname version format;
-    dist = "py3";
-    python = "py3";
-    hash = "sha256-tNDRu8KdzU7yWkojoIpIBG1TN7cEva+rsC0AENKZoGg=";
+    inherit pname version;
+    hash = "sha256-39i5qRLMCdNmdfarSrAqqNx6oQrgkYN5TsW9CDvhlUA=";
   };
+
+  build-system = [ pythonPackages.hatchling ];
 
   dependencies = with pythonPackages; [
     aiohttp-retry
@@ -22,4 +22,6 @@ pythonPackages.buildPythonPackage rec {
     yarl
   ];
   pythonImportsCheck = [ "hindsight_client" ];
+
+  passthru.updateScript = nix-update-script { extraArgs = [ "--flake" ]; };
 }

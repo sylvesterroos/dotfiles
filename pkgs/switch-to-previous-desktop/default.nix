@@ -2,6 +2,7 @@
   lib,
   stdenv,
   fetchFromGitLab,
+  nix-update-script,
 }:
 
 stdenv.mkDerivation {
@@ -24,6 +25,13 @@ stdenv.mkDerivation {
 
     runHook postInstall
   '';
+
+  passthru.updateScript = nix-update-script {
+    extraArgs = [
+      "--flake"
+      "--version=branch"
+    ];
+  };
 
   meta = with lib; {
     description = "KWin script: switch to the previously used virtual desktop";

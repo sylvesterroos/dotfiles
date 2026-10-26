@@ -3,6 +3,7 @@
 # PYTHONPATH.
 {
   fetchFromGitHub,
+  nix-update-script,
   pythonPackages,
 }:
 pythonPackages.buildPythonPackage {
@@ -45,4 +46,11 @@ pythonPackages.buildPythonPackage {
   # Imports Hermes modules, which only the Hermes venv provides.
   dontCheckRuntimeDeps = true;
   dontUsePythonImportsCheck = true;
+
+  passthru.updateScript = nix-update-script {
+    extraArgs = [
+      "--flake"
+      "--version=branch"
+    ];
+  };
 }
