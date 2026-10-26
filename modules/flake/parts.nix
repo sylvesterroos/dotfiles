@@ -18,11 +18,7 @@
     };
   };
 
-  # aarch64-darwin: pkgs/mpatch carries darwin build logic.
-  config.systems = [
-    "x86_64-linux"
-    "aarch64-darwin"
-  ];
+  config.systems = [ "x86_64-linux" ];
 
   config.serviceFrom = import "${inputs.self}/lib/service-from.nix";
 
