@@ -19,19 +19,17 @@ pythonPackages.buildPythonPackage {
   };
   sourceRoot = "source/homeassistant";
 
-  # Upstream ships a directory plugin; move it into a package and declare the
-  # entry point. Its one dependency, aiohttp, comes from the Hermes venv.
+  # Upstream ships a directory plugin whose pyproject.toml carries the project
+  # metadata and dependency bounds. Move the plugin into a package and extend
+  # that file with the build backend and the entry point.
   postPatch = ''
     mkdir hermes_homeassistant
     mv *.py hermes_homeassistant/
-    cat > pyproject.toml <<'EOF'
+    cat >> pyproject.toml <<'EOF'
+
     [build-system]
     requires = ["setuptools"]
     build-backend = "setuptools.build_meta"
-
-    [project]
-    name = "hermes-plugin-homeassistant"
-    version = "2.0.1"
 
     [project.entry-points."hermes_agent.plugins"]
     homeassistant = "hermes_homeassistant"
@@ -42,9 +40,9 @@ pythonPackages.buildPythonPackage {
   '';
 
   build-system = [ pythonPackages.setuptools ];
+  dependencies = [ pythonPackages.aiohttp ];
 
   # Imports Hermes modules, which only the Hermes venv provides.
-  dontCheckRuntimeDeps = true;
   dontUsePythonImportsCheck = true;
 
   passthru.updateScript = nix-update-script {
