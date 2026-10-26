@@ -1,4 +1,7 @@
-# Updates flake.lock, then reports which entries in pins.nix can be dropped.
+# Reports which entries in pins.nix can be dropped at the locked inputs. Run
+# it after updating flake.lock; the report-pins workflow runs `report` weekly
+# and opens an issue for every verdict other than keep. GitHub API calls go
+# through `gh api`, which authenticates with `gh auth` or GH_TOKEN.
 #
 # A nixpkgs pin can go once cache.nixos.org has built every package in its
 # group at the new tip: Hydra publishes only what builds. A group holding a
@@ -58,7 +61,7 @@ def check-inputs [] {
     if $head == $pin.broken {
       { pin: $name, verdict: "keep", detail: "upstream has no commits past the broken one" }
     } else {
-      print $"building ($repo)/($head | str substring 0..6) …"
+      print --stderr $"building ($repo)/($head | str substring 0..6) …"
       let build = nix build --no-link $"($repo)/($head)#packages.x86_64-linux.default" | complete
       if $build.exit_code == 0 {
         { pin: $name, verdict: "DROP", detail: $"($head | str substring 0..6) builds; set the url back to ($repo)" }
@@ -116,7 +119,7 @@ def upstream-links [] {
 def upstream-state [url: string] {
     let parsed = $url | parse --regex '^https://github\.com/(?<repo>[^/]+/[^/]+)/(?:pull|issues)/(?<number>\d+)'
     if ($parsed | is-empty) { return "untracked" }
-    let issue = http get $"https://api.github.com/repos/($parsed.0.repo)/issues/($parsed.0.number)"
+    let issue = gh api $"repos/($parsed.0.repo)/issues/($parsed.0.number)" | from json
     if $issue.state != "closed" { return "open" }
     let fixed = if ($issue.pull_request? | is-not-empty) {
         $issue.pull_request.merged_at? != null
@@ -134,12 +137,10 @@ def relink [links: record] { each { |row|
             $row
         }
     } }
-def main [] {
+# One verdict per pin.
+def report [] {
     cd $root
-    nix flake update
-    print ""
     let links = upstream-links
-    print (
-        check-nixpkgs $links.nixpkgs | relink $links.nixpkgs | append (check-patches | relink $links.patches) | append (check-inputs) | table --index false
-    )
+    check-nixpkgs $links.nixpkgs | relink $links.nixpkgs | append (check-patches | relink $links.patches) | append (check-inputs)
 }
+def main [] { print (report | table --index false) }

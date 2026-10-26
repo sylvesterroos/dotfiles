@@ -1,5 +1,5 @@
 # Packages held back or patched ahead of upstream.
-# `nu update.nu` updates the lock and reports which pins can be dropped.
+# `nu pins.nu` reports which pins can be dropped at the locked inputs.
 {
   # Package groups served from an older nixpkgs revision by the `pins`
   # overlay. A group can be dropped once all its packages build on tip.

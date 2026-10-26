@@ -1,0 +1,53 @@
+# Checks pins.nix against the committed flake.lock and keeps one issue open
+# while any pin has a verdict other than keep: drop it, try removing it, or
+# relink its upstream. The issue closes once every pin reports keep again.
+name: Report pins
+on:
+  schedule:
+    - cron: "0 4 * * 1"
+  push:
+    branches: [master]
+    paths:
+      - flake.lock
+      - pins.nix
+      - pins.nu
+      - patches/**
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TITLE: Pins ready for action
+    steps:
+      - uses: actions/checkout@v7
+      - uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes pipe-operators
+      - name: Check pins
+        run: |
+          nix shell --inputs-from . nixpkgs#nushell -c \
+            nu -c 'source pins.nu; report | where verdict != "keep" | to md' \
+            > "$RUNNER_TEMP/actionable.md"
+      - name: Open, refresh or close the issue
+        run: |
+          number=$(gh issue list --state open --json number,title \
+            --jq "map(select(.title == \"$TITLE\"))[0].number // empty")
+          if grep -q . "$RUNNER_TEMP/actionable.md"; then
+            {
+              echo "\`pins.nu\` at $GITHUB_SHA:"
+              echo
+              cat "$RUNNER_TEMP/actionable.md"
+            } > "$RUNNER_TEMP/body.md"
+            if [ -n "$number" ]; then
+              gh issue edit "$number" --body-file "$RUNNER_TEMP/body.md"
+            else
+              gh issue create --title "$TITLE" --body-file "$RUNNER_TEMP/body.md"
+            fi
+          elif [ -n "$number" ]; then
+            gh issue close "$number" --comment "Every pin reports keep at $GITHUB_SHA."
+          fi

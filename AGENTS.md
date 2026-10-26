@@ -6,7 +6,7 @@
 - Format: `nix fmt`
 
 ## Updates
-- `flake.lock`: `nu update.nu` updates `flake.lock` and reports which `pins.nix` entries can be dropped
+- `flake.lock`: `nh os <action> --update`. `nu pins.nu` prints which `pins.nix` entries can be dropped; `.github/workflows/report-pins.yml` runs the same report weekly and on pushes touching the lock or pins, and keeps one issue open while any pin reports something other than keep
 - Packages in `pkgs/`: a weekly workflow, `.github/workflows/update-packages.yml`, runs `nix-update --use-update-script` on every package that declares `passthru.updateScript` and opens one pull request per package once every package builds. A package's update rule lives in its `updateScript`; most use `nix-update-script { extraArgs = [ "--flake" ... ]; }`
 
 ## Pins
