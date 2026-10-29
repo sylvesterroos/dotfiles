@@ -146,6 +146,20 @@ in
     };
   };
 
+  # The Discord bot connects from bachus alone. Its token arrives on the
+  # desktops with the synced `.env`, so their gateways pin the adapter off
+  # through Hermes' managed scope, which overlays every profile's config.
+  # The token stays, so the Discord tools still send from the desktops.
+  flake.modules.nixos.desktop =
+    { pkgs, ... }:
+    {
+      environment.etc."hermes/config.yaml".source =
+        (pkgs.formats.yaml { }).generate "hermes-managed.yaml"
+          {
+            platforms.discord.enabled = false;
+          };
+    };
+
   flake.modules.nixos.without-home-manager =
     {
       config,
