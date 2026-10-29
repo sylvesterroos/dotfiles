@@ -15,12 +15,10 @@ in
           stablePkgs = mv.at (lib.last mv.releases);
         in
         [
-          attic-client
           elixir
           erlang
           devenv
           fastfetch
-          fd
           figlet # making large letters out of ordinary text
           gitleaks
           godot
@@ -38,11 +36,7 @@ in
           libreoffice-qt
           nix-alien
           obsidian
-          podman-desktop
-          podman-tui
-          pods
           qbittorrent
-          sgdboop
           spotifast
           signal-desktop
           stablePkgs.calibre

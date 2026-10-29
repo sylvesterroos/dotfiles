@@ -45,4 +45,14 @@
       systemd.timers.podman-auto-update.wantedBy = [ "timers.target" ];
       environment.systemPackages = with pkgs; [ podman-compose ];
     };
+
+  flake.modules.homeManager.desktop =
+    { pkgs, ... }:
+    {
+      home.packages = with pkgs; [
+        podman-desktop
+        podman-tui
+        pods
+      ];
+    };
 }
