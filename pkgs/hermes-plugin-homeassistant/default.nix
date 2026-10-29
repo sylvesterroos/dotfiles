@@ -7,7 +7,8 @@
   pythonPackages,
 }:
 pythonPackages.buildPythonPackage {
-  pname = "hermes-plugin-homeassistant";
+  # The project name upstream's pyproject.toml declares.
+  pname = "hermes-homeassistant";
   version = "0-unstable-2026-10-26";
   pyproject = true;
 
