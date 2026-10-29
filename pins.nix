@@ -24,14 +24,7 @@
   # Upstream fixes the `pins` overlay adds to a package, named by its
   # attribute path. A patch can be dropped once the package's source on tip
   # already contains it.
-  patches = {
-    nix-output-monitor-unknown-types = {
-      package = [ "nix-output-monitor" ];
-      patch = ./patches/nix-output-monitor-321.patch;
-      reason = "nom 2.2.0 throws ParseNixJSONMessageError on Determinate Nix 3.23's activity and result types";
-      upstream = "https://github.com/maralorn/nix-output-monitor/pull/321";
-    };
-  };
+  patches = { };
 
   # Flake inputs locked to a commit in flake.nix. `broken` is the upstream
   # commit that fails; the pin can go once upstream moves past it and builds.
