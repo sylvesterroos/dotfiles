@@ -1,10 +1,5 @@
 {
   flake.modules.nixos.creek = {
-    boot.kernel.sysctl = {
-      # enable SysRq shortcuts
-      "kernel.sysrq" = 1;
-    };
-
     boot.loader.systemd-boot = {
       enable = true;
       consoleMode = "keep";
