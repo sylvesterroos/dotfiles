@@ -12,7 +12,6 @@
     services.flatpak = {
       enable = true;
       packages = [
-        "com.github.iwalton3.jellyfin-media-player"
         "com.spotify.Client"
         "com.usebottles.bottles"
         "eu.betterbird.Betterbird"
