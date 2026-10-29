@@ -14,21 +14,6 @@ let
       llmAgents = inputs.llm-agents.packages.${system};
       hermesPkgs = inputs.llm-agents.inputs.nixpkgs.legacyPackages.${system};
       python = hermesPkgs.python3;
-      # PM runs in its own dependency graph when resolving managed MCP launchers.
-      pmPython = python.withPackages (
-        ps: with ps; [
-          packaging
-          tomli-w
-          ruamel-yaml
-          truststore
-        ]
-      );
-      pmRuntime = hermesPkgs.writeTextDir "pm-runtime.json" (
-        builtins.toJSON {
-          python = "${python}/bin/python3";
-          sitePackages = "${pmPython}/${python.sitePackages}";
-        }
-      );
       cuaDriver = inputs.cua.packages.${system}.cua-driver;
       hermes = llmAgents.hermes-agent.overridePythonAttrs (
         old:
@@ -50,21 +35,6 @@ let
         in
         {
           inherit dependencies;
-          postInstall = old.postInstall + ''
-            chmod u+w "$out/${python.sitePackages}/install-stamp.json"
-            ${python.interpreter} -c '
-            import json, pathlib, sys
-            path = pathlib.Path(sys.argv[1])
-            stamp = json.loads(path.read_text())
-            stamp["pmRuntime"] = "${pmRuntime}"
-            path.write_text(json.dumps(stamp))
-            ' "$out/${python.sitePackages}/install-stamp.json"
-          '';
-          postPatch = old.postPatch + ''
-            substituteInPlace hermes_cli/gateway.py \
-              --replace-fail 'return str(resolve_store_python(PROJECT_ROOT) or sys.executable)' \
-                'return os.environ.get("HERMES_PYTHON") or str(resolve_store_python(PROJECT_ROOT) or sys.executable)'
-          '';
           makeWrapperArgs = map (
             arg: if arg == "${originalPython}/bin/python3" then "${runtimePython}/bin/python3" else arg
           ) old.makeWrapperArgs;
