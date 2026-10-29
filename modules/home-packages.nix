@@ -26,7 +26,6 @@ in
           godot
           nil
           onefetch
-          ranger
           stow
           topiary
           upscayl

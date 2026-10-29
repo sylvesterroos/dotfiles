@@ -17,6 +17,7 @@
         termscp
         unzip
         wget
+        yq-go
       ];
     };
 }
