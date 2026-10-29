@@ -14,7 +14,6 @@ let
       llmAgents = inputs.llm-agents.packages.${system};
       hermesPkgs = inputs.llm-agents.inputs.nixpkgs.legacyPackages.${system};
       python = hermesPkgs.python3;
-      cuaDriver = inputs.cua.packages.${system}.cua-driver;
       hermes = llmAgents.hermes-agent.overridePythonAttrs (
         old:
         let
@@ -48,15 +47,12 @@ let
         (llmAgents.hermes-desktop.override { hermes-agent = hermes; })
         llmAgents.agent-browser
         llmAgents.claude-code # Anthropic authentication
-        cuaDriver
         pkgs.imagemagick
-        pkgs.at-spi2-core
       ];
 
       sessionVariables = {
         HERMES_TUI = "1";
         AGENT_BROWSER_EXECUTABLE_PATH = lib.getExe pkgs.chromium;
-        HERMES_CUA_DRIVER_CMD = lib.getExe cuaDriver;
       };
     };
 
@@ -164,9 +160,6 @@ in
       };
     in
     {
-      # CUA's Linux accessibility backend uses AT-SPI, which talks over D-Bus.
-      services.dbus.enable = true;
-
       users.users.sylvester.packages = hermes.packages;
 
       # NixOS has no per-user session variables; scope a /etc/profile snippet.
@@ -174,7 +167,6 @@ in
         if [ "$USER" = 'sylvester' ]; then
           export HERMES_TUI="${hermes.sessionVariables.HERMES_TUI}"
           export AGENT_BROWSER_EXECUTABLE_PATH='${hermes.sessionVariables.AGENT_BROWSER_EXECUTABLE_PATH}'
-          export HERMES_CUA_DRIVER_CMD='${hermes.sessionVariables.HERMES_CUA_DRIVER_CMD}'
         fi
       '';
     };

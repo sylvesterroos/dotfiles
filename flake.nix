@@ -86,8 +86,6 @@
       flake = false;
     };
 
-    cua.url = "github:trycua/cua";
-
     # Fork carrying NateSavage/pznix#1 (Mod IDs from mod.info); return to
     # github:NateSavage/pznix once it merges.
     pznix = {
