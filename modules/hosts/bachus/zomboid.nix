@@ -7,7 +7,7 @@
 { inputs, ... }:
 {
   flake.modules.nixos.bachus =
-    { config, ... }:
+    { config, lib, ... }:
     {
       imports = [ inputs.pznix.nixosModules.default ];
 
@@ -60,5 +60,12 @@
           SleepAllowed = "true";
         };
       };
+
+      # The update check sends the in-game warnings, then waits for the server
+      # to restart. The warnings are fixed sleeps, and the restart is bounded by
+      # the server unit's own stop and start timeouts (steamcmd updates on
+      # start), so the check carries no timeout of its own. pznix's default
+      # leaves 120 s for the restart, which the shutdown save alone can exceed.
+      systemd.services.pznix-zomboid-update-check.serviceConfig.TimeoutStartSec = lib.mkForce "infinity";
     };
 }
