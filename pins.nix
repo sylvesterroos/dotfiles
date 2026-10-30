@@ -33,9 +33,15 @@
   # already contains it.
   patches = { };
 
-  # Flake inputs locked to a commit in flake.nix. `broken` is the upstream
-  # commit that fails; the pin can go once upstream moves past it and builds.
+  # Flake inputs locked to a commit in flake.nix. A pin held back names the
+  # upstream commit that fails as `broken`; it can go once upstream moves past
+  # it and builds. A pin running ahead of upstream names the fix it carries as
+  # `upstream`; it can go once that fix lands.
   inputs = {
+    disko = {
+      upstream = "https://github.com/nix-community/disko/issues/1303";
+      reason = "LUKS `enrollFido2` defines `boot.initrd.systemd.enable`, a removed option on 26.11; the pinned commit is PR #1305, which drops it";
+    };
     linux-wallpaper-engine = {
       broken = "f52102134ea4205a422eb93cc5550e8568a8d769";
       reason = "electron-forge vite plugin: `vite_1.default.build` undefined";

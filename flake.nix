@@ -18,8 +18,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Pinned; see pins.nix.
     disko = {
-      url = "github:nix-community/disko";
+      url = "github:nix-community/disko/848faebb3704e5a6a25b39696d87959548deb83f";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
