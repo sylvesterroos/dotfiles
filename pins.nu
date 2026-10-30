@@ -10,8 +10,9 @@
 # `upstream` link is fixed: remove the pin and build by hand.
 # A patch can go once the package's source on tip, with nixpkgs' own patches
 # applied, already contains it: the patch then undoes cleanly.
-# A flake-input pin can go once upstream has moved past the broken commit and
-# the new commit builds.
+# A flake-input pin held back can go once upstream has moved past the broken
+# commit and the new commit builds; one running ahead can go once its
+# `upstream` link is fixed.
 # A kept pin whose `upstream` PR closed unmerged, or whose issue closed as not
 # planned, shows RELINK: point it at the PR or issue that now carries the fix.
 const root = path self .
@@ -62,6 +63,13 @@ def check-inputs [] {
     $inputs | items { |name, pin|
     let locked = $lock | get $name | get locked
     let repo = $"github:($locked.owner)/($locked.repo)"
+    if "upstream" in $pin {
+      return (match (upstream-state $pin.upstream) {
+        "fixed" => { pin: $name, verdict: "DROP", detail: $"($pin.upstream) is fixed; set the url back to ($repo)" }
+        "ended" => { pin: $name, verdict: "RELINK", detail: $"($pin.upstream) closed without the fix; find its successor" }
+        _ => { pin: $name, verdict: "keep", detail: $"waiting on ($pin.upstream)" }
+      })
+    }
     let head = git ls-remote $"https://github.com/($locked.owner)/($locked.repo)" HEAD | split row "\t" | first
     if $head == $pin.broken {
       { pin: $name, verdict: "keep", detail: "upstream has no commits past the broken one" }
