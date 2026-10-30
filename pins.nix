@@ -2,7 +2,8 @@
 # `nu pins.nu` reports which pins can be dropped at the locked inputs.
 {
   # Package groups served from an older nixpkgs revision by the `pins`
-  # overlay. A group can be dropped once all its packages build on tip.
+  # overlay. `broken` names the multiverse selector the packages fail on,
+  # tip when absent; a group can be dropped once all its packages build there.
   nixpkgs = {
     zotero = {
       rev = "b1b875982b17";
@@ -18,6 +19,12 @@
       ];
       reason = "out-of-tree modules fail to build or merge since kernel.dev gained System.map and module signing";
       upstream = "https://github.com/NixOS/nixpkgs/issues/576406";
+    };
+    copyparty = {
+      rev = "fe13242281a6";
+      broken = "26.05";
+      packages = [ "copyparty" ];
+      reason = "Pillow 13, backported to 26.05, rejects Image.fromarray modes that pillow-jpls and imageio still pass, so both fail their tests";
     };
   };
 

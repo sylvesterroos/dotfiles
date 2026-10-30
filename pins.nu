@@ -4,7 +4,8 @@
 # through `gh api`, which authenticates with `gh auth` or GH_TOKEN.
 #
 # A nixpkgs pin can go once cache.nixos.org has built every package in its
-# group at the new tip: Hydra publishes only what builds. A group holding a
+# group at the selector it was broken on (`broken`, tip when absent): Hydra
+# publishes only what builds. A group holding a
 # package set or function, which Hydra cannot judge, shows TRY once its
 # `upstream` link is fixed: remove the pin and build by hand.
 # A patch can go once the package's source on tip, with nixpkgs' own patches
@@ -14,18 +15,21 @@
 # A kept pin whose `upstream` PR closed unmerged, or whose issue closed as not
 # planned, shows RELINK: point it at the PR or issue that now carries the fix.
 const root = path self .
-def tip-outputs [] {
+def group-outputs [] {
     let expr = $"
     let
       flake = builtins.getFlake \"($root)\";
-      tip = \(flake.inputs.multiverse.lib.mkMultiverse { system = \"x86_64-linux\"; }\).tip;
-      package = name: let
-        value = tip.${name};
-        derivation = tip.lib.isDerivation value;
+      mv = flake.inputs.multiverse.lib.mkMultiverse { system = \"x86_64-linux\"; };
+      package = set: name: let
+        value = set.${name};
+        derivation = set.lib.isDerivation value;
         r = builtins.tryEval value.outPath;
       in { inherit name derivation; out = if derivation && r.success then r.value else null; };
+      outputs = group: let
+        set = if group ? broken then mv.at group.broken else mv.tip;
+      in { at = group.broken or \"tip\"; packages = map \(package set\) group.packages; };
     in
-    builtins.mapAttrs \(_: group: map package group.packages\) \(import ($root)/pins.nix\).nixpkgs
+    builtins.mapAttrs \(_: outputs\) \(import ($root)/pins.nix\).nixpkgs
   "
     nix eval --impure --json --expr $expr | from json
 }
@@ -34,7 +38,8 @@ def cached [out: string] {
     (http get --full --allow-errors $"https://cache.nixos.org/($hash).narinfo" | get status) == 200
 }
 def check-nixpkgs [links: record] {
-    tip-outputs | items { |group, packages|
+    group-outputs | items { |group, outputs|
+    let packages = $outputs.packages
     let unjudged = $packages | where { |p| not $p.derivation } | get name
     let missing = $packages | where { |p| $p.out == null or not (cached $p.out) } | get name
     if ($unjudged | is-not-empty) {
@@ -45,9 +50,9 @@ def check-nixpkgs [links: record] {
         { pin: $group, verdict: "keep", detail: $"Hydra can't judge ($unjudged | str join ', '); waiting on ($url)" }
       }
     } else if ($missing | is-empty) {
-      { pin: $group, verdict: "DROP", detail: "every package is built on tip" }
+      { pin: $group, verdict: "DROP", detail: $"every package is built on ($outputs.at)" }
     } else {
-      { pin: $group, verdict: "keep", detail: $"not built on tip: ($missing | str join ', ')" }
+      { pin: $group, verdict: "keep", detail: $"not built on ($outputs.at): ($missing | str join ', ')" }
     }
   }
 }
