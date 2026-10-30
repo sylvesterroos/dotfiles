@@ -77,6 +77,7 @@ in
     devices = [
       "delta"
       "creek"
+      "framework"
       "windows-desktop"
       "android"
     ];

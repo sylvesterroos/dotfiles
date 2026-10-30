@@ -193,6 +193,7 @@ in
     devices = [
       "creek"
       "delta"
+      "framework"
     ];
   };
 }

@@ -28,6 +28,10 @@
             id = "6YSBUTW-CFFQOGH-FKDBVZF-MW7BJDS-BAUB6FE-VMOTHGD-EXICHET-ZEKQNQ2";
             addresses = [ "dynamic" ];
           };
+          "framework" = {
+            id = "3SEM5NZ-Q6PHHD7-AJHHNW7-M3PEDST-SCNGW6Y-N6E5AIB-KXDOWEM-3XYWWQM";
+            addresses = [ "dynamic" ];
+          };
           "windows-desktop" = {
             id = "ICJG2JE-NOR37L7-NETFILO-A6DSKEU-JZ2RW2J-FQVWNJV-ELRGLCV-GG7SQQR";
             addresses = [ "dynamic" ];
@@ -44,6 +48,7 @@
             devices = [
               "delta"
               "creek"
+              "framework"
               "windows-desktop"
               "android"
             ];
@@ -54,6 +59,7 @@
             devices = [
               "delta"
               "creek"
+              "framework"
               "windows-desktop"
             ];
             ignorePatterns = [ "(?d).git" ];
@@ -63,6 +69,7 @@
             devices = [
               "delta"
               "creek"
+              "framework"
               "windows-desktop"
             ];
             ignorePatterns = [ "(?d).git" ];
@@ -72,6 +79,7 @@
             devices = [
               "delta"
               "creek"
+              "framework"
               "windows-desktop"
             ];
             ignorePatterns = [ "(?d).git" ];
@@ -81,6 +89,7 @@
             devices = [
               "delta"
               "creek"
+              "framework"
               "windows-desktop"
             ];
             ignorePatterns = [ "(?d).git" ];
@@ -90,6 +99,7 @@
             devices = [
               "delta"
               "creek"
+              "framework"
               "windows-desktop"
             ];
             ignorePatterns = [ "(?d).git" ];
