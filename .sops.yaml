@@ -10,10 +10,11 @@ keys:
   - &bachus age1v8qdcfkvgu7prgwd5fncqpkd0w8q8gtcjht6mwt8k3p20fnjughqhf2ldg
   - &creek age1ghypfvf282c3a7ndmkrmaev7824wuvz47qqwxgd23vu7tupzyu5q76llxs
   - &delta age1mv7wy8jtuweennlwgdvnl53pjsw4st3jeju5ua6a5m6yca943qnsn0mxre
+  - &framework age199k3d72dl6l0ednva59ayqtgx2kjqxanc0uajtqhfcwasq308vusdzjtex
 creation_rules:
   - path_regex: secrets/shared\.yaml$
     key_groups:
-      - age: [*main, *backup, *bachus, *creek, *delta]
+      - age: [*main, *backup, *bachus, *creek, *delta, *framework]
   - path_regex: secrets/bachus\.yaml$
     key_groups:
       - age: [*main, *backup, *bachus]
@@ -25,4 +26,4 @@ creation_rules:
       - age: [*main, *backup, *delta]
   - path_regex: secrets/framework\.yaml$
     key_groups:
-      - age: [*main, *backup]
+      - age: [*main, *backup, *framework]
