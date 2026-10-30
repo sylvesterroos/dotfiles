@@ -33,8 +33,6 @@
 
       boot.zswap.enable = true;
 
-      hardware.cpu.intel.npu.enable = true;
-
       my.headscaled.network = config.headscaleNetwork;
 
       users.users.sylvester.extraGroups = [ "plugdev" ];
