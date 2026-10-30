@@ -1,7 +1,5 @@
-{ config, inputs, ... }:
+{ inputs, ... }:
 let
-  mv = config.multiverse;
-  hosts = config.configurations.nixos;
   herdrTui = pkgs: inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.herdr;
 in
 {
@@ -12,23 +10,8 @@ in
     };
 
   flake.modules.homeManager.desktop =
-    {
-      osConfig,
-      lib,
-      pkgs,
-      ...
-    }:
+    { lib, pkgs, ... }:
     let
-      # The GUI loads the host's Mesa into its own process, and Mesa needs the
-      # glibc it was built with. Build upstream's flake against the nixpkgs
-      # this host runs instead of the nixpkgs its input follows.
-      herdrGui = (import "${inputs.herdr-gpui}/flake.nix").outputs (
-        inputs.herdr-gpui.inputs
-        // {
-          self = inputs.herdr-gpui;
-          nixpkgs = mv.flakeAt hosts.${osConfig.networking.hostName}.nixpkgs;
-        }
-      );
       herdr = lib.getExe (herdrTui pkgs);
       # Pick a Hermes profile, then open it as a tab in the "~" workspace,
       # creating that workspace on first use.
@@ -79,7 +62,5 @@ in
           ];
         };
       };
-
-      home.packages = [ herdrGui.packages.${pkgs.stdenv.hostPlatform.system}.default ];
     };
 }

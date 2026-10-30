@@ -234,7 +234,7 @@
         "nix": "nix_2",
         "nixd": "nixd",
         "nixpkgs": "nixpkgs_8",
-        "rust-overlay": "rust-overlay_3"
+        "rust-overlay": "rust-overlay_2"
       },
       "locked": {
         "lastModified": 1783538213,
@@ -571,27 +571,6 @@
         "type": "github"
       }
     },
-    "herdr-gpui": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "rust-overlay": "rust-overlay"
-      },
-      "locked": {
-        "lastModified": 1793253925,
-        "narHash": "sha256-K7Agnl9d61OVh6ScOXZmirowwc82Lh9t/L6IZBKuDwo=",
-        "owner": "penso",
-        "repo": "herdr-gpui",
-        "rev": "a5b2df2db54061cd2785c3ddf184bce348be3fd1",
-        "type": "github"
-      },
-      "original": {
-        "owner": "penso",
-        "repo": "herdr-gpui",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -648,7 +627,7 @@
           "nixpkgs"
         ],
         "pre-commit": "pre-commit",
-        "rust-overlay": "rust-overlay_2"
+        "rust-overlay": "rust-overlay"
       },
       "locked": {
         "lastModified": 1790423250,
@@ -1167,7 +1146,6 @@
         "disko": "disko",
         "flake-parts": "flake-parts_2",
         "helium": "helium",
-        "herdr-gpui": "herdr-gpui",
         "home-manager": "home-manager",
         "import-tree": "import-tree",
         "lanzaboote": "lanzaboote",
@@ -1189,27 +1167,6 @@
     "rust-overlay": {
       "inputs": {
         "nixpkgs": [
-          "herdr-gpui",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1790062494,
-        "narHash": "sha256-Mds1vuoczq1fRm1rf+Iar8IKDBHNjOMo2JqqPWJUlng=",
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "rev": "b88764907c1b2de6c0e206d8d9d9634d91c81334",
-        "type": "github"
-      },
-      "original": {
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "type": "github"
-      }
-    },
-    "rust-overlay_2": {
-      "inputs": {
-        "nixpkgs": [
           "lanzaboote",
           "nixpkgs"
         ]
@@ -1228,7 +1185,7 @@
         "type": "github"
       }
     },
-    "rust-overlay_3": {
+    "rust-overlay_2": {
       "inputs": {
         "nixpkgs": [
           "sylvesterroos-com",

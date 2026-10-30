@@ -70,11 +70,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    herdr-gpui = {
-      url = "github:penso/herdr-gpui";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     copyparty = {
       url = "github:9001/copyparty";
       # upstream's input is broken
