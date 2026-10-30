@@ -1,4 +1,12 @@
+# Ghostty: the terminal on the desktops, and its terminfo on every host so
+# sessions opened from Ghostty, locally or over SSH, know the terminal type.
 {
+  flake.modules.nixos.base =
+    { pkgs, ... }:
+    {
+      environment.systemPackages = [ pkgs.ghostty.terminfo ];
+    };
+
   flake.modules.homeManager.desktop =
     { pkgs, ... }:
     {

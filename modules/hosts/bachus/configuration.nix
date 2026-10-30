@@ -44,7 +44,6 @@ in
       boot.loader.timeout = 0;
 
       environment.systemPackages = with pkgs; [
-        ghostty.terminfo
         git
         gitu
         neovim
