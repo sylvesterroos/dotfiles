@@ -89,6 +89,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Voice dictation. Only the module and package recipe are used; the
+    # package is built with each host's nixpkgs (modules/hex.nix).
+    hex = {
+      url = "github:anomalyco/hex";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+
     # Agent CLIs and apps, updated daily. Follows its own nixpkgs so
     # cache.numtide.com serves the builds.
     llm-agents.url = "github:numtide/llm-agents.nix";
