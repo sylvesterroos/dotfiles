@@ -55,7 +55,14 @@
           }
         ];
 
-        kwin.virtualDesktops.number = lib.mkDefault 6;
+        kwin.virtualDesktops.names = [
+          "Browsing"
+          "Programming"
+          "Communication"
+          "Music"
+          "Writing"
+          "Miscellaneous"
+        ];
 
         #
         # Some high-level settings:
@@ -281,5 +288,9 @@
     };
 
   # The games live on their own desktop, Meta+7.
-  flake.modules.homeManager.gaming.programs.plasma.kwin.virtualDesktops.number = 7;
+  flake.modules.homeManager.gaming =
+    { lib, ... }:
+    {
+      programs.plasma.kwin.virtualDesktops.names = lib.mkAfter [ "Gaming" ];
+    };
 }
