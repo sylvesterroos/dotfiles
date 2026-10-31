@@ -51,7 +51,6 @@ let multiple_completers = {|spans|
 }
 $env.config = {
     show_banner: true
-    # Report modified keys such as Ctrl-Backspace distinctly from their legacy control bytes
     use_kitty_protocol: true
     completions: {
         case_sensitive: false
