@@ -18,7 +18,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Pinned; see pins.nix.
     disko = {
       url = "github:nix-community/disko/848faebb3704e5a6a25b39696d87959548deb83f";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -51,7 +50,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Pinned; see pins.nix.
     linux-wallpaper-engine.url = "github:jagrat7/linux-wallpaper-engine/27cb7f959a1ca1221526b3b436deeffa6c3a683b";
 
     treefmt-nix = {
@@ -87,6 +85,14 @@
     pznix = {
       url = "github:sylvesterroos/pznix/mod-info-ids";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Voice dictation. Only the module and package recipe are used; the
+    # package is built with each host's nixpkgs (modules/hex.nix).
+    hex = {
+      url = "github:anomalyco/hex";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
     };
 
     # Agent CLIs and apps, updated daily. Follows its own nixpkgs so
