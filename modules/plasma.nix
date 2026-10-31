@@ -137,11 +137,15 @@
             "Window to Next Screen" = "none";
             "Window to Previous Screen" = "none";
 
+            "Window Close" = "Meta+Q";
+
             # Present windows of the current application.
             "ExposeClass" = "Meta+F7";
           };
 
           plasmashell = {
+            # Meta+Q is Plasma's default for the activity switcher; it closes windows here.
+            "manage activities" = "none";
             "activate task manager entry 1" = "none";
             "activate task manager entry 2" = "none";
             "activate task manager entry 3" = "none";
