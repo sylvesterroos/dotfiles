@@ -11,8 +11,9 @@
     module = {
       imports = with config.flake.modules.nixos; [
         desktop
-        headscaled
         framework
+        headscaled
+        programming
       ];
       home-manager.users.sylvester.imports = [ config.flake.modules.homeManager.framework ];
     };

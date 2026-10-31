@@ -10,6 +10,7 @@
     module = {
       imports = with config.flake.modules.nixos; [
         desktop
+        programming
         headscaled
         livebook
         logiops

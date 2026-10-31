@@ -6,6 +6,7 @@
     module = {
       imports = with config.flake.modules.nixos; [
         desktop
+        programming
         headscaled
         logiops
         creek

@@ -17,7 +17,7 @@ Dendritic layout on flake-parts, following [mightyiam/dendritic](https://github.
 
 - `flake.nix` — inputs only; outputs come from `modules/`
 - `modules/flake/` — flake plumbing: systems, overlays and packages, formatter, and `hosts.nix`, which turns each `configurations.nixos.<host>` into a NixOS system
-- `modules/*.nix` — features. Each adds to a role: `flake.modules.nixos.base` (every host), `flake.modules.nixos.desktop` (creek, delta), and the matching `flake.modules.homeManager.{base,desktop}`. Individually selected features have a named module that the host imports.
+- `modules/*.nix` — features. Each adds to a role: `flake.modules.nixos.base` (every host), `desktop` (creek, delta, framework), `programming` (creek, delta, framework, bachus), and the matching `flake.modules.homeManager.{base,desktop}`. Roles never import each other; a host lists every role it plays. Individually selected features have a named module that the host imports.
 - `modules/hosts/<host>/` — a host's roles, hardware and host-only services, as `flake.modules.nixos.<host>` and `flake.modules.homeManager.<host>`
 - `pkgs/` — custom packages
 - `overlays/` — nixpkgs overlays

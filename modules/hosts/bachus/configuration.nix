@@ -14,6 +14,7 @@ in
     nixpkgs = lib.last mv.releases;
     module.imports = with config.flake.modules.nixos; [
       without-home-manager
+      programming
       attic-server
       headscaled
       hermes-gateway
@@ -47,9 +48,7 @@ in
         git
         gitu
         neovim
-        nil
         yazi
-        mv.tip.devenv
         inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.codex
         inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode
       ];
