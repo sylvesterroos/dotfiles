@@ -15,6 +15,8 @@
       environment.systemPackages = with pkgs; [
         mangohud
         mangojuice
+        # protontricks' desktop entry names `Icon=wine`
+        wine-icon
       ];
     };
 
