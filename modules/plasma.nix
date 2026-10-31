@@ -140,6 +140,9 @@
 
         configFile."kwinrc"."Plugins"."switch-to-previous-desktopEnabled" = true;
 
+        # 9 is KWin's ElectricNone: no hot corner for the overview.
+        configFile."kwinrc"."Effect-overview"."BorderActivate" = 9;
+
         #
         # Some low-level settings:
         #
