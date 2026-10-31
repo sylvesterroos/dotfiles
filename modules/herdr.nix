@@ -1,6 +1,7 @@
-{ inputs, ... }:
+{ config, inputs, ... }:
 let
   herdrTui = pkgs: inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.herdr;
+  hosts = builtins.attrNames config.configurations.nixos;
 in
 {
   flake.modules.nixos.bachus =
@@ -10,9 +11,24 @@ in
     };
 
   flake.modules.homeManager.desktop =
-    { lib, pkgs, ... }:
+    {
+      lib,
+      osConfig,
+      pkgs,
+      ...
+    }:
     let
       herdr = lib.getExe (herdrTui pkgs);
+      # Every other host as a saved SSH machine, so the sidebar lists its
+      # workspaces and agents next to Local. Herdr requires a profile id of 32
+      # lowercase hex characters; a digest of the host name keeps it stable.
+      machines = map (host: {
+        id = builtins.substring 0 32 (builtins.hashString "sha256" host);
+        label = host;
+        target = host;
+        session = "default";
+        enabled = true;
+      }) (lib.remove osConfig.networking.hostName hosts);
       # Pick a Hermes profile, then open it as a tab in the "~" workspace,
       # creating that workspace on first use.
       hermesTab = pkgs.writers.writeNu "herdr-hermes-tab" ''
@@ -31,6 +47,11 @@ in
       '';
     in
     {
+      xdg.stateFile."herdr/client/endpoints.json".text = builtins.toJSON {
+        version = 1;
+        ssh = machines;
+      };
+
       programs.herdr = {
         enable = true;
         package = herdrTui pkgs;
