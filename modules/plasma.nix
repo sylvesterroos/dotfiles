@@ -40,7 +40,7 @@
     };
 
   flake.modules.homeManager.desktop =
-    { pkgs, ... }:
+    { lib, pkgs, ... }:
     {
       imports = [
         inputs.plasma-manager.homeModules.plasma-manager
@@ -55,6 +55,8 @@
             variant = "altgr-intl";
           }
         ];
+
+        kwin.virtualDesktops.number = lib.mkDefault 6;
 
         #
         # Some high-level settings:
@@ -156,4 +158,7 @@
         inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.switch-to-previous-desktop
       ];
     };
+
+  # The games live on their own desktop, Meta+7.
+  flake.modules.homeManager.gaming.programs.plasma.kwin.virtualDesktops.number = 7;
 }

@@ -10,6 +10,7 @@
     nixpkgs = "tip";
     module = {
       imports = with config.flake.modules.nixos; [
+        gaming
         desktop
         framework
         headscaled

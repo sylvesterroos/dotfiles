@@ -19,4 +19,6 @@ in
       ];
     };
   };
+
+  flake.modules.nixos.gaming.home-manager.users.sylvester.imports = [ hm.gaming ];
 }

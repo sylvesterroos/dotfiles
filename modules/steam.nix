@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.desktop =
+  flake.modules.nixos.gaming =
     { pkgs, ... }:
     {
       programs.steam = {
@@ -18,7 +18,7 @@
       ];
     };
 
-  flake.modules.homeManager.desktop =
+  flake.modules.homeManager.gaming =
     { pkgs, ... }:
     {
       home.packages = with pkgs; [ sgdboop ];
