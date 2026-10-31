@@ -55,6 +55,14 @@
           }
         ];
 
+        # KWin's defaults for every touchpad: natural scrolling and a right
+        # click with two fingers (ClickMethod 2). A device's own group in
+        # kcminputrc overrides these.
+        configFile."kcminputrc"."Libinput/Defaults/Touchpad" = {
+          NaturalScroll = true;
+          ClickMethod = 2;
+        };
+
         kwin.virtualDesktops.names = [
           "Browsing"
           "Programming"
