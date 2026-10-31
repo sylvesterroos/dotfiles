@@ -6,6 +6,7 @@ pkgs: {
   playkeeper = pkgs.callPackage ./playkeeper { };
   proton-drive-cli = pkgs.callPackage ./proton-drive-cli { };
   wine-icon = pkgs.callPackage ./wine-icon { };
+  shader-wallpaper = pkgs.kdePackages.callPackage ./shader-wallpaper { };
   # Hermes builds these against its own interpreter; these attributes serve
   # builds and updates.
   hermes-plugin-hindsight = pkgs.callPackage ./hermes-plugin-hindsight {
