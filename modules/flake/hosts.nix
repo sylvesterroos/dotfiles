@@ -22,6 +22,11 @@ in
             type = lib.types.str;
             description = "The host's ed25519 SSH host public key. Its sops age recipient in .sops.yaml derives from this key.";
           };
+          nixSigningKey = lib.mkOption {
+            type = lib.types.nullOr lib.types.str;
+            default = null;
+            description = "Public half of the key the host signs its Nix builds with, as `<name>:<base64>`; null for a host that signs nothing.";
+          };
           module = lib.mkOption {
             type = lib.types.deferredModule;
             description = "The host: its roles, hardware and host-only settings.";

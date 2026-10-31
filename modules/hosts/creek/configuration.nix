@@ -4,6 +4,7 @@
   configurations.nixos.creek = {
     nixpkgs = "tip";
     sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEJwLILTn1Fcv2rWpEnPj2Zjzl1hbSb5xVHua5yWtrYV";
+    nixSigningKey = "creek:UcoGc9NgCBfUQMcw+qJimw+sve+YNLn+tNnte1DupMU=";
     module = {
       imports = with config.flake.modules.nixos; [
         desktop

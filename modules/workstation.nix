@@ -1,6 +1,10 @@
 # What every workstation shares: your user account, Bluetooth, aarch64
 # emulation for cross builds, an open firewall on the trusted LAN, and a nix
 # signing key per host so the other machines trust its store paths.
+{ config, ... }:
+let
+  hosts = config.configurations.nixos;
+in
 {
   flake.modules.nixos.desktop =
     { config, pkgs, ... }:
@@ -25,5 +29,11 @@
 
       sops.secrets.nix-signing-key = { };
       nix.settings.secret-key-files = [ config.sops.secrets.nix-signing-key.path ];
+      assertions = [
+        {
+          assertion = hosts.${config.networking.hostName}.nixSigningKey != null;
+          message = "${config.networking.hostName} signs its Nix builds; set configurations.nixos.${config.networking.hostName}.nixSigningKey to the public half of its key.";
+        }
+      ];
     };
 }

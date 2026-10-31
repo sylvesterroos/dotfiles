@@ -8,6 +8,7 @@
   configurations.nixos.delta = {
     nixpkgs = "tip";
     sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPXZpUJNBcSsQA36y96pF2pRZjtYlcRnDCh71YvOc7Uc";
+    nixSigningKey = "delta:MfokDZYzRFSHuj8dIQuPVw5GoeFKUvOqJAVjJnxJ2RE=";
     module = {
       imports = with config.flake.modules.nixos; [
         desktop
