@@ -35,6 +35,11 @@
                   type = "bcachefs";
                   filesystem = "fs";
                   label = "root";
+                  extraFormatArgs = [
+                    "--compression=lz4"
+                    "--background_compression=zstd:5"
+                    "--reconcile_on_ac_only=1"
+                  ];
                 };
               };
             };
