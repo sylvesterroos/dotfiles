@@ -24,7 +24,6 @@ in
           godot
           nil
           onefetch
-          stow
           topiary
           upscayl
         ]

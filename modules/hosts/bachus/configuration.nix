@@ -48,7 +48,6 @@ in
         gitu
         neovim
         nil
-        stow
         yazi
         mv.tip.devenv
         inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.codex

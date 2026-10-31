@@ -14,6 +14,7 @@
         jq
         neovim
         ripgrep
+        stow
         termscp
         unzip
         wget
