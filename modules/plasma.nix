@@ -35,7 +35,6 @@
           btrfs-progs
 
           haruna
-          morewaita-icon-theme
         ]);
     };
 
