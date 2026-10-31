@@ -1,7 +1,8 @@
 # NixOS Dotfiles
 
 ## Build Commands
-- Build a host: `nh os build` (hosts: creek, delta, bachus); home-manager builds along with it on creek and delta
+- Build the current host: `nh os build`; home-manager builds along with it on hosts that use it
+- List hosts: `nix eval .#nixosConfigurations --apply builtins.attrNames`; the current host is `hostname`
 - Evaluate an option: `nix eval .#nixosConfigurations.<host>.config.<option>`
 - Format: `nix fmt`
 
@@ -17,13 +18,13 @@ Dendritic layout on flake-parts, following [mightyiam/dendritic](https://github.
 
 - `flake.nix` — inputs only; outputs come from `modules/`
 - `modules/flake/` — flake plumbing: systems, overlays and packages, formatter, and `hosts.nix`, which turns each `configurations.nixos.<host>` into a NixOS system
-- `modules/*.nix` — features. Each adds to a role: `flake.modules.nixos.base` (every host), `desktop` (creek, delta, framework), `programming` (creek, delta, framework, bachus), `gaming` (delta), and the matching `flake.modules.homeManager.{base,desktop,gaming}`. Roles never import each other; a host lists every role it plays. Individually selected features have a named module that the host imports.
+- `modules/*.nix` — features. Each adds to a role: `flake.modules.nixos.base` (every host), `desktop`, `programming`, `gaming`, and the matching `flake.modules.homeManager.{base,desktop,gaming}`. Roles never import each other; a host lists every role it plays. Individually selected features have a named module that the host imports.
 - `modules/hosts/<host>/` — a host's roles, hardware and host-only services, as `flake.modules.nixos.<host>` and `flake.modules.homeManager.<host>`
 - `pkgs/` — custom packages
 - `overlays/` — nixpkgs overlays
 - `secrets/` — sops-nix encrypted secrets (`.sops.yaml`)
 
-Home-manager runs as a NixOS module on the desktop hosts; home modules read the system through `osConfig`. Bachus runs without home-manager and gets its user tools from `flake.modules.nixos.without-home-manager`.
+Home-manager runs as a NixOS module on hosts that play the `desktop` role; home modules read the system through `osConfig`. Hosts without home-manager get their user tools from `flake.modules.nixos.without-home-manager`.
 
 ## Service Sources
 `config.serviceFrom` selects a service's NixOS module and package from one package set. Capture it and `config.multiverse` in the top-level module, then import its result into the host module:
