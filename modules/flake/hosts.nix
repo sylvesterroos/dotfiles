@@ -18,6 +18,10 @@ in
             type = lib.types.str;
             description = "Multiverse selector of the nixpkgs release the host runs.";
           };
+          sshHostKey = lib.mkOption {
+            type = lib.types.str;
+            description = "The host's ed25519 SSH host public key. Its sops age recipient in .sops.yaml derives from this key.";
+          };
           module = lib.mkOption {
             type = lib.types.deferredModule;
             description = "The host: its roles, hardware and host-only settings.";

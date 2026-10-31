@@ -12,6 +12,7 @@ in
 {
   configurations.nixos.bachus = {
     nixpkgs = lib.last mv.releases;
+    sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHekf3baiZ+GXfRPPVqJf9pSoIaTw0DnU4EA130ZcJ+e";
     module.imports = with config.flake.modules.nixos; [
       without-home-manager
       programming

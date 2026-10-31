@@ -8,6 +8,7 @@
 {
   configurations.nixos.framework = {
     nixpkgs = "tip";
+    sshHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMVMKMM7bqPyi8ryo4TGfDwxRkSG+fVfWf0HjdYS8S61";
     module = {
       imports = with config.flake.modules.nixos; [
         gaming

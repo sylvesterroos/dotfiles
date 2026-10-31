@@ -1,5 +1,12 @@
+{ config, lib, ... }:
 {
   flake.modules.nixos.base = {
+    # Every host trusts the host key `configurations.nixos` records for each
+    # other host.
+    programs.ssh.knownHosts = lib.mapAttrs (_: host: {
+      publicKey = host.sshHostKey;
+    }) config.configurations.nixos;
+
     services.openssh = {
       enable = true;
       settings = {
