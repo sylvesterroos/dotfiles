@@ -10,6 +10,16 @@
       services.displayManager.plasma-login-manager.enable = true;
       services.desktopManager.plasma6.enable = true;
 
+      # Keep the greeter password-only. `services.fprintd.enablePam` defaults
+      # to on, which adds pam_fprintd to every PAM service, `login` included;
+      # plasmalogin authenticates through `login`. A fingerprint login never
+      # supplies a password, so pam_kwallet cannot unlock the wallet and
+      # Chromium-family apps (Brave) ask for the KWallet password. The lock
+      # screen is unaffected: kscreenlocker uses the separate
+      # `kde-fingerprint` service that nixpkgs' plasma6 module enables, which
+      # accepts fingerprint or password.
+      security.pam.services.login.fprintAuth = false;
+
       programs.kdeconnect = {
         enable = true;
       };
