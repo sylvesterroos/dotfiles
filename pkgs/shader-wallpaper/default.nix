@@ -59,6 +59,15 @@ stdenv.mkDerivation (finalAttrs: {
     shaderc
   ];
 
+  # The Plasma Login Manager greeter runs as the plasmalogin user and cannot
+  # read shaders kept in the desktop user's home. Shaders under the package's
+  # contents/ui/Shaders are resolved against whichever copy of the plugin is
+  # running, so shipping one here makes it selectable from the login screen.
+  postInstall = ''
+    install -Dm644 ${./framework_ascii.glsl} \
+      $out/share/plasma/wallpapers/online.knowmad.shaderwallpaper/contents/ui/Shaders/framework_ascii.glsl
+  '';
+
   passthru.updateScript = nix-update-script { extraArgs = [ "--flake" ]; };
 
   meta = {
