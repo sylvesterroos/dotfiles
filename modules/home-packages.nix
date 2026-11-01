@@ -17,10 +17,10 @@ in
         [
           elixir
           erlang
-          fastfetch
           figlet # making large letters out of ordinary text
           gitleaks
           godot
+          nitch
           onefetch
           topiary
           upscayl
