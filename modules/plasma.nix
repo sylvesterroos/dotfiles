@@ -171,8 +171,15 @@
         # 9 is KWin's ElectricNone: no hot corner for the overview.
         configFile."kwinrc"."Effect-overview"."BorderActivate" = 9;
 
-        # Search results show applications, files and settings; visited websites stay in the browser.
-        configFile."krunnerrc"."Plugins"."browserhistoryEnabled" = false;
+        configFile."krunnerrc"."Plugins" = {
+          browserhistoryEnabled = false;
+          browsertabsEnabled = false;
+          "org.kde.activities2Enabled" = false;
+          shellEnabled = false;
+          krunner_shellEnabled = false;
+          konsoleprofilesEnabled = false;
+          krunner_konsoleprofilesEnabled = false;
+        };
 
         # Baloo reads "exclude filters" as the complete list of skipped file and folder names.
         # It opens with Baloo 6.31's defaults (src/file/fileexcludefilters.cpp, list version 9)
