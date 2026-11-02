@@ -39,8 +39,9 @@
         };
       };
 
-      # Plasma's terminal for Terminal=true applications (btop, htop) and
-      # "Open Terminal Here".
-      programs.plasma.configFile.kdeglobals.General.TerminalService = "com.mitchellh.ghostty.desktop";
+      programs.plasma.configFile.kdeglobals.General = {
+        TerminalService = "com.mitchellh.ghostty.desktop";
+        TerminalApplication = "ghostty --gtk-single-instance=true --confirm-close-surface=false";
+      };
     };
 }
