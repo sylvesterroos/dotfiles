@@ -16,7 +16,6 @@
         programming
         headscaled
         livebook
-        logiops
         delta
       ];
       home-manager.users.sylvester.imports = with config.flake.modules.homeManager; [

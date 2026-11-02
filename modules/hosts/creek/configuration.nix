@@ -10,7 +10,6 @@
         desktop
         programming
         headscaled
-        logiops
         creek
       ];
       home-manager.users.sylvester.imports = with config.flake.modules.homeManager; [
