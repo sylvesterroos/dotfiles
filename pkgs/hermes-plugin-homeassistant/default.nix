@@ -9,14 +9,14 @@
 pythonPackages.buildPythonPackage {
   # The project name upstream's pyproject.toml declares.
   pname = "hermes-homeassistant";
-  version = "0-unstable-2026-10-26";
+  version = "0-unstable-2026-11-02";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "NousResearch";
     repo = "hermes-official-plugins";
-    rev = "e4e40398c4d46f86dba3bbdcbfa5ef02d2675988";
-    hash = "sha256-3QOf+Py3bqM28hOW2B0bOXhDDHxdagMIZgUd8z+kwIg=";
+    rev = "471acd3b4d0d5c12f6f0f6b42db4a2f52a912dba";
+    hash = "sha256-NGCuKXTy1xSdwZ09OhgMiFzPLPJyP0dXrgFzK7wtj5c=";
   };
   sourceRoot = "source/homeassistant";
 
