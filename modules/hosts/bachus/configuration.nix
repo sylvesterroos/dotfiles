@@ -18,6 +18,7 @@ in
       programming
       attic-server
       headscaled
+      tailscale-provision
       hermes-gateway
       hindsight
       bachus

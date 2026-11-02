@@ -2,11 +2,9 @@
   flake.modules.nixos.bachus =
     { config, ... }:
     {
-      # One-time prerequisites outside Nix (Tailscale admin console):
-      #   1. Tag bachus (e.g. tag:server) — service hosts must be tagged nodes.
-      #   2. Define every service below on the Services page (name + tcp:443).
-      #   3. Add a services auto-approver rule so bachus can advertise them.
-      # After that, each entry is reachable at https://<name>.allosaurus-snapper.ts.net
+      # `tailscale-provision` defines each service below and approves bachus
+      # (tag:server) as its host. Each entry is reachable at
+      # https://<name>.allosaurus-snapper.ts.net
       my.tailnet-services.services = [
         {
           name = "jellyfin";
