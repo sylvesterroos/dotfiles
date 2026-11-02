@@ -23,7 +23,7 @@
   };
 
   flake.modules.nixos.framework =
-    { pkgs, ... }:
+    { config, pkgs, ... }:
     {
       imports = [
         inputs.disko.nixosModules.default
@@ -38,6 +38,22 @@
       boot.zswap.enable = true;
 
       users.users.sylvester.extraGroups = [ "plugdev" ];
+
+      # With the lid closed the reader is out of reach: skip pam_fprintd and
+      # ask for the password at once.
+      security.pam.services.sudo.rules.auth.skip-fprintd-lid-closed = {
+        order = config.security.pam.services.sudo.rules.auth.fprintd.order - 10;
+        control = "[success=1 default=ignore]";
+        modulePath = "${pkgs.linux-pam}/lib/security/pam_exec.so";
+        args = [
+          "quiet"
+          (toString (
+            pkgs.writeShellScript "lid-closed" ''
+              exec ${pkgs.gnugrep}/bin/grep -qs closed /proc/acpi/button/lid/*/state
+            ''
+          ))
+        ];
+      };
 
       # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
       system.stateVersion = "26.11";
