@@ -20,6 +20,8 @@
         };
       };
       boot.loader.efi.canTouchEfiVariables = true;
+      # 0 = menu hidden, boots silently; hold space/esc/arrows at power-on to enter it
+      boot.loader.timeout = 0;
       environment.systemPackages = [ pkgs.sbctl ];
     };
 }
