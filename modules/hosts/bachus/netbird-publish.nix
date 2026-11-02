@@ -10,21 +10,31 @@ in
   flake.modules.nixos.bachus =
     { config, lib, ... }:
     let
-      services = lib.filter (s: s.netbird) config.my.tailnet-services.services;
+      published = lib.filter (s: s.netbird) config.my.tailnet-services.services;
 
       # Same mount semantics as tailscale serve: the path prefix is stripped
       # before proxying.
       route =
         path: upstream:
-        if path == "/" then
-          "handle {\n  reverse_proxy ${upstream}\n}"
-        else
-          "handle_path ${lib.removeSuffix "/" path}/* {\n  reverse_proxy ${upstream}\n}";
+        let
+          matcher = if path == "/" then "handle" else "handle_path ${lib.removeSuffix "/" path}/*";
+        in
+        "${matcher} {\n  reverse_proxy ${upstream}\n}";
     in
     {
+      my.netbird.grants = [
+        {
+          name = "services";
+          sources = [ "All" ];
+          destinations = [ "servers" ];
+          protocols = [ "tcp" ];
+          ports = [ 443 ];
+        }
+      ];
+
       services.netbird.clients.netbird.environment.NB_EXTRA_DNS_LABELS = lib.concatMapStringsSep "," (
         s: s.name
-      ) services;
+      ) published;
 
       # Certificates come through DNS-01 (Porkbun): the names resolve to a
       # NetBird address, which HTTP-01 cannot reach.
@@ -49,7 +59,7 @@ in
               }
             '';
           }
-        ) services
+        ) published
       );
     };
 }

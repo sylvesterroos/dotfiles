@@ -26,17 +26,15 @@ in
       dashboardUrl = "https://${network.dashboard}";
       relayAddress = "127.0.0.1:33080";
       dashboardPort = 8090;
+      relayUrl = "rels://${network.server}:443/relay";
       relaySecret = config.sops.secrets."netbird/relay_auth_secret".path;
     in
     {
-      imports = [
-        (
-          let
-            relay = import "${mv.tip.path}/nixos/modules/services/networking/netbird/netbird-relay.nix";
-          in
-          lib.setFunctionArgs (args: removeAttrs (relay args) [ "meta" ]) (lib.functionArgs relay)
-        )
-      ];
+      imports =
+        let
+          relay = import "${mv.tip.path}/nixos/modules/services/networking/netbird/netbird-relay.nix";
+        in
+        [ (lib.setFunctionArgs (args: removeAttrs (relay args) [ "meta" ]) (lib.functionArgs relay)) ];
 
       sops.secrets."netbird/datastore_encryption_key" = { };
       sops.secrets."netbird/relay_auth_secret" = { };
@@ -64,7 +62,7 @@ in
               Secret._secret = relaySecret;
             };
             Relay = {
-              Addresses = [ "rels://${network.server}:443/relay" ];
+              Addresses = [ relayUrl ];
               CredentialsTTL = "24h";
               Secret._secret = relaySecret;
             };
@@ -113,7 +111,7 @@ in
         authSecretFile = relaySecret;
         settings = {
           listen-address = relayAddress;
-          exposed-address = "rels://${network.server}:443/relay";
+          exposed-address = relayUrl;
         };
       };
 

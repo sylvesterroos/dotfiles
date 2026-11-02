@@ -41,81 +41,10 @@ in
         deck = "deck";
       };
 
-      zomboid = config.services.pznix.servers.zomboid.ports;
-
-      # Access between groups. `All` is NetBird's group of every peer; a
-      # person's group holds that person's devices.
-      grants = [
-        {
-          name = "services";
-          sources = [ "All" ];
-          destinations = [ "servers" ];
-          protocols = [ "tcp" ];
-          ports = [ 443 ];
-        }
-        {
-          name = "rimmolt";
-          sources = [ "servers" ];
-          destinations = [ "deck" ];
-          protocols = [ "tcp" ];
-          ports = [ 8787 ];
-        }
-        {
-          name = "skyrim-together";
-          sources = [ "fred" ];
-          destinations = [
-            "sylvester"
-            "deck"
-          ];
-          protocols = [
-            "tcp"
-            "udp"
-          ];
-          ports = [ 10578 ];
-        }
-        # BitTorrent between fred and sylvester, on each one's listen port.
-        {
-          name = "bittorrent-fred";
-          sources = [ "fred" ];
-          destinations = [ "sylvester" ];
-          protocols = [
-            "tcp"
-            "udp"
-          ];
-          ports = [ 43658 ];
-        }
-        {
-          name = "bittorrent-sylvester";
-          sources = [ "sylvester" ];
-          destinations = [ "fred" ];
-          protocols = [
-            "tcp"
-            "udp"
-          ];
-          ports = [ 10696 ];
-        }
-        {
-          name = "zomboid";
-          sources = [ "All" ];
-          destinations = [ "servers" ];
-          protocols = [ "udp" ];
-          ports = [ zomboid.game ] ++ map (p: p.port) zomboid.extra;
-        }
-        # Minecraft servers run by Playkeeper: the first on 25565, each
-        # further one on the next port.
-        {
-          name = "minecraft";
-          sources = [ "All" ];
-          destinations = [ "servers" ];
-          protocols = [ "tcp" ];
-          portRanges = [
-            {
-              start = 25565;
-              end = 25574;
-            }
-          ];
-        }
-      ];
+      # Access between groups, declared by the features that serve them through
+      # `my.netbird.grants`. `All` is NetBird's group of every peer; a person's
+      # group holds that person's devices.
+      grants = config.my.netbird.grants;
 
       groups = lib.subtractLists [ "All" ] (
         lib.unique (lib.concatMap (g: g.sources ++ g.destinations) grants)
@@ -142,8 +71,8 @@ in
                     sources = map groupId grant.sources;
                     destinations = map groupId grant.destinations;
                   }
-                  // lib.optionalAttrs (grant ? ports) { ports = map toString grant.ports; }
-                  // lib.optionalAttrs (grant ? portRanges) { port_ranges = grant.portRanges; }
+                  // lib.optionalAttrs (grant.ports != [ ]) { ports = map toString grant.ports; }
+                  // lib.optionalAttrs (grant.portRanges != [ ]) { port_ranges = grant.portRanges; }
                 )
               ];
             }
@@ -211,59 +140,156 @@ in
           matching = lib.filter (g: lib.elem protocol g.protocols) toServers;
         in
         {
-          ports = lib.concatMap (g: g.ports or [ ]) matching;
+          ports = lib.concatMap (g: g.ports) matching;
           ranges = map (r: {
             from = r.start;
             to = r.end;
-          }) (lib.concatMap (g: g.portRanges or [ ]) matching);
+          }) (lib.concatMap (g: g.portRanges) matching);
         };
     in
     {
-      assertions = [
-        {
-          assertion = lib.all (name: lib.elem name groups) (lib.attrNames accounts);
-          message = "Every NetBird account must belong to a group the grants name.";
-        }
-        {
-          assertion = lib.all (group: group == "All" || lib.elem group groups) (lib.attrValues setupKeys);
-          message = "Every NetBird setup key must join a group the grants name.";
-        }
-      ];
-
-      sops.secrets."netbird/provision_token" = { };
-
-      systemd.services.netbird-provision =
-        tofuProvision {
-          inherit pkgs plugins configuration;
-          name = "netbird-provision";
-          description = "Apply NetBird's account settings, groups, policies and setup keys";
-          credentials.NB_PAT = config.sops.secrets."netbird/provision_token".path;
-        }
-        // {
-          requires = [ "netbird-management.service" ];
-          after = [ "netbird-management.service" ];
-        };
-
-      services.netbird.clients.netbird.login = {
-        enable = true;
-        setupKeyFile = "${keyDirectory}/bachus";
-        systemdDependencies = [ "netbird-provision.service" ];
+      options.my.netbird.grants = lib.mkOption {
+        type = lib.types.listOf (
+          lib.types.submodule {
+            options = {
+              name = lib.mkOption {
+                type = lib.types.str;
+                description = "Policy name; with the protocol it names the policy's OpenTofu resource.";
+              };
+              sources = lib.mkOption {
+                type = lib.types.listOf lib.types.str;
+                description = "Groups the traffic comes from.";
+              };
+              destinations = lib.mkOption {
+                type = lib.types.listOf lib.types.str;
+                description = "Groups the traffic goes to. Grants to `servers` also open the ports on bachus's NetBird interface.";
+              };
+              protocols = lib.mkOption {
+                type = lib.types.listOf (
+                  lib.types.enum [
+                    "tcp"
+                    "udp"
+                  ]
+                );
+                description = "Transport protocols the grant covers.";
+              };
+              ports = lib.mkOption {
+                type = lib.types.listOf lib.types.port;
+                default = [ ];
+                description = "Single ports the grant covers.";
+              };
+              portRanges = lib.mkOption {
+                type = lib.types.listOf (
+                  lib.types.submodule {
+                    options = {
+                      start = lib.mkOption { type = lib.types.port; };
+                      end = lib.mkOption { type = lib.types.port; };
+                    };
+                  }
+                );
+                default = [ ];
+                description = "Port ranges the grant covers.";
+              };
+            };
+          }
+        );
+        default = [ ];
+        description = "Access between NetBird groups. Each feature declares the grants for what it serves.";
       };
 
-      # The module starts the login only alongside the daemon, which a switch
-      # leaves running.
-      systemd.services.netbird-login.wantedBy = [ "multi-user.target" ];
+      config = {
+        # People's devices reach each other; the rest of the grants come from the
+        # features that serve them.
+        my.netbird.grants = [
+          {
+            name = "rimmolt";
+            sources = [ "servers" ];
+            destinations = [ "deck" ];
+            protocols = [ "tcp" ];
+            ports = [ 8787 ];
+          }
+          {
+            name = "skyrim-together";
+            sources = [ "fred" ];
+            destinations = [
+              "sylvester"
+              "deck"
+            ];
+            protocols = [
+              "tcp"
+              "udp"
+            ];
+            ports = [ 10578 ];
+          }
+          # BitTorrent between fred and sylvester, on each one's listen port.
+          {
+            name = "bittorrent-fred";
+            sources = [ "fred" ];
+            destinations = [ "sylvester" ];
+            protocols = [
+              "tcp"
+              "udp"
+            ];
+            ports = [ 43658 ];
+          }
+          {
+            name = "bittorrent-sylvester";
+            sources = [ "sylvester" ];
+            destinations = [ "fred" ];
+            protocols = [
+              "tcp"
+              "udp"
+            ];
+            ports = [ 10696 ];
+          }
+        ];
 
-      networking.firewall.interfaces.${client.interface} =
-        let
-          tcp = openings "tcp";
-          udp = openings "udp";
-        in
-        {
-          allowedTCPPorts = lib.unique tcp.ports;
-          allowedTCPPortRanges = tcp.ranges;
-          allowedUDPPorts = lib.unique udp.ports;
-          allowedUDPPortRanges = udp.ranges;
+        assertions = [
+          {
+            assertion = lib.all (name: lib.elem name groups) (lib.attrNames accounts);
+            message = "Every NetBird account must belong to a group the grants name.";
+          }
+          {
+            assertion = lib.all (group: group == "All" || lib.elem group groups) (lib.attrValues setupKeys);
+            message = "Every NetBird setup key must join a group the grants name.";
+          }
+        ];
+
+        sops.secrets."netbird/provision_token" = { };
+
+        systemd.services.netbird-provision =
+          tofuProvision {
+            inherit pkgs plugins configuration;
+            name = "netbird-provision";
+            description = "Apply NetBird's account settings, groups, policies and setup keys";
+            credentials.NB_PAT = config.sops.secrets."netbird/provision_token".path;
+          }
+          // {
+            requires = [ "netbird-management.service" ];
+            after = [ "netbird-management.service" ];
+          };
+
+        services.netbird.clients.netbird.login = {
+          enable = true;
+          setupKeyFile = "${keyDirectory}/bachus";
+          systemdDependencies = [ "netbird-provision.service" ];
         };
+
+        # The module starts the login only alongside the daemon, which a switch
+        # leaves running.
+        systemd.services.netbird-login.wantedBy = [ "multi-user.target" ];
+
+        networking.firewall.interfaces.${client.interface} =
+          let
+            tcp = openings "tcp";
+            udp = openings "udp";
+          in
+          {
+            allowedTCPPorts = lib.unique tcp.ports;
+            allowedTCPPortRanges = tcp.ranges;
+            allowedUDPPorts = lib.unique udp.ports;
+            allowedUDPPortRanges = udp.ranges;
+          };
+      };
     };
 }

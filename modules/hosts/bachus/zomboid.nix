@@ -11,6 +11,20 @@
     {
       imports = [ inputs.pznix.nixosModules.default ];
 
+      my.netbird.grants =
+        let
+          ports = config.services.pznix.servers.zomboid.ports;
+        in
+        [
+          {
+            name = "zomboid";
+            sources = [ "All" ];
+            destinations = [ "servers" ];
+            protocols = [ "udp" ];
+            ports = [ ports.game ] ++ map (p: p.port) ports.extra;
+          }
+        ];
+
       sops.secrets."zomboid/admin-password".owner = "pzserver-zomboid";
       sops.secrets."zomboid/rcon-password".owner = "pzserver-zomboid";
 

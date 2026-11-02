@@ -66,6 +66,23 @@
       };
     in
     {
+      # The first Minecraft server listens on the game port, each further one
+      # on the next.
+      my.netbird.grants = [
+        {
+          name = "minecraft";
+          sources = [ "All" ];
+          destinations = [ "servers" ];
+          protocols = [ "tcp" ];
+          portRanges = [
+            {
+              start = settings.gamePort;
+              end = settings.gamePort + 9;
+            }
+          ];
+        }
+      ];
+
       environment.systemPackages = [ package ];
       environment.etc."playkeeper/config.json".text = builtins.toJSON settings;
 
