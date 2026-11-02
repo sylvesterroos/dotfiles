@@ -9,6 +9,7 @@
 { config, ... }:
 let
   network = config.netbirdNetwork;
+  inherit (config) tofuProvision;
 in
 {
   flake.modules.nixos.netbird-provision =
@@ -150,61 +151,57 @@ in
         ) grants
       );
 
-      configuration = pkgs.writeText "main.tf.json" (
-        builtins.toJSON (
-          {
-            terraform.required_providers = {
-              netbird.source = "netbirdio/netbird";
-              local.source = "hashicorp/local";
-            };
-            provider.netbird.management_url = "http://127.0.0.1:${toString management.port}";
-            data.netbird_group.all.name = "All";
-            resource = lib.filterAttrs (_: resources: resources != { }) {
-              netbird_account_settings.account = {
-                network_range = network.range;
-                # Devices stay connected without a periodic re-login.
-                peer_login_expiration_enabled = false;
-                regular_users_view_blocked = true;
-                groups_propagation_enabled = true;
-              };
-              netbird_group = lib.genAttrs groups (name: {
-                inherit name;
-              });
-              netbird_policy = policies;
-              netbird_setup_key = lib.mapAttrs (name: group: {
-                inherit name;
-                type = "one-off";
-                auto_groups = [ (groupId group) ];
-                allow_extra_dns_labels = true;
-                ephemeral = false;
-                expiry_seconds = 0;
-              }) setupKeys;
-              local_sensitive_file = lib.mapAttrs (name: _: {
-                filename = "${keyDirectory}/${name}";
-                content = "\${netbird_setup_key.${name}.key}";
-                file_permission = "0400";
-                directory_permission = "0700";
-              }) setupKeys;
-              netbird_user = lib.mapAttrs (name: account: {
-                is_service_user = false;
-                inherit (account) role;
-                auto_groups = [ (groupId name) ];
-              }) accounts;
-            };
-          }
-          // lib.optionalAttrs (accounts != { }) {
-            import = lib.mapAttrsToList (name: account: {
-              to = "netbird_user.${name}";
-              inherit (account) id;
-            }) accounts;
-          }
-        )
-      );
+      configuration = {
+        terraform.required_providers = {
+          netbird.source = "netbirdio/netbird";
+          local.source = "hashicorp/local";
+        };
+        provider.netbird.management_url = "http://127.0.0.1:${toString management.port}";
+        data.netbird_group.all.name = "All";
+        resource = lib.filterAttrs (_: resources: resources != { }) {
+          netbird_account_settings.account = {
+            network_range = network.range;
+            # Devices stay connected without a periodic re-login.
+            peer_login_expiration_enabled = false;
+            regular_users_view_blocked = true;
+            groups_propagation_enabled = true;
+          };
+          netbird_group = lib.genAttrs groups (name: {
+            inherit name;
+          });
+          netbird_policy = policies;
+          netbird_setup_key = lib.mapAttrs (name: group: {
+            inherit name;
+            type = "one-off";
+            auto_groups = [ (groupId group) ];
+            allow_extra_dns_labels = true;
+            ephemeral = false;
+            expiry_seconds = 0;
+          }) setupKeys;
+          local_sensitive_file = lib.mapAttrs (name: _: {
+            filename = "${keyDirectory}/${name}";
+            content = "\${netbird_setup_key.${name}.key}";
+            file_permission = "0400";
+            directory_permission = "0700";
+          }) setupKeys;
+          netbird_user = lib.mapAttrs (name: account: {
+            is_service_user = false;
+            inherit (account) role;
+            auto_groups = [ (groupId name) ];
+          }) accounts;
+        };
+      }
+      // lib.optionalAttrs (accounts != { }) {
+        import = lib.mapAttrsToList (name: account: {
+          to = "netbird_user.${name}";
+          inherit (account) id;
+        }) accounts;
+      };
 
-      tofu = pkgs.opentofu.withPlugins (p: [
+      plugins = p: [
         p.hashicorp_local
         pkgs.terraform-provider-netbird
-      ]);
+      ];
 
       # Firewall openings on bachus for every grant that reaches the servers.
       toServers = lib.filter (g: lib.elem "servers" g.destinations) grants;
@@ -227,34 +224,25 @@ in
           assertion = lib.all (name: lib.elem name groups) (lib.attrNames accounts);
           message = "Every NetBird account must belong to a group the grants name.";
         }
+        {
+          assertion = lib.all (group: group == "All" || lib.elem group groups) (lib.attrValues setupKeys);
+          message = "Every NetBird setup key must join a group the grants name.";
+        }
       ];
 
       sops.secrets."netbird/provision_token" = { };
 
-      systemd.services.netbird-provision = {
-        description = "Apply NetBird's account settings, groups, policies and setup keys";
-        wantedBy = [ "multi-user.target" ];
-        requires = [ "netbird-management.service" ];
-        after = [ "netbird-management.service" ];
-        path = [ tofu ];
-        script = ''
-          export NB_PAT="$(< "$CREDENTIALS_DIRECTORY/token")"
-          ln -sf ${configuration} main.tf.json
-          tofu init -input=false
-          tofu apply -input=false -auto-approve
-        '';
-        serviceConfig = {
-          Type = "oneshot";
-          RemainAfterExit = true;
-          StateDirectory = "netbird-provision";
-          StateDirectoryMode = "0700";
-          WorkingDirectory = stateDirectory;
-          LoadCredential = "token:${config.sops.secrets."netbird/provision_token".path}";
-          # The management API answers some seconds after its unit starts.
-          Restart = "on-failure";
-          RestartSec = 30;
+      systemd.services.netbird-provision =
+        tofuProvision {
+          inherit pkgs plugins configuration;
+          name = "netbird-provision";
+          description = "Apply NetBird's account settings, groups, policies and setup keys";
+          credentials.NB_PAT = config.sops.secrets."netbird/provision_token".path;
+        }
+        // {
+          requires = [ "netbird-management.service" ];
+          after = [ "netbird-management.service" ];
         };
-      };
 
       services.netbird.clients.netbird.login = {
         enable = true;
@@ -266,11 +254,16 @@ in
       # leaves running.
       systemd.services.netbird-login.wantedBy = [ "multi-user.target" ];
 
-      networking.firewall.interfaces.${client.interface} = {
-        allowedTCPPorts = (openings "tcp").ports;
-        allowedTCPPortRanges = (openings "tcp").ranges;
-        allowedUDPPorts = (openings "udp").ports;
-        allowedUDPPortRanges = (openings "udp").ranges;
-      };
+      networking.firewall.interfaces.${client.interface} =
+        let
+          tcp = openings "tcp";
+          udp = openings "udp";
+        in
+        {
+          allowedTCPPorts = lib.unique tcp.ports;
+          allowedTCPPortRanges = tcp.ranges;
+          allowedUDPPorts = lib.unique udp.ports;
+          allowedUDPPortRanges = udp.ranges;
+        };
     };
 }

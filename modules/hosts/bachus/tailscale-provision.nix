@@ -5,6 +5,10 @@
 # and `policy_file` write scopes, store its ID and secret as sops
 # `tailscale/oauth_client_id` and `tailscale/oauth_client_secret`, then import
 # this module.
+{ config, ... }:
+let
+  inherit (config) tofuProvision;
+in
 {
   flake.modules.nixos.tailscale-provision =
     {
@@ -14,8 +18,6 @@
       ...
     }:
     let
-      stateDirectory = "/var/lib/tailscale-provision";
-
       serviceNames = map (service: "svc:${service.name}") config.my.tailnet-services.services;
 
       policy = {
@@ -56,29 +58,25 @@
         ];
       };
 
-      configuration = pkgs.writeText "main.tf.json" (
-        builtins.toJSON {
-          terraform.required_providers.tailscale.source = "tailscale/tailscale";
-          resource.tailscale_service = lib.listToAttrs (
-            map (
-              service:
-              lib.nameValuePair service.name {
-                name = "svc:${service.name}";
-                ports = [ "tcp:443" ];
-              }
-            ) config.my.tailnet-services.services
-          );
-          resource.tailscale_acl.policy.acl = builtins.toJSON policy;
-          import = [
-            {
-              to = "tailscale_acl.policy";
-              id = "acl";
+      configuration = {
+        terraform.required_providers.tailscale.source = "tailscale/tailscale";
+        resource.tailscale_service = lib.listToAttrs (
+          map (
+            service:
+            lib.nameValuePair service.name {
+              name = "svc:${service.name}";
+              ports = [ "tcp:443" ];
             }
-          ];
-        }
-      );
-
-      tofu = pkgs.opentofu.withPlugins (p: [ p.tailscale_tailscale ]);
+          ) config.my.tailnet-services.services
+        );
+        resource.tailscale_acl.policy.acl = builtins.toJSON policy;
+        import = [
+          {
+            to = "tailscale_acl.policy";
+            id = "acl";
+          }
+        ];
+      };
     in
     {
       sops.secrets = {
@@ -86,33 +84,21 @@
         "tailscale/oauth_client_secret" = { };
       };
 
-      systemd.services.tailscale-provision = {
-        description = "Define the Tailscale Services of this host";
-        wantedBy = [ "multi-user.target" ];
-        before = [ "tailnet-services-apply.service" ];
-        wants = [ "network-online.target" ];
-        after = [ "network-online.target" ];
-        path = [ tofu ];
-        environment = {
-          TAILSCALE_OAUTH_CLIENT_ID = "file:%d/client_id";
-          TAILSCALE_OAUTH_CLIENT_SECRET = "file:%d/client_secret";
+      systemd.services.tailscale-provision =
+        tofuProvision {
+          inherit pkgs configuration;
+          name = "tailscale-provision";
+          description = "Define the Tailscale Services of this host";
+          plugins = p: [ p.tailscale_tailscale ];
+          credentials = {
+            TAILSCALE_OAUTH_CLIENT_ID = config.sops.secrets."tailscale/oauth_client_id".path;
+            TAILSCALE_OAUTH_CLIENT_SECRET = config.sops.secrets."tailscale/oauth_client_secret".path;
+          };
+        }
+        // {
+          before = [ "tailnet-services-apply.service" ];
+          wants = [ "network-online.target" ];
+          after = [ "network-online.target" ];
         };
-        script = ''
-          ln -sf ${configuration} main.tf.json
-          tofu init -input=false
-          tofu apply -input=false -auto-approve
-        '';
-        serviceConfig = {
-          Type = "oneshot";
-          RemainAfterExit = true;
-          StateDirectory = "tailscale-provision";
-          StateDirectoryMode = "0700";
-          WorkingDirectory = stateDirectory;
-          LoadCredential = [
-            "client_id:${config.sops.secrets."tailscale/oauth_client_id".path}"
-            "client_secret:${config.sops.secrets."tailscale/oauth_client_secret".path}"
-          ];
-        };
-      };
     };
 }

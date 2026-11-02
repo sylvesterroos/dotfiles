@@ -1,6 +1,7 @@
 { config, ... }:
 let
   mv = config.multiverse;
+  inherit (config) tofuProvision;
 in
 {
   flake.modules.nixos.bachus =
@@ -14,38 +15,34 @@ in
       cfg = config.my.pocket-id;
       groupId = name: "\${pocketid_group.${name}.id}";
 
-      configuration = pkgs.writeText "main.tf.json" (
-        builtins.toJSON (
-          {
-            terraform.required_providers.pocketid.source = "trozz/pocketid";
-            provider.pocketid.base_url = "http://127.0.0.1:${toString config.services.pocket-id.settings.PORT}";
-            resource = lib.filterAttrs (_: resources: resources != { }) {
-              pocketid_group = lib.mapAttrs (name: group: {
-                inherit name;
-                friendly_name = group.friendlyName;
-              }) cfg.groups;
-              pocketid_client = lib.mapAttrs (_: client: {
-                client_id = client.id;
-                inherit (client) name;
-                callback_urls = client.callbackUrls;
-                logout_callback_urls = client.logoutCallbackUrls;
-                is_public = client.public;
-                pkce_enabled = client.pkce;
-                allowed_user_groups = map groupId client.groups;
-              }) cfg.clients;
-            };
-          }
-          // lib.optionalAttrs (lib.any (client: client.existing) (lib.attrValues cfg.clients)) {
-            import = lib.mapAttrsToList (name: client: {
-              to = "pocketid_client.${name}";
-              inherit (client) id;
-            }) (lib.filterAttrs (_: client: client.existing) cfg.clients);
-          }
-        )
-      );
+      configuration = {
+        terraform.required_providers.pocketid.source = "trozz/pocketid";
+        provider.pocketid.base_url = "http://127.0.0.1:${toString config.services.pocket-id.settings.PORT}";
+        resource = lib.filterAttrs (_: resources: resources != { }) {
+          pocketid_group = lib.mapAttrs (name: group: {
+            inherit name;
+            friendly_name = group.friendlyName;
+          }) cfg.groups;
+          pocketid_client = lib.mapAttrs (_: client: {
+            client_id = client.id;
+            inherit (client) name;
+            callback_urls = client.callbackUrls;
+            logout_callback_urls = client.logoutCallbackUrls;
+            is_public = client.public;
+            pkce_enabled = client.pkce;
+            allowed_user_groups = map groupId client.groups;
+          }) cfg.clients;
+        };
+      }
+      // lib.optionalAttrs (lib.any (client: client.existing) (lib.attrValues cfg.clients)) {
+        import = lib.mapAttrsToList (name: client: {
+          to = "pocketid_client.${name}";
+          inherit (client) id;
+        }) (lib.filterAttrs (_: client: client.existing) cfg.clients);
+      };
 
       # Stable's provider sends the client ID in a field Pocket ID 2 ignores.
-      tofu = pkgs.opentofu.withPlugins (_: [ mv.tip.terraform-providers.trozz_pocketid ]);
+      plugins = _: [ mv.tip.terraform-providers.trozz_pocketid ];
     in
     {
       options.my.pocket-id = {
@@ -138,30 +135,17 @@ in
           };
         };
 
-        systemd.services.pocket-id-provision = {
-          description = "Apply Pocket ID's declared groups and OIDC clients";
-          wantedBy = [ "multi-user.target" ];
-          requires = [ "pocket-id.service" ];
-          after = [ "pocket-id.service" ];
-          path = [ tofu ];
-          script = ''
-            export POCKETID_API_TOKEN="$(< "$CREDENTIALS_DIRECTORY/token")"
-            ln -sf ${configuration} main.tf.json
-            tofu init -input=false
-            tofu apply -input=false -auto-approve
-          '';
-          serviceConfig = {
-            Type = "oneshot";
-            RemainAfterExit = true;
-            StateDirectory = "pocket-id-provision";
-            StateDirectoryMode = "0700";
-            WorkingDirectory = "/var/lib/pocket-id-provision";
-            LoadCredential = "token:${config.sops.secrets."pocket-id/static_api_key".path}";
-            # Pocket ID answers some seconds after its unit starts.
-            Restart = "on-failure";
-            RestartSec = 30;
+        systemd.services.pocket-id-provision =
+          tofuProvision {
+            inherit pkgs plugins configuration;
+            name = "pocket-id-provision";
+            description = "Apply Pocket ID's declared groups and OIDC clients";
+            credentials.POCKETID_API_TOKEN = config.sops.secrets."pocket-id/static_api_key".path;
+          }
+          // {
+            requires = [ "pocket-id.service" ];
+            after = [ "pocket-id.service" ];
           };
-        };
 
         services.caddy.virtualHosts."pocket-id.sylvesterroos.com" = {
           extraConfig = ''

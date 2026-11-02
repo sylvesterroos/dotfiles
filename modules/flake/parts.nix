@@ -16,11 +16,18 @@
       readOnly = true;
       description = "Select a service's NixOS module and package from one package set.";
     };
+    tofuProvision = lib.mkOption {
+      type = lib.types.functionTo lib.types.raw;
+      readOnly = true;
+      description = "The systemd unit definition that applies an OpenTofu configuration on every switch.";
+    };
   };
 
   config.systems = [ "x86_64-linux" ];
 
   config.serviceFrom = import "${inputs.self}/lib/service-from.nix";
+
+  config.tofuProvision = import "${inputs.self}/lib/tofu-provision.nix";
 
   # The one multiverse instance every host and user resolves packages from, so
   # a selector means the same package set everywhere.
