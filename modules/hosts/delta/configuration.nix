@@ -14,7 +14,7 @@
         desktop
         gaming
         programming
-        headscaled
+        netbird
         livebook
         delta
       ];
@@ -33,8 +33,6 @@
       networking.hostName = "delta";
 
       boot.kernelPackages = pkgs.linuxPackages_xanmod;
-
-      my.headscaled.network = config.headscaleNetwork;
 
       networking.networkmanager.ensureProfiles.profiles."Wired internet" = {
         connection = {

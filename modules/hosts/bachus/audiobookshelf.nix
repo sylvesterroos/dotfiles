@@ -15,6 +15,22 @@
 
       systemd.services.audiobookshelf.unitConfig.RequiresMountsFor = "/srv";
 
+      my.pocket-id.clients.audiobookshelf =
+        let
+          origin = "https://audiobookshelf.allosaurus-snapper.ts.net";
+        in
+        {
+          id = "ea67e52e-d087-40f5-8d01-9a5dde4032f6";
+          name = "Audiobookshelf";
+          callbackUrls = [
+            "${origin}/audiobookshelf/auth/openid/callback"
+            "${origin}/audiobookshelf/auth/openid/mobile-redirect"
+          ];
+          logoutCallbackUrls = [ "${origin}/login" ];
+          pkce = false;
+          existing = true;
+        };
+
       systemd.tmpfiles.rules =
         let
           sylvester = config.users.users.sylvester.name;

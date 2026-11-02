@@ -9,7 +9,7 @@
       imports = with config.flake.modules.nixos; [
         desktop
         programming
-        headscaled
+        netbird
         creek
       ];
       home-manager.users.sylvester.imports = with config.flake.modules.homeManager; [
@@ -48,8 +48,6 @@
           size = 16 * 1024; # 16 GiB, backs the zswap pool
         }
       ];
-
-      my.headscaled.network = config.headscaleNetwork;
 
       # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
       system.stateVersion = "23.05";

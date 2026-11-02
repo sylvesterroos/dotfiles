@@ -17,7 +17,8 @@ in
       without-home-manager
       programming
       attic-server
-      headscaled
+      netbird
+      netbird-provision
       tailscale-provision
       hermes-gateway
       hindsight

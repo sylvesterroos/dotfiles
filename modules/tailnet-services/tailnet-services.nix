@@ -58,10 +58,10 @@
                     serves its own self-signed certificate.
                   '';
                 };
-                headscale = mkOption {
+                netbird = mkOption {
                   type = types.bool;
                   default = false;
-                  description = "Also publish the service on the headscale tailnet.";
+                  description = "Also publish the service on the NetBird network.";
                 };
               };
             }

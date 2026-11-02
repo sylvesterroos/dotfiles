@@ -1,9 +1,9 @@
 # Project Zomboid dedicated server, run by pznix: steamcmd installs and updates
 # the game and its Workshop mods on every start and at 04:00 daily.
 #
-# Clients join over the headscale tailnet at bachus.<headscale domain>:16261.
-# The userspace headscaled hands their UDP to 127.0.0.1, so the server needs
-# no open firewall port; the headscale policy grants the game ports.
+# Clients join over the NetBird network at bachus.<NetBird domain>:16261. The
+# NetBird policy grants the game ports and opens them on bachus's NetBird
+# interface (netbird-provision.nix).
 { inputs, ... }:
 {
   flake.modules.nixos.bachus =
@@ -51,7 +51,7 @@
         extraIniSettings = {
           PVP = "false";
           Public = "false";
-          # Accept any headscale member on first join; each creates an account.
+          # Accept any NetBird member on first join; each creates an account.
           Open = "true";
           # Linux clients get false kicks from this check (PZwiki warns of a Linux bug).
           DoLuaChecksum = "false";

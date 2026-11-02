@@ -9,7 +9,7 @@
         {
           name = "jellyfin";
           routes."/" = "http://127.0.0.1:8096";
-          headscale = true;
+          netbird = true;
         }
         {
           name = "audiobookshelf";
@@ -46,7 +46,7 @@
         {
           name = "files";
           routes."/" = "http://127.0.0.1:3923";
-          headscale = true;
+          netbird = true;
         }
         {
           name = "syncthing";
@@ -60,10 +60,6 @@
             "/" = "http://127.0.0.1:9999";
             "/memory" = "http://127.0.0.1:8888";
           };
-        }
-        {
-          name = "headplane";
-          routes."/" = "http://127.0.0.1:${toString config.services.headplane.settings.server.port}";
         }
         {
           name = "playkeeper";

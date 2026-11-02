@@ -9,10 +9,9 @@
 # a release to, so updates go through the package version.
 #
 # The dashboard answers at https://playkeeper.<tailnet>.ts.net
-# (tailnet-services.nix). Clients join over the headscale tailnet at
-# bachus.<headscale domain>; the headscale policy grants the game ports and
-# the userspace headscaled delivers them to loopback. First admin:
-# `sudo playkeeper setup-code`.
+# (tailnet-services.nix). Clients join over the NetBird network at
+# bachus.<NetBird domain>; the NetBird policy grants the game ports
+# (netbird-provision.nix). First admin: `sudo playkeeper setup-code`.
 {
   flake.modules.nixos.bachus =
     {
@@ -28,7 +27,6 @@
       gameId = 950;
 
       settings = {
-        # 8443, the upstream default, belongs to headscaled's Caddy listener.
         panelPort = 8444;
         panelBind = "127.0.0.1";
         gamePort = 25565;

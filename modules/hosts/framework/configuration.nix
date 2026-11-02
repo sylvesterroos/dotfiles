@@ -15,7 +15,7 @@
         gaming
         desktop
         framework
-        headscaled
+        netbird
         programming
       ];
       home-manager.users.sylvester.imports = [ config.flake.modules.homeManager.framework ];
@@ -36,8 +36,6 @@
       boot.kernelPackages = pkgs.linuxPackages_latest;
 
       boot.zswap.enable = true;
-
-      my.headscaled.network = config.headscaleNetwork;
 
       users.users.sylvester.extraGroups = [ "plugdev" ];
 
