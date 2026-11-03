@@ -52,6 +52,7 @@ let multiple_completers = {|spans|
 $env.config = {
     show_banner: true
     use_kitty_protocol: true
+    buffer_editor: "hx"
     completions: {
         case_sensitive: false
         quick: true
