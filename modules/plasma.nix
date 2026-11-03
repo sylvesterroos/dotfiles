@@ -171,6 +171,8 @@
         # 9 is KWin's ElectricNone: no hot corner for the overview.
         configFile."kwinrc"."Effect-overview"."BorderActivate" = 9;
 
+        configFile."spectaclerc"."GuiConfig"."quitAfterSaveCopyExport" = true;
+
         configFile."krunnerrc"."Plugins" = {
           browserhistoryEnabled = false;
           browsertabsEnabled = false;
