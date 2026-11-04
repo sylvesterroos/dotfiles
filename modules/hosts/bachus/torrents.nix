@@ -8,6 +8,10 @@
     }:
     let
       vpnTable = 1000;
+      arrSettings = {
+        auth.method = "External";
+        server.bindaddress = "127.0.0.1";
+      };
       vpnUsers = map (u: config.users.users.${u}.name) [
         "qbittorrent"
         "prowlarr"
@@ -87,6 +91,7 @@
       services = {
         prowlarr = {
           enable = true;
+          settings = arrSettings;
         };
 
         flaresolverr = {
@@ -95,10 +100,12 @@
 
         radarr = {
           enable = true;
+          settings = arrSettings;
         };
 
         sonarr = {
           enable = true;
+          settings = arrSettings;
         };
 
         qbittorrent = {
@@ -120,13 +127,32 @@
               WebUI = {
                 AlternativeUIEnabled = true;
                 RootFolder = "${pkgs.vuetorrent}/share/vuetorrent";
-                Username = "sylvester";
-                Password_PBKDF2 = "@ByteArray(SHulZq5Q8ROK0j5lDSRv5g==:lN1jwNif0jvZr5sc9rowJaU7n+l5K3OqK7D8A2Ij/RXC0jjj04YXtZp+oPoyYoxZ4hBa2xbE4q7DniDHJ9YHYQ==)";
+                Address = "127.0.0.1";
+                LocalHostAuth = false;
               };
             };
           };
         };
       };
+
+      # The sign-in happens at the gate; the applications trust loopback.
+      my.oidc-gate.apps =
+        let
+          arrGate = name: port: {
+            upstreamPort = config.services.${name}.settings.server.port;
+            inherit port;
+            openRoutes = [ "^/api" ];
+          };
+        in
+        {
+          sonarr = arrGate "sonarr" 4181;
+          radarr = arrGate "radarr" 4182;
+          prowlarr = arrGate "prowlarr" 4183;
+          qbittorrent = {
+            upstreamPort = config.services.qbittorrent.webuiPort;
+            port = 4184;
+          };
+        };
 
       users.users.flaresolverr = {
         isSystemUser = true;

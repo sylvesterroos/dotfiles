@@ -4,7 +4,7 @@
     {
       # `tailscale-provision` defines each service below and approves bachus
       # (tag:server) as its host. Each entry is reachable at
-      # https://<name>.allosaurus-snapper.ts.net
+      # https://<name>.<tailnet>
       my.tailnet-services.services = [
         {
           name = "jellyfin";
@@ -22,22 +22,6 @@
         {
           name = "home-assistant";
           routes."/" = "http://127.0.0.1:8123";
-        }
-        {
-          name = "radarr";
-          routes."/" = "http://127.0.0.1:7878";
-        }
-        {
-          name = "sonarr";
-          routes."/" = "http://127.0.0.1:8989";
-        }
-        {
-          name = "prowlarr";
-          routes."/" = "http://127.0.0.1:9696";
-        }
-        {
-          name = "qbittorrent";
-          routes."/" = "http://127.0.0.1:${toString config.services.qbittorrent.webuiPort}";
         }
         {
           name = "qui";
@@ -68,7 +52,7 @@
         }
       ];
 
-      # Hermes on https://bachus.allosaurus-snapper.ts.net. The ports follow the
+      # Hermes on https://bachus.<tailnet>. The ports follow the
       # hermes-relay plugin's convention, so `hermes pair` detects the TLS
       # listeners itself and advertises https/wss to the app.
       my.tailnet-services.listeners = [
