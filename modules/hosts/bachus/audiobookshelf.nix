@@ -1,3 +1,7 @@
+{ config, ... }:
+let
+  inherit (config) tailnetDomain;
+in
 {
   flake.modules.nixos.bachus =
     { config, ... }:
@@ -17,7 +21,7 @@
 
       my.pocket-id.clients.audiobookshelf =
         let
-          origin = "https://audiobookshelf.allosaurus-snapper.ts.net";
+          origin = "https://audiobookshelf.${tailnetDomain}";
         in
         {
           id = "ea67e52e-d087-40f5-8d01-9a5dde4032f6";

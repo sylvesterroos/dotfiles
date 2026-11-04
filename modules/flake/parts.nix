@@ -16,6 +16,11 @@
       readOnly = true;
       description = "Select a service's NixOS module and package from one package set.";
     };
+    tailnetDomain = lib.mkOption {
+      type = lib.types.str;
+      readOnly = true;
+      description = "MagicDNS domain of the personal tailnet; services are reached as <name>.<domain>.";
+    };
     tofuProvision = lib.mkOption {
       type = lib.types.functionTo lib.types.raw;
       readOnly = true;
@@ -24,6 +29,8 @@
   };
 
   config.systems = [ "x86_64-linux" ];
+
+  config.tailnetDomain = "allosaurus-snapper.ts.net";
 
   config.serviceFrom = import "${inputs.self}/lib/service-from.nix";
 
