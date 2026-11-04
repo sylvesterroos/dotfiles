@@ -9,8 +9,6 @@
           action = "sleep";
           idleTimeout = 60 * 60;
         };
-        whenLaptopLidClosed = "doNothing";
-        inhibitLidActionWhenExternalMonitorConnected = false;
       };
       battery = {
         dimDisplay.idleTimeout = 10 * 60;
@@ -19,8 +17,6 @@
           action = "sleep";
           idleTimeout = 30 * 60;
         };
-        whenLaptopLidClosed = "doNothing";
-        inhibitLidActionWhenExternalMonitorConnected = false;
       };
     };
   };
