@@ -32,7 +32,7 @@ in
 
   config.netbirdNetwork = {
     server = "vpn.sylvesterroos.com";
-    dashboard = "netbird.allosaurus-snapper.ts.net";
+    dashboard = "netbird.${config.tailnetDomain}";
     # Outside the server's name: clients answer every query in this domain
     # themselves, so the management URL there would not resolve.
     domain = "netbird.sylvesterroos.com";

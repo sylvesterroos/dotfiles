@@ -4,7 +4,7 @@
 let
   host = "bachus";
   port = 18732;
-  endpoint = "http://${host}.allosaurus-snapper.ts.net:${toString port}/";
+  endpoint = "http://${host}.${config.tailnetDomain}:${toString port}/";
   # Each host signs its own builds with a key named after it.
   hostKeyNames = lib.attrNames config.configurations.nixos;
 in
