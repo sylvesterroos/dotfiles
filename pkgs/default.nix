@@ -5,6 +5,7 @@ pkgs: {
   switch-to-previous-desktop = pkgs.callPackage ./switch-to-previous-desktop { };
   playkeeper = pkgs.callPackage ./playkeeper { };
   proton-drive-cli = pkgs.callPackage ./proton-drive-cli { };
+  usgc-machine-report = pkgs.callPackage ./usgc-machine-report { };
   wine-icon = pkgs.callPackage ./wine-icon { };
   shader-wallpaper = pkgs.kdePackages.callPackage ./shader-wallpaper { };
   terraform-provider-netbird = pkgs.callPackage ./terraform-provider-netbird { };
