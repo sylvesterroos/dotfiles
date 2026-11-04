@@ -140,7 +140,6 @@ in
         "/run/wrappers"
         "/etc/profiles/per-user/%u"
         "/run/current-system/sw"
-        "%h/.hermes/node"
         "%h/.local"
       ];
     };
