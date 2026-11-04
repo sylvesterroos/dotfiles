@@ -14,6 +14,8 @@ in
     let
       cfg = config.my.pocket-id;
       groupId = name: "\${pocketid_group.${name}.id}";
+      withSecret = lib.filterAttrs (_: client: client.secret != null) cfg.clients;
+      secretVariable = name: "${name}_secret";
 
       configuration = {
         terraform.required_providers.pocketid.source = "trozz/pocketid";
@@ -23,16 +25,31 @@ in
             inherit name;
             friendly_name = group.friendlyName;
           }) cfg.groups;
-          pocketid_client = lib.mapAttrs (_: client: {
-            client_id = client.id;
-            inherit (client) name;
-            callback_urls = client.callbackUrls;
-            logout_callback_urls = client.logoutCallbackUrls;
-            is_public = client.public;
-            pkce_enabled = client.pkce;
-            allowed_user_groups = map groupId client.groups;
-          }) cfg.clients;
+          pocketid_client = lib.mapAttrs (
+            name: client:
+            {
+              client_id = client.id;
+              inherit (client) name;
+              callback_urls = client.callbackUrls;
+              logout_callback_urls = client.logoutCallbackUrls;
+              is_public = client.public;
+              pkce_enabled = client.pkce;
+              allowed_user_groups = map groupId client.groups;
+            }
+            // lib.optionalAttrs (client.secret != null) {
+              client_secret = "\${var.${secretVariable name}}";
+            }
+          ) cfg.clients;
         };
+      }
+      // lib.optionalAttrs (withSecret != { }) {
+        variable = lib.mapAttrs' (
+          name: _:
+          lib.nameValuePair (secretVariable name) {
+            type = "string";
+            sensitive = true;
+          }
+        ) withSecret;
       }
       // lib.optionalAttrs (lib.any (client: client.existing) (lib.attrValues cfg.clients)) {
         import = lib.mapAttrsToList (name: client: {
@@ -95,6 +112,16 @@ in
                   default = [ ];
                   description = "Groups whose members may sign in; every user may when empty.";
                 };
+                secret = lib.mkOption {
+                  type = lib.types.nullOr lib.types.str;
+                  default = null;
+                  description = ''
+                    Name of the sops secret holding the client's secret. Pocket ID
+                    takes this value as the client's only secret; a change rotates
+                    it and revokes the previous one. Needs at least 16 printable
+                    ASCII characters.
+                  '';
+                };
                 existing = lib.mkOption {
                   type = lib.types.bool;
                   default = false;
@@ -104,7 +131,7 @@ in
             }
           );
           default = { };
-          description = "OIDC clients. A confidential client's secret is created in Pocket ID's UI.";
+          description = "OIDC clients. A confidential client without `secret` keeps the secret Pocket ID holds.";
         };
       };
 
@@ -118,8 +145,13 @@ in
           }
         ];
 
-        sops.secrets."pocket-id/encryption_key" = { };
-        sops.secrets."pocket-id/static_api_key" = { };
+        sops.secrets = {
+          "pocket-id/encryption_key" = { };
+          "pocket-id/static_api_key" = { };
+        }
+        // lib.mapAttrs' (
+          _: client: lib.nameValuePair client.secret { restartUnits = [ "pocket-id-provision.service" ]; }
+        ) withSecret;
 
         services.pocket-id = {
           enable = true;
@@ -140,7 +172,13 @@ in
             inherit pkgs plugins configuration;
             name = "pocket-id-provision";
             description = "Apply Pocket ID's declared groups and OIDC clients";
-            credentials.POCKETID_API_TOKEN = config.sops.secrets."pocket-id/static_api_key".path;
+            credentials = {
+              POCKETID_API_TOKEN = config.sops.secrets."pocket-id/static_api_key".path;
+            }
+            // lib.mapAttrs' (
+              name: client:
+              lib.nameValuePair "TF_VAR_${secretVariable name}" config.sops.secrets.${client.secret}.path
+            ) withSecret;
           }
           // {
             requires = [ "pocket-id.service" ];
