@@ -1,0 +1,11 @@
+name: librarian
+version: 0.1.0
+description: Read remote git repositories from a local cache at any branch, tag or commit.
+provides_tools:
+  - repo_checkout
+  - repo_list
+  - repo_read
+  - repo_files
+  - repo_grep
+  - repo_history
+  - repo_show

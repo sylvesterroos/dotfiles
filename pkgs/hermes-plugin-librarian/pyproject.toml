@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hermes-librarian"
+version = "0.1.0"
+description = "Hermes tools that read cached remote git repositories at any revision"
+requires-python = ">=3.13"
+
+[project.entry-points."hermes_agent.plugins"]
+librarian = "hermes_librarian"
+
+[tool.setuptools]
+packages = ["hermes_librarian"]
+
+[tool.setuptools.package-data]
+hermes_librarian = ["plugin.yaml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

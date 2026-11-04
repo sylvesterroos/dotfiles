@@ -16,6 +16,9 @@ pkgs: {
   hermes-plugin-homeassistant = pkgs.callPackage ./hermes-plugin-homeassistant {
     pythonPackages = pkgs.python3Packages;
   };
+  hermes-plugin-librarian = pkgs.callPackage ./hermes-plugin-librarian {
+    pythonPackages = pkgs.python3Packages;
+  };
   hindsight-client = pkgs.callPackage ./hindsight-client {
     pythonPackages = pkgs.python3Packages;
   };
