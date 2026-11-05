@@ -18,7 +18,7 @@
       export ${variable}
     '') (builtins.attrNames credentials)}
     ln -sf ${pkgs.writeText "main.tf.json" (builtins.toJSON configuration)} main.tf.json
-    tofu init -input=false
+    tofu init -input=false -upgrade
     tofu apply -input=false -auto-approve
   '';
   serviceConfig = {
