@@ -53,6 +53,11 @@
           "3683880154" # Alcohol Fluid Fix [B42]
           # The maintained B42 fork of Ladders!? (2737665235); never enable both.
           "3629835761" # Ladders?! B42.20 SP/MP (Unofficial)
+          "3171167894" # that DAMN Library + that DAMN Glass (damnlib is required by the KI5 vehicles)
+          "3435796523" # '88 Toyota Hilux
+          "3330403100" # Trailers!
+          "3780683663" # Cye's Push Doors!
+          "2847184718" # Proximity Inventory
         ];
 
         # The Ladders fork ships one mod ID per game version; Ladders42204 is
