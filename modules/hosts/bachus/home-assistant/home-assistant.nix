@@ -1,4 +1,7 @@
-{ inputs, ... }:
+{ config, inputs, ... }:
+let
+  inherit (config) tailnetDomain;
+in
 {
   flake.modules.nixos.bachus =
     {
@@ -8,6 +11,27 @@
       ...
     }:
     let
+      configVolume = "/var/lib/containers/storage/volumes/home-assistant/_data";
+
+      # Pocket ID sign-in through hass-oidc-auth. Members of `home-assistant`
+      # become Home Assistant users; members of `home-assistant-admin` become
+      # administrators.
+      oidcConfiguration = (pkgs.formats.yaml { }).generate "auth_oidc.yaml" {
+        client_id = "home-assistant";
+        discovery_url = "${config.services.pocket-id.settings.APP_URL}/.well-known/openid-configuration";
+        display_name = "Pocket ID";
+        roles.admin = "home-assistant-admin";
+        features.automatic_user_linking = true;
+      };
+
+      # configuration.yaml belongs to Home Assistant; this adds the one line
+      # that loads the declared OIDC settings and leaves the rest alone.
+      includeOidcConfiguration = pkgs.writeShellScript "home-assistant-include-oidc" ''
+        file=${configVolume}/configuration.yaml
+        line='auth_oidc: !include auth_oidc.yaml'
+        grep -qxF "$line" "$file" || printf '\n%s\n' "$line" >> "$file"
+      '';
+
       stateDir = "/var/lib/proton-drive";
       # On the /srv disk; the config volume stays on the root disk.
       backupsDir = "/srv/backups/home-assistant";
@@ -39,6 +63,8 @@
       virtualisation.oci-containers.containers.homeassistant = {
         volumes = [
           "home-assistant:/config"
+          "${pkgs.home-assistant-custom-components.auth_oidc}/custom_components/auth_oidc:/config/custom_components/auth_oidc:ro"
+          "${oidcConfiguration}:/config/auth_oidc.yaml:ro"
           "${backupsDir}:/config/backups"
         ];
         environment.TZ = config.time.timeZone;
@@ -54,6 +80,24 @@
             # Pass devices into the container, so Home Assistant can discover and make use of them
             "--device=${zigbeeDongleDevice}:${zigbeeDongleDevice}"
           ];
+      };
+
+      systemd.services.podman-homeassistant.serviceConfig.ExecStartPre = [ includeOidcConfiguration ];
+
+      my.pocket-id.groups.home-assistant.friendlyName = "Home Assistant";
+      my.pocket-id.groups.home-assistant-admin.friendlyName = "Home Assistant administrators";
+      my.pocket-id.clients.home-assistant = {
+        id = "home-assistant";
+        name = "Home Assistant";
+        callbackUrls = [
+          "https://home-assistant.${tailnetDomain}/auth/oidc/callback"
+          "http://192.168.2.201:8123/auth/oidc/callback"
+        ];
+        public = true;
+        groups = [
+          "home-assistant"
+          "home-assistant-admin"
+        ];
       };
 
       # Home Assistant's automatic backups (Settings → System → Backups) land in
