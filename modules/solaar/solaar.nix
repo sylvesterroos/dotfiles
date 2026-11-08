@@ -37,6 +37,26 @@
     {
       xdg.configFile."solaar/rules.yaml".source = rules;
 
+      # plasma-manager's panels route rebuilds the whole appletsrc, so patch the
+      # tray applet instead. hiddenItems keeps the icon in the popup
+      programs.plasma.startup.desktopScript."solaar-tray-icon" = {
+        text = ''
+          var id = "indicator-solaar";
+
+          panels().forEach(function (panel) {
+            panel.widgets("org.kde.plasma.systemtray").forEach(function (tray) {
+              tray.currentConfigGroup = ["General"];
+              var current = tray.readConfig("hiddenItems", "");
+              var items = current === "" ? [] : current.split(",");
+              if (items.indexOf(id) === -1) {
+                items.push(id);
+                tray.writeConfig("hiddenItems", items.join(","));
+              }
+            });
+          });
+        '';
+      };
+
       systemd.user.services.solaar = {
         Unit = {
           Description = "Solaar";
