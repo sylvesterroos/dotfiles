@@ -23,7 +23,12 @@
   };
 
   flake.modules.nixos.framework =
-    { config, pkgs, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     {
       imports = [
         inputs.disko.nixosModules.default
@@ -36,6 +41,17 @@
       boot.kernelPackages = pkgs.linuxPackages_latest;
 
       boot.zswap.enable = true;
+
+      # The EC stores the limit; NixOS has no option, so reapply it each boot.
+      systemd.services.framework-charge-limit = {
+        description = "Set Framework battery charge limit to 80%";
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+          ExecStart = "${lib.getExe pkgs.framework-tool} --charge-limit 80";
+        };
+      };
 
       users.users.sylvester.extraGroups = [ "plugdev" ];
 
