@@ -3,6 +3,9 @@ let
   mv = config.multiverse;
   inherit (config) serviceFrom tailnetDomain;
   origin = "https://immich.${tailnetDomain}";
+  deltaMachineLearning = "100.91.77.3:3003";
+  localMachineLearning = "127.0.0.1:3003";
+  machineLearningRouter = "127.0.0.1:3004";
 in
 {
   flake.modules.nixos.bachus =
@@ -24,10 +27,10 @@ in
           IMMICH_LOG_LEVEL = "verbose";
         };
         database.port = 5431;
-        machine-learning.enable = false;
+        machine-learning.enable = true;
         settings = {
           nightlyTasks.startTime = "21:00";
-          machineLearning.urls = [ "http://100.91.77.3:3003" ];
+          machineLearning.urls = [ "http://${machineLearningRouter}" ];
           oauth = {
             enabled = true;
             issuerUrl = config.services.pocket-id.settings.APP_URL;
@@ -37,6 +40,39 @@ in
             buttonText = "Sign in with Pocket ID";
           };
         };
+      };
+
+      # Text encoding for search runs on delta or, when delta is down, on the local CPU instance.
+      # Every other model task runs on delta only. The router matches "textual" in the multipart
+      # `entries` field, which Immich sends first, so it sits inside the buffered request start.
+      services.haproxy = {
+        enable = true;
+        config = ''
+          global
+              maxconn 64
+
+          defaults
+              mode http
+              timeout connect 3s
+              timeout client 300s
+              timeout server 300s
+              option http-buffer-request
+
+          frontend machine_learning
+              bind ${machineLearningRouter}
+              acl text_encoding req.body -m sub "\"textual\""
+              use_backend text_encoding if text_encoding
+              default_backend delta_only
+
+          backend delta_only
+              option httpchk GET /ping
+              server delta ${deltaMachineLearning} check inter 5s fall 2 rise 1
+
+          backend text_encoding
+              option httpchk GET /ping
+              server delta ${deltaMachineLearning} check inter 5s fall 2 rise 1
+              server local ${localMachineLearning} check inter 5s backup
+        '';
       };
 
       sops.secrets."immich/oidc_client_secret".restartUnits = [ "immich-server.service" ];
