@@ -50,6 +50,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    bootvine = {
+      url = "git+https://codeberg.org/wvhulle/bootvine";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     linux-wallpaper-engine.url = "github:jagrat7/linux-wallpaper-engine/27cb7f959a1ca1221526b3b436deeffa6c3a683b";
 
     treefmt-nix = {
