@@ -3,6 +3,42 @@
 # agents through Syncthing, with long-term memory in Hindsight.
 { inputs, ... }:
 let
+  llmAgentsFor = pkgs: inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
+
+  hermesFor =
+    { pkgs, plugins }:
+    let
+      system = pkgs.stdenv.hostPlatform.system;
+      llmAgents = llmAgentsFor pkgs;
+      hermesPkgs = inputs.llm-agents.inputs.nixpkgs.legacyPackages.${system};
+      python = hermesPkgs.python3;
+    in
+    llmAgents.hermes-agent.overridePythonAttrs (
+      old:
+      let
+        dependencies =
+          old.dependencies
+          ++ map (path: hermesPkgs.callPackage path { pythonPackages = python.pkgs; }) (
+            [ "${inputs.self}/pkgs/hermes-plugin-hindsight" ] ++ plugins
+          )
+          # The hermes-relay plugin, installed in the synced profiles, imports
+          # these beyond Hermes' own dependencies.
+          ++ (with python.pkgs; [
+            segno
+            websocket-client
+          ]);
+        # The CLI and its TUI/gateway subprocesses share these dependencies.
+        originalPython = python.withPackages (_: old.dependencies);
+        runtimePython = python.withPackages (_: dependencies);
+      in
+      {
+        inherit dependencies;
+        makeWrapperArgs = map (
+          arg: if arg == "${originalPython}/bin/python3" then "${runtimePython}/bin/python3" else arg
+        ) old.makeWrapperArgs;
+      }
+    );
+
   env =
     {
       lib,
@@ -10,35 +46,8 @@ let
       plugins,
     }:
     let
-      system = pkgs.stdenv.hostPlatform.system;
-      llmAgents = inputs.llm-agents.packages.${system};
-      hermesPkgs = inputs.llm-agents.inputs.nixpkgs.legacyPackages.${system};
-      python = hermesPkgs.python3;
-      hermes = llmAgents.hermes-agent.overridePythonAttrs (
-        old:
-        let
-          dependencies =
-            old.dependencies
-            ++ map (path: hermesPkgs.callPackage path { pythonPackages = python.pkgs; }) (
-              [ "${inputs.self}/pkgs/hermes-plugin-hindsight" ] ++ plugins
-            )
-            # The hermes-relay plugin, installed in the synced profiles, imports
-            # these beyond Hermes' own dependencies.
-            ++ (with python.pkgs; [
-              segno
-              websocket-client
-            ]);
-          # The CLI and its TUI/gateway subprocesses share these dependencies.
-          originalPython = python.withPackages (_: old.dependencies);
-          runtimePython = python.withPackages (_: dependencies);
-        in
-        {
-          inherit dependencies;
-          makeWrapperArgs = map (
-            arg: if arg == "${originalPython}/bin/python3" then "${runtimePython}/bin/python3" else arg
-          ) old.makeWrapperArgs;
-        }
-      );
+      llmAgents = llmAgentsFor pkgs;
+      hermes = hermesFor { inherit pkgs plugins; };
     in
     {
       packages = [
@@ -132,18 +141,32 @@ in
   # `hermes gateway install` writes the gateway unit with an FHS PATH. The
   # gateway launches MCP servers (`nix run …`) with that PATH, so this drop-in
   # gives it the user's NixOS tools; the installer rewrites only the unit file.
-  flake.modules.nixos.hermes-gateway = {
-    systemd.user.services.hermes-gateway = {
-      overrideStrategy = "asDropin";
-      # Each entry contributes its bin directory.
-      path = [
-        "/run/wrappers"
-        "/etc/profiles/per-user/%u"
-        "/run/current-system/sw"
-        "%h/.local"
-      ];
+  flake.modules.nixos.hermes-gateway =
+    { config, pkgs, ... }:
+    let
+      hermes = hermesFor {
+        inherit pkgs;
+        inherit (config.my.hermes-agent) plugins;
+      };
+    in
+    {
+      systemd.user.services.hermes-gateway = {
+        overrideStrategy = "asDropin";
+        # The `bin/hermes` wrapper exports these; the installed unit skips it.
+        environment = {
+          HERMES_BUNDLED_PLUGINS = "${hermes}/share/hermes/plugins";
+          HERMES_BUNDLED_SKILLS = "${hermes}/share/hermes/skills";
+          HERMES_BUNDLED_LOCALES = "${hermes}/share/hermes/locales";
+        };
+        # Each entry contributes its bin directory.
+        path = [
+          "/run/wrappers"
+          "/etc/profiles/per-user/%u"
+          "/run/current-system/sw"
+          "%h/.local"
+        ];
+      };
     };
-  };
 
   # The Discord bot connects from bachus alone. Its token arrives on the
   # desktops with the synced `.env`, so their gateways pin the adapter off
