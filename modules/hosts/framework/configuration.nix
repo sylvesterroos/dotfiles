@@ -15,7 +15,7 @@
         gaming
         desktop
         framework
-        netbird
+        netbird-on-demand
         programming
       ];
       home-manager.users.sylvester.imports = [ config.flake.modules.homeManager.framework ];

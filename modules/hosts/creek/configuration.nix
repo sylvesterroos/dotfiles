@@ -9,7 +9,7 @@
       imports = with config.flake.modules.nixos; [
         desktop
         programming
-        netbird
+        netbird-on-demand
         creek
       ];
       home-manager.users.sylvester.imports = with config.flake.modules.homeManager; [

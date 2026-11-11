@@ -14,7 +14,7 @@
         desktop
         gaming
         programming
-        netbird
+        netbird-on-demand
         livebook
         delta
       ];

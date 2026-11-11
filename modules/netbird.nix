@@ -66,4 +66,12 @@ in
         config.environment.etc."netbird/config.d/50-nixos.json".source
       ];
     };
+
+  config.flake.modules.nixos.netbird-on-demand = {
+    imports = [ config.flake.modules.nixos.netbird ];
+
+    services.netbird.clients.netbird.autoStart = false;
+    # The module wires the unit into multi-user.target regardless of autoStart.
+    systemd.services.netbird.wantedBy = lib.mkForce [ ];
+  };
 }
