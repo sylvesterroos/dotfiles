@@ -1,0 +1,30 @@
+{
+  "contacts": [
+    {
+      "id": "c1",
+      "name": "Jane Roe",
+      "phone": "mobile:+31600000000",
+      "emails": [
+        "jane@example.com"
+      ],
+      "phones": [
+        "mobile:+31600000000",
+        "+31611111111"
+      ],
+      "addresses": [],
+      "urls": [],
+      "first_name": "Jane",
+      "last_name": "Roe",
+      "cards": [
+        "x"
+      ],
+      "signature": "unsigned",
+      "org": "Roe Dental"
+    }
+  ],
+  "count": 1,
+  "has_more": false,
+  "page": 0,
+  "page_size": 50,
+  "total": 1
+}

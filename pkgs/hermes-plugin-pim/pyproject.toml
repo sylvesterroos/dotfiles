@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hermes-pim"
+version = "0.1.0"
+description = "Hermes tools for mail, calendar and contacts, independent of the provider behind them"
+requires-python = ">=3.13"
+
+[project.entry-points."hermes_agent.plugins"]
+pim = "hermes_pim"
+
+[tool.setuptools]
+packages = ["hermes_pim"]
+
+[tool.setuptools.package-data]
+hermes_pim = ["plugin.yaml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

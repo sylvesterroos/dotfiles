@@ -1,0 +1,40 @@
+{
+  "count": 2,
+  "events": [
+    {
+      "id": "e1",
+      "calendar_id": "cal1",
+      "title": "Dentist",
+      "location": "Main Street 1",
+      "description": "\n",
+      "start": "2026-11-10T14:00:00+01:00",
+      "end": "2026-11-10T15:00:00+01:00",
+      "all_day": false,
+      "zone": "Europe/Amsterdam",
+      "uid": "ue1",
+      "reminders": [],
+      "attendees": [
+        "a@example.com"
+      ],
+      "status": "confirmed",
+      "organizer": "boss@example.com",
+      "signature": "unsigned"
+    },
+    {
+      "id": "e2",
+      "calendar_id": "cal2",
+      "title": "Holiday",
+      "description": "\n",
+      "start": "2026-11-10T14:00:00+01:00",
+      "end": "2026-11-10T15:00:00+01:00",
+      "all_day": true,
+      "zone": "Europe/Amsterdam",
+      "uid": "ue2",
+      "reminders": [],
+      "attendees": [],
+      "status": "confirmed",
+      "organizer": "boss@example.com",
+      "signature": "unsigned"
+    }
+  ]
+}

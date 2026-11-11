@@ -1,0 +1,39 @@
+{
+  "conversations": [
+    {
+      "id": "conv1",
+      "subject": "Your invoice",
+      "num_messages": 2,
+      "num_unread": 1,
+      "num_attachments": 1,
+      "time": 1794378952,
+      "senders": [
+        {
+          "Address": "billing@shop.example",
+          "BimiSelector": null,
+          "DisplaySenderImage": 0,
+          "IsProton": 0,
+          "IsSimpleLogin": 0,
+          "Name": "Shop"
+        }
+      ],
+      "recipients": [
+        {
+          "Address": "me@pm.example",
+          "IsProton": 1,
+          "Name": "Me"
+        }
+      ],
+      "labels": [
+        "0",
+        "5",
+        "10"
+      ]
+    }
+  ],
+  "count": 1,
+  "has_more": true,
+  "page": 0,
+  "page_size": 25,
+  "total": 40
+}

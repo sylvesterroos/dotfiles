@@ -1,0 +1,19 @@
+{
+  "calendars": [
+    {
+      "id": "cal1",
+      "name": "Personal",
+      "color": "#415DF0",
+      "member_count": 1,
+      "kind": "personal"
+    },
+    {
+      "id": "cal2",
+      "name": "Holidays",
+      "color": "#273EB2",
+      "member_count": 1,
+      "kind": "holidays"
+    }
+  ],
+  "count": 2
+}

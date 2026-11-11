@@ -1,0 +1,78 @@
+{
+  "conversation": {
+    "id": "conv1",
+    "subject": "Your invoice",
+    "num_messages": 2,
+    "num_unread": 1,
+    "num_attachments": 1,
+    "time": 1794378952,
+    "senders": [
+      {
+        "Address": "billing@shop.example",
+        "BimiSelector": null,
+        "DisplaySenderImage": 0,
+        "IsProton": 0,
+        "IsSimpleLogin": 0,
+        "Name": "Shop"
+      }
+    ],
+    "recipients": [
+      {
+        "Address": "me@pm.example",
+        "IsProton": 1,
+        "Name": "Me"
+      }
+    ],
+    "labels": [
+      "0",
+      "5",
+      "10"
+    ]
+  },
+  "messages": [
+    {
+      "id": "msg1",
+      "conversation_id": "conv1",
+      "subject": "Your invoice",
+      "from": {
+        "Address": "billing@shop.example",
+        "BimiSelector": null,
+        "DisplaySenderImage": 0,
+        "IsProton": 0,
+        "IsSimpleLogin": 0,
+        "Name": "Shop"
+      },
+      "to": [
+        {
+          "Address": "me@pm.example",
+          "Group": "",
+          "IsProton": 1,
+          "Name": "Me"
+        }
+      ],
+      "cc": [
+        {
+          "Address": "cc@example.com",
+          "Group": "",
+          "IsProton": 0,
+          "Name": ""
+        }
+      ],
+      "bcc": [],
+      "time": 1794378952,
+      "body": "Invoice attached.",
+      "mime_type": "text/plain",
+      "address_id": "a1",
+      "attachments": [
+        {
+          "id": "att1",
+          "name": "invoice.pdf",
+          "size": 1200,
+          "mime_type": "application/pdf",
+          "disposition": "attachment"
+        }
+      ],
+      "signature": "unsigned"
+    }
+  ]
+}

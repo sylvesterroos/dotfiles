@@ -20,6 +20,9 @@ pkgs: {
   hermes-plugin-librarian = pkgs.callPackage ./hermes-plugin-librarian {
     pythonPackages = pkgs.python3Packages;
   };
+  hermes-plugin-pim = pkgs.callPackage ./hermes-plugin-pim {
+    pythonPackages = pkgs.python3Packages;
+  };
   hindsight-client = pkgs.callPackage ./hindsight-client {
     pythonPackages = pkgs.python3Packages;
   };
