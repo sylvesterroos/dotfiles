@@ -124,13 +124,20 @@
         #
         shortcuts = {
           kwin = {
-            "Switch to Desktop 1" = "Meta+1";
-            "Switch to Desktop 2" = "Meta+2";
-            "Switch to Desktop 3" = "Meta+3";
-            "Switch to Desktop 4" = "Meta+4";
-            "Switch to Desktop 5" = "Meta+5";
-            "Switch to Desktop 6" = "Meta+6";
-            "Switch to Desktop 7" = "Meta+7";
+            "Switch to Desktop 1" = "none";
+            "Back and Forth Desktop 1" = "Meta+1";
+            "Switch to Desktop 2" = "none";
+            "Back and Forth Desktop 2" = "Meta+2";
+            "Switch to Desktop 3" = "none";
+            "Back and Forth Desktop 3" = "Meta+3";
+            "Switch to Desktop 4" = "none";
+            "Back and Forth Desktop 4" = "Meta+4";
+            "Switch to Desktop 5" = "none";
+            "Back and Forth Desktop 5" = "Meta+5";
+            "Switch to Desktop 6" = "none";
+            "Back and Forth Desktop 6" = "Meta+6";
+            "Switch to Desktop 7" = "none";
+            "Back and Forth Desktop 7" = "Meta+7";
             "Switch to Previously Used Desktop" = "Meta+Z";
             "Window to Desktop 1" = "Meta+!";
             "Window to Desktop 2" = "Meta+@";
@@ -166,7 +173,7 @@
           };
         };
 
-        configFile."kwinrc"."Plugins"."switch-to-previous-desktopEnabled" = true;
+        configFile."kwinrc"."Plugins"."desktop-back-and-forthEnabled" = true;
 
         # 9 is KWin's ElectricNone: no hot corner for the overview.
         configFile."kwinrc"."Effect-overview"."BorderActivate" = 9;
@@ -314,7 +321,7 @@
       };
 
       home.packages = [
-        inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.switch-to-previous-desktop
+        inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.desktop-back-and-forth
       ];
     };
 

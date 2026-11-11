@@ -2,7 +2,7 @@
 # You can build them using 'nix build .#example'
 pkgs: {
   # example = pkgs.callPackage ./example { };
-  switch-to-previous-desktop = pkgs.callPackage ./switch-to-previous-desktop { };
+  desktop-back-and-forth = pkgs.callPackage ./desktop-back-and-forth { };
   playkeeper = pkgs.callPackage ./playkeeper { };
   proton-drive-cli = pkgs.callPackage ./proton-drive-cli { };
   usgc-machine-report = pkgs.callPackage ./usgc-machine-report { };

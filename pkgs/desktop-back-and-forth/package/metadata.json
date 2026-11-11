@@ -1,0 +1,16 @@
+{
+  "KPackageStructure": "KWin/Script",
+  "KPlugin": {
+    "Authors": [
+      {
+        "Name": "Sylvester Roos"
+      }
+    ],
+    "Description": "Switches to the previously used desktop, also when the shortcut of the current desktop is pressed",
+    "Icon": "preferences-system-windows-script-test",
+    "Id": "desktop-back-and-forth",
+    "License": "GPL",
+    "Name": "Desktop back and forth"
+  },
+  "X-Plasma-API": "javascript"
+}
