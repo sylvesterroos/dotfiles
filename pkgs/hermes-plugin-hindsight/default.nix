@@ -8,14 +8,14 @@
 }:
 pythonPackages.buildPythonPackage rec {
   pname = "hermes-plugin-hindsight";
-  version = "1.2.3";
+  version = "1.2.4";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "vectorize-io";
     repo = "hindsight";
     tag = "integrations/hermes/v${version}";
-    hash = "sha256-qEjN1JRGLH7iGDkCEEeIG5ciFRpggvMbjjmrQP+ThCo=";
+    hash = "sha256-/i9dq5v7w0agur17alI3rutFyrSwtlwsP2yA8kOHYD0=";
   };
   sourceRoot = "source/hindsight-integrations/hermes";
 
