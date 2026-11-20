@@ -1,17 +1,11 @@
 [
   {
-    "context": "vim_mode == normal",
+    "context": "vim_mode == helix_normal",
     "bindings": {
       // leader (t)oggle (l)eft / (r)ight / (b)ottom
       "space t l": "workspace::ToggleLeftDock",
       "space t r": "workspace::ToggleRightDock",
       "space t b": "workspace::ToggleBottomDock",
-    },
-  },
-  {
-    "context": "vim_mode == visual",
-    "bindings": {
-      "shift-s": "vim::PushAddSurrounds",
     },
   },
   {
@@ -27,28 +21,13 @@
     "context": "Terminal",
     "bindings": {
       "ctrl-shift-l": "pane::SplitRight",
-    },
-  },
-  {
-    "context": "Terminal",
-    "bindings": {
       "ctrl-shift-h": "pane::SplitLeft",
-    },
-  },
-  {
-    "context": "Terminal",
-    "bindings": {
       "ctrl-shift-k": "pane::SplitUp",
-    },
-  },
-  {
-    "context": "Terminal",
-    "bindings": {
       "ctrl-shift-j": "pane::SplitDown",
     },
   },
   {
-    "context": "Editor && vim_mode == normal",
+    "context": "Editor && vim_mode == helix_normal",
     "bindings": {
       "space g g": ["task::Spawn", { "task_name": "gitu" }],
     },
