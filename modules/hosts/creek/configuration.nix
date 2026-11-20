@@ -27,8 +27,6 @@
       boot.kernelPackages = pkgs.linuxPackages_zen;
 
       environment.variables = {
-        EDITOR = lib.getExe pkgs.neovim;
-
         # https://consoledonottrack.com/
         DO_NOT_TRACK = 1;
       };

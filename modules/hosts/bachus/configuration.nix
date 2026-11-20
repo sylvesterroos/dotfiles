@@ -56,8 +56,6 @@ in
         inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode
       ];
 
-      environment.variables.EDITOR = lib.getExe pkgs.neovim;
-
       programs.nh.flake = "/srv/nixos";
 
       my.postgresql.dbaUsers = [ { userName = "sylvester"; } ];
