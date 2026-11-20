@@ -93,6 +93,8 @@ in
             # Devices stay connected without a periodic re-login.
             peer_login_expiration_enabled = false;
             regular_users_view_blocked = true;
+            # Pocket ID's `netbird` group already vets who may sign in.
+            user_approval_required = false;
             groups_propagation_enabled = true;
           };
           netbird_group = lib.genAttrs groups (name: {
