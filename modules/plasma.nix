@@ -20,6 +20,9 @@
       # accepts fingerprint or password.
       security.pam.services.login.fprintAuth = false;
 
+      # Temporary: log why lock-screen fingerprint attempts fail.
+      security.pam.services.kde-fingerprint.rules.auth.fprintd.args = [ "debug" ];
+
       programs.kdeconnect = {
         enable = true;
       };
