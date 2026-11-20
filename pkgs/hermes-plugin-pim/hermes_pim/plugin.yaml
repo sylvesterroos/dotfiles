@@ -1,8 +1,11 @@
 name: pim
 version: 0.1.0
-description: Read mail, calendar and contacts through the configured provider.
+description: Read mail and contacts and manage the calendar through the configured provider.
 provides_tools:
   - mail_search
   - mail_read
   - calendar_events
+  - calendar_create
+  - calendar_update
+  - calendar_delete
   - contacts_search

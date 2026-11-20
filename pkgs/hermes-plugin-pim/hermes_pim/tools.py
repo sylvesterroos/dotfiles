@@ -3,11 +3,13 @@
 import json
 from collections.abc import Callable
 from dataclasses import asdict
-from datetime import date
+from datetime import date, datetime
 
 from .model import (
     CalendarBackend,
     ContactsBackend,
+    EventChange,
+    EventDraft,
     MailBackend,
     MailQuery,
     PimError,
@@ -38,6 +40,18 @@ def _day(args: dict, key: str, required: bool = False) -> str | None:
         raise PimError(f"{key} must be a date as YYYY-MM-DD, got {value!r}") from None
 
 
+def _moment(args: dict, key: str, required: bool = False) -> str | None:
+    value = args.get(key)
+    if value is None and not required:
+        return None
+    try:
+        if isinstance(value, str) and "T" in value:
+            return datetime.strptime(value, "%Y-%m-%dT%H:%M").strftime("%Y-%m-%dT%H:%M")
+        return date.fromisoformat(value).isoformat()
+    except (TypeError, ValueError):
+        raise PimError(f"{key} must be YYYY-MM-DD or YYYY-MM-DDTHH:MM, got {value!r}") from None
+
+
 def _limit(args: dict) -> int:
     limit = int(args.get("limit", DEFAULT_LIMIT))
     if not 1 <= limit <= MAX_LIMIT:
@@ -54,6 +68,9 @@ def _schema(name: str, description: str, properties: dict, required: list[str]) 
 
 
 _DAY = "Date as YYYY-MM-DD."
+_MOMENT = (
+    "Local time as YYYY-MM-DDTHH:MM, or a date as YYYY-MM-DD for an all-day event."
+)
 _LIMIT = f"Results per page, 1 to {MAX_LIMIT}. Default {DEFAULT_LIMIT}."
 
 
@@ -89,6 +106,37 @@ def build_tools(
             )
         events = calendar.events(first, last, args.get("calendar"))
         return {"events": [asdict(event) for event in events]}
+
+    @_json_tool
+    def calendar_create(args):
+        draft = EventDraft(
+            calendar=args.get("calendar"),
+            title=args["title"],
+            start=_moment(args, "start", True),
+            end=_moment(args, "end"),
+            location=args.get("location"),
+            description=args.get("description"),
+        )
+        return {"id": calendar.create(draft)}
+
+    @_json_tool
+    def calendar_update(args):
+        change = EventChange(
+            title=args.get("title"),
+            start=_moment(args, "start"),
+            end=_moment(args, "end"),
+            location=args.get("location"),
+            description=args.get("description"),
+        )
+        if all(value is None for value in vars(change).values()):
+            raise PimError("give at least one field to change")
+        calendar.update(args["event_id"], change)
+        return {"id": args["event_id"]}
+
+    @_json_tool
+    def calendar_delete(args):
+        calendar.delete(args["event_id"])
+        return {"deleted": args["event_id"]}
 
     @_json_tool
     def contacts_search(args):
@@ -144,6 +192,59 @@ def build_tools(
                 ["first_day", "last_day"],
             ),
             calendar_events,
+        ),
+        (
+            _schema(
+                "calendar_create",
+                "Create a calendar event. Without an end the event lasts the calendar's "
+                "default duration.",
+                {
+                    "title": {"type": "string", "description": "Event title."},
+                    "start": {"type": "string", "description": _MOMENT},
+                    "end": {
+                        "type": "string",
+                        "description": "End, in the same form as start. For an all-day "
+                        "event, the last day it runs through.",
+                    },
+                    "location": {"type": "string", "description": "Where it is."},
+                    "description": {"type": "string", "description": "Event notes."},
+                    "calendar": {
+                        "type": "string",
+                        "description": "Calendar name. Default: the first calendar.",
+                    },
+                },
+                ["title", "start"],
+            ),
+            calendar_create,
+        ),
+        (
+            _schema(
+                "calendar_update",
+                "Change fields of an existing event; omitted fields stay as they are. "
+                "An empty string clears location or description.",
+                {
+                    "event_id": {"type": "string", "description": "Id from calendar_events."},
+                    "title": {"type": "string", "description": "New title."},
+                    "start": {
+                        "type": "string",
+                        "description": _MOMENT + " A date alone moves the event and keeps its time.",
+                    },
+                    "end": {"type": "string", "description": "New end, in the form of start."},
+                    "location": {"type": "string", "description": "New location."},
+                    "description": {"type": "string", "description": "New notes."},
+                },
+                ["event_id"],
+            ),
+            calendar_update,
+        ),
+        (
+            _schema(
+                "calendar_delete",
+                "Permanently delete an event.",
+                {"event_id": {"type": "string", "description": "Id from calendar_events."}},
+                ["event_id"],
+            ),
+            calendar_delete,
         ),
         (
             _schema(

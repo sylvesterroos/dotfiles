@@ -1,4 +1,4 @@
-"""Hermes plugin that reads mail, calendar and contacts."""
+"""Hermes plugin that serves mail, calendar and contacts."""
 
 import shutil
 

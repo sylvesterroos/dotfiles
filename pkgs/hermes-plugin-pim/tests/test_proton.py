@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from hermes_pim.model import MailQuery, PimError
+from hermes_pim.model import EventChange, EventDraft, MailQuery, PimError
 from hermes_pim.proton import ProtonCalendar, ProtonContacts, ProtonMail, command_runner
 
 FIXTURES = Path(__file__).parent / "fixtures"
@@ -68,7 +68,37 @@ def test_calendar_events_name_their_calendar():
                             "--end", "2026-11-10", "--calendar", "Personal"]
     assert [(e.calendar, e.title, e.location, e.all_day) for e in events] == [
         ("Personal", "Dentist", "Main Street 1", False), ("Holidays", "Holiday", None, True)]
+    assert events[0].id == "cal1/e1"
     assert events[0].attendees == ["a@example.com"]
+
+
+def test_calendar_create_builds_cli_arguments_and_returns_the_id():
+    run = RecordingRun(**{"calendar events create": {"ids": ["cal1/e9"]}})
+    draft = EventDraft("Personal", "Dentist", "2027-05-13T12:30", "2027-05-13T13:15", "Main Street 1", "Check-up")
+    assert ProtonCalendar(run).create(draft) == "cal1/e9"
+    assert run.calls == [[
+        "calendar", "events", "create", "--title", "Dentist", "--start", "2027-05-13T12:30",
+        "--calendar", "Personal", "--end", "2027-05-13T13:15", "--location", "Main Street 1",
+        "--description", "Check-up",
+    ]]
+
+
+def test_calendar_create_marks_a_bare_date_as_all_day():
+    run = RecordingRun(**{"calendar events create": {"ids": ["cal1/e9"]}})
+    ProtonCalendar(run).create(EventDraft(None, "Holiday", "2027-07-01", None, None, None))
+    assert run.calls == [["calendar", "events", "create", "--title", "Holiday", "--start", "2027-07-01", "--all-day"]]
+
+
+def test_calendar_update_sends_given_fields_including_empty_ones():
+    run = RecordingRun(**{"calendar events update": {}})
+    ProtonCalendar(run).update("cal1/e1", EventChange("Checkup", None, None, "", None))
+    assert run.calls == [["calendar", "events", "update", "cal1/e1", "--title", "Checkup", "--location", ""]]
+
+
+def test_calendar_delete_confirms_in_the_cli():
+    run = RecordingRun(**{"calendar events delete": {}})
+    ProtonCalendar(run).delete("cal1/e1")
+    assert run.calls == [["calendar", "events", "delete", "cal1/e1", "--yes"]]
 
 
 def test_contacts_drop_the_phone_type_prefix():

@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from hermes_pim.model import Contact, Event, MailQuery, Message, PimError, Thread, ThreadPage
+from hermes_pim.model import Contact, Event, EventChange, EventDraft, MailQuery, Message, PimError, Thread, ThreadPage
 from hermes_pim.tools import build_tools
 
 
@@ -24,6 +24,21 @@ class FakeMail:
 class FakeCalendar:
     def __init__(self):
         self.ranges = []
+        self.created = []
+        self.updated = []
+        self.deleted = []
+
+    def create(self, draft):
+        self.created.append(draft)
+        return "cal/e2"
+
+    def update(self, event_id, change):
+        self.updated.append((event_id, change))
+
+    def delete(self, event_id):
+        if event_id != "cal/e1":
+            raise PimError(f"no event {event_id}")
+        self.deleted.append(event_id)
 
     def events(self, first_day, last_day, calendar):
         self.ranges.append((first_day, last_day, calendar))
@@ -97,3 +112,33 @@ def test_calendar_events_returns_events(call, calendar):
 
 def test_contacts_search_returns_contacts(call):
     assert call("contacts_search", text="jane")["contacts"][0]["emails"] == ["jane@example.com"]
+
+
+def test_calendar_create_passes_a_neutral_draft(call, calendar):
+    result = call("calendar_create", title="Dentist", start="2027-05-13T12:30", location="Main Street 1")
+    assert result == {"id": "cal/e2"}
+    assert calendar.created == [EventDraft(None, "Dentist", "2027-05-13T12:30", None, "Main Street 1", None)]
+
+
+def test_calendar_create_rejects_a_malformed_start(call, calendar):
+    assert "YYYY-MM-DDTHH:MM" in call("calendar_create", title="Dentist", start="13-05-2027 12:30")["error"]
+    assert calendar.created == []
+
+
+def test_calendar_update_passes_only_given_fields(call, calendar):
+    call("calendar_update", event_id="cal/e1", location="")
+    assert calendar.updated == [("cal/e1", EventChange(None, None, None, "", None))]
+
+
+def test_calendar_update_requires_a_field(call, calendar):
+    assert "at least one" in call("calendar_update", event_id="cal/e1")["error"]
+    assert calendar.updated == []
+
+
+def test_calendar_delete_removes_the_event(call, calendar):
+    assert call("calendar_delete", event_id="cal/e1") == {"deleted": "cal/e1"}
+    assert calendar.deleted == ["cal/e1"]
+
+
+def test_calendar_delete_reports_an_unknown_event(call):
+    assert call("calendar_delete", event_id="gone")["error"] == "no event gone"

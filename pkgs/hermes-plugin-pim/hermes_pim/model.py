@@ -71,6 +71,25 @@ class Event:
 
 
 @dataclass(frozen=True)
+class EventDraft:
+    calendar: str | None
+    title: str
+    start: str
+    end: str | None
+    location: str | None
+    description: str | None
+
+
+@dataclass(frozen=True)
+class EventChange:
+    title: str | None
+    start: str | None
+    end: str | None
+    location: str | None
+    description: str | None
+
+
+@dataclass(frozen=True)
 class Contact:
     id: str
     name: str
@@ -87,6 +106,12 @@ class MailBackend(Protocol):
 
 class CalendarBackend(Protocol):
     def events(self, first_day: str, last_day: str, calendar: str | None) -> list[Event]: ...
+
+    def create(self, draft: EventDraft) -> str: ...
+
+    def update(self, event_id: str, change: EventChange) -> None: ...
+
+    def delete(self, event_id: str) -> None: ...
 
 
 class ContactsBackend(Protocol):

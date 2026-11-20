@@ -1,4 +1,4 @@
-"""Backends that read Proton Mail, Calendar and Contacts through the `proton` command line."""
+"""Backends for Proton Mail, Calendar and Contacts through the `proton` command line."""
 
 import json
 import subprocess
@@ -8,6 +8,8 @@ from datetime import datetime
 from .model import (
     Contact,
     Event,
+    EventChange,
+    EventDraft,
     Message,
     MailQuery,
     PimError,
@@ -117,7 +119,7 @@ class ProtonCalendar:
             arguments += ["--calendar", calendar]
         return [
             Event(
-                id=item["id"],
+                id=f"{item['calendar_id']}/{item['id']}",
                 calendar=names[item["calendar_id"]],
                 title=item["title"],
                 start=item["start"],
@@ -128,6 +130,38 @@ class ProtonCalendar:
             )
             for item in self._run(arguments)["events"]
         ]
+
+    def create(self, draft: EventDraft) -> str:
+        arguments = ["calendar", "events", "create", "--title", draft.title, "--start", draft.start]
+        if "T" not in draft.start:
+            arguments.append("--all-day")
+        optional = {
+            "--calendar": draft.calendar,
+            "--end": draft.end,
+            "--location": draft.location,
+            "--description": draft.description,
+        }
+        for flag, value in optional.items():
+            if value is not None:
+                arguments += [flag, value]
+        return self._run(arguments)["ids"][0]
+
+    def update(self, event_id: str, change: EventChange) -> None:
+        arguments = ["calendar", "events", "update", event_id]
+        optional = {
+            "--title": change.title,
+            "--start": change.start,
+            "--end": change.end,
+            "--location": change.location,
+            "--description": change.description,
+        }
+        for flag, value in optional.items():
+            if value is not None:
+                arguments += [flag, value]
+        self._run(arguments)
+
+    def delete(self, event_id: str) -> None:
+        self._run(["calendar", "events", "delete", event_id, "--yes"])
 
 
 class ProtonContacts:
