@@ -13,6 +13,7 @@
       enable = true;
       packages = [
         "com.spotify.Client"
+        "com.stremio.Stremio"
         "com.usebottles.bottles"
         "eu.betterbird.Betterbird"
         "io.github.kelvinnovais.Kasasa"
