@@ -13,6 +13,10 @@
       '';
     };
 
+    services.caddy.virtualHosts."www.sylvesterroos.com".extraConfig = ''
+      redir https://sylvesterroos.com{uri} permanent
+    '';
+
     networking.firewall.allowedTCPPorts = [
       80
       443
