@@ -54,6 +54,7 @@ in
         yazi
         inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.codex
         inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode
+        mv.tip.dix
       ];
 
       programs.nh.flake = "/srv/nixos";
