@@ -62,7 +62,7 @@ class ProtonMail:
                 arguments += [flag, value]
         if query.unread_only:
             arguments.append("--unread")
-        arguments += ["--page-size", str(query.limit), "--page", str(query.page)]
+        arguments += ["--limit", str(query.limit), "--page", str(query.page)]
         listing = self._run(arguments)
         return ThreadPage(
             threads=[self._summary(item) for item in listing["conversations"]],
@@ -170,7 +170,7 @@ class ProtonContacts:
 
     def search(self, text: str, limit: int) -> list[Contact]:
         listing = self._run(
-            ["contacts", "list", "--keyword", text, "--page-size", str(limit)]
+            ["contacts", "list", "--keyword", text, "--limit", str(limit)]
         )
         return [
             Contact(

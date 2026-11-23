@@ -34,7 +34,7 @@ def test_mail_search_builds_cli_filters():
     assert run.calls == [[
         "mail", "conversations", "list", "--folder", "all", "--from", "a@example.com",
         "--subject", "invoice", "--keyword", "tax", "--after", "2026-11-01",
-        "--before", "2026-11-30", "--unread", "--page-size", "10", "--page", "2",
+        "--before", "2026-11-30", "--unread", "--limit", "10", "--page", "2",
     ]]
 
 
@@ -104,7 +104,7 @@ def test_calendar_delete_confirms_in_the_cli():
 def test_contacts_drop_the_phone_type_prefix():
     run = RecordingRun(**{"contacts list --keyword": fixture("contacts_list.json")})
     [contact] = ProtonContacts(run).search("jane", 5)
-    assert run.calls == [["contacts", "list", "--keyword", "jane", "--page-size", "5"]]
+    assert run.calls == [["contacts", "list", "--keyword", "jane", "--limit", "5"]]
     assert (contact.name, contact.emails, contact.phones, contact.organization) == (
         "Jane Roe", ["jane@example.com"], ["+31600000000", "+31611111111"], "Roe Dental")
 
